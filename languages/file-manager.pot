@@ -1,0 +1,1089 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: File Manager\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-10 01:44+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.2.1; wp-5.1"
+
+#: views/admin/extension-themepack.php:20
+msgid "2 Series of themes"
+msgstr ""
+
+#: views/admin/extension-themepack.php:18
+msgid "50 Different Themes"
+msgstr ""
+
+#: views/admin/language-code.php:76
+msgid "Abkhazian"
+msgstr ""
+
+#: views/admin/extensions.php:30
+msgid "Add additional folder for user & user role"
+msgstr ""
+
+#: views/admin/language-code.php:75
+msgid "Afar"
+msgstr ""
+
+#: views/admin/language-code.php:78
+msgid "Afrikaans"
+msgstr ""
+
+#. Author of the plugin
+msgid "Aftabul Islam"
+msgstr ""
+
+#: views/admin/language-code.php:79
+msgid "Akan"
+msgstr ""
+
+#: views/admin/language-code.php:225
+msgid "Albanian"
+msgstr ""
+
+#: views/admin/language-code.php:80
+msgid "Amharic"
+msgstr ""
+
+#: views/admin/language-code.php:82
+msgid "Arabic"
+msgstr ""
+
+#: views/admin/language-code.php:81
+msgid "Aragonese"
+msgstr ""
+
+#: views/admin/language-code.php:137
+msgid "Armenian"
+msgstr ""
+
+#: views/admin/language-code.php:83
+msgid "Assamese"
+msgstr ""
+
+#: views/admin/language-code.php:84
+msgid "Avaric"
+msgstr ""
+
+#: views/admin/language-code.php:77
+msgid "Avestan"
+msgstr ""
+
+#: views/admin/language-code.php:85
+msgid "Aymara"
+msgstr ""
+
+#: views/admin/language-code.php:86
+msgid "Azerbaijani"
+msgstr ""
+
+#: views/admin/language-code.php:92
+msgid "Bambara"
+msgstr ""
+
+#: views/admin/extensions.php:23
+msgid "Ban any user from performing any file operations"
+msgstr ""
+
+#: views/admin/language-code.php:87
+msgid "Bashkir"
+msgstr ""
+
+#: views/admin/language-code.php:116
+msgid "Basque"
+msgstr ""
+
+#: views/admin/language-code.php:88
+msgid "Belarusian"
+msgstr ""
+
+#: views/admin/language-code.php:93
+msgid "Bengali"
+msgstr ""
+
+#: views/admin/language-code.php:90
+msgid "Bihari"
+msgstr ""
+
+#: views/admin/language-code.php:91
+msgid "Bislama"
+msgstr ""
+
+#: views/admin/language-code.php:96
+msgid "Bosnian"
+msgstr ""
+
+#: views/admin/language-code.php:95
+msgid "Breton"
+msgstr ""
+
+#: views/admin/utility.php:43
+msgid "Browser and OS"
+msgstr ""
+
+#: views/admin/language-code.php:89
+msgid "Bulgarian"
+msgstr ""
+
+#: views/admin/language-code.php:185
+msgid "Burmese"
+msgstr ""
+
+#: views/admin/donate.php:26
+msgid "Buy me a Coffee"
+msgstr ""
+
+#: views/admin/donate.php:17
+msgid "Buy me a coffee"
+msgstr ""
+
+#: views/admin/language-code.php:97
+msgid "Catalan"
+msgstr ""
+
+#: views/admin/language-code.php:99
+msgid "Chamorro"
+msgstr ""
+
+#: views/admin/footer.php:15
+msgid "Changelog"
+msgstr ""
+
+#: views/admin/language-code.php:98
+msgid "Chechen"
+msgstr ""
+
+#: views/admin/language-code.php:196
+msgid "Chichewa"
+msgstr ""
+
+#: views/admin/language-code.php:260
+msgid "Chinese"
+msgstr ""
+
+#: views/admin/language-code.php:261
+msgid "Chinese(China)"
+msgstr ""
+
+#: views/admin/language-code.php:262
+msgid "Chinese(Taiwan)"
+msgstr ""
+
+#: views/admin/language-code.php:103
+msgid "Church Slavic"
+msgstr ""
+
+#: views/admin/language-code.php:104
+msgid "Chuvash"
+msgstr ""
+
+#: views/admin/footer.php:16
+msgid "Contacts"
+msgstr ""
+
+#: views/admin/extensions.php:29
+msgid "Control uploadable file size"
+msgstr ""
+
+#: views/admin/extensions.php:20
+msgid "Control what type of file can be uploaded"
+msgstr ""
+
+#: views/admin/extensions.php:22
+msgid "Control what type of file can be uploaded or downloaded"
+msgstr ""
+
+#: views/admin/extensions.php:21
+msgid "Control which user/usergroup can perform file operation"
+msgstr ""
+
+#: views/admin/language-code.php:165
+msgid "Cornish"
+msgstr ""
+
+#: views/admin/language-code.php:100
+msgid "Corsican"
+msgstr ""
+
+#: views/admin/extensions.php:31
+msgid ""
+"Create any kind of file access strcture for your user's on the frontend."
+msgstr ""
+
+#: views/admin/language-code.php:101
+msgid "Cree"
+msgstr ""
+
+#: views/admin/language-code.php:134
+msgid "Croatian"
+msgstr ""
+
+#: views/admin/language-code.php:102
+msgid "Czech"
+msgstr ""
+
+#: views/admin/language-code.php:106
+msgid "Danish"
+msgstr ""
+
+#: views/admin/language-code.php:74
+msgid "Default"
+msgstr ""
+
+#: views/admin/settings.php:73
+msgid "Default Path:"
+msgstr ""
+
+#: views/admin/settings.php:77
+msgid "Default URL:"
+msgstr ""
+
+#: views/admin/language-code.php:108
+msgid "Divehi"
+msgstr ""
+
+#: views/admin/footer.php:17
+msgid "Docs"
+msgstr ""
+
+#: inc/class.review.php:78
+msgid "Don't ask again."
+msgstr ""
+
+#: views/admin/language-code.php:191
+msgid "Dutch"
+msgstr ""
+
+#: views/admin/language-code.php:109
+msgid "Dzongkha"
+msgstr ""
+
+#: views/admin/language-code.php:112
+msgid "English"
+msgstr ""
+
+#: views/admin/language-code.php:113
+msgid "Esperanto"
+msgstr ""
+
+#: views/admin/language-code.php:115
+msgid "Estonian"
+msgstr ""
+
+#: views/admin/language-code.php:110
+msgid "Ewe"
+msgstr ""
+
+#: views/admin/header.php:21
+msgid "Extend"
+msgstr ""
+
+#: views/admin/extensions.php:14
+msgid "Extension"
+msgstr ""
+
+#: views/admin/permission_system.php:24
+msgid "Extension."
+msgstr ""
+
+#: views/admin/footer.php:14
+msgid "FAQ"
+msgstr ""
+
+#: views/admin/language-code.php:121
+msgid "Faroese"
+msgstr ""
+
+#: views/admin/language-code.php:120
+msgid "Fijian"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"File Manage let you manage your file the way you like. You can upload, "
+"delete, copy, move, rename, compress, extract files. You don't need to worry "
+"about ftp. It is realy simple and easy to use."
+msgstr ""
+
+#. Name of the plugin
+msgid "File Manager"
+msgstr ""
+
+#: views/admin/permission_system.php:24
+msgid "File Manager Permission System(Pro)"
+msgstr ""
+
+#. Parent Slug
+#: BootStart/BootStart.php:259
+msgid "File Manager Permission System(pro)"
+msgstr ""
+
+#: views/admin/language-code.php:119
+msgid "Finnish"
+msgstr ""
+
+#: views/admin/language-code.php:122
+msgid "French"
+msgstr ""
+
+#: views/admin/language-code.php:118
+msgid "Fulah"
+msgstr ""
+
+#: views/admin/language-code.php:126
+msgid "Galician"
+msgstr ""
+
+#: views/admin/language-code.php:169
+msgid "Ganda"
+msgstr ""
+
+#: views/admin/language-code.php:152
+msgid "Georgian"
+msgstr ""
+
+#: views/admin/language-code.php:107
+msgid "German"
+msgstr ""
+
+#: views/admin/permission_system.php:25
+msgid "Get It Now!"
+msgstr ""
+
+#: views/admin/extension-themepack.php:25 views/admin/extensions.php:35
+msgid "Get it now!"
+msgstr ""
+
+#: views/admin/language-code.php:111
+msgid "Greek"
+msgstr ""
+
+#: views/admin/language-code.php:127
+msgid "Guarani"
+msgstr ""
+
+#: views/admin/language-code.php:128
+msgid "Gujarati"
+msgstr ""
+
+#: views/admin/language-code.php:135
+msgid "Haitian"
+msgstr ""
+
+#: views/admin/language-code.php:130
+msgid "Hausa"
+msgstr ""
+
+#: views/admin/language-code.php:131
+msgid "Hebrew"
+msgstr ""
+
+#: views/admin/settings.php:105
+msgid "Height"
+msgstr ""
+
+#: views/admin/footer.php:19
+msgid "Help & Support"
+msgstr ""
+
+#: views/admin/language-code.php:138
+msgid "Herero"
+msgstr ""
+
+#: views/admin/language-code.php:132
+msgid "Hindi"
+msgstr ""
+
+#: views/admin/language-code.php:133
+msgid "Hiri Motu"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://www.giribaz.com"
+msgstr ""
+
+#: views/admin/language-code.php:136
+msgid "Hungarian"
+msgstr ""
+
+#: inc/class.review.php:78
+msgid "I don't care!"
+msgstr ""
+
+#: inc/class.review.php:77
+msgid "I don't have time right now."
+msgstr ""
+
+#: inc/class.review.php:76
+msgid "I like your plugin!"
+msgstr ""
+
+#: views/admin/language-code.php:146
+msgid "Icelandic"
+msgstr ""
+
+#: views/admin/language-code.php:145
+msgid "Ido"
+msgstr ""
+
+#: views/admin/language-code.php:142
+msgid "Igbo"
+msgstr ""
+
+#: views/admin/language-code.php:140
+msgid "Indonesian"
+msgstr ""
+
+#: views/admin/language-code.php:139
+msgid "Interlingua (International Auxiliary Language Association)"
+msgstr ""
+
+#: views/admin/language-code.php:141
+msgid "Interlingue"
+msgstr ""
+
+#: views/admin/language-code.php:148
+msgid "Inuktitut"
+msgstr ""
+
+#: views/admin/language-code.php:144
+msgid "Inupiaq"
+msgstr ""
+
+#: views/admin/language-code.php:124
+msgid "Irish"
+msgstr ""
+
+#: file-manager.php:207
+msgid "is set to"
+msgstr ""
+
+#: views/admin/donate.php:19
+msgid ""
+"It takes time, effort and investment to develop, maintain and support a "
+"plugin. If you want us to continue further work on the plugin, please "
+"support us with your donation. Even a small amount of donation helps."
+msgstr ""
+
+#: views/admin/language-code.php:147
+msgid "Italian"
+msgstr ""
+
+#: views/admin/language-code.php:149 views/admin/language-code.php:150
+msgid "Japanese"
+msgstr ""
+
+#: views/admin/language-code.php:151
+msgid "Javanese"
+msgstr ""
+
+#: views/admin/language-code.php:157
+msgid "Kalaallisut"
+msgstr ""
+
+#: views/admin/language-code.php:159
+msgid "Kannada"
+msgstr ""
+
+#: views/admin/language-code.php:161
+msgid "Kanuri"
+msgstr ""
+
+#: views/admin/language-code.php:162
+msgid "Kashmiri"
+msgstr ""
+
+#: views/admin/language-code.php:156
+msgid "Kazakh"
+msgstr ""
+
+#: views/admin/language-code.php:158
+msgid "Khmer"
+msgstr ""
+
+#: views/admin/language-code.php:154
+msgid "Kikuyu"
+msgstr ""
+
+#: views/admin/language-code.php:213
+msgid "Kinyarwanda"
+msgstr ""
+
+#: views/admin/language-code.php:166
+msgid "Kirghiz"
+msgstr ""
+
+#: views/admin/language-code.php:210
+msgid "Kirundi"
+msgstr ""
+
+#: views/admin/language-code.php:164
+msgid "Komi"
+msgstr ""
+
+#: views/admin/language-code.php:153
+msgid "Kongo"
+msgstr ""
+
+#: views/admin/language-code.php:160
+msgid "Korean"
+msgstr ""
+
+#: views/admin/language-code.php:163
+msgid "Kurdish"
+msgstr ""
+
+#: views/admin/language-code.php:155
+msgid "Kwanyama"
+msgstr ""
+
+#: views/admin/language-code.php:172
+msgid "Lao"
+msgstr ""
+
+#: views/admin/language-code.php:167
+msgid "Latin"
+msgstr ""
+
+#: views/admin/language-code.php:175
+msgid "Latvian"
+msgstr ""
+
+#: views/admin/header.php:20
+msgid "Leave us a feedback"
+msgstr ""
+
+#: inc/class.review.php:76
+msgid "Leave us a review."
+msgstr ""
+
+#: views/admin/language-code.php:170
+msgid "Limburgish"
+msgstr ""
+
+#: views/admin/language-code.php:171
+msgid "Lingala"
+msgstr ""
+
+#: views/admin/language-code.php:173
+msgid "Lithuanian"
+msgstr ""
+
+#: views/admin/language-code.php:174
+msgid "Luba-Katanga"
+msgstr ""
+
+#: views/admin/language-code.php:168
+msgid "Luxembourgish"
+msgstr ""
+
+#: views/admin/language-code.php:179
+msgid "Macedonian"
+msgstr ""
+
+#: views/admin/language-code.php:176
+msgid "Malagasy"
+msgstr ""
+
+#: views/admin/language-code.php:183
+msgid "Malay"
+msgstr ""
+
+#: views/admin/language-code.php:180
+msgid "Malayalam"
+msgstr ""
+
+#: views/admin/language-code.php:184
+msgid "Maltese"
+msgstr ""
+
+#: views/admin/language-code.php:129
+msgid "Manx"
+msgstr ""
+
+#: views/admin/language-code.php:178
+msgid "Maori"
+msgstr ""
+
+#: views/admin/language-code.php:182
+msgid "Marathi"
+msgstr ""
+
+#: views/admin/language-code.php:177
+msgid "Marshallese"
+msgstr ""
+
+#: views/admin/utility.php:23
+msgid "Maximum file upload size"
+msgstr ""
+
+#: views/admin/utility.php:33
+msgid "Memory Limit"
+msgstr ""
+
+#: views/admin/language-code.php:181
+msgid "Mongolian"
+msgstr ""
+
+#: views/admin/language-code.php:186
+msgid "Nauru"
+msgstr ""
+
+#: views/admin/language-code.php:195
+msgid "Navajo"
+msgstr ""
+
+#: views/admin/language-code.php:190
+msgid "Ndonga"
+msgstr ""
+
+#: views/admin/header.php:19
+msgid "Need help?"
+msgstr ""
+
+#: views/admin/language-code.php:189
+msgid "Nepali"
+msgstr ""
+
+#: views/admin/language-code.php:188
+msgid "North Ndebele"
+msgstr ""
+
+#: views/admin/language-code.php:217
+msgid "Northern Sami"
+msgstr ""
+
+#: views/admin/language-code.php:193
+msgid "Norwegian"
+msgstr ""
+
+#: views/admin/language-code.php:187
+msgid "Norwegian Bokmal"
+msgstr ""
+
+#: views/admin/language-code.php:192
+msgid "Norwegian Nynorsk"
+msgstr ""
+
+#: views/admin/language-code.php:197
+msgid "Occitan"
+msgstr ""
+
+#: views/admin/language-code.php:198
+msgid "Ojibwa"
+msgstr ""
+
+#: views/admin/language-code.php:200
+msgid "Oriya"
+msgstr ""
+
+#: views/admin/language-code.php:199
+msgid "Oromo"
+msgstr ""
+
+#: views/admin/language-code.php:201
+msgid "Ossetian"
+msgstr ""
+
+#: views/admin/language-code.php:203
+msgid "Pali"
+msgstr ""
+
+#: views/admin/language-code.php:202
+msgid "Panjabi"
+msgstr ""
+
+#: views/admin/language-code.php:205
+msgid "Pashto"
+msgstr ""
+
+#. Page title
+#: BootStart/BootStart.php:260
+msgid "Permission System"
+msgstr ""
+
+#: views/admin/language-code.php:117
+msgid "Persian"
+msgstr ""
+
+#: views/admin/utility.php:18
+msgid "PHP version"
+msgstr ""
+
+#: file-manager.php:207
+msgid "Please set"
+msgstr ""
+
+#: views/admin/language-code.php:204
+msgid "Polish"
+msgstr ""
+
+#: views/admin/language-code.php:206
+msgid "Portuguese"
+msgstr ""
+
+#: views/admin/language-code.php:207
+msgid "Portuguese(Brazil)"
+msgstr ""
+
+#: views/admin/utility.php:28
+msgid "Post maximum file upload size"
+msgstr ""
+
+#: views/admin/language-code.php:208
+msgid "Quechua"
+msgstr ""
+
+#: views/admin/language-code.php:209
+msgid "Raeto-Romance"
+msgstr ""
+
+#: inc/class.review.php:77
+msgid "Remind me later."
+msgstr ""
+
+#: views/admin/footer.php:18
+msgid "Review"
+msgstr ""
+
+#: views/admin/language-code.php:211
+msgid "Romanian"
+msgstr ""
+
+#: views/admin/settings.php:64
+msgid "Root Folder Path"
+msgstr ""
+
+#: views/admin/settings.php:81
+msgid "Root folder path and URL must be correct, otherwise it won't work."
+msgstr ""
+
+#: views/admin/settings.php:67
+msgid "Root Folder URL"
+msgstr ""
+
+#: views/admin/language-code.php:212
+msgid "Russian"
+msgstr ""
+
+#: views/admin/language-code.php:222
+msgid "Samoan"
+msgstr ""
+
+#: views/admin/language-code.php:218
+msgid "Sango"
+msgstr ""
+
+#: views/admin/language-code.php:214
+msgid "Sanskrit"
+msgstr ""
+
+#: views/admin/language-code.php:215
+msgid "Sardinian"
+msgstr ""
+
+#: views/admin/settings.php:118
+msgid "Save"
+msgstr ""
+
+#: views/admin/language-code.php:125
+msgid "Scottish Gaelic"
+msgstr ""
+
+#: views/admin/settings.php:84
+msgid "Select Language"
+msgstr ""
+
+#: views/admin/language-code.php:226
+msgid "Serbian"
+msgstr ""
+
+#: views/admin/extensions.php:26
+msgid "Set a common folders for all users."
+msgstr ""
+
+#: views/admin/extensions.php:25
+msgid "Set common folders for user roles."
+msgstr ""
+
+#: views/admin/extensions.php:24
+msgid "Set individual folders for each user"
+msgstr ""
+
+#: views/admin/settings.php:46
+msgid "Settings"
+msgstr ""
+
+#: views/admin/language-code.php:223
+msgid "Shona"
+msgstr ""
+
+#: views/admin/settings.php:54
+msgid "Show"
+msgstr ""
+
+#: views/admin/extensions.php:28
+msgid "Show file manager for guest users."
+msgstr ""
+
+#: views/admin/settings.php:109
+msgid "Show Hidden Files"
+msgstr ""
+
+#: views/admin/language-code.php:143
+msgid "Sichuan Yi"
+msgstr ""
+
+#: views/admin/language-code.php:216
+msgid "Sindhi"
+msgstr ""
+
+#: views/admin/language-code.php:219
+msgid "Sinhala"
+msgstr ""
+
+#: views/admin/settings.php:102
+msgid "Size"
+msgstr ""
+
+#: views/admin/language-code.php:220
+msgid "Slovak"
+msgstr ""
+
+#: views/admin/language-code.php:221
+msgid "Slovenian"
+msgstr ""
+
+#: views/admin/language-code.php:224
+msgid "Somali"
+msgstr ""
+
+#: views/admin/language-code.php:194
+msgid "South Ndebele"
+msgstr ""
+
+#: views/admin/language-code.php:228
+msgid "Southern Sotho"
+msgstr ""
+
+#: views/admin/language-code.php:114
+msgid "Spanish"
+msgstr ""
+
+#: views/admin/language-code.php:229
+msgid "Sundanese"
+msgstr ""
+
+#: views/admin/extension-themepack.php:21
+msgid "Super easy to install"
+msgstr ""
+
+#: views/admin/extension-themepack.php:19
+msgid "Supports backend and frontend"
+msgstr ""
+
+#: views/admin/language-code.php:231
+msgid "Swahili"
+msgstr ""
+
+#: views/admin/language-code.php:227
+msgid "Swati"
+msgstr ""
+
+#: views/admin/language-code.php:230
+msgid "Swedish"
+msgstr ""
+
+#: inc/class.php.syntax.checker.php:19
+msgid "Syntax Error found. Please check your code for syntax error."
+msgstr ""
+
+#: views/admin/language-code.php:238
+msgid "Tagalog"
+msgstr ""
+
+#: views/admin/language-code.php:245
+msgid "Tahitian"
+msgstr ""
+
+#: views/admin/language-code.php:234
+msgid "Tajik"
+msgstr ""
+
+#: views/admin/language-code.php:232
+msgid "Tamil"
+msgstr ""
+
+#: views/admin/language-code.php:243
+msgid "Tatar"
+msgstr ""
+
+#: views/admin/language-code.php:233
+msgid "Telugu"
+msgstr ""
+
+#: views/admin/language-code.php:235
+msgid "Thai"
+msgstr ""
+
+#: views/admin/extension-themepack.php:14
+#: views/admin/extension-themepack.php:16
+msgid "Themepack"
+msgstr ""
+
+#: views/admin/permission_system.php:24
+msgid "This is a demo of"
+msgstr ""
+
+#: views/admin/language-code.php:94
+msgid "Tibetan"
+msgstr ""
+
+#: views/admin/language-code.php:236
+msgid "Tigrinya"
+msgstr ""
+
+#: views/admin/utility.php:38
+msgid "Timeout"
+msgstr ""
+
+#: file-manager.php:207
+msgid "to"
+msgstr ""
+
+#: views/admin/language-code.php:240
+msgid "Tonga"
+msgstr ""
+
+#: views/admin/language-code.php:242
+msgid "Tsonga"
+msgstr ""
+
+#: views/admin/language-code.php:239
+msgid "Tswana"
+msgstr ""
+
+#: views/admin/language-code.php:241
+msgid "Turkish"
+msgstr ""
+
+#: views/admin/language-code.php:237
+msgid "Turkmen"
+msgstr ""
+
+#: views/admin/language-code.php:244
+msgid "Twi"
+msgstr ""
+
+#: views/admin/language-code.php:246
+msgid "Uighur"
+msgstr ""
+
+#: views/admin/language-code.php:247
+msgid "Uighur(China)"
+msgstr ""
+
+#: views/admin/language-code.php:248
+msgid "Ukrainian"
+msgstr ""
+
+#: views/admin/language-code.php:249
+msgid "Urdu"
+msgstr ""
+
+#: views/admin/settings.php:52
+msgid "URL and Path"
+msgstr ""
+
+#: views/admin/extensions.php:18
+msgid "Use file manager on the frontend"
+msgstr ""
+
+#: views/admin/extensions.php:27
+msgid ""
+"Use single shortcode to allow all logged in users to perform file operations."
+msgstr ""
+
+#: views/admin/extensions.php:19
+msgid "Users can perform file operations"
+msgstr ""
+
+#: views/admin/language-code.php:250
+msgid "Uzbek"
+msgstr ""
+
+#: views/admin/language-code.php:251
+msgid "Venda"
+msgstr ""
+
+#: views/admin/language-code.php:252
+msgid "Vietnamese"
+msgstr ""
+
+#: views/admin/language-code.php:253
+msgid "Volapuk"
+msgstr ""
+
+#: views/admin/language-code.php:254
+msgid "Walloon"
+msgstr ""
+
+#: inc/class.review.php:73
+msgid ""
+"We are continiously developing and maintining the plugin. If you like our "
+"plugin you can post a review. It is very much appriciated."
+msgstr ""
+
+#: views/admin/language-code.php:105
+msgid "Welsh"
+msgstr ""
+
+#: views/admin/language-code.php:123
+msgid "Western Frisian"
+msgstr ""
+
+#: views/admin/settings.php:112
+msgid "When checked hidden files and folders will be shown to the users."
+msgstr ""
+
+#: views/admin/settings.php:104
+msgid "Width"
+msgstr ""
+
+#: views/admin/language-code.php:255
+msgid "Wolof"
+msgstr ""
+
+#: views/admin/language-code.php:256
+msgid "Xhosa"
+msgstr ""
+
+#: views/admin/language-code.php:257
+msgid "Yiddish"
+msgstr ""
+
+#: views/admin/language-code.php:258
+msgid "Yoruba"
+msgstr ""
+
+#: file-manager.php:207
+msgid "You will not be able to edit files with"
+msgstr ""
+
+#: views/admin/language-code.php:259
+msgid "Zhuang"
+msgstr ""
+
+#: views/admin/language-code.php:263
+msgid "Zulu"
+msgstr ""
