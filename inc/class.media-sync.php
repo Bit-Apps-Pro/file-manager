@@ -29,14 +29,14 @@ class FMMediaSync {
 	public function onFileUpload($cmd, &$result, $args, $elfinder, $volume){
 		$images = array();
 		$I = 0;
-		$fp = fopen('fmm.txt', 'w+');
-		
+
 		$upload_target_path = $volume->getPath($args['target']);
 
 		if( strpos( $upload_target_path, $this->wp_upload_directory ) !== false ){
 			
 			$images = array();
-
+            error_log(print_r($args, true));
+            error_log(print_r($args['FILES'], true));
 			for($I = 0; $I < count($args['FILES']['upload']['name']); $I++){
 				
 				$images[] = array(

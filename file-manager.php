@@ -13,9 +13,19 @@
  *
  * */
 
+/*
+ * @since v5.2.0
+ *
+ * Constant Definition
+ *
+ * */
+
 // Directory Seperator
 if( !defined( 'DS' ) ) define("DS", DIRECTORY_SEPARATOR);
 
+$upload_dir = wp_upload_dir();
+
+defined( 'FM_UPLOAD_BASE_DIR' ) || define( 'FM_UPLOAD_BASE_DIR', $upload_dir['basedir'] . DS . 'file-manager' . DS );
 
 // Including elFinder class
 require_once('elFinder' . DS . 'elFinder.php');
@@ -119,9 +129,9 @@ class FM extends FM_BootStart {
 		
 		$opts = array(
 			'bind' => array(
-				'put.pre' => array(new FMPHPSyntaxChecker, 'checkSyntax'), // Syntax Checking.
-				'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre file.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre get.pre' => array(&$this, 'security_check'),
-				'upload' => array(new FMMediaSync(), 'onFileUpload'),
+				 'put.pre' => array(new FMPHPSyntaxChecker, 'checkSyntax'), // Syntax Checking.
+				// 'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre file.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre get.pre' => array(&$this, 'security_check'),
+				// 'upload' => array(new FMMediaSync(), 'onFileUpload'),
 				'*' => 'fm_logger',
 			),
 			'debug' => true,
