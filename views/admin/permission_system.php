@@ -21,8 +21,8 @@ $FileManager->admin_assets();
 
 	<div class='col-main'>
 		<div class='fmp-demo-notice'>
-			<?php _e("This is a demo of", 'file-manager'); ?><a href='http://giribaz.com/wordpress-file-manager-plugin/'><?php _e("File Manager Permission System(Pro)", 'file-manager'); ?></a> <?php _e("Extension.", 'file-manager'); ?>
-			<button onClick="window.location = 'http://giribaz.com/wordpress-file-manager-plugin/'"><?php _e("Get It Now!", 'file-manager'); ?></button>
+			<?php _e("This is a demo of", 'file-manager'); ?><a href='https://wpjos.com/library-file-manager-plugin/'><?php _e("File Manager Permission System(Pro)", 'file-manager'); ?></a> <?php _e("Extension.", 'file-manager'); ?>
+			<button onClick="window.location = 'https://wpjos.com/library-file-manager-plugin/'"><?php _e("Get It Now!", 'file-manager'); ?></button>
 		</div>
 		<div class='gb-fm-row'>
 

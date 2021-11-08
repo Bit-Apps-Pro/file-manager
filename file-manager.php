@@ -3,7 +3,7 @@
  *
  * Plugin Name: File Manager
  * Author: Aftabul Islam
- * Author URI: http://www.giribaz.com
+ * Author URI: https://wpjos.com
  * Version: 5.2.0
  * Author Email: toaihimel@gmail.com
  * PHP version: 5.6
@@ -89,9 +89,9 @@ class FM extends FM_BootStart {
 
 		$this->version = '5.1.3';
 		$this->version_no = 513;
-		$this->site = 'http://www.giribaz.com';
-		$this->giribaz_landing_page = 'http://www.giribaz.com/wordpress-file-manager-plugin';
-		$this->support_page = 'http://giribaz.com/support/';
+		$this->site = 'https://wpjos.com';
+		$this->giribaz_landing_page = 'https://wpjos.com/library-file-manager-plugin';
+		$this->support_page = 'https://wpjos.com/support/';
 		$this->feedback_page = 'https://wordpress.org/support/plugin/file-manager/reviews/';
 		$this->file_manager_view_path = plugin_dir_path(__FILE__);
 
@@ -193,12 +193,12 @@ class FM extends FM_BootStart {
 		if (!$this_plugin) $this_plugin = plugin_basename(__FILE__);
 
 		if ($file == $this_plugin){
-			array_unshift( $links, '<a target=\'blank\' href="http://www.giribaz.com/support/">'. "Support" .'</a>');
+			array_unshift( $links, '<a target=\'blank\' href="https://wpjos.com/support/">'. "Support" .'</a>');
 
 			array_unshift( $links, '<a href="admin.php?page=file-manager-settings">'. "File Manager" .'</a>');
 
 			if( !defined('FILE_MANAGER_PREMIUM') && !defined('FILE_MANAGER_BACKEND') )
-				array_unshift( $links, '<a target=\'blank\' class="file-manager-admin-panel-pro" href="http://www.giribaz.com/wordpress-file-manager-plugin/" style="color: white; font-weight: bold; background-color: red; padding-right: 5px; padding-left: 5px; border-radius: 40%;">'. "Pro" .'</a>');
+				array_unshift( $links, '<a target=\'blank\' class="file-manager-admin-panel-pro" href="https://wpjos.com/library-file-manager-plugin/" style="color: white; font-weight: bold; background-color: red; padding-right: 5px; padding-left: 5px; border-radius: 40%;">'. "Pro" .'</a>');
 
 		}
 

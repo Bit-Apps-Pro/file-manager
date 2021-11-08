@@ -70,7 +70,7 @@ Just install the plugin following standard wordpress plugin install process. All
 + **Operation Control:** Control 13+ operations for specific user and user role.
 + **Ban Roles/Users:** Ban Users and Roles.
 
-**[Extend File Manager](http://giribaz.com/wordpress-file-manager-plugin/)**
+**[Extend File Manager](https://wpjos.com/library-file-manager-plugin/)**
 
 == Installation ==
 

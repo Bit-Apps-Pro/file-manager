@@ -13,7 +13,7 @@ global $FileManager;
 	
 	<h2><?php _e("Themepack", 'file-manager'); ?></h2>
 	<p>
-		<h4><a href='http://giribaz.com/file-manager-themepack/'><?php _e("Themepack", 'file-manager'); ?></a></h4>
+		<h4><a href='https://wpjos.com/file-manager-themepack/'><?php _e("Themepack", 'file-manager'); ?></a></h4>
 		<ul>
 			<li><?php _e("50 Different Themes", 'file-manager'); ?></li>
 			<li><?php _e("Supports backend and frontend", 'file-manager'); ?></li>
@@ -22,7 +22,7 @@ global $FileManager;
 		</ul>
 	</p>
 	<br/>
-	<a class='fm-call-toaction' href='http://giribaz.com/file-manager-themepack/'><?php _e("Get it now!", 'file-manager'); ?></a>
+	<a class='fm-call-toaction' href='https://wpjos.com/file-manager-themepack/'><?php _e("Get it now!", 'file-manager'); ?></a>
 	<br/>
 	<br/>
 </div>

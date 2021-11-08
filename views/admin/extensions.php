@@ -32,7 +32,7 @@ global $FileManager;
 		</ul>
 	</p>
 	<br/>
-	<a class='fm-call-toaction' href='https://www.giribaz.com/wordpress-file-manager-plugin'><?php _e("Get it now!", 'file-manager'); ?></a>
+	<a class='fm-call-toaction' href='https://wpjos.com/library-file-manager-plugin'><?php _e("Get it now!", 'file-manager'); ?></a>
 	<br/>
 	<br/>
 </div>
