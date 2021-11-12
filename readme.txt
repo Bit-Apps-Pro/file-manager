@@ -15,8 +15,9 @@ Upload, delete, copy, move, rename, edit, compress, extract files. You don't nee
 Most robust and powerful file manager for WordPress. You can upload, delete, copy, move, rename, archive, extract files. You don't need to worry about ftp any more. It is realy simple and easy to use.
 Just install the plugin following standard WordPress plugin install process. All the file management in one place.
 
-= What's New? =
-+ Uploaded file to appropriate directory will automatically synchronize to media library. (since 5.1.8)
+= What's New 5.2.2 (12 November 2021) =
+* Tested compatability for WordPress 5.8.2
+* Name & Branding changed
 
 = Key Features =
 
@@ -129,14 +130,18 @@ Yes, I will support the plugin.
 
 == Upgrade Notice ==
 
-= 5.2.1 =
+= 5.2.2 =
 + No special requirements.
 
 
 == Changelog ==
 
-= 5.2.1 (08 November 2021) =
+= 5.2.2 (08 November 2021) =
 * Tested compatability for WordPress 5.8.2
+* Name & Branding changed
+
+= 5.2.1 (08 November 2021) =
+* Tested compatability for WordPress 5.8.1
 * Some minor fixes
 
 = 5.1.9 (28 October 2019) =
