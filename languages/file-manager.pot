@@ -1,7 +1,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: File Manager\n"
+"Project-Id-Version: Library File Manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-10 01:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -316,16 +316,16 @@ msgid ""
 msgstr ""
 
 #. Name of the plugin
-msgid "File Manager"
+msgid "Library File Manager"
 msgstr ""
 
 #: views/admin/permission_system.php:24
-msgid "File Manager Permission System(Pro)"
+msgid "Library File Manager Permission System(Pro)"
 msgstr ""
 
 #. Parent Slug
 #: BootStart/BootStart.php:259
-msgid "File Manager Permission System(pro)"
+msgid "Library File Manager Permission System(pro)"
 msgstr ""
 
 #: views/admin/language-code.php:119
@@ -833,7 +833,7 @@ msgid "Show"
 msgstr ""
 
 #: views/admin/extensions.php:28
-msgid "Show file manager for guest users."
+msgid "Show Library File Manager for guest users."
 msgstr ""
 
 #: views/admin/settings.php:109
@@ -1006,7 +1006,7 @@ msgid "URL and Path"
 msgstr ""
 
 #: views/admin/extensions.php:18
-msgid "Use file manager on the frontend"
+msgid "Use Library File Manager on the frontend"
 msgstr ""
 
 #: views/admin/extensions.php:27

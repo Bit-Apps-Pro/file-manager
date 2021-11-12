@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * Plugin Name: File Manager
+ * Plugin Name: Library File Manager
  * Author: Aftabul Islam
  * Author URI: https://wpjos.com
  * Version: 5.2.1
@@ -43,7 +43,7 @@ class FM extends FM_BootStart {
 
 	/**
 	 *
-	 * @var $version Wordpress file manager plugin version
+	 * @var $version Wordpress library file manager plugin version
 	 *
 	 * */
 	public $version;
@@ -80,7 +80,7 @@ class FM extends FM_BootStart {
 
 	/**
 	 *
-	 * @var $file_manager_view_path View path of file manager
+	 * @var $file_manager_view_path View path of library file manager
 	 *
 	 * */
 	public $file_manager_view_path;
@@ -118,7 +118,7 @@ class FM extends FM_BootStart {
 
 	/**
 	 *
-	 * File manager connector function
+	 * Library File Manager connector function
 	 *
 	 * */
 	public function connector(){
@@ -195,7 +195,7 @@ class FM extends FM_BootStart {
 		if ($file == $this_plugin){
 			array_unshift( $links, '<a target=\'blank\' href="https://wpjos.com/support/">'. "Support" .'</a>');
 
-			array_unshift( $links, '<a href="admin.php?page=file-manager-settings">'. "File Manager" .'</a>');
+			array_unshift( $links, '<a href="admin.php?page=file-manager-settings">'. "Library File Manager" .'</a>');
 
 			if( !defined('FILE_MANAGER_PREMIUM') && !defined('FILE_MANAGER_BACKEND') )
 				array_unshift( $links, '<a target=\'blank\' class="file-manager-admin-panel-pro" href="https://wpjos.com/library-file-manager-plugin/" style="color: white; font-weight: bold; background-color: red; padding-right: 5px; padding-left: 5px; border-radius: 40%;">'. "Pro" .'</a>');
@@ -218,7 +218,7 @@ class FM extends FM_BootStart {
 		// DISALLOW_FILE_EDIT Macro checking
 		if(defined('DISALLOW_FILE_EDIT') && DISALLOW_FILE_EDIT):
 		?>
-		<div class='update-nag fm-error'><b>DISALLOW_FILE_EDIT</b> <?php _e("is set to", 'file-manager'); ?> <b>TRUE</b>. <?php _e("You will not be able to edit files with", 'file-manager'); ?> <a href='admin.php?page=file-manager-settings'>File Manager</a>. <?php _e("Please set", 'file-manager'); ?> <b>DISALLOW_FILE_EDIT</b> <?php _e("to", 'file-manager'); ?> <b>FALSE</b></div>
+		<div class='update-nag fm-error'><b>DISALLOW_FILE_EDIT</b> <?php _e("is set to", 'file-manager'); ?> <b>TRUE</b>. <?php _e("You will not be able to edit files with", 'file-manager'); ?> <a href='admin.php?page=file-manager-settings'>Library File Manager</a>. <?php _e("Please set", 'file-manager'); ?> <b>DISALLOW_FILE_EDIT</b> <?php _e("to", 'file-manager'); ?> <b>FALSE</b></div>
 		<style>
 			.fm-error{
 				border-left: 4px solid red;

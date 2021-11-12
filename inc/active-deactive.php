@@ -11,7 +11,7 @@ function gb_fm_activate(){
     add_option('fm_log', '');
   }
 
-  // Creating necessary folders for file manager
+  // Creating necessary folders for library file manager
   $upload_dir = wp_upload_dir();
   $index = $upload_dir['basedir'] . DS . 'file-manager' . DS . 'index.html';
   wp_mkdir_p(dirname($index));

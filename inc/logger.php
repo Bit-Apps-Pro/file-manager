@@ -15,7 +15,7 @@ if(!function_exists('fm_logger')):
  *
  * @function logger
  *
- * Logs file file manager actions
+ * Logs file library file manager actions
  *
  * */
 function fm_logger($cmd, $result, $args, $elfinder) {

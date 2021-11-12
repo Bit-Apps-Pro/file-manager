@@ -20,7 +20,7 @@ global $FileManager;
 	<?php endif; ?>
 	
 	<?php if(!defined('FILE_MANAGER_PREMIUM')): ?>
-	<div class='gb-fm-row'><?php require_once( 'extensions.php' ); ?></div>
+	<div class='gb-fm-row' style="border-bottom-width: 16px;border-bottom-style: solid;"><?php require_once( 'extensions.php' ); ?></div>
 	<?php endif; ?>
 
 	<?php if(!defined('FILE_MANAGER_THEMEPACK')): ?>

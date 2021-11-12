@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @file index.php The manin admin view file that will show the actual file manager
+ * @file index.php The manin admin view file that will show the actual library file manager
  *
  * */
 
