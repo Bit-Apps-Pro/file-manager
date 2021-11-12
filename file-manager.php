@@ -4,7 +4,7 @@
  * Plugin Name: File Manager
  * Author: Aftabul Islam
  * Author URI: https://wpjos.com
- * Version: 5.2.0
+ * Version: 5.2.1
  * Author Email: toaihimel@gmail.com
  * PHP version: 5.6
  * Text domain: file-manager

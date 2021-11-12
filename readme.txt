@@ -2,7 +2,7 @@
 Contributors: aihimel
 Tags: file manager, wordpress file manager, wp file manager, FTP, elfinder, file Browser, manage files, upload, delete, rename, copy, move, online file browser, remote file manager, drag and drop, folder upload
 Requires at least: 4.0.0
-Tested up to: 5.6
+Tested up to: 5.8
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
