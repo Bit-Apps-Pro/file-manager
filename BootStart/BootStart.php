@@ -229,7 +229,7 @@ abstract class FM_BootStart{
 
 		// elFinder Scripts depends on jQuery UI core, selectable, draggable, droppable, resizable, dialog and slider.
 		wp_register_script( 'fmp-elfinder-script', $this->url('elFinder/js/elfinder.full.js'), array('jquery', 'jquery-ui-core', 'jquery-ui-selectable', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-resizable', 'jquery-ui-dialog', 'jquery-ui-slider', 'jquery-ui-tabs') );
-		wp_register_script( 'fmp-elfinder-editor-script', $this->url('elFinder/js/extras/editors.default.js'), array('fmp-elfinder-script') );
+		// wp_register_script( 'fmp-elfinder-editor-script', $this->url('elFinder/js/extras/editors.default.js'), array('fmp-elfinder-script') );
 
 	}
 
@@ -251,12 +251,12 @@ abstract class FM_BootStart{
 			add_menu_page( $this->name, $this->name, $capabilities, $this->prefix, array(&$this, 'admin_panel'), $this->url('img/icon-24x24.png'), 7 );
 
 			// Settings Page
-			add_submenu_page( $this->prefix, 'File Manager Settings', 'Settings', 'manage_options', $this->zip( 'File Manager Settings' ), array( &$this, 'settings' ) );
+			add_submenu_page( $this->prefix, 'Library File Manager Settings', 'Settings', 'manage_options', $this->zip( 'Library File Manager Settings' ), array( &$this, 'settings' ) );
 
 			if(!defined('FILE_MANAGER_PREMIUM')){
 				add_submenu_page(
 					'file-manager', // Parent Slug
-					__('File Manager Permission System(pro)', 'file-manager'), // Page title
+					__('Library File Manager Permission System(pro)', 'file-manager'), // Page title
 					__('Permission System', 'file-manager'), // Menu title
 					'manage_options', // User capabilities
 					'file-manager-permission-system', // Menu Slug

@@ -1,10 +1,10 @@
 <?php
 /**
  *
- * Plugin Name: File Manager
+ * Plugin Name: Library File Manager
  * Author: Aftabul Islam
- * Author URI: http://www.giribaz.com
- * Version: 5.2.0
+ * Author URI: https://wpjos.com
+ * Version: 5.2.2
  * Author Email: toaihimel@gmail.com
  * PHP version: 5.6
  * Text domain: file-manager
@@ -13,9 +13,19 @@
  *
  * */
 
+/*
+ * @since v5.2.0
+ *
+ * Constant Definition
+ *
+ * */
+
 // Directory Seperator
 if( !defined( 'DS' ) ) define("DS", DIRECTORY_SEPARATOR);
 
+$upload_dir = wp_upload_dir();
+
+defined( 'FM_UPLOAD_BASE_DIR' ) || define( 'FM_UPLOAD_BASE_DIR', $upload_dir['basedir'] . DS . 'file-manager' . DS );
 
 // Including elFinder class
 require_once('elFinder' . DS . 'elFinder.php');
@@ -33,7 +43,7 @@ class FM extends FM_BootStart {
 
 	/**
 	 *
-	 * @var $version Wordpress file manager plugin version
+	 * @var $version Wordpress library file manager plugin version
 	 *
 	 * */
 	public $version;
@@ -70,18 +80,18 @@ class FM extends FM_BootStart {
 
 	/**
 	 *
-	 * @var $file_manager_view_path View path of file manager
+	 * @var $file_manager_view_path View path of library file manager
 	 *
 	 * */
 	public $file_manager_view_path;
 
 	public function __construct($name){
 
-		$this->version = '5.1.3';
-		$this->version_no = 513;
-		$this->site = 'http://www.giribaz.com';
-		$this->giribaz_landing_page = 'http://www.giribaz.com/wordpress-file-manager-plugin';
-		$this->support_page = 'http://giribaz.com/support/';
+		$this->version = '5.2.2';
+		$this->version_no = 522;
+		$this->site = 'https://wpjos.com';
+		$this->giribaz_landing_page = 'https://wpjos.com/library-file-manager-plugin';
+		$this->support_page = 'https://wpjos.com/support/';
 		$this->feedback_page = 'https://wordpress.org/support/plugin/file-manager/reviews/';
 		$this->file_manager_view_path = plugin_dir_path(__FILE__);
 
@@ -108,7 +118,7 @@ class FM extends FM_BootStart {
 
 	/**
 	 *
-	 * File manager connector function
+	 * Library File Manager connector function
 	 *
 	 * */
 	public function connector(){
@@ -119,9 +129,9 @@ class FM extends FM_BootStart {
 		
 		$opts = array(
 			'bind' => array(
-				'put.pre' => array(new FMPHPSyntaxChecker, 'checkSyntax'), // Syntax Checking.
-				'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre file.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre get.pre' => array(&$this, 'security_check'),
-				'upload' => array(new FMMediaSync(), 'onFileUpload'),
+				 'put.pre' => array(new FMPHPSyntaxChecker, 'checkSyntax'), // Syntax Checking.
+				// 'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre file.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre get.pre' => array(&$this, 'security_check'),
+				// 'upload' => array(new FMMediaSync(), 'onFileUpload'),
 				'*' => 'fm_logger',
 			),
 			'debug' => true,
@@ -183,12 +193,12 @@ class FM extends FM_BootStart {
 		if (!$this_plugin) $this_plugin = plugin_basename(__FILE__);
 
 		if ($file == $this_plugin){
-			array_unshift( $links, '<a target=\'blank\' href="http://www.giribaz.com/support/">'. "Support" .'</a>');
+			array_unshift( $links, '<a target=\'blank\' href="https://wpjos.com/support/">'. "Support" .'</a>');
 
-			array_unshift( $links, '<a href="admin.php?page=file-manager-settings">'. "File Manager" .'</a>');
+			array_unshift( $links, '<a href="admin.php?page=file-manager-settings">'. "Library File Manager" .'</a>');
 
 			if( !defined('FILE_MANAGER_PREMIUM') && !defined('FILE_MANAGER_BACKEND') )
-				array_unshift( $links, '<a target=\'blank\' class="file-manager-admin-panel-pro" href="http://www.giribaz.com/wordpress-file-manager-plugin/" style="color: white; font-weight: bold; background-color: red; padding-right: 5px; padding-left: 5px; border-radius: 40%;">'. "Pro" .'</a>');
+				array_unshift( $links, '<a target=\'blank\' class="file-manager-admin-panel-pro" href="https://wpjos.com/library-file-manager-plugin/" style="color: white; font-weight: bold; background-color: red; padding-right: 5px; padding-left: 5px; border-radius: 40%;">'. "Pro" .'</a>');
 
 		}
 
@@ -208,7 +218,7 @@ class FM extends FM_BootStart {
 		// DISALLOW_FILE_EDIT Macro checking
 		if(defined('DISALLOW_FILE_EDIT') && DISALLOW_FILE_EDIT):
 		?>
-		<div class='update-nag fm-error'><b>DISALLOW_FILE_EDIT</b> <?php _e("is set to", 'file-manager'); ?> <b>TRUE</b>. <?php _e("You will not be able to edit files with", 'file-manager'); ?> <a href='admin.php?page=file-manager-settings'>File Manager</a>. <?php _e("Please set", 'file-manager'); ?> <b>DISALLOW_FILE_EDIT</b> <?php _e("to", 'file-manager'); ?> <b>FALSE</b></div>
+		<div class='update-nag fm-error'><b>DISALLOW_FILE_EDIT</b> <?php _e("is set to", 'file-manager'); ?> <b>TRUE</b>. <?php _e("You will not be able to edit files with", 'file-manager'); ?> <a href='admin.php?page=file-manager-settings'>Library File Manager</a>. <?php _e("Please set", 'file-manager'); ?> <b>DISALLOW_FILE_EDIT</b> <?php _e("to", 'file-manager'); ?> <b>FALSE</b></div>
 		<style>
 			.fm-error{
 				border-left: 4px solid red;
