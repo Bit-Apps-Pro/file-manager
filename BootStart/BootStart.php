@@ -229,7 +229,7 @@ abstract class FM_BootStart{
 
 		// elFinder Scripts depends on jQuery UI core, selectable, draggable, droppable, resizable, dialog and slider.
 		wp_register_script( 'fmp-elfinder-script', $this->url('elFinder/js/elfinder.full.js'), array('jquery', 'jquery-ui-core', 'jquery-ui-selectable', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-resizable', 'jquery-ui-dialog', 'jquery-ui-slider', 'jquery-ui-tabs') );
-		wp_register_script( 'fmp-elfinder-editor-script', $this->url('elFinder/js/extras/editors.default.js'), array('fmp-elfinder-script') );
+		// wp_register_script( 'fmp-elfinder-editor-script', $this->url('elFinder/js/extras/editors.default.js'), array('fmp-elfinder-script') );
 
 	}
 

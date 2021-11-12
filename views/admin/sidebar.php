@@ -24,9 +24,9 @@ global $FileManager;
 	<?php endif; ?>
 
 	<?php if(!defined('FILE_MANAGER_THEMEPACK')): ?>
-	<div class='gb-fm-row'><?php require_once( 'extension-themepack.php' ); ?></div>
+<!--	<div class='gb-fm-row'>--><?php //require_once( 'extension-themepack.php' ); ?><!--</div>-->
 	<?php endif; ?>
 	<?php if(!defined('FILE_MANAGER_PREMIUM') && !defined('FILE_MANAGER_THEMEPACK')):?>
-	<div class='gb-fm-row'><?php require_once( plugin_dir_path(__FILE__ ) . 'donate.php' ); ?></div>
+<!--	<div class='gb-fm-row'>--><?php //require_once( plugin_dir_path(__FILE__ ) . 'donate.php' ); ?><!--</div>-->
 	<?php endif; ?>
 </div>
