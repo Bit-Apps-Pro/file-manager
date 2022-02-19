@@ -1,0 +1,3 @@
+[submodule "submodule/sources/elFinder"]
+	path = submodule/sources/elFinder
+	url = https://github.com/Studio-42/elFinder.git
