@@ -13,14 +13,15 @@
  *
  * */
 
-/*
- * @since v5.2.0
+/**
  *
  * Constant Definition
  *
+ * @since v5.2.0
+ *
  * */
 
-// Directory Seperator
+// Directory Separator
 if( !defined( 'DS' ) ) define("DS", DIRECTORY_SEPARATOR);
 
 $upload_dir = wp_upload_dir();
@@ -28,9 +29,9 @@ $upload_dir = wp_upload_dir();
 defined( 'FM_UPLOAD_BASE_DIR' ) || define( 'FM_UPLOAD_BASE_DIR', $upload_dir['basedir'] . DS . 'file-manager' . DS );
 
 // Including elFinder class
-require_once('elFinder' . DS . 'elFinder.php');
+require_once('elFinder' . DS . 'php' . DS . 'autoload.php');
 
-// Including bootstarter
+// Including Boot Starter
 require_once('BootStart' . DS . 'BootStart.php');
 
 // Including other necessary files
@@ -116,11 +117,13 @@ class FM extends FM_BootStart {
 		add_action('admin_notices', array(&$this, 'admin_notice'));
 	}
 
-	/**
-	 *
-	 * Library File Manager connector function
-	 *
-	 * */
+  /**
+   *
+   * Library File Manager connector function
+   *
+   *
+   * @throws Exception
+   */
 	public function connector(){
 
 		// Allowed mime types
@@ -168,8 +171,7 @@ class FM extends FM_BootStart {
 		 *
 		 * */
 		$opts = apply_filters('fm_options_filter', $opts);
-		$elFinder = new FM_EL_Finder();
-		$elFinder = $elFinder->connect($opts);
+		$elFinder = new elFinderConnector(new elFinder($opts));
 		$elFinder->run();
 
 		wp_die();
