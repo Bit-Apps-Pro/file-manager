@@ -15,6 +15,15 @@ if($language_settings['code'] != 'LANG'){
 	$lang_file_url = $language_settings['file-url'];
 }
 
+// Command options modifier
+$commandOptions = [];
+$commandOptions['info'] = [];
+$commandOptions['info']['hideItems'] = ['md5', 'sha256'];
+if($FileManager->options['file_manager_settings']['show_url_path'] && $FileManager->options['file_manager_settings']['show_url_path'] == 'hide'){
+  $commandOptions['info']['hideItems'][] = 'link';
+  $commandOptions['info']['hideItems'][] = 'path';
+}
+
 wp_enqueue_style( 'fmp-jquery-ui-css' );
 wp_enqueue_style( 'fmp-elfinder-css' );
 wp_enqueue_style( 'fmp-elfinder-theme-css' );
@@ -41,17 +50,18 @@ PLUGINS_URL = '<?php echo plugins_url();?>';
 jQuery(document).ready(function(){
 
 	jQuery('#file-manager').elfinder({
-		url: ajaxurl,
-		contextmenu : {
+        url: ajaxurl,
+        contextmenu : {
             // current directory file menu
             files  : ['getfile', '|' ,'open', 'opennew', 'download', 'opendir', 'quicklook', 'email', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', 'empty', 'hide', '|', 'rename', 'edit', 'resize', '|', 'archive', 'extract', '|', 'selectall', 'selectinvert', '|', 'places', 'info', 'chmod', 'netunmount'
             ]
         },
-		customData:{action: 'connector', file_manager_security_token: '<?php echo wp_create_nonce( "file-manager-security-token" ); ?>'},
-		lang: '<?php if( isset($language_code) ) echo esc_js($language_code); ?>',
-		requestType: 'post',
-		width: '<?php if(isset($FileManager->options['file_manager_settings']['size']['width'])) echo esc_js($FileManager->options['file_manager_settings']['size']['width']); ?>',
-		height: '<?php if(isset($FileManager->options['file_manager_settings']['size']['height'])) echo esc_js($FileManager->options['file_manager_settings']['size']['height']); ?>',
+        customData:{action: 'connector', file_manager_security_token: '<?php echo wp_create_nonce( "file-manager-security-token" ); ?>'},
+        lang: '<?php if( isset($language_code) ) echo esc_js($language_code); ?>',
+        requestType: 'post',
+        width: '<?php if(isset($FileManager->options['file_manager_settings']['size']['width'])) echo esc_js($FileManager->options['file_manager_settings']['size']['width']); ?>',
+        height: '<?php if(isset($FileManager->options['file_manager_settings']['size']['height'])) echo esc_js($FileManager->options['file_manager_settings']['size']['height']); ?>',
+        commandsOptions : <?php echo json_encode($commandOptions); ?>
 	});
 });
 
