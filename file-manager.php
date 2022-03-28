@@ -148,7 +148,7 @@ class FM extends FM_BootStart {
 					'uploadAllow'   => $mime->get_types(), // All MIME types is allowed
 					'uploadOrder'   => array('allow', 'deny'),      // allowed Mimetype `image` and `text/plain` only
 					'accessControl' => array(new FMAccessControl(), 'control'),
-					'disabled'      => array(),    // List of disabled operations
+					'disabled'      => array('zipdl'),    // List of disabled operations
 				),
 				array(
 					'alias'        => 'Media',
