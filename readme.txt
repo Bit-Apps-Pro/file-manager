@@ -2,7 +2,7 @@
 Contributors: aihimel
 Tags: file manager, wp file manager, FTP, elfinder, file Browser, manage files, upload, delete, rename, copy, move, online file browser, remote file manager, drag and drop, folder upload
 Requires at least: 4.0.0
-Tested up to: 5.8.2
+Tested up to: 5.9.2
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -15,9 +15,13 @@ Upload, delete, copy, move, rename, edit, compress, extract files. You don't nee
 Most robust and powerful file manager for WordPress. You can upload, delete, copy, move, rename, archive, extract files. You don't need to worry about ftp any more. It is realy simple and easy to use.
 Just install the plugin following standard WordPress plugin install process. All the file management in one place.
 
-= What's New 5.2.2 (12 November 2021) =
-* Tested compatability for WordPress 5.8.2
-* Name & Branding changed
+
+= What's New 5.2.3 (28 March, 2022) =
+* Tested compatability for WordPress 5.9.2
+* Updated to elFinder 2.1.61
+* Security issue fixed
+* Minor issue fixed.
+
 
 = Key Features =
 
@@ -135,6 +139,12 @@ Yes, I will support the plugin.
 
 
 == Changelog ==
+
+= 5.2.3 (28 March, 2022) =
+* Tested compatability for WordPress 5.9.2
+* Updated to elFinder 2.1.61
+* Security issue fixed
+* Minor issue fixed.
 
 = 5.2.2 (08 November 2021) =
 * Tested compatability for WordPress 5.8.2
