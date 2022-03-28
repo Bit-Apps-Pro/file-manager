@@ -19,20 +19,14 @@ if($language_settings['code'] != 'LANG'){
 $commandOptions = [];
 $commandOptions['info'] = [];
 $commandOptions['info']['hideItems'] = ['md5', 'sha256'];
-// $commandOptions['quicklook']['autoplay'] = true;
-// $commandOptions['quicklook']['jplayer'] = 'extensions/jplayer';
-
 $commandOptions['download']['maxRequests'] = 10;
-$commandOptions['download']['minFilesZipdl'] = 10000;
+$commandOptions['download']['minFilesZipdl'] = 2000;
 
 
 if($FileManager->options['file_manager_settings']['show_url_path'] && $FileManager->options['file_manager_settings']['show_url_path'] == 'hide'){
   $commandOptions['info']['hideItems'][] = 'link';
   $commandOptions['info']['hideItems'][] = 'path';
 }
-echo "<pre>";
-print_r($commandOptions);
-
 wp_enqueue_style( 'fmp-jquery-ui-css' );
 wp_enqueue_style( 'fmp-elfinder-css' );
 wp_enqueue_style( 'fmp-elfinder-theme-css' );
