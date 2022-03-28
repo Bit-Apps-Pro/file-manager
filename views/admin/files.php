@@ -19,11 +19,14 @@ if($language_settings['code'] != 'LANG'){
 $commandOptions = [];
 $commandOptions['info'] = [];
 $commandOptions['info']['hideItems'] = ['md5', 'sha256'];
+$commandOptions['download']['maxRequests'] = 10;
+$commandOptions['download']['minFilesZipdl'] = 2000;
+
+
 if($FileManager->options['file_manager_settings']['show_url_path'] && $FileManager->options['file_manager_settings']['show_url_path'] == 'hide'){
   $commandOptions['info']['hideItems'][] = 'link';
   $commandOptions['info']['hideItems'][] = 'path';
 }
-
 wp_enqueue_style( 'fmp-jquery-ui-css' );
 wp_enqueue_style( 'fmp-elfinder-css' );
 wp_enqueue_style( 'fmp-elfinder-theme-css' );
@@ -61,7 +64,8 @@ jQuery(document).ready(function(){
         requestType: 'post',
         width: '<?php if(isset($FileManager->options['file_manager_settings']['size']['width'])) echo esc_js($FileManager->options['file_manager_settings']['size']['width']); ?>',
         height: '<?php if(isset($FileManager->options['file_manager_settings']['size']['height'])) echo esc_js($FileManager->options['file_manager_settings']['size']['height']); ?>',
-        commandsOptions : <?php echo json_encode($commandOptions); ?>
+        commandsOptions : <?php echo json_encode($commandOptions); ?>,
+        
 	});
 });
 
