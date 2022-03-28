@@ -4,7 +4,7 @@
  * Plugin Name: Library File Manager
  * Author: Aftabul Islam
  * Author URI: https://wpjos.com
- * Version: 5.2.2
+ * Version: 5.2.3
  * Author Email: toaihimel@gmail.com
  * PHP version: 5.6
  * Text domain: file-manager
@@ -13,14 +13,15 @@
  *
  * */
 
-/*
- * @since v5.2.0
+/**
  *
  * Constant Definition
  *
+ * @since v5.2.0
+ *
  * */
 
-// Directory Seperator
+// Directory Separator
 if( !defined( 'DS' ) ) define("DS", DIRECTORY_SEPARATOR);
 
 $upload_dir = wp_upload_dir();
@@ -28,9 +29,9 @@ $upload_dir = wp_upload_dir();
 defined( 'FM_UPLOAD_BASE_DIR' ) || define( 'FM_UPLOAD_BASE_DIR', $upload_dir['basedir'] . DS . 'file-manager' . DS );
 
 // Including elFinder class
-require_once('elFinder' . DS . 'elFinder.php');
+require_once('elFinder' . DS . 'php' . DS . 'autoload.php');
 
-// Including bootstarter
+// Including Boot Starter
 require_once('BootStart' . DS . 'BootStart.php');
 
 // Including other necessary files
@@ -87,8 +88,8 @@ class FM extends FM_BootStart {
 
 	public function __construct($name){
 
-		$this->version = '5.2.2';
-		$this->version_no = 522;
+		$this->version = '5.2.3';
+		$this->version_no = 523;
 		$this->site = 'https://wpjos.com';
 		$this->giribaz_landing_page = 'https://wpjos.com/library-file-manager-plugin';
 		$this->support_page = 'https://wpjos.com/support/';
@@ -116,11 +117,13 @@ class FM extends FM_BootStart {
 		add_action('admin_notices', array(&$this, 'admin_notice'));
 	}
 
-	/**
-	 *
-	 * Library File Manager connector function
-	 *
-	 * */
+  /**
+   *
+   * Library File Manager connector function
+   *
+   *
+   * @throws Exception
+   */
 	public function connector(){
 
 		// Allowed mime types
@@ -146,6 +149,7 @@ class FM extends FM_BootStart {
 					'uploadOrder'   => array('allow', 'deny'),      // allowed Mimetype `image` and `text/plain` only
 					'accessControl' => array(new FMAccessControl(), 'control'),
 					'disabled'      => array(),    // List of disabled operations
+					'dispInlineRegex' => '^(?:image|application/(?:vnd\.)?(?:ms(?:-office|word|-excel|-powerpoint)|openxmlformats-officedocument)|text/plain$)',
 				),
 				array(
 					'alias'        => 'Media',
@@ -168,8 +172,7 @@ class FM extends FM_BootStart {
 		 *
 		 * */
 		$opts = apply_filters('fm_options_filter', $opts);
-		$elFinder = new FM_EL_Finder();
-		$elFinder = $elFinder->connect($opts);
+		$elFinder = new elFinderConnector(new elFinder($opts));
 		$elFinder->run();
 
 		wp_die();

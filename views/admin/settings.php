@@ -10,7 +10,7 @@ if( isset( $_POST ) && !empty( $_POST ) ){
 	$_POST['show_url_path'] = sanitize_text_field($_POST['show_url_path']);
 	if( isset($_POST['show_url_path']) && ($_POST['show_url_path'] == 'show' || $_POST['show_url_path'] == 'hide') ) $FileManager->options['file_manager_settings']['show_url_path'] = $_POST['show_url_path'];
 	
-	$FileManager->options['file_manager_settings']['root_folder_path']  = sanitize_file_name($_POST['root_folder_path']) ? sanitize_file_name($_POST['root_folder_path']) : '';
+	$FileManager->options['file_manager_settings']['root_folder_path']  = sanitize_text_field($_POST['root_folder_path']) ? sanitize_text_field($_POST['root_folder_path']) : '';
 	$FileManager->options['file_manager_settings']['root_folder_url']  = esc_url_raw($_POST['root_folder_url']) ? esc_url_raw($_POST['root_folder_url']) : '';
 
 	$FileManager->options['file_manager_settings']['language'] = sanitize_text_field($_POST['language']);
