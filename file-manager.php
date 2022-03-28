@@ -149,6 +149,7 @@ class FM extends FM_BootStart {
 					'uploadOrder'   => array('allow', 'deny'),      // allowed Mimetype `image` and `text/plain` only
 					'accessControl' => array(new FMAccessControl(), 'control'),
 					'disabled'      => array(),    // List of disabled operations
+					'dispInlineRegex' => '^(?:image|application/(?:vnd\.)?(?:ms(?:-office|word|-excel|-powerpoint)|openxmlformats-officedocument)|text/plain$)',
 				),
 				array(
 					'alias'        => 'Media',
