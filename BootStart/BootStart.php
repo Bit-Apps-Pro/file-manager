@@ -236,7 +236,8 @@ abstract class FM_BootStart{
 			'nonce'         => $fm_nonce,
 			'plugin_dir'	=> plugin_dir_path(__DIR__),
 			'plugin_url' 	=> plugin_dir_url(__DIR__),
-			'js_url' 		=> plugin_dir_url(__DIR__)."elFinder/js/"
+			'js_url' 		=> plugin_dir_url(__DIR__)."elFinder/js/",
+			'elfinder' 		=> plugin_dir_url(__DIR__)."elFinder/"
 		));
 
 
