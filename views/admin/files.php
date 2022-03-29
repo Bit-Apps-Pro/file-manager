@@ -13,7 +13,24 @@ if(!is_array($FileManager->options['file_manager_settings']['language'])) $langu
 if($language_settings['code'] != 'LANG'){
 	$language_code = $language_settings['code'];
 	$lang_file_url = $language_settings['file-url'];
+}else{
+  $language_code = get_lang_code();
+  $lang_file_url = plugins_url( '../../elFinder/js/i18n/elfinder.'.get_lang_code().'.js', __FILE__ );;
 }
+
+function get_lang_code(){
+  $code = 'en';
+  if('en_US' == get_locale(  )){
+    $code = 'en';
+  }else{
+    $code = get_locale(  );
+  }
+
+  return $code;
+}
+
+
+print_r($lang_file_url);
 
 // Command options modifier
 $commandOptions = [];
