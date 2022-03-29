@@ -19,7 +19,7 @@ global $FileManager;
 		<td>
 			<?php 
 				$wp_upload_dir = wp_upload_dir();
-				echo $wp_upload_dir['path'];
+				echo esc_url($wp_upload_dir['path']);
 			?>
 		</td>
 	</tr>
