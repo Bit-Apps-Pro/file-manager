@@ -15,9 +15,13 @@ if($language_settings['code'] != 'LANG'){
 	$lang_file_url = $language_settings['file-url'];
 }else{
   $language_code = get_lang_code();
-  $lang_file_url = plugins_url( '../../elFinder/js/i18n/elfinder.'.get_lang_code().'.js', __FILE__ );;
+  // Check if the file is exsits.
+  $lang_file_url =  ELFINDER_URL.'js/i18n/elfinder.'.$language_code.'.js';
+  $lang_file_path = ELFINDER_PATH.'/js/i18n/elfinder.'.$language_code.'.js';
+  if(!file_exists($lang_file_path)){
+    $lang_file_url = plugins_url( '../../elFinder/js/i18n/elfinder.LANG.js', __FILE__ );
+  }
 }
-
 function get_lang_code(){
   $code = 'en';
   if('en_US' == get_locale(  )){
@@ -29,8 +33,6 @@ function get_lang_code(){
   return $code;
 }
 
-
-print_r($lang_file_url);
 
 // Command options modifier
 $commandOptions = [];
