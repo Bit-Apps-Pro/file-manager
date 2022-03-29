@@ -24,9 +24,7 @@ if( isset( $_POST ) && !empty( $_POST ) ){
 $admin_page_url = admin_url()."admin.php?page={$FileManager->prefix}";
 
 if( !isset($_GET['sub_page']) || empty($_GET['sub_page']) ) $_GET['sub_page'] = 'files';
-// Escaping data
-$_GET['sub_page'] = preg_replace( "/[<>#$%]/", "", $_GET['sub_page']);
-// Sanitizing data
+
 $_GET['sub_page'] = sanitize_text_field($_GET['sub_page']);
 
 // Enqueing admin assets
@@ -93,7 +91,7 @@ global $fm_languages;
 								?>
 								<select name='language'>
 									<?php foreach($lang as $L): ?>
-									<option <?php if($language_code == $L['code']) echo "selected='selected'"; ?> value='<?php echo esc_attr(serialize($L)); ?>'><?php echo $L['name']?></option>
+									<option <?php selected($L['code'], $language_code); ?> value='<?php echo esc_attr(serialize($L)); ?>'><?php echo esc_html($L['name']); ?></option>
 									<?php endforeach; ?>
 								</select>
 							</td>
