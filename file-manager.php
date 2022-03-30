@@ -143,6 +143,8 @@ class FM extends FM_BootStart {
 
 		// Admin Notices
 		add_action('admin_notices', array(&$this, 'admin_notice'));
+
+
 	}
 
   /**
@@ -291,6 +293,8 @@ register_activation_hook( __FILE__, 'gb_fm_activate' );
 
 global $FileManager;
 $FileManager = new FM('File Manager');
+
+
 
 if(!function_exists('pr')):
 function pr($obj){

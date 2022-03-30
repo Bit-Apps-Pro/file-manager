@@ -34,6 +34,7 @@ function get_lang_code(){
 }
 
 
+
 // Command options modifier
 $commandOptions = [];
 $commandOptions['info'] = [];
@@ -50,8 +51,9 @@ wp_enqueue_style( 'fmp-jquery-ui-css' );
 wp_enqueue_style( 'fmp-elfinder-css' );
 wp_enqueue_style( 'fmp-elfinder-theme-css' );
 
-wp_enqueue_script('fmp-elfinder-script');
-wp_enqueue_script('fmp-elfinder-editor-script');
+
+wp_enqueue_script($FileManager->is_minified_file_load('fmp-elfinder-script')['handle']);
+wp_enqueue_script( $FileManager->is_minified_file_load('fmp-elfinder-editor-script')['handle']);
 
 // Testing
 $fm_php_syntax_checker = new FMPHPSyntaxChecker();
