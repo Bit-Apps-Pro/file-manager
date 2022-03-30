@@ -38,7 +38,23 @@ if( !defined( 'ELFINDER_URL' ) ) define("ELFINDER_URL", plugin_dir_url( __FILE__
 
 $upload_dir = wp_upload_dir();
 
+// Upload dir path
+if( !defined( 'FM_UPLOAD_DIR_PATH' ) ) define("FM_UPLOAD_DIR_PATH", $upload_dir['path']);
+
+// Upload dir url
+if( !defined( 'FM_UPLOAD_DIR_URL' ) ) define("FM_UPLOAD_DIR_URL", $upload_dir['url']);
+
+// Media basedir
+if( !defined( 'FM_MEDIA_BASE_DIR_PATH' ) ) define("FM_MEDIA_BASE_DIR_PATH", $upload_dir['basedir']);
+
+// Media baseurl
+if( !defined( 'FM_MEDIA_BASE_DIR_URL' ) ) define("FM_MEDIA_BASE_DIR_URL", $upload_dir['baseurl']);
+
+// File manager upload dir basedir
 defined( 'FM_UPLOAD_BASE_DIR' ) || define( 'FM_UPLOAD_BASE_DIR', $upload_dir['basedir'] . DS . 'file-manager' . DS );
+
+// File manager upload dir baseurl
+defined( 'FM_UPLOAD_BASE_URL' ) || define( 'FM_UPLOAD_BASE_URL', $upload_dir['baseurl'] . DS . 'file-manager' . DS );
 
 // Including elFinder class
 require_once('elFinder' . DS . 'php' . DS . 'autoload.php');
@@ -140,7 +156,6 @@ class FM extends FM_BootStart {
 
 		// Allowed mime types
 		$mime = new FMMIME( plugin_dir_path(__FILE__) . 'elFinder/php/mime.types' );
-		$wp_upload_dir = wp_upload_dir();
 		
 		$opts = array(
 			'bind' => array(
@@ -163,12 +178,35 @@ class FM extends FM_BootStart {
 					'accessControl' => array(new FMAccessControl(), 'control'),
 					'disabled'      => array(),    // List of disabled operations
 					'dispInlineRegex' => '^(?:image|application/(?:vnd\.)?(?:ms(?:-office|word|-excel|-powerpoint)|openxmlformats-officedocument)|text/plain$)',
+					'attributes' => array(
+						array(// hide specipic folder.
+							'pattern' => '!^/img!',
+							'hidden' => false,
+							'read'   => false,
+							'write'  => false,
+							'locked' => false,
+						),
+						array( // hide specipic folder.
+							'pattern' => '!^/inc!',
+							'hidden' => false,
+							'read'   => true,
+							'write'  => true,
+							'locked' => false,
+						),
+						array( // hide specipic file type.
+							'pattern' => '!\.env!',
+							'hidden' => false,
+							'read'   => true,
+							'write'  => true,
+							'locked' => false,
+						)
+					)
 				),
 				array(
 					'alias'        => 'Media',
 					'driver'        => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
-					'path'          => $wp_upload_dir['path'],                     // path to files (REQUIRED)
-					'URL'           => $wp_upload_dir['url'],                  // URL to files (REQUIRED)
+					'path'          => FM_MEDIA_BASE_DIR_PATH,                     // path to files (REQUIRED)
+					'URL'           => FM_MEDIA_BASE_DIR_URL,                  // URL to files (REQUIRED)
 					'uploadDeny'    => array(),                // All Mimetypes not allowed to upload
 					'uploadAllow'   => $mime->get_types(), // All MIME types is allowed
 					'uploadOrder'   => array('allow', 'deny'),      // allowed Mimetype `image` and `text/plain` only
@@ -177,6 +215,7 @@ class FM extends FM_BootStart {
 				),
 			)
 		);
+
 
 		/**
 		 *

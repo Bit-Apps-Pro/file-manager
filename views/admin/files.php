@@ -33,6 +33,8 @@ function get_lang_code(){
   return $code;
 }
 
+ECHO "<PRE>";
+print_r(wp_upload_dir());
 
 // Command options modifier
 $commandOptions = [];
