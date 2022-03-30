@@ -182,8 +182,8 @@ class FM extends FM_BootStart {
 						array(// hide specipic folder.
 							'pattern' => '!^/img!',
 							'hidden' => false,
-							'read'   => false,
-							'write'  => false,
+							'read'   => true,
+							'write'  => true,
 							'locked' => false,
 						),
 						array( // hide specipic folder.
@@ -193,13 +193,13 @@ class FM extends FM_BootStart {
 							'write'  => true,
 							'locked' => false,
 						),
-						array( // hide specipic file type.
-							'pattern' => '!\.env!',
-							'hidden' => false,
-							'read'   => true,
-							'write'  => true,
-							'locked' => false,
-						)
+						// array( // hide specipic file type.
+						// 	'pattern' => '!\.env!',
+						// 	'hidden' => false,
+						// 	'read'   => true,
+						// 	'write'  => true,
+						// 	'locked' => false,
+						// )
 					)
 				),
 				array(
