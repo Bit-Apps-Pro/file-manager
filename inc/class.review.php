@@ -19,11 +19,9 @@ class FMReviewClass{
 
     function __construct(){
         // Checking the review status
-        if(isset($_GET['fm-review-status']))
-            $_GET['fm-review-status'] = sanitize_text_field($_GET['fm-review-status']);
+        $review_status = isset($_GET['fm-review-status']) ? sanitize_text_field($_GET['fm-review-status']): '';
+        if( in_array( $review_status, $this->status ) ){
 
-        if(!empty($_GET['fm-review-status']) && in_array($_GET['fm-review-status'], $this->status)){
-            $review_status = $_GET['fm-review-status'];
             switch($review_status){
                 case 'review-successfull':
                     $this->set_status('review-successfull', time());

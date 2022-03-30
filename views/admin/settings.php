@@ -23,10 +23,6 @@ if( isset( $_POST ) && !empty( $_POST ) ){
 
 $admin_page_url = admin_url()."admin.php?page={$FileManager->prefix}";
 
-if( !isset($_GET['sub_page']) || empty($_GET['sub_page']) ) $_GET['sub_page'] = 'files';
-
-$_GET['sub_page'] = sanitize_text_field($_GET['sub_page']);
-
 // Enqueing admin assets
 $FileManager->admin_assets();
 

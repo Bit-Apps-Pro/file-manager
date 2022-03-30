@@ -50,7 +50,7 @@ global $FileManager;
 	
 	<tr>
 		<td><?php _e("Browser and OS", 'file-manager'); ?></td>
-		<td><?php echo $_SERVER['HTTP_USER_AGENT']; ?></td>
+		<td><?php echo esc_html($_SERVER['HTTP_USER_AGENT']); ?></td>
 	</tr>
 	
 	<tr>

@@ -16,9 +16,9 @@ wp_enqueue_script( 'fmp-admin-script' );
 	<h1><img class='fm-logo' src='<?php echo plugin_dir_url(__FILE__) . '../../img/icon-128x128.png';?>'><?php _e('Library File Manager', 'file-manager'); ?></h1>
 
 	<ul class='top-right-menu'>
-		<li><a href='<?php echo $FileManager->support_page; ?>'><?php _e("Need help?", 'file-manager'); ?></a></li>
-		<li><a href='<?php echo $FileManager->feedback_page; ?>'><?php _e("Leave us a feedback", 'file-manager'); ?></a></li>
-		<li class='fm-marketing'><a href='<?php echo $FileManager->giribaz_landing_page; ?>'><?php _e("Extend", 'file-manager'); ?></a></li>
+		<li><a href='<?php echo esc_url($FileManager->support_page); ?>'><?php _e("Need help?", 'file-manager'); ?></a></li>
+		<li><a href='<?php echo esc_url($FileManager->feedback_page); ?>'><?php _e("Leave us a feedback", 'file-manager'); ?></a></li>
+		<li class='fm-marketing'><a href='<?php echo esc_url($FileManager->giribaz_landing_page); ?>'><?php _e("Extend", 'file-manager'); ?></a></li>
 	</ul>
 
 </div>

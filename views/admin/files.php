@@ -69,7 +69,7 @@ if( isset($lang_file_url) ) wp_enqueue_script('fmp-elfinder-lang', $lang_file_ur
 
 <script>
 
-PLUGINS_URL = '<?php echo plugins_url();?>';
+PLUGINS_URL = '<?php echo esc_js(plugins_url());?>';
 
 jQuery(document).ready(function(){
   console.log(ajaxurl);
