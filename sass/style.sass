@@ -1,0 +1,108 @@
+x//This the backend sass file
+
+input[type=checkbox]
+    -webkit-appearance:checkbox !important
+
+input[type=radio]
+    -webkit-appearance:radio !important
+
+.fm-header
+    box-shadow: 0px 1px 0px
+    padding-left: 50px
+    width: 94%
+    >h1
+        color: #0073AA
+        display: inline-block
+    >ul
+        display: inline-block
+        float: right
+        >li
+            display: inline-block
+            margin: 5px
+            padding: 5px
+    .fm-logo
+        width: 50px
+        height: auto
+        position: relative
+        top: 15px
+        left: -15px
+    .top-right-menu
+        position: relative
+        top: 25px
+
+.fm-container
+    .col-main
+        .fm-data
+            border-left: 5px solid #0073AA
+            padding: 24px 0px 24px 0px
+            >table
+                margin-left: auto
+                margin-right: auto
+                >tr
+                    >tr
+                        padding: 5px
+    .col-sidebar
+        width: 30%
+        .fm-extensions
+            margin: 10px
+            >h2
+                color: #0073AA
+                padding-top: 20px
+                text-align: center
+
+.fm-container
+    width: 98%
+    min-height: 500px
+    margin-top: 20px
+    .col-main
+        width: 69.6%
+        min-height: 200px
+        float: left
+    .col-sidebar
+        min-width: 29.6
+        min-height: 200px
+        float: right
+    .gb-fm-row
+        width: 98%
+        background-color: white
+        min-height: 100px
+        margin: 5px
+        margin-bottom: 20px
+
+.fm-marketing
+    a
+        color: white
+        text-decoration: none
+        font-size: 120%
+        padding: 5px
+        padding-left: 10px
+        padding-right: 10px
+        background-color: #D92519
+
+.fm-call-toaction
+    color: white
+    background-color: #D92519
+    font-size: 120%
+    padding: 10px
+    margin: 20px
+    &:hover
+        color: white
+
+.fm-footer
+    width: 98%
+    float: left
+    background-color: #DDDDDD
+    text-align: center
+    ul
+        li
+            display: inline-block
+            margin-left: 10px
+
+@import "parts/settings"
+@import "parts/themepack"
+@import "parts/permission-system"
+@import "parts/component"
+@import "parts/donation"
+@import "parts/elfinder"
+@import "parts/permission-system-demo"
+@import "parts/review"

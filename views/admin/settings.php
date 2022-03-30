@@ -56,11 +56,16 @@ global $fm_languages;
 							
 							<td>
 								<label for='root_folder_path_id'> <?php _e("Root Folder Path", 'file-manager'); ?> </label>
-								<input type='text' name='root_folder_path' id='root_folder_path_id' value='<?php  if( isset( $FileManager->options['file_manager_settings']['root_folder_path'] ) && !empty( $FileManager->options['file_manager_settings']['root_folder_path'] ) ) echo esc_attr($FileManager->options['file_manager_settings']['root_folder_path']); ?>' />
-
+                                <input type='text' name='root_folder_path' id='root_folder_path_id' value='<?php  if( isset( $FileManager->options['file_manager_settings']['root_folder_path'] ) && !empty( $FileManager->options['file_manager_settings']['root_folder_path'] ) ) echo esc_attr($FileManager->options['file_manager_settings']['root_folder_path']); ?>' />
+                                <br>
+                                <small><?php _e("Default Path:", 'file-manager'); ?> <b><?php echo ABSPATH;?></b></small>
+                                <br><br>
 								<label for='root_folder_url_id'> <?php _e("Root Folder URL", 'file-manager'); ?> </label>
-								<input type='text' name='root_folder_url' id='root_folder_url_id' value='<?php  if( isset( $FileManager->options['file_manager_settings']['root_folder_url'] ) && !empty( $FileManager->options['file_manager_settings']['root_folder_url'] ) ) echo esc_attr($FileManager->options['file_manager_settings']['root_folder_url']); ?>' />
-							</td>
+                                &nbsp;
+                                <input type='text' name='root_folder_url' id='root_folder_url_id' value='<?php  if( isset( $FileManager->options['file_manager_settings']['root_folder_url'] ) && !empty( $FileManager->options['file_manager_settings']['root_folder_url'] ) ) echo esc_attr($FileManager->options['file_manager_settings']['root_folder_url']); ?>' />
+                                <br>
+                                <small><?php _e("Default URL:", 'file-manager'); ?> <b><?php echo site_url();?></b></small>
+                            </td>
 						</tr>
 						<tr>
 							<td></td>
