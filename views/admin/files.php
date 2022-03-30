@@ -72,7 +72,7 @@ if( isset($lang_file_url) ) wp_enqueue_script('fmp-elfinder-lang', $lang_file_ur
 PLUGINS_URL = '<?php echo plugins_url();?>';
 
 jQuery(document).ready(function(){
-
+  console.log(ajaxurl);
 	jQuery('#file-manager').elfinder({
         url: ajaxurl,
         contextmenu : {
@@ -80,7 +80,7 @@ jQuery(document).ready(function(){
             files  : ['getfile', '|' ,'open', 'opennew', 'download', 'opendir', 'quicklook', 'email', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', 'empty', 'hide', '|', 'rename', 'edit', 'resize', '|', 'archive', 'extract', '|', 'selectall', 'selectinvert', '|', 'places', 'info', 'chmod', 'netunmount'
             ]
         },
-        customData:{action: 'connector', file_manager_security_token: '<?php echo wp_create_nonce( "file-manager-security-token" ); ?>'},
+        customData:{action: 'connector', file_manager_security_token: fm.nonce},
         lang: '<?php if( isset($language_code) ) echo esc_js($language_code); ?>',
         requestType: 'post',
         width: '<?php if(isset($FileManager->options['file_manager_settings']['size']['width'])) echo esc_js($FileManager->options['file_manager_settings']['size']['width']); ?>',

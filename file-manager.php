@@ -234,8 +234,8 @@ class FM extends FM_BootStart {
 
 	public function security_check(){
 		// Checks if the current user have enough authorization to operate.
-		if( ! wp_verify_nonce( $_POST['file_manager_security_token'] ,'file-manager-security-token') || !current_user_can( 'manage_options' ) ) wp_die();
-		check_ajax_referer('file-manager-security-token', 'file_manager_security_token');
+		if( ! wp_verify_nonce( $_POST['file_manager_security_token'] ,'fm_nonce') || !current_user_can( 'manage_options' ) ) wp_die();
+		check_ajax_referer('fm_nonce', 'file_manager_security_token');
 	}
 
 	/**
