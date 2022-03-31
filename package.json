@@ -8,12 +8,18 @@
     "sass:compile": "node-sass sass/style.sass -o css --output-style expanded --source-map true",
     "sass:minify": "cleancss --format breakWith=lf --source-map --source-map-inline-sources --output css/style.min.css css/style.css",
     "sass:build": "npm run sass:compile && npm run sass:minify",
-    "sass:watch": "onchange 'sass/**/*.sass' -- npm run sass:build"
+    "sass:watch": "onchange 'sass/**/*.sass' -- npm run sass:build",
+    "build:elfinder": "./tools/build_elfinder.sh",
+    "build:copy": "node tools/build_copy.js",
+    "build:zip": "node tools/zip_build.js",
+    "build:prod": "npm run build:elfinder && npm run build:copy && npm run build:zip"
   },
   "dependencies": {
     "clean-css-cli": "^5.5.2",
     "concurrently": "^7.0.0",
     "node-sass": "^7.0.1",
-    "onchange": "^7.1.0"
+    "onchange": "^7.1.0",
+    "recursive-copy": "^2.0.14",
+    "zip-local": "^0.3.5"
   }
 }
