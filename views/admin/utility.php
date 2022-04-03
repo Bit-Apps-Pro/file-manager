@@ -27,6 +27,10 @@ global $FileManager;
 		<td><?php _e("PHP version", 'file-manager'); ?></td>
 		<td><?php echo phpversion(); ?></td>
 	</tr>
+    <tr>
+		<td><?php _e("PHP ini file", 'file-manager'); ?></td>
+		<td><?php echo php_ini_loaded_file(); ?></td>
+	</tr>
 	
 	<tr>
 		<td><?php _e("Maximum file upload size", 'file-manager'); ?></td>
