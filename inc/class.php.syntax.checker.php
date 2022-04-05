@@ -29,7 +29,6 @@ class FMPHPSyntaxChecker{
 				if(strpos($result, 'Errors parsing' ) !== false){
 				}else{
 					$error_message[] = $result;
-					error_log(print_r($result, true));
 				}
 			}
 
