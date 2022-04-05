@@ -72,7 +72,6 @@ if( isset($lang_file_url) ) wp_enqueue_script('fmp-elfinder-lang', $lang_file_ur
 PLUGINS_URL = '<?php echo esc_js(plugins_url());?>';
 
 jQuery(document).ready(function(){
-  console.log(ajaxurl);
 	jQuery('#file-manager').elfinder({
         url: ajaxurl,
         contextmenu : {

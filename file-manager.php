@@ -158,6 +158,7 @@ class FM extends FM_BootStart {
 
 		// Allowed mime types
 		$mime = new FMMIME( plugin_dir_path(__FILE__) . 'elFinder/php/mime.types' );
+		$fmAccessControll = new FMAccessControl();
 		
 		$opts = array(
 			'bind' => array(
@@ -176,8 +177,9 @@ class FM extends FM_BootStart {
 					'URL'           => isset($this->options['file_manager_settings']['root_folder_url']) && !empty($this->options['file_manager_settings']['root_folder_url']) ? $this->options['file_manager_settings']['root_folder_url'] :site_url(),                  // URL to files (REQUIRED)
 					'uploadDeny'    => array(),                // All Mimetypes not allowed to upload
 					'uploadAllow'   => $mime->get_types(), // All MIME types is allowed
-					'uploadOrder'   => array('allow', 'deny'),      // allowed Mimetype `image` and `text/plain` only
-					'accessControl' => array(new FMAccessControl(), 'control'),
+					'uploadOrder'   => array('order', 'allow', 'deny'),      // allowed Mimetype `image` and `text/plain` only
+					'accessControl' => array($fmAccessControll, 'control'),
+					'acceptedName' =>  array($fmAccessControll, 'accepted__name'),
 					'disabled'      => array(),    // List of disabled operations
 					'dispInlineRegex' => '^(?:image|application/(?:vnd\.)?(?:ms(?:-office|word|-excel|-powerpoint)|openxmlformats-officedocument)|text/plain$)',
 					'attributes' => array(
@@ -196,12 +198,20 @@ class FM extends FM_BootStart {
 							'locked' => false,
 						),
 						// array( // hide specipic file type.
-						// 	'pattern' => '!\.env!',
+						// 	'pattern' => '!.gitignore!',
 						// 	'hidden' => false,
 						// 	'read'   => true,
 						// 	'write'  => true,
 						// 	'locked' => false,
-						// )
+						// ),
+						// array( // hide specipic file type.
+						// 	'pattern' => '/^.+/',
+						// 	'hidden' => false,
+						// 	'read'   => true,
+						// 	'write'  => true,
+						// 	'locked' => false,
+						// ),
+
 					)
 				),
 				array(

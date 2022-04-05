@@ -18,6 +18,7 @@ if( isset( $_POST ) && !empty( $_POST ) ){
 	$FileManager->options['file_manager_settings']['size']['width']  = filter_var($_POST['width'], FILTER_VALIDATE_INT) ? $_POST['width'] : 'auto';
 	$FileManager->options['file_manager_settings']['size']['height']  = filter_var($_POST['height'], FILTER_VALIDATE_INT) ? $_POST['height'] : 600;
 	$FileManager->options['file_manager_settings']['fm-show-hidden-files']  = isset($_POST['fm-show-hidden-files']) && !empty($_POST['fm-show-hidden-files']) ? filter_var($_POST['fm-show-hidden-files'], FILTER_SANITIZE_STRING) : '';
+	$FileManager->options['file_manager_settings']['fm-create-hidden-files-folders']  = isset($_POST['fm-create-hidden-files-folders']) && !empty($_POST['fm-create-hidden-files-folders']) ? filter_var($_POST['fm-create-hidden-files-folders'], FILTER_SANITIZE_STRING) : '';
 
 }
 
@@ -109,6 +110,13 @@ global $fm_languages;
 							<td>
 								<input id='fm-media-sync-id' type='checkbox' name='fm-show-hidden-files' <?php if(isset($FileManager->options['file_manager_settings']['fm-show-hidden-files']) && !empty($FileManager->options['file_manager_settings']['fm-show-hidden-files'])) echo "checked";?> value="fm-show-hidden-files">
 								<small><?php _e("When checked hidden files and folders will be shown to the users.", 'file-manager'); ?></small>
+							</td>
+						</tr>
+						<tr>
+							<td><h4><label for='fm-width-id'><?php _e("Allow Create/Upload Hidden Files/Folders", 'file-manager'); ?></label></h4></td>
+							<td>
+								<input id='fm-hidden-file-id' type='checkbox' name='fm-create-hidden-files-folders' <?php if(isset($FileManager->options['file_manager_settings']['fm-create-hidden-files-folders']) && !empty($FileManager->options['file_manager_settings']['fm-create-hidden-files-folders'])) echo "checked";?> value="fm-create-hidden-files-folders">
+								<small><?php _e("When checked hidden files and folders will be create by the users.", 'file-manager'); ?></small>
 							</td>
 						</tr>
 						<tr>

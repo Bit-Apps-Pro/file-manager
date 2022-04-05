@@ -13,13 +13,29 @@ class FMAccessControl{
 	function __construct(){
 		global $FileManager;
 		$this->settings = $FileManager->options['file_manager_settings'];
+		
 	}
 	
 	function control($attr, $path, $data, $volume) {
     	if(!isset($this->settings['fm-show-hidden-files']) || empty($this->settings['fm-show-hidden-files']))
     		return strpos(basename($path), '.') === 0    
 		        ? !($attr == 'read' || $attr == 'write')  
-		        :  null;                                    
+		        :  ($attr == 'read' || $attr == 'write')  ;                                    
+	}
+
+	/**
+	 * Create or upload .( Dot) started files or folder based on settings.
+	 * @param $name file.
+	 * @return boolean
+	 * @reference : https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#acceptedName
+	 */
+	function accepted__name($name){
+
+		if( isset($this->settings['fm-create-hidden-files-folders']) &&  'fm-create-hidden-files-folders' == $this->settings['fm-create-hidden-files-folders'] ){
+			return true;
+		}
+
+		return strpos($name, '.') !== 0;
 	}
 	
 }
