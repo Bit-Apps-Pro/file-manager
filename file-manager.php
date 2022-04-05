@@ -20,9 +20,9 @@
  * @since v5.2.0
  *
  * */
-
 // Directory Separator
 if( !defined( 'DS' ) ) define("DS", DIRECTORY_SEPARATOR);
+
 
 // file manger path
 if( !defined( 'FILE_MANAGER_PATH' ) ) define("FILE_MANAGER_PATH", plugin_dir_path( __FILE__ ));
@@ -37,7 +37,6 @@ if( !defined( 'ELFINDER_PATH' ) ) define("ELFINDER_PATH", plugin_dir_path( __FIL
 if( !defined( 'ELFINDER_URL' ) ) define("ELFINDER_URL", plugin_dir_url( __FILE__ ) . 'elFinder/');
 
 $upload_dir = wp_upload_dir();
-
 // Upload dir path
 if( !defined( 'FM_UPLOAD_DIR_PATH' ) ) define("FM_UPLOAD_DIR_PATH", $upload_dir['path']);
 
@@ -69,7 +68,7 @@ require_once('inc/__init__.php');
 do_action('file_manager_init');
 
 class FM extends FM_BootStart {
-
+    
 	/**
 	 *
 	 * @var $version Wordpress library file manager plugin version
@@ -134,7 +133,7 @@ class FM extends FM_BootStart {
 
 		// Adding Ajax
 		$this->add_ajax('connector'); // elFinder ajax call
-		$this->add_ajax('fm_site_backup'); // Site backup function invoked
+		$this->add_ajax('fm_site_backup'); // Site backup function 
 
 		parent::__construct($name);
 
@@ -143,8 +142,7 @@ class FM extends FM_BootStart {
 
 		// Admin Notices
 		add_action('admin_notices', array(&$this, 'admin_notice'));
-
-
+		
 	}
 
   /**

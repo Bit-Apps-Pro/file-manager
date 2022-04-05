@@ -17,8 +17,21 @@ class FMPHPSyntaxChecker{
 			fclose($fp);
 			exec("php -l " . $temp_file_path , $output, $return);
 
-			if(strpos($output[3], 'Errors parsing' ) !== false)
-			    $error_message = __("Syntax Error found. Please check your code for syntax error.",'file-manager');
+			
+			$error_message = [];
+			foreach($output as $result){
+				if(strpos($result , 'No syntax errors detected') !== false){
+					continue;
+				}elseif($result == ''){
+					continue;
+				}
+
+				if(strpos($result, 'Errors parsing' ) !== false){
+				}else{
+					$error_message[] = $result;
+					error_log(print_r($result, true));
+				}
+			}
 
 			unlink($temp_file_path);
 
