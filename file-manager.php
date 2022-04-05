@@ -55,6 +55,16 @@ defined( 'FM_UPLOAD_BASE_DIR' ) || define( 'FM_UPLOAD_BASE_DIR', $upload_dir['ba
 // File manager upload dir baseurl
 defined( 'FM_UPLOAD_BASE_URL' ) || define( 'FM_UPLOAD_BASE_URL', $upload_dir['baseurl'] . DS . 'file-manager' . DS );
 
+
+//TODO: This folder neeed to created programetically. 
+
+// File manager trash dir path
+defined( 'FM_TRASH_DIR_PATH' ) || define( 'FM_TRASH_DIR_PATH', $upload_dir['basedir'] . DS . 'file-manager' . DS . 'trash' . DS);
+
+// File manager trash tmb dir url
+defined( 'FM_TRASH_TMB_DIR_URL' ) || define( 'FM_TRASH_TMB_DIR_URL', $upload_dir['basedir'] . DS . 'file-manager' . DS . 'trash' . DS . '.tmb' . DS);
+
+
 // Including elFinder class
 require_once('elFinder' . DS . 'php' . DS . 'autoload.php');
 
@@ -168,6 +178,20 @@ class FM extends FM_BootStart {
 			),
 			'debug' => true,
 			'roots' => array(
+
+				array(
+					'id'            => '1',
+					'driver'        => 'Trash',
+					'path'          => FM_TRASH_DIR_PATH,  // path to files (REQUIRED)
+					'tmbURL'        => dirname($_SERVER['PHP_SELF']) . '/'. FM_TRASH_TMB_DIR_URL, // path to files (REQUIRED),
+					'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
+					'uploadDeny'    => array(),                // Recomend the same settings as the original volume that uses the trash
+					'uploadAllow'   => $mime->get_types(),// Same as above
+					'uploadOrder'   => array('deny', 'allow'),      // Same as above
+					'accessControl' => array(new FMAccessControl(), 'control'),                    // Same as above
+				),
+
+
 				array(
 					'alias'         => 'WP Root',
 					'driver'        => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
@@ -177,10 +201,14 @@ class FM extends FM_BootStart {
 					'uploadAllow'   => $mime->get_types(), // All MIME types is allowed
 					'uploadOrder'   => array('order', 'allow', 'deny'),      // allowed Mimetype `image` and `text/plain` only
 					'accessControl' => array($fmAccessControll, 'control'),
-					'acceptedName' =>  array($fmAccessControll, 'accepted__name'),
+					'acceptedName' =>  array($fmAccessControll, 'accepted__name'), // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#acceptedName
 					'disabled'      => array(),    // List of disabled operations
-					'dispInlineRegex' => '^(?:image|application/(?:vnd\.)?(?:ms(?:-office|word|-excel|-powerpoint)|openxmlformats-officedocument)|text/plain$)',
-					'attributes' => array(
+					'dispInlineRegex' => '^(?:image|application/(?:vnd\.)?(?:ms(?:-office|word|-excel|-powerpoint)|openxmlformats-officedocument)|text/plain$)',// https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#dispInlineRegex
+					'trashHash'     => 't1_Lw',                     // elFinder's hash of trash folder
+					'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too						
+					// 'defaults'   => array('read' => true, 'write' => true,'locked'=>true),
+					
+					'attributes' => array( // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#attributes
 						array(// hide specipic folder.
 							'pattern' => '!^/img!',
 							'hidden' => false,
@@ -210,7 +238,8 @@ class FM extends FM_BootStart {
 						// 	'locked' => false,
 						// ),
 
-					)
+						),
+						
 				),
 				array(
 					'alias'        => 'Media',
@@ -223,6 +252,8 @@ class FM extends FM_BootStart {
 					'accessControl' => array(new FMAccessControl(), 'control'),
 					'disabled'      => array(),    // List of disabled operations
 				),
+
+				
 			)
 		);
 
