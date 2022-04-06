@@ -283,6 +283,11 @@ abstract class FM_BootStart{
 			// Settings Page
 			add_submenu_page( $this->prefix, 'Library File Manager Settings', 'Settings', 'manage_options', $this->zip( 'Library File Manager Settings' ), array( &$this, 'settings' ) );
 
+
+			// System Page
+			add_submenu_page( $this->prefix, 'System Information', 'System Info', 'manage_options', $this->zip( 'System Information' ), array( &$this, 'systems' ) );
+
+		
 			if(!defined('FILE_MANAGER_PREMIUM')){
 				add_submenu_page(
 					'file-manager', // Parent Slug
@@ -318,6 +323,20 @@ abstract class FM_BootStart{
 		if(!current_user_can('manage_options')) die( $this->render('', 'access-denied') );
 
 		$this->render('', 'admin' . DS . 'settings');
+
+	}
+
+	/**
+	 * Adds a System page
+	 *
+	 * */
+	public function systems(){
+
+		if(!current_user_can('manage_options')) die( $this->render('', 'access-denied') );
+
+		$this->render('', 'admin' . DS . 'utility');
+
+
 
 	}
 

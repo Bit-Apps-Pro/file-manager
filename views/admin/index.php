@@ -21,9 +21,7 @@ global $FileManager;
 
 		</div>
 
-		<div class='gb-fm-row fm-data'>
-			<?php require_once('utility.php'); ?>
-		</div>
+		
 
 	</div>
 

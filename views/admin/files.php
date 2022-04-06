@@ -34,7 +34,6 @@ function get_lang_code(){
 }
 
 
-
 // Command options modifier
 $commandOptions = [];
 $commandOptions['info'] = [];
