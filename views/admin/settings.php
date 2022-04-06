@@ -112,10 +112,26 @@ global $fm_languages;
 
 							<td>
 								<label for='root_folder_path_id'> <?php _e("Root Folder Path", 'file-manager');?> </label>
-                                <input type='text' name='root_folder_path' id='root_folder_path_id' value='<?php if (isset($FileManager->options['file_manager_settings']['root_folder_path']) && !empty($FileManager->options['file_manager_settings']['root_folder_path'])) {
+                                <input type='text' name='root_folder_path' onchange="pathVlidation()" id='root_folder_path_id' value='<?php if (isset($FileManager->options['file_manager_settings']['root_folder_path']) && !empty($FileManager->options['file_manager_settings']['root_folder_path'])) {
     echo esc_attr($FileManager->options['file_manager_settings']['root_folder_path']);
 }
-?>' />
+?>' /></br>
+<span id="fm_path_err"></span>
+								<script>
+									function pathVlidation(){
+										let path = document.getElementById('root_folder_path_id').value;
+										let res = path.match(/^[a-zA-Z]:\\([a-zA-Z0-9.\-*.+]+([ ][a-zA-Z0-9.\-*.+]+)*\\)*([a-zA-Z0-9.\-*.+]+([ ][a-zA-Z0-9.\-*.+]+)*)*$/gi);
+										let span = document.getElementById('fm_path_err');
+										console.log(res)
+										if(res == null){
+											span.innerHTML = "Path is wrong! Please enter a valid Path.";
+											span.style.color ='red';
+											span.style.visibility = 'visible'
+										}else if(res.length){
+											span.style.visibility = 'hidden'
+										}
+									}
+								</script>
 								<br>
                                 <small><?php _e("Default Path:", 'file-manager');?> <b><?php echo ABSPATH; ?></b></small>
                                 <br><br>
@@ -138,6 +154,7 @@ global $fm_languages;
 										if(res == null){
 											span.innerHTML = "URL is wrong! Please enter a valid URL.";
 											span.style.color ='red';
+											span.style.visibility = 'visible'
 										}else if(res.length){
 											span.style.visibility = 'hidden'
 										}
