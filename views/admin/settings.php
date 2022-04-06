@@ -20,6 +20,7 @@ if( isset( $_POST ) && !empty( $_POST ) ){
 	$FileManager->options['file_manager_settings']['fm-show-hidden-files']  = isset($_POST['fm-show-hidden-files']) && !empty($_POST['fm-show-hidden-files']) ? filter_var($_POST['fm-show-hidden-files'], FILTER_SANITIZE_STRING) : '';
 	$FileManager->options['file_manager_settings']['fm-create-hidden-files-folders']  = isset($_POST['fm-create-hidden-files-folders']) && !empty($_POST['fm-create-hidden-files-folders']) ? filter_var($_POST['fm-create-hidden-files-folders'], FILTER_SANITIZE_STRING) : '';
 	$FileManager->options['file_manager_settings']['fm-create-trash-files-folders']  = isset($_POST['fm-create-trash-files-folders']) && !empty($_POST['fm-create-trash-files-folders']) ? filter_var($_POST['fm-create-trash-files-folders'], FILTER_SANITIZE_STRING) : '';
+	$FileManager->options['file_manager_settings']['fm_root_folder_name']  = isset($_POST['fm_root_folder_name']) && !empty($_POST['fm_root_folder_name']) ? filter_var($_POST['fm_root_folder_name'], FILTER_SANITIZE_STRING) : 'WP Root';
 
 }
 
@@ -127,6 +128,13 @@ global $fm_languages;
 								<small><?php _e("When checked deleted files and folder will save here.", 'file-manager'); ?></small>
 								<br/>
 								<small><?php _e("Default Path:", 'file-manager'); ?> <b><?php echo FM_TRASH_DIR_PATH;?></b></small>
+							</td>
+						</tr>
+						<tr>
+							<td><h4><?php _e("Root Folder Name", 'file-manager'); ?></h4></td>
+							<td>
+								<label for='fm-root-folder-name-id'></label>
+								<input id='fm-root-folder-name-id' type='text' name='fm_root_folder_name' value='<?php if(isset($FileManager->options['file_manager_settings']['fm_root_folder_name']) && !empty($FileManager->options['file_manager_settings']['fm_root_folder_name'])) echo esc_attr($FileManager->options['file_manager_settings']['fm_root_folder_name']); else echo 'WP Root';?>'>
 							</td>
 						</tr>
 						<tr>

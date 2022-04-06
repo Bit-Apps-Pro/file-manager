@@ -203,7 +203,7 @@ class FM extends FM_BootStart {
 			'roots' => array(
 
 				array(
-					'alias'         => 'WP Root',
+					'alias'         => isset($this->options['file_manager_settings']['fm_root_folder_name']) && !empty($this->options['file_manager_settings']['fm_root_folder_name']) ? $this->options['file_manager_settings']['fm_root_folder_name'] : "WP Root",
 					'driver'        => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
 					'path'          => isset($this->options['file_manager_settings']['root_folder_path']) && !empty($this->options['file_manager_settings']['root_folder_path']) ? $this->options['file_manager_settings']['root_folder_path'] : ABSPATH,                     // path to files (REQUIRED)
 					'URL'           => isset($this->options['file_manager_settings']['root_folder_url']) && !empty($this->options['file_manager_settings']['root_folder_url']) ? $this->options['file_manager_settings']['root_folder_url'] :site_url(),                  // URL to files (REQUIRED)
