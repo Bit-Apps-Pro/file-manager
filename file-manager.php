@@ -55,14 +55,37 @@ defined( 'FM_UPLOAD_BASE_DIR' ) || define( 'FM_UPLOAD_BASE_DIR', $upload_dir['ba
 // File manager upload dir baseurl
 defined( 'FM_UPLOAD_BASE_URL' ) || define( 'FM_UPLOAD_BASE_URL', $upload_dir['baseurl'] . DS . 'file-manager' . DS );
 
-
-//TODO: This folder neeed to created programetically. 
-
 // File manager trash dir path
-defined( 'FM_TRASH_DIR_PATH' ) || define( 'FM_TRASH_DIR_PATH', $upload_dir['basedir'] . DS . 'file-manager' . DS . 'trash' . DS);
+if ( ! defined( 'FM_TRASH_DIR_PATH' )) {
+    /**
+     * Custom Trash Directory.
+     */
+    $fm_trash_dir = $upload_dir['basedir'] .'/file-manager/trash/';
+    define( 'FM_TRASH_DIR_PATH', $fm_trash_dir  );
+    if ( ! file_exists( $fm_trash_dir ) && is_writable( $upload_dir['basedir'] ) ) {
+        mkdir( $fm_trash_dir, 0777, true );
+        // Protect files from public access.
+        touch( FM_TRASH_DIR_PATH . '.htaccess' );
+        $content = 'deny from all';
+        $fp      = fopen( FM_TRASH_DIR_PATH . '.htaccess', 'wb' );
+        fwrite( $fp, $content );
+        fclose( $fp );
+    }elseif ( ! file_exists( $fm_trash_dir ) && ! is_writable($fm_trash_dir) && ! is_writable( $upload_dir['basedir'] ) ) {
+        add_action('admin_notices', function(){ ?>
+			<div class="notice notice-error is-dismissible">
+				<p>
+					<?php
+					_e('<h1>File Manager</h1>  <b>Your uploads folder is not writable. Please make <code style="color: red;">wp-content/uploads</code> folder writable to create trash folder.</b>', 'file-manager'); 
+					?>
+				</p>
+			</div> <?php
+		});
+    }
+}
 
 // File manager trash tmb dir url
-defined( 'FM_TRASH_TMB_DIR_URL' ) || define( 'FM_TRASH_TMB_DIR_URL', $upload_dir['basedir'] . DS . 'file-manager' . DS . 'trash' . DS . '.tmb' . DS);
+defined( 'FM_TRASH_TMB_DIR_URL' ) || define( 'FM_TRASH_TMB_DIR_URL', $upload_dir['baseurl'] . '/file-manager/trash/.tmb/');
+
 
 
 // Including elFinder class
@@ -180,19 +203,6 @@ class FM extends FM_BootStart {
 			'roots' => array(
 
 				array(
-					'id'            => '1',
-					'driver'        => 'Trash',
-					'path'          => FM_TRASH_DIR_PATH,  // path to files (REQUIRED)
-					'tmbURL'        => dirname($_SERVER['PHP_SELF']) . '/'. FM_TRASH_TMB_DIR_URL, // path to files (REQUIRED),
-					'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
-					'uploadDeny'    => array(),                // Recomend the same settings as the original volume that uses the trash
-					'uploadAllow'   => $mime->get_types(),// Same as above
-					'uploadOrder'   => array('deny', 'allow'),      // Same as above
-					'accessControl' => array(new FMAccessControl(), 'control'),                    // Same as above
-				),
-
-
-				array(
 					'alias'         => 'WP Root',
 					'driver'        => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
 					'path'          => isset($this->options['file_manager_settings']['root_folder_path']) && !empty($this->options['file_manager_settings']['root_folder_path']) ? $this->options['file_manager_settings']['root_folder_path'] : ABSPATH,                     // path to files (REQUIRED)
@@ -204,7 +214,7 @@ class FM extends FM_BootStart {
 					'acceptedName' =>  array($fmAccessControll, 'accepted__name'), // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#acceptedName
 					'disabled'      => array(),    // List of disabled operations
 					'dispInlineRegex' => '^(?:image|application/(?:vnd\.)?(?:ms(?:-office|word|-excel|-powerpoint)|openxmlformats-officedocument)|text/plain$)',// https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#dispInlineRegex
-					'trashHash'     => 't1_Lw',                     // elFinder's hash of trash folder
+					'trashHash'     =>   isset($this->options['file_manager_settings']['fm-create-trash-files-folders']) && !empty($this->options['file_manager_settings']['fm-create-trash-files-folders']) ? 't1_Lw' :'',                     // elFinder's hash of trash folder
 					'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too						
 					// 'defaults'   => array('read' => true, 'write' => true,'locked'=>true),
 					
@@ -257,6 +267,20 @@ class FM extends FM_BootStart {
 			)
 		);
 
+		$upload_dir = wp_upload_dir(  );
+		if( $this->options['file_manager_settings']['fm-create-trash-files-folders']  && is_writable( $upload_dir['basedir'] )){
+			$opts['roots'][] = array(
+				'id'            => '1',
+				'driver'        => 'Trash',
+				'path'          => FM_TRASH_DIR_PATH,  // path to files (REQUIRED)
+				'tmbURL'        => FM_TRASH_TMB_DIR_URL, // path to files (REQUIRED),
+				'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
+				'uploadDeny'    => array(),                // Recomend the same settings as the original volume that uses the trash
+				'uploadAllow'   => $mime->get_types(),// Same as above
+				'uploadOrder'   => array('deny', 'allow'),      // Same as above
+				'accessControl' => array(new FMAccessControl(), 'control'),                    // Same as above
+			);
+		}
 
 		/**
 		 *

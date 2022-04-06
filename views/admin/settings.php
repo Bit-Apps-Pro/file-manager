@@ -19,6 +19,7 @@ if( isset( $_POST ) && !empty( $_POST ) ){
 	$FileManager->options['file_manager_settings']['size']['height']  = filter_var($_POST['height'], FILTER_VALIDATE_INT) ? $_POST['height'] : 600;
 	$FileManager->options['file_manager_settings']['fm-show-hidden-files']  = isset($_POST['fm-show-hidden-files']) && !empty($_POST['fm-show-hidden-files']) ? filter_var($_POST['fm-show-hidden-files'], FILTER_SANITIZE_STRING) : '';
 	$FileManager->options['file_manager_settings']['fm-create-hidden-files-folders']  = isset($_POST['fm-create-hidden-files-folders']) && !empty($_POST['fm-create-hidden-files-folders']) ? filter_var($_POST['fm-create-hidden-files-folders'], FILTER_SANITIZE_STRING) : '';
+	$FileManager->options['file_manager_settings']['fm-create-trash-files-folders']  = isset($_POST['fm-create-trash-files-folders']) && !empty($_POST['fm-create-trash-files-folders']) ? filter_var($_POST['fm-create-trash-files-folders'], FILTER_SANITIZE_STRING) : '';
 
 }
 
@@ -117,6 +118,15 @@ global $fm_languages;
 							<td>
 								<input id='fm-hidden-file-id' type='checkbox' name='fm-create-hidden-files-folders' <?php if(isset($FileManager->options['file_manager_settings']['fm-create-hidden-files-folders']) && !empty($FileManager->options['file_manager_settings']['fm-create-hidden-files-folders'])) echo "checked";?> value="fm-create-hidden-files-folders">
 								<small><?php _e("When checked hidden files and folders will be create by the users.", 'file-manager'); ?></small>
+							</td>
+						</tr>
+						<tr>
+							<td><h4><label for='fm-width-id'><?php _e("Allow Trash", 'file-manager'); ?></label></h4></td>
+							<td>
+								<input id='fm-trash-id' type='checkbox' name='fm-create-trash-files-folders' <?php if(isset($FileManager->options['file_manager_settings']['fm-create-trash-files-folders']) && !empty($FileManager->options['file_manager_settings']['fm-create-trash-files-folders'])) echo "checked";?> value="fm-create-trash-files-folders">
+								<small><?php _e("When checked deleted files and folder will save here.", 'file-manager'); ?></small>
+								<br/>
+								<small><?php _e("Default Path:", 'file-manager'); ?> <b><?php echo FM_TRASH_DIR_PATH;?></b></small>
 							</td>
 						</tr>
 						<tr>
