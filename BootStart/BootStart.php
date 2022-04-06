@@ -284,9 +284,6 @@ abstract class FM_BootStart{
 			add_submenu_page( $this->prefix, 'Library File Manager Settings', 'Settings', 'manage_options', $this->zip( 'Library File Manager Settings' ), array( &$this, 'settings' ) );
 
 
-			// System Page
-			add_submenu_page( $this->prefix, 'System Information', 'System Info', 'manage_options', $this->zip( 'System Information' ), array( &$this, 'systems' ) );
-
 		
 			if(!defined('FILE_MANAGER_PREMIUM')){
 				add_submenu_page(
@@ -295,9 +292,14 @@ abstract class FM_BootStart{
 					__('Permission System', 'file-manager'), // Menu title
 					'manage_options', // User capabilities
 					'file-manager-permission-system', // Menu Slug
-					function(){include plugin_dir_path( __FILE__ ) . ".." . DS . "views" . DS . "admin" . DS . "permission_system.php";}
+					function(){include plugin_dir_path( __FILE__ ) . ".." . DS . "views" . DS . "admin" . DS . "permission_system.php";}, 2
 				);
 			}
+
+			
+			// System Page
+			add_submenu_page( $this->prefix, 'System Information', 'System Info', 'manage_options', $this->zip( 'System Information' ), array( &$this, 'systems' ), 3 );
+
 
 		}
 
