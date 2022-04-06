@@ -39,7 +39,7 @@ if (isset($_POST) && !empty($_POST)) {
 function truepath($path)
 {
     // whether $path is unix or not
-    $unipath = strlen($path) == 0 || $path{0} != '/';
+    $unipath = strlen($path) == 0 || $path[0] != '/';
     // attempts to detect if path is relative in which case, add cwd
     if (strpos($path, ':') === false && $unipath) {
         $path = getcwd() . DIRECTORY_SEPARATOR . $path;
@@ -122,7 +122,6 @@ global $fm_languages;
 										let path = document.getElementById('root_folder_path_id').value;
 										let res = path.match(/^[a-zA-Z]:\\([a-zA-Z0-9.\-*.+]+([ ][a-zA-Z0-9.\-*.+]+)*\\)*([a-zA-Z0-9.\-*.+]+([ ][a-zA-Z0-9.\-*.+]+)*)*$/gi);
 										let span = document.getElementById('fm_path_err');
-										console.log(res)
 										if(res == null){
 											span.innerHTML = "Path is wrong! Please enter a valid Path.";
 											span.style.color ='red';
