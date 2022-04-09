@@ -31,7 +31,7 @@ class FMAccessControl{
 	 */
 	function accepted__name($name){
 
-		if( 'fm-create-hidden-files-folders' == $this->settings['fm-create-hidden-files-folders'] ){
+		if( isset( $this->settings['fm-create-hidden-files-folders'] ) && 'fm-create-hidden-files-folders' == $this->settings['fm-create-hidden-files-folders'] ){
 			return true;
 		}
 
