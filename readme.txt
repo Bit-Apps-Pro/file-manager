@@ -2,9 +2,9 @@
 Contributors: aihimel
 Tags: file manager, wp file manager, FTP, elfinder, file Browser, manage files, upload, delete, rename, copy, move, online file browser, remote file manager, drag and drop, folder upload
 Requires at least: 4.0.0
-Tested up to: 5.9.2
+Tested up to: 5.9.3
 Requires PHP: 5.6
-Stable tag: 5.2.3
+Stable tag: 5.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,16 +12,9 @@ Upload, delete, copy, move, rename, edit, compress, extract files. You don't nee
 
 == Description ==
 
-Most robust and powerful file manager for WordPress. You can upload, delete, copy, move, rename, archive, extract files. You don't need to worry about ftp any more. It is realy simple and easy to use.
-Just install the plugin following standard WordPress plugin install process. All the file management in one place.
+Most robust and powerful file manager plugin for WordPress. You can upload, delete, copy, move, rename, archive, extract files with the file manager plugin. You don’t need to worry about FTP anymore. It is really simple and easy to use.
 
-
-= What's New 5.2.3 (28 March, 2022) =
-* Tested compatability for WordPress 5.9.2
-* Updated to elFinder 2.1.61
-* Security issue fixed
-* Minor issue fixed.
-
+Just install the plugin by following the standard WordPress plugin install process. All the file management is in one place.
 
 = Key Features =
 
@@ -29,27 +22,27 @@ Just install the plugin following standard WordPress plugin install process. All
 + Upload, Download and Delete operations
 + All operations with files and folders (copy, move, upload, create folder/file, rename, archive, extract, edit, etc.)
 + Download, upload, cut, copy, duplicate, paste, delete, create directory, create file, edit file, rename, archive, extract
-+ Light and Elegant client UI
-+ Drag & Drop file upload support
-+ List and Icons view available
++ File manager plugin comes with light and elegant client UI
++ File manager support drag & drop file upload
++ List and Icons view available in File Manager Plugin
 + Alternative to FTP and cPanel
 + Supported Archives (zip, rar, 7z, tar, gzip, bzip2)
 + Image and File Edit Support
 + Quicklook, preview for common file types
 + Calculate directory sizes
 + Video and audio preview/play
-+ Support file search and sort
++ File manager supports file search and sort
 
 = Extended Features =
 
 + High performance server backend
-+ Uses local file system no need of database.
++ Uses a local file system therefore no need for a database.
 + Keyboard shortcuts available
 + Multiple file/folder selection
 + Move/Copy files with Drag & Drop
 + Rich context menu and toolbar
 + Thumbnails for image files
-+ Auto resize on file upload.
++ Auto resizes on file upload.
 + UTF-8 Normalizer of file-name and file-path etc.
 + Sanitizer of file-name and file-path etc.
 + Folder upload
@@ -69,13 +62,20 @@ Just install the plugin following standard WordPress plugin install process. All
 + **User Role Folder:** User with same role can have common shared folder.
 + **User Role Permission:** Set permission for user roles.
 + **User Permission:** Set permission for specific users.
-+ **File Type:** Control what files can be uploaded and what file can be downloaded.
-+ **File Size:** Control maximum file size that can be uploaded.
++ **File Type:** Control what files can be uploaded and what files can be downloaded.
++ **File Size:** Control the maximum file size that can be uploaded.
 + **Maximum Operations:** Support 13+ types of file operation control.
-+ **Operation Control:** Control 13+ operations for specific user and user role.
++ **Operation Control:** Control 13+ operations for specific user and user roles.
 + **Ban Roles/Users:** Ban Users and Roles.
 
 **[Extend Library File Manager](https://wpjos.com/library-file-manager-plugin/)**
+
+== Compatibility ==
+
+We try to make our plugin compatible with as many plugin/theme as possible. If you find any compatability issue with any 3rd party plugin/theme, kindly report it to us via our plugin support forum or on our website.
+
+**Plugins**
++ WPML -- Best WP plugin to translate and display your website in any languages
 
 == Installation ==
 
@@ -134,11 +134,24 @@ Yes, I will support the plugin.
 
 == Upgrade Notice ==
 
-= 5.2.2 =
+= 5.2.4 =
 + No special requirements.
 
 
 == Changelog ==
+
+= 5.2.4 (10 April, 2022) =
+* Tested compatability for WordPress 5.9.3
+* Unicode character support for file/folder
+* Media folder sync, you can upload to media folder, and it will be available on media library
+* File Preview issue fixed [.docx, .psd etc]
+* Code editor issue fixed
+* Syntax checking for PHP file [You can't save file with syntax error]
+* .htaccess file operation added [Now you can edit/upload/delete .htaccess files]
+* Hidden file/folder operation added [Now you can edit/upload/delete any hidden file/folder]
+* Root folder name settings added
+* System information moved to a different page
+* Emailing a file on right click menu added.
 
 = 5.2.3 (28 March, 2022) =
 * Tested compatability for WordPress 5.9.2
