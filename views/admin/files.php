@@ -13,7 +13,26 @@ if(!is_array($FileManager->options['file_manager_settings']['language'])) $langu
 if($language_settings['code'] != 'LANG'){
 	$language_code = $language_settings['code'];
 	$lang_file_url = $language_settings['file-url'];
+}else{
+  $language_code = get_lang_code();
+  // Check if the file is exsits.
+  $lang_file_url =  ELFINDER_URL.'js/i18n/elfinder.'.$language_code.'.js';
+  $lang_file_path = ELFINDER_PATH.'/js/i18n/elfinder.'.$language_code.'.js';
+  if(!file_exists($lang_file_path)){
+    $lang_file_url = plugins_url( '../../elFinder/js/i18n/elfinder.LANG.js', __FILE__ );
+  }
 }
+function get_lang_code(){
+  $code = 'en';
+  if('en_US' == get_locale(  )){
+    $code = 'en';
+  }else{
+    $code = get_locale(  );
+  }
+
+  return $code;
+}
+
 
 // Command options modifier
 $commandOptions = [];
@@ -31,8 +50,9 @@ wp_enqueue_style( 'fmp-jquery-ui-css' );
 wp_enqueue_style( 'fmp-elfinder-css' );
 wp_enqueue_style( 'fmp-elfinder-theme-css' );
 
-wp_enqueue_script('fmp-elfinder-script');
-wp_enqueue_script('fmp-elfinder-editor-script');
+
+wp_enqueue_script($FileManager->is_minified_file_load('fmp-elfinder-script')['handle']);
+wp_enqueue_script( $FileManager->is_minified_file_load('fmp-elfinder-editor-script')['handle']);
 
 // Testing
 $fm_php_syntax_checker = new FMPHPSyntaxChecker();
@@ -48,18 +68,19 @@ if( isset($lang_file_url) ) wp_enqueue_script('fmp-elfinder-lang', $lang_file_ur
 
 <script>
 
-PLUGINS_URL = '<?php echo plugins_url();?>';
+PLUGINS_URL = '<?php echo esc_js(plugins_url());?>';
 
 jQuery(document).ready(function(){
-
 	jQuery('#file-manager').elfinder({
         url: ajaxurl,
         contextmenu : {
+          commands : ['*'],
+
             // current directory file menu
-            files  : ['getfile', '|' ,'open', 'opennew', 'download', 'opendir', 'quicklook', 'email', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', 'empty', 'hide', '|', 'rename', 'edit', 'resize', '|', 'archive', 'extract', '|', 'selectall', 'selectinvert', '|', 'places', 'info', 'chmod', 'netunmount'
+            files  : ['getfile', '|' , 'emailto', 'open', 'opennew', 'download', 'opendir', 'quicklook', 'email', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', 'empty', 'hide', '|', 'rename', 'edit', 'resize', '|', 'archive', 'extract', '|', 'selectall', 'selectinvert', '|', 'places', 'info', 'chmod', 'netunmount'
             ]
         },
-        customData:{action: 'connector', file_manager_security_token: '<?php echo wp_create_nonce( "file-manager-security-token" ); ?>'},
+        customData:{action: 'connector', file_manager_security_token: fm.nonce},
         lang: '<?php if( isset($language_code) ) echo esc_js($language_code); ?>',
         requestType: 'post',
         width: '<?php if(isset($FileManager->options['file_manager_settings']['size']['width'])) echo esc_js($FileManager->options['file_manager_settings']['size']['width']); ?>',

@@ -1,4 +1,7 @@
 .idea
 vendor
 .DS_Store
+node_modules
 elFinder
+css/style*
+build

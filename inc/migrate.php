@@ -10,8 +10,8 @@ class FMMigrate{
   public function __construct($current_version){
 
     // Checkks the current version
-    // update_option('fm_current_version', 501);
-    $this->version = get_option('fm_current_version', 501);
+    // update_option('fm_current_version', 524);
+    $this->version = get_option('fm_current_version', 524);
     if((int)($this->version) < (int)($current_version)){
       for($I = (int)($this->version) + 1; $I <= $current_version; $I++ ){
         $function = 'migrate_to_' . $I;
