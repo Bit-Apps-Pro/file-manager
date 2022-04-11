@@ -76,6 +76,11 @@ $admin_page_url = admin_url() . "admin.php?page={$FileManager->prefix}";
 // Enqueing admin assets
 $FileManager->admin_assets();
 
+
+
+// echo "<pre>";
+// echo "=======================".print_r(get_option($FileManager->prefix));
+
 // Language
 include 'language-code.php';
 global $fm_languages;

@@ -47,7 +47,7 @@ if($FileManager->options['file_manager_settings']['show_url_path'] && $FileManag
   $commandOptions['info']['hideItems'][] = 'path';
 }
 wp_enqueue_style( 'fmp-jquery-ui-css' );
-wp_enqueue_style( 'fmp-elfinder-css' );
+wp_enqueue_style( $FileManager->is_minified_file_load('fmp-elfinder-css')['handle'] );
 wp_enqueue_style( 'fmp-elfinder-theme-css' );
 
 

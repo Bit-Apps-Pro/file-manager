@@ -117,6 +117,7 @@ abstract class FM_BootStart{
 
 		// Loading Options
 		// Options
+		// delete_option($this->prefix);
 		$this->options = get_option($this->prefix);
 		if(empty($this->options)) $this->options = array( // Setting up default values
 			'file_manager_settings' => array(
@@ -221,8 +222,9 @@ abstract class FM_BootStart{
 		// Jquery UI CSS
 		wp_register_style( 'fmp-jquery-ui-css',  $jquery_ui_url);
 
+		$elfinder_style = $this->is_minified_file_load('fmp-elfinder-css');
 		// elFinder CSS
-		wp_register_style( 'fmp-elfinder-css', $this->url('elFinder/css/elfinder.full.css'), array('fmp-jquery-ui-css') );
+		wp_register_style( $elfinder_style['handle'], $this->url('elFinder/css/elfinder'.$elfinder_style['file_type'].'css'), array('fmp-jquery-ui-css') );
 
 		// elFinder theme CSS
 		if($this->url('jquery-ui-1.11.4/jquery-ui.min.css') == $jquery_ui_url ) wp_register_style( 'fmp-elfinder-theme-css', $this->url('elFinder/css/theme.css'), array('fmp-elfinder-css') );
@@ -252,7 +254,7 @@ abstract class FM_BootStart{
 		if(WP_DEBUG) {
 			return [
 				'handle' => $handle_name,
-				'file_type' => ('fmp-elfinder-script' === $handle_name ) ? '.full.':  '.'
+				'file_type' => ('fmp-elfinder-script' === $handle_name || 'fmp-elfinder-css' === $handle_name) ? '.full.':  '.'
 			];
 		}
 

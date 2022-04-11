@@ -268,7 +268,7 @@ class FM extends FM_BootStart {
 		);
 
 		$upload_dir = wp_upload_dir(  );
-		if( $this->options['file_manager_settings']['fm-create-trash-files-folders']  && is_writable( $upload_dir['basedir'] )){
+		if( isset($this->options['file_manager_settings']['fm-create-trash-files-folders']) && $this->options['file_manager_settings']['fm-create-trash-files-folders']  && is_writable( $upload_dir['basedir'] )){
 			$opts['roots'][] = array(
 				'id'            => '1',
 				'driver'        => 'Trash',
@@ -278,7 +278,8 @@ class FM extends FM_BootStart {
 				'uploadDeny'    => array(),                // Recomend the same settings as the original volume that uses the trash
 				'uploadAllow'   => $mime->get_types(),// Same as above
 				'uploadOrder'   => array('deny', 'allow'),      // Same as above
-				'accessControl' => array(new FMAccessControl(), 'control'),                    // Same as above
+				'accessControl' => array(new FMAccessControl(), 'control'),      
+				'acceptedName' =>  array($fmAccessControll, 'accepted__name'),              // Same as above
 			);
 		}
 
