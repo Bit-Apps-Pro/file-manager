@@ -145,6 +145,8 @@ class FM extends FM_BootStart {
 					'trashHash'     =>   isset($this->options['file_manager_settings']['fm-create-trash-files-folders']) && !empty($this->options['file_manager_settings']['fm-create-trash-files-folders']) ? 't1_Lw' :'',                     // elFinder's hash of trash folder
 					'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too						
 					// 'defaults'   => array('read' => true, 'write' => true,'locked'=>true),
+					'allowChmodReadOnly'=> true, // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#allowChmodReadOnly
+					'statOwner' => true, // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#statOwner
 					
 					'attributes' => array( // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#attributes
 						array(// hide specipic folder.
