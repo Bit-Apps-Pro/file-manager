@@ -76,11 +76,6 @@ $admin_page_url = admin_url() . "admin.php?page={$FileManager->prefix}";
 // Enqueing admin assets
 $FileManager->admin_assets();
 
-
-
-// echo "<pre>";
-// echo "=======================".print_r(get_option($FileManager->prefix));
-
 // Language
 include 'language-code.php';
 global $fm_languages;
@@ -117,7 +112,7 @@ global $fm_languages;
 
 							<td>
 								<label for='root_folder_path_id'> <?php _e("Root Folder Path", 'file-manager');?> </label>
-                                <input type='text' name='root_folder_path' onchange="pathVlidation()" id='root_folder_path_id' value='<?php if (isset($FileManager->options['file_manager_settings']['root_folder_path']) && !empty($FileManager->options['file_manager_settings']['root_folder_path'])) {
+                                <input type='text' name='root_folder_path' onkeyup="pathVlidation()" id='root_folder_path_id' value='<?php if (isset($FileManager->options['file_manager_settings']['root_folder_path']) && !empty($FileManager->options['file_manager_settings']['root_folder_path'])) {
     echo esc_attr($FileManager->options['file_manager_settings']['root_folder_path']);
 }
 ?>' /></br>
@@ -141,7 +136,7 @@ global $fm_languages;
                                 <br><br>
 								<label for='root_folder_url_id'> <?php _e("Root Folder URL", 'file-manager');?> </label>
                                 &nbsp;
-                                <input type='text' name='root_folder_url' onchange="validURL()"  id='root_folder_url_id' value='<?php if (isset($FileManager->options['file_manager_settings']['root_folder_url']) && !empty($FileManager->options['file_manager_settings']['root_folder_url'])) {
+                                <input type='text' name='root_folder_url' onkeyup="validURL()"  id='root_folder_url_id' value='<?php if (isset($FileManager->options['file_manager_settings']['root_folder_url']) && !empty($FileManager->options['file_manager_settings']['root_folder_url'])) {
     echo esc_attr($FileManager->options['file_manager_settings']['root_folder_url']);
 }
 ?>' /><br/>
