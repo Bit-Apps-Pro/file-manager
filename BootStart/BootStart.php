@@ -281,7 +281,6 @@ abstract class FM_BootStart{
 
 			// Main Menu
 			add_menu_page( $this->name, $this->name, $capabilities, $this->prefix, array(&$this, 'admin_panel'), $this->url('img/icon-24x24.png'), 7 );
-
 			// Settings Page
 			add_submenu_page( $this->prefix, 'Library File Manager Settings', 'Settings', 'manage_options', $this->zip( 'Library File Manager Settings' ), array( &$this, 'settings' ) );
 
