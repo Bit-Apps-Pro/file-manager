@@ -170,7 +170,7 @@ class FM extends FM_BootStart {
 						// 	'write'  => true,
 						// 	'locked' => false,
 						// ),
-						// array( // hide specipic file type.
+						// array( // hide all files type.
 						// 	'pattern' => '/^.+/',
 						// 	'hidden' => false,
 						// 	'read'   => true,
