@@ -60,6 +60,7 @@ $fm_php_syntax_checker = new FMPHPSyntaxChecker();
 
 // Loading lanugage file
 if( isset($lang_file_url) ) wp_enqueue_script('fmp-elfinder-lang', $lang_file_url, array('fmp-elfinder-script'));
+
 ?>
 
 <div id='file-manager'>
@@ -86,7 +87,15 @@ jQuery(document).ready(function(){
         width: '<?php if(isset($FileManager->options['file_manager_settings']['size']['width'])) echo esc_js($FileManager->options['file_manager_settings']['size']['width']); ?>',
         height: '<?php if(isset($FileManager->options['file_manager_settings']['size']['height'])) echo esc_js($FileManager->options['file_manager_settings']['size']['height']); ?>',
         commandsOptions : <?php echo json_encode($commandOptions); ?>,
-        
+        rememberLastDir: false,
+        reloadClearHistory:true,
+        defaultView: 'icons',//  'list'  @ref:https://github.com/Studio-42/elFinder/wiki/Client-configuration-options-2.1#defaultView
+        sortOrder: 'asc', //'desc'
+        sortStickFolders: true, // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options-2.1#sortStickFolders
+        ui: ['toolbar', 'places', 'tree', 'path', 'stat'],
+        dragUploadAllow : 'auto',
+
+
 	});
 });
 

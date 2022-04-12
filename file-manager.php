@@ -129,7 +129,6 @@ class FM extends FM_BootStart {
 			),
 			'debug' => true,
 			'roots' => array(
-
 				array(
 					'alias'         => isset($this->options['file_manager_settings']['fm_root_folder_name']) && !empty($this->options['file_manager_settings']['fm_root_folder_name']) ? $this->options['file_manager_settings']['fm_root_folder_name'] : "WP Root",
 					'driver'        => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
@@ -179,8 +178,12 @@ class FM extends FM_BootStart {
 						// ),
 
 						),
-						
-				),
+						'copyTo'=> true, //https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#copyTo
+						'uploadMaxSize'=> 0, // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#uploadMaxSize
+						'archiveMimes' => array() ,// https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#archiveMimes
+						//'dirMode'        => 0755,            // new dirs mode (default 0755)
+						//'fileMode'       => 0644,            // new files mode (default 0644)
+					),
 				array(
 					'alias'        => 'Media',
 					'driver'        => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
@@ -209,6 +212,7 @@ class FM extends FM_BootStart {
 				'uploadOrder'   => array('deny', 'allow'),      // Same as above
 				'accessControl' => array(new FMAccessControl(), 'control'),      
 				'acceptedName' =>  array($fmAccessControll, 'accepted__name'),              // Same as above
+				
 			);
 		}
 
