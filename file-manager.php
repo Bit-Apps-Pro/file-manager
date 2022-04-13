@@ -183,6 +183,7 @@ class FM extends FM_BootStart {
 						'archiveMimes' => array() ,// https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#archiveMimes
 						//'dirMode'        => 0755,            // new dirs mode (default 0755)
 						//'fileMode'       => 0644,            // new files mode (default 0644)
+					// 'maxTargets'=> 0,
 					),
 				array(
 					'alias'        => 'Media',
