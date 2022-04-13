@@ -87,18 +87,18 @@ jQuery(document).ready(function(){
         width: '<?php if(isset($FileManager->options['file_manager_settings']['size']['width'])) echo esc_js($FileManager->options['file_manager_settings']['size']['width']); ?>',
         height: '<?php if(isset($FileManager->options['file_manager_settings']['size']['height'])) echo esc_js($FileManager->options['file_manager_settings']['size']['height']); ?>',
         commandsOptions : <?php echo json_encode($commandOptions); ?>,
-        rememberLastDir: false,
-        reloadClearHistory:true,
+        rememberLastDir: '<?php if(isset($FileManager->options['file_manager_settings']['fm-remember-last-dir'])) echo esc_js($FileManager->options['file_manager_settings']['fm-remember-last-dir']); ?>',
+        reloadClearHistory:'<?php if(isset($FileManager->options['file_manager_settings']['fm-clear-history-on-reload'])) echo esc_js($FileManager->options['file_manager_settings']['fm-clear-history-on-reload']); ?>',
         defaultView: '<?php if(isset($FileManager->options['file_manager_settings']['fm_default_view_type'])) echo esc_js($FileManager->options['file_manager_settings']['fm_default_view_type']); ?>', //  'list'  @ref:https://github.com/Studio-42/elFinder/wiki/Client-configuration-options-2.1#defaultView
-        ui: ['toolbar', 'places', 'tree', 'path', 'stat'],
-        
+        ui: <?php if(isset($FileManager->options['file_manager_settings']['fm_display_ui_options'])) echo json_encode($FileManager->options['file_manager_settings']['fm_display_ui_options']); ?>  ,
+
         
         
         sortOrder: 'asc', //'desc'
         sortStickFolders: true, // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options-2.1#sortStickFolders
         dragUploadAllow : 'auto',
         fileModeStyle: "both",
-        resizable: true,
+        resizable: true
 
 
 	});
