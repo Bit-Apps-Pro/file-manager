@@ -89,11 +89,16 @@ jQuery(document).ready(function(){
         commandsOptions : <?php echo json_encode($commandOptions); ?>,
         rememberLastDir: false,
         reloadClearHistory:true,
-        defaultView: 'icons',//  'list'  @ref:https://github.com/Studio-42/elFinder/wiki/Client-configuration-options-2.1#defaultView
+        defaultView: '<?php if(isset($FileManager->options['file_manager_settings']['fm_default_view_type'])) echo esc_js($FileManager->options['file_manager_settings']['fm_default_view_type']); ?>', //  'list'  @ref:https://github.com/Studio-42/elFinder/wiki/Client-configuration-options-2.1#defaultView
+        ui: ['toolbar', 'places', 'tree', 'path', 'stat'],
+        
+        
+        
         sortOrder: 'asc', //'desc'
         sortStickFolders: true, // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options-2.1#sortStickFolders
-        ui: ['toolbar', 'places', 'tree', 'path', 'stat'],
         dragUploadAllow : 'auto',
+        fileModeStyle: "both",
+        resizable: true,
 
 
 	});

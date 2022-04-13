@@ -17,6 +17,7 @@ if (isset($_POST) && !empty($_POST)) {
         $FileManager->options['file_manager_settings']['show_url_path'] = $_POST['show_url_path'];
     }
 
+
     $FileManager->options['file_manager_settings']['root_folder_path'] = sanitize_text_field($_POST['root_folder_path']) ? sanitize_text_field(truepath($_POST['root_folder_path'])) : '';
     $FileManager->options['file_manager_settings']['root_folder_url'] = esc_url_raw($_POST['root_folder_url']) ? esc_url_raw($_POST['root_folder_url']) : '';
 
@@ -28,6 +29,8 @@ if (isset($_POST) && !empty($_POST)) {
     $FileManager->options['file_manager_settings']['fm-create-hidden-files-folders'] = isset($_POST['fm-create-hidden-files-folders']) && !empty($_POST['fm-create-hidden-files-folders']) ? filter_var($_POST['fm-create-hidden-files-folders'], FILTER_SANITIZE_STRING) : '';
     $FileManager->options['file_manager_settings']['fm-create-trash-files-folders'] = isset($_POST['fm-create-trash-files-folders']) && !empty($_POST['fm-create-trash-files-folders']) ? filter_var($_POST['fm-create-trash-files-folders'], FILTER_SANITIZE_STRING) : '';
     $FileManager->options['file_manager_settings']['fm_root_folder_name'] = isset($_POST['fm_root_folder_name']) && !empty($_POST['fm_root_folder_name']) ? filter_var($_POST['fm_root_folder_name'], FILTER_SANITIZE_STRING) : 'WP Root';
+	$FileManager->options['file_manager_settings']['fm_default_view_type'] = isset($_POST['fm_default_view_type']) && !empty($_POST['fm_default_view_type']) ? filter_var($_POST['fm_default_view_type'], FILTER_SANITIZE_STRING) : 'icons';
+
 
 }
 
@@ -259,6 +262,17 @@ $language_code = $language_settings['code'];
 }
 ?>'>
 							</td>
+						</tr>
+						<tr>
+							<td><h4><?php _e("Default View Type", 'file-manager');?></h4></td>
+							<td>
+								<label for='fm-root-folder-name-id'></label>
+								<select id="fm_default_view_type" name="fm_default_view_type" >
+								<option disabled>Select Defualt View Type</option>
+								<option <?php selected('icons', $FileManager->options['file_manager_settings']['fm_default_view_type']);?> value='icons'>Icons</option>
+								<option <?php selected('list', $FileManager->options['file_manager_settings']['fm_default_view_type']);?> value='list'>List</option>
+								</select>
+						</td>
 						</tr>
 						<tr>
 							<td></td>
