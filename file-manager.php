@@ -127,7 +127,7 @@ class FM extends FM_BootStart {
 				 'upload' => array(new FMMediaSync(), 'onFileUpload'),
                  '*' => 'fm_logger',
 			),
-			'debug' => true,
+			'debug' => WP_DEBUG,
 			'roots' => array(
 				array(
 					'alias'         => isset($this->options['file_manager_settings']['fm_root_folder_name']) && !empty($this->options['file_manager_settings']['fm_root_folder_name']) ? $this->options['file_manager_settings']['fm_root_folder_name'] : "WP Root",
