@@ -131,6 +131,8 @@ abstract class FM_BootStart{
                     'width' => 'auto',
                     'height' => 600
                 ),
+				'fm_default_view_type' => 'icons',
+				'fm_display_ui_options' => []
 			),
 		);
 		register_shutdown_function(array(&$this, 'save_options'));

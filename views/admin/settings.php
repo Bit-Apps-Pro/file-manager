@@ -205,13 +205,16 @@ $language_code = $language_settings['code'];
 						<tr>
 							<td><h4><?php _e("Size", 'file-manager');?></h4></td>
 							<td>
-								<label for='fm-width-id'><?php _e("Width", 'file-manager');?></label><input id='fm-width-id' type='text' name='width' value='<?php if (isset($FileManager->options['file_manager_settings']['size']['width']) && !empty($FileManager->options['file_manager_settings']['size']['width'])) {
+								<label for='fm-width-id'><?php _e("Width", 'file-manager');?></label>
+								&nbsp;&nbsp;&nbsp;<input id='fm-width-id' type='text' name='width' value='<?php if (isset($FileManager->options['file_manager_settings']['size']['width']) && !empty($FileManager->options['file_manager_settings']['size']['width'])) {
     echo esc_attr($FileManager->options['file_manager_settings']['size']['width']);
 } else {
     echo 'auto';
 }
 ?>'>
-								<label for='fm-height-id'><?php _e("Height", 'file-manager');?></label><input id='fm-height-id' type='text' name='height' value='<?php if (isset($FileManager->options['file_manager_settings']['size']['height']) && !empty($FileManager->options['file_manager_settings']['size']['height'])) {
+<br/>
+								<label for='fm-height-id'><?php _e("Height", 'file-manager');?></label>
+								&nbsp;&nbsp;<input id='fm-height-id' type='text' name='height' value='<?php if (isset($FileManager->options['file_manager_settings']['size']['height']) && !empty($FileManager->options['file_manager_settings']['size']['height'])) {
     echo esc_attr($FileManager->options['file_manager_settings']['size']['height']);
 } else {
     echo 400;
