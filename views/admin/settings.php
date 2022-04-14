@@ -269,11 +269,14 @@ $language_code = $language_settings['code'];
 						<tr>
 							<td><h4><?php _e("Default View Type", 'file-manager');?></h4></td>
 							<td>
+								<?php
+									$default_view_type = isset($FileManager->options['file_manager_settings']['fm_default_view_type']) ? $FileManager->options['file_manager_settings']['fm_default_view_type'] : 'icon'; 
+								?>
 								<label for='fm-root-folder-name-id'></label>
 								<select id="fm_default_view_type" name="fm_default_view_type" >
 								<option disabled>Select Defualt View Type</option>
-								<option <?php selected('icons', $FileManager->options['file_manager_settings']['fm_default_view_type']);?> value='icons'>Icons</option>
-								<option <?php selected('list', $FileManager->options['file_manager_settings']['fm_default_view_type']);?> value='list'>List</option>
+								<option <?php selected('icons', $default_view_type);?> value='icons'>Icons</option>
+								<option <?php selected('list', $default_view_type);?> value='list'>List</option>
 								</select>
 						</td>
 						</tr>

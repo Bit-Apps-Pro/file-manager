@@ -115,11 +115,10 @@ abstract class FM_BootStart{
 		// Setting php.ini variables
 		$this->php_ini_settings();
 
-		// Loading Options
 		// Options
-		// delete_option($this->prefix);
-		$this->options = get_option($this->prefix);
-		if(empty($this->options)) $this->options = array( // Setting up default values
+
+		// Default options
+		$default_options = [
 			'file_manager_settings' => array(
 				'show_url_path' => 'show',
 				'language' => array(
@@ -134,10 +133,16 @@ abstract class FM_BootStart{
 				'fm_default_view_type' => 'icons',
 				'fm_display_ui_options' => ['toolbar', 'places', 'tree', 'path', 'stat']
 			),
-		);
-		register_shutdown_function(array(&$this, 'save_options'));
+		];
+		
+		$this->options = get_option($this->prefix);
+		if(empty($this->options)){
+			$this->options = $default_options;
+		} else {
+			$this->options = array_merge($default_options, $this->options);
+		}
 
-		//auto::  $this->options = new FM_OptionsManager($this->name);
+		register_shutdown_function(array(&$this, 'save_options'));
 
 		// Creating upload folder.
 	   	$this->upload_folder();
