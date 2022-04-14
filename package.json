@@ -8,8 +8,9 @@
     "sass:compile": "node-sass sass/style.sass -o css --output-style expanded --source-map true",
     "sass:minify": "cleancss --format breakWith=lf --source-map --source-map-inline-sources --output css/style.min.css css/style.css",
     "sass:build": "npm run sass:compile && npm run sass:minify",
-    "sass:watch": "onchange 'sass/**/*.sass' -- npm run sass:build",
+    "sass:watch": "npm run sass:build && onchange 'sass/**/*.sass' -- npm run sass:build",
     "build:elfinder": "./tools/build_elfinder.sh",
+    "elfinder:watch": "npm run build:elfinder && onchange 'submodule/sources/elFinder/**/*' -- npm run build:elfinder",
     "build:copy": "node tools/build_copy.js",
     "build:zip": "node tools/zip_build.js",
     "build:prod": "npm run build:elfinder && npm run sass:build && npm run build:copy && npm run build:zip"
