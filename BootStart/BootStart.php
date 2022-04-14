@@ -115,10 +115,10 @@ abstract class FM_BootStart{
 		// Setting php.ini variables
 		$this->php_ini_settings();
 
-		// Loading Options
 		// Options
-		$this->options = get_option($this->prefix);
-		if(empty($this->options)) $this->options = array( // Setting up default values
+
+		// Default options
+		$default_options = [
 			'file_manager_settings' => array(
 				'show_url_path' => 'show',
 				'language' => array(
@@ -130,11 +130,19 @@ abstract class FM_BootStart{
                     'width' => 'auto',
                     'height' => 600
                 ),
+				'fm_default_view_type' => 'icons',
+				'fm_display_ui_options' => ['toolbar', 'places', 'tree', 'path', 'stat']
 			),
-		);
-		register_shutdown_function(array(&$this, 'save_options'));
+		];
+		
+		$this->options = get_option($this->prefix);
+		if(empty($this->options)){
+			$this->options = $default_options;
+		} else {
+			$this->options = array_merge($default_options, $this->options);
+		}
 
-		//auto::  $this->options = new FM_OptionsManager($this->name);
+		register_shutdown_function(array(&$this, 'save_options'));
 
 		// Creating upload folder.
 	   	$this->upload_folder();
@@ -221,8 +229,9 @@ abstract class FM_BootStart{
 		// Jquery UI CSS
 		wp_register_style( 'fmp-jquery-ui-css',  $jquery_ui_url);
 
+		$elfinder_style = $this->is_minified_file_load('fmp-elfinder-css');
 		// elFinder CSS
-		wp_register_style( 'fmp-elfinder-css', $this->url('elFinder/css/elfinder.full.css'), array('fmp-jquery-ui-css') );
+		wp_register_style( $elfinder_style['handle'], $this->url('elFinder/css/elfinder'.$elfinder_style['file_type'].'css'), array('fmp-jquery-ui-css') );
 
 		// elFinder theme CSS
 		if($this->url('jquery-ui-1.11.4/jquery-ui.min.css') == $jquery_ui_url ) wp_register_style( 'fmp-elfinder-theme-css', $this->url('elFinder/css/theme.css'), array('fmp-elfinder-css') );
@@ -252,7 +261,7 @@ abstract class FM_BootStart{
 		if(WP_DEBUG) {
 			return [
 				'handle' => $handle_name,
-				'file_type' => ('fmp-elfinder-script' === $handle_name ) ? '.full.':  '.'
+				'file_type' => ('fmp-elfinder-script' === $handle_name || 'fmp-elfinder-css' === $handle_name) ? '.full.':  '.'
 			];
 		}
 
@@ -279,7 +288,6 @@ abstract class FM_BootStart{
 
 			// Main Menu
 			add_menu_page( $this->name, $this->name, $capabilities, $this->prefix, array(&$this, 'admin_panel'), $this->url('img/icon-24x24.png'), 7 );
-
 			// Settings Page
 			add_submenu_page( $this->prefix, 'Library File Manager Settings', 'Settings', 'manage_options', $this->zip( 'Library File Manager Settings' ), array( &$this, 'settings' ) );
 

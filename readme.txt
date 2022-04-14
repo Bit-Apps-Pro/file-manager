@@ -4,7 +4,7 @@ Tags: file manager, wp file manager, FTP, elfinder, file Browser, manage files, 
 Requires at least: 4.0.0
 Tested up to: 5.9.3
 Requires PHP: 5.6
-Stable tag: 5.2.4
+Stable tag: 5.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,7 +18,6 @@ Just install the plugin by following the standard WordPress plugin install proce
 
 = Key Features =
 
-+ Automatic media sync
 + Upload, Download and Delete operations
 + All operations with files and folders (copy, move, upload, create folder/file, rename, archive, extract, edit, etc.)
 + Download, upload, cut, copy, duplicate, paste, delete, create directory, create file, edit file, rename, archive, extract
@@ -32,6 +31,8 @@ Just install the plugin by following the standard WordPress plugin install proce
 + Calculate directory sizes
 + Video and audio preview/play
 + File manager supports file search and sort
++ Automatic media sync
++ Trash folder 
 
 = Extended Features =
 
@@ -134,11 +135,22 @@ Yes, I will support the plugin.
 
 == Upgrade Notice ==
 
-= 5.2.4 =
+= 5.2.5 =
 + No special requirements.
 
 
 == Changelog ==
+
+= 5.2.5 (14 April, 2022) =
+* File preview design issue fixed.
+* Code editor design issue fixed.
+* Full screen design issue fixed.
+* Trash folder feature added.
+* Plugin debug is synchronized with WP_DEBUG
+* Setttings configuration issue fixed
+* Codemirror issue fixed
+* Code quality improvement
+* Other minor bug fixes
 
 = 5.2.4 (10 April, 2022) =
 * Tested compatability for WordPress 5.9.3
