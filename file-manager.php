@@ -4,7 +4,7 @@
  * Plugin Name: Library File Manager
  * Author: Aftabul Islam
  * Author URI: https://wpjos.com
- * Version: 5.2.4
+ * Version: 5.2.5
  * Author Email: toaihimel@gmail.com
  * PHP version: 5.6
  * Text domain: file-manager
@@ -76,8 +76,8 @@ class FM extends FM_BootStart {
 
 	public function __construct($name){
 
-		$this->version = '5.2.4';
-		$this->version_no = 524;
+		$this->version = '5.2.5';
+		$this->version_no = 525;
 		$this->site = 'https://wpjos.com';
 		$this->giribaz_landing_page = 'https://wpjos.com/library-file-manager-plugin';
 		$this->support_page = 'https://wpjos.com/support/';
