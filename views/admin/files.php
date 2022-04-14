@@ -60,7 +60,6 @@ $fm_php_syntax_checker = new FMPHPSyntaxChecker();
 
 // Loading lanugage file
 if( isset($lang_file_url) ) wp_enqueue_script('fmp-elfinder-lang', $lang_file_url, array('fmp-elfinder-script'));
-
 ?>
 
 <div id='file-manager'>
@@ -90,7 +89,7 @@ jQuery(document).ready(function(){
         rememberLastDir: '<?php if(isset($FileManager->options['file_manager_settings']['fm-remember-last-dir'])) echo esc_js($FileManager->options['file_manager_settings']['fm-remember-last-dir']); ?>',
         reloadClearHistory:'<?php if(isset($FileManager->options['file_manager_settings']['fm-clear-history-on-reload'])) echo esc_js($FileManager->options['file_manager_settings']['fm-clear-history-on-reload']); ?>',
         defaultView: '<?php if(isset($FileManager->options['file_manager_settings']['fm_default_view_type'])) echo esc_js($FileManager->options['file_manager_settings']['fm_default_view_type']); ?>', //  'list'  @ref:https://github.com/Studio-42/elFinder/wiki/Client-configuration-options-2.1#defaultView
-        ui: <?php if(isset($FileManager->options['file_manager_settings']['fm_display_ui_options'])) echo json_encode($FileManager->options['file_manager_settings']['fm_display_ui_options']); ?>  ,
+        ui: <?php if(isset($FileManager->options['file_manager_settings']['fm_display_ui_options'])) echo json_encode($FileManager->options['file_manager_settings']['fm_display_ui_options']); else echo json_encode(['toolbar', 'places', 'tree', 'path', 'stat']) ?>  ,
 
         
         

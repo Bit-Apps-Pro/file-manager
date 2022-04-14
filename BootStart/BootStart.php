@@ -132,7 +132,7 @@ abstract class FM_BootStart{
                     'height' => 600
                 ),
 				'fm_default_view_type' => 'icons',
-				'fm_display_ui_options' => []
+				'fm_display_ui_options' => ['toolbar', 'places', 'tree', 'path', 'stat']
 			),
 		);
 		register_shutdown_function(array(&$this, 'save_options'));
