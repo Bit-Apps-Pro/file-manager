@@ -2,6 +2,7 @@
 /**
  *
  * Plugin Name: Library File Manager
+ * Plugin URI: https://wpjos.com/library-file-manager-plugin/
  * Author: Aftabul Islam
  * Author URI: https://wpjos.com
  * Version: 5.2.5

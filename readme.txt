@@ -1,7 +1,7 @@
 === Library File Manager ===
 Contributors: aihimel
 Tags: file manager, wp file manager, FTP, elfinder, file Browser, manage files, upload, delete, rename, copy, move, online file browser, remote file manager, drag and drop, folder upload
-Requires at least: 4.0.0
+Requires at least: 4.0
 Tested up to: 5.9.3
 Requires PHP: 5.6
 Stable tag: 5.2.5
@@ -76,7 +76,47 @@ Just install the plugin by following the standard WordPress plugin install proce
 We try to make our plugin compatible with as many plugin/theme as possible. If you find any compatability issue with any 3rd party plugin/theme, kindly report it to us via our plugin support forum or on our website.
 
 **Plugins**
+
 + WPML -- Best WP plugin to translate and display your website in any languages
+
+== Supported Languages(36) ==
+
++ Arabic
++ Bulgarian
++ Catalan
++ Czech
++ Danish
++ German
++ Greek
++ English
++ Español
++ Persian/Farsi
++ Faroese
++ Française/French
++ Canadienne française/French Canadian
++ Hebrew/hébreu
++ Croatian
++ Hungarian
++ Indonesian
++ Italiano/Italian
++ Japanese
++ Korean
++ Dutch
++ Norwegian
++ Polskie/Polish
++ Português/Porguese
++ Română/Romanian/Moldavian/Moldovan
++ Russian
++ Sinhala
++ Slovak
++ Slovenian
++ Serbian
++ Swedish
++ Türkçe/Turkish
++ Uyghur
++ Ukrainian
++ Vietnamese
++ Chinese
 
 == Installation ==
 
