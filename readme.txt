@@ -143,19 +143,19 @@ We try to make our plugin compatible with as many plugin/theme as possible. If y
 
 = Invalid backend configuration. Readable volumes not available. =
 
-Please check your file permission from your hosting panel. The permission must be 0755 for file/folder. If you are using a vps(virtual private server) then you must ensure that the owner of your installation is PHP aka www-data
+Please check your file permission from your hosting panel. The permission must be 0755 for file/folder. If you are using a vps(virtual private server) then you must ensure that the owner of your installation is PHP aka www-data. Another reason could be wrong root folder path/url. Inserting a correct root folder path/URL should fix the issue.
 
 = I can not upload larger files then *MB =
 
-You can upload any size of file.
+You can upload any size of file. Library file manager plugin uploads files in chunks. So a very large file can be easily uploaded & downloaded.
 
 = Can I preview .psd and document files? =
 
-Yes you can.
+Yes, documents like PSD, DOCX can be previewd via file manager preview.
 
-= Will I support the plugin? =
+= Can I change file permission like cPanel? =
 
-Yes, I will support the plugin.
+Yes, file/folder permission can be changed like cPanel and other hosting management interfaces. It is very easy. Just right click on the file and you will see a menu named **Change Mode **. Clicking will open a dialogue box, where you can update the file permission, just like cPanel.
 
 
 == Screenshots ==
@@ -170,7 +170,9 @@ Yes, I will support the plugin.
 8. Edit file
 9. Right Click Menu
 10. Library File manager settings page
-11. Server details.
+11. Server details
+12. Emailing File
+13. Changing file permission
 
 
 == Upgrade Notice ==
@@ -249,13 +251,13 @@ Yes, I will support the plugin.
 * PDF preview added
 * PSD preview added
 
-= 5.1.1 (22 February 2019)=
+= 5.1.1 (22 February 2019) =
 * Minor Bug fixed.
 * Code & Image editor added.
 * WYSIWYG Editor added.
 * Chunked file upload added. Upload large file regardless your php.ini settings.
 
-= 5.1.0 (21 February 2019)=
+= 5.1.0 (21 February 2019) =
 * Updated to elFinder 2.1.46
 * Code Editor added for easy editing [Ace, Codemirror, TinyMCE & others].
 * Supported file format extended.
