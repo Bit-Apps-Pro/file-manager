@@ -165,14 +165,6 @@ global $fm_languages;
 								</script>
                             </td>
 						</tr>
-						<!-- <tr>
-							<td></td>
-							<td><small><?php _e("Default Path:", 'file-manager');?> <b><?php echo ABSPATH; ?></b></small></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td><small><?php _e("Default URL:", 'file-manager');?> <b><?php echo site_url(); ?></b></small></td>
-						</tr> -->
 						<tr>
 							<td></td>
 							<td style="text-align: center;"><small><?php _e("Root folder path and URL must be correct, otherwise it won't work.", 'file-manager');?></small></td>
