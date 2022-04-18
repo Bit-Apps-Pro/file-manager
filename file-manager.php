@@ -200,6 +200,7 @@ class FM extends FM_BootStart {
 
 				array(
 					'driver'        => 'FTP',
+					'alias'        => 'FTP Server',
 					'host'          => 'localhost',
 					'user'          => 'hasan',
 					'pass'          => '123456789',
