@@ -307,6 +307,8 @@ abstract class FM_BootStart{
 			
 			// System Page
 			add_submenu_page( $this->prefix, 'System Information', 'System Info', 'manage_options', $this->zip( 'System Information' ), array( &$this, 'systems' ), 3 );
+			// System Page
+			add_submenu_page( $this->prefix, 'PHP Config', 'PHP Config', 'manage_options', $this->zip( 'PHP Config' ), array( &$this, 'php_config' ), 4 );
 
 
 		}
@@ -333,7 +335,6 @@ abstract class FM_BootStart{
 		if(!current_user_can('manage_options')) die( $this->render('', 'access-denied') );
 
 		$this->render('', 'admin' . DS . 'settings');
-
 	}
 
 	/**
@@ -345,8 +346,16 @@ abstract class FM_BootStart{
 		if(!current_user_can('manage_options')) die( $this->render('', 'access-denied') );
 
 		$this->render('', 'admin' . DS . 'utility');
+	}
 
+	/**
+	 * Update php configuration
+	 */
+	public function php_config(){
 
+		if(!current_user_can('manage_options')) die( $this->render('', 'access-denied') );
+
+		$this->render('', 'admin' . DS . 'php-config');
 
 	}
 
