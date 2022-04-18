@@ -31,8 +31,17 @@ if (isset($_POST) && !empty($_POST)) {
 	$FileManager->options['file_manager_settings']['fm-remember-last-dir'] = isset($_POST['fm-remember-last-dir']) && !empty($_POST['fm-remember-last-dir']) ? filter_var($_POST['fm-remember-last-dir'], FILTER_SANITIZE_STRING ) : 'checked';
 	$FileManager->options['file_manager_settings']['fm-clear-history-on-reload'] = isset($_POST['fm-clear-history-on-reload']) && !empty($_POST['fm-clear-history-on-reload']) ? filter_var($_POST['fm-clear-history-on-reload'], FILTER_SANITIZE_STRING ) : 'checked';
 	$FileManager->options['file_manager_settings']['fm_display_ui_options'] = isset($_POST['fm_display_ui_options']) && !empty($_POST['fm_display_ui_options']) ? filter_var_array($_POST['fm_display_ui_options']) : ['toolbar', 'places', 'tree', 'path', 'stat'];
-
+	/**
+	 * FTP Server.
+	 */
+	$FileManager->options['file_manager_settings']['fm_allow_ftp_server'] = isset($_POST['fm_allow_ftp_server']) && !empty($_POST['fm_allow_ftp_server']) ? filter_var($_POST['fm_allow_ftp_server'], FILTER_SANITIZE_STRING ) : 'checked';
+	$FileManager->options['file_manager_settings']['fm_ftp_host_name'] = isset($_POST['fm_ftp_host_name']) && !empty($_POST['fm_ftp_host_name']) ? filter_var($_POST['fm_ftp_host_name'], FILTER_SANITIZE_STRING ) : 'localhost';
+	$FileManager->options['file_manager_settings']['fm_ftp_username'] = isset($_POST['fm_ftp_username']) && !empty($_POST['fm_ftp_username']) ? filter_var($_POST['fm_ftp_username'], FILTER_SANITIZE_STRING ) : '';
+	$FileManager->options['file_manager_settings']['fm_ftp_password'] = isset($_POST['fm_ftp_password']) && !empty($_POST['fm_ftp_password']) ? filter_var($_POST['fm_ftp_password'], FILTER_SANITIZE_STRING ) : '';
+	$FileManager->options['file_manager_settings']['fm_ftp_port'] = isset($_POST['fm_ftp_port']) && !empty($_POST['fm_ftp_port']) ? filter_var($_POST['fm_ftp_port'], FILTER_SANITIZE_NUMBER_INT  ) : 21;
+	$FileManager->options['file_manager_settings']['fm_ftp_path'] = sanitize_text_field($_POST['fm_ftp_path']) ? sanitize_text_field(truepath($_POST['fm_ftp_path'])) : '/';
 }
+
 
 /**
  * This function is to replace PHP's extremely buggy realpath().
@@ -300,6 +309,52 @@ $language_code = $language_settings['code'];
 								<?php } ?>
 								</select>
 						</td>
+						</tr>
+						<!--
+							FTP Server configuration
+
+						 -->
+						<tr>
+							<td><h4><label for='fm_allow_ftp_server'><?php _e("Allow FTP/SFTP Sever", 'file-manager');?></label></h4></td>
+							<td>
+								<input id='fm_allow_ftp_server' type='checkbox' name='fm_allow_ftp_server' <?php if (isset($FileManager->options['file_manager_settings']['fm_allow_ftp_server']) && !empty($FileManager->options['file_manager_settings']['fm_allow_ftp_server'])) echo "checked"?> value="fm_allow_ftp_server">
+								<small><?php _e("FTP/SFTP Server.", 'file-manager');?></small>
+							</td>
+						</tr>
+						<tr>
+							<td><h4><?php _e("FTP/SFTP Host Name", 'file-manager');?></h4></td>
+							<td>
+								<label for='fm_ftp_host_name'></label>
+								<input id='fm_ftp_host_name' type='text' name='fm_ftp_host_name' value='<?php echo   (isset($FileManager->options['file_manager_settings']['fm_ftp_host_name']) && !empty($FileManager->options['file_manager_settings']['fm_ftp_host_name'])) ? esc_attr($FileManager->options['file_manager_settings']['fm_ftp_host_name']) : 'localhost';?>'>
+							</td>
+						</tr>
+						<tr>
+							<td><h4><?php _e("FTP/SFTP Username", 'file-manager');?></h4></td>
+							<td>
+								<label for='fm_ftp_username'></label>
+								<input id='fm_ftp_username' type='text' name='fm_ftp_username' value='<?php echo   (isset($FileManager->options['file_manager_settings']['fm_ftp_username']) && !empty($FileManager->options['file_manager_settings']['fm_ftp_username'])) ? esc_attr($FileManager->options['file_manager_settings']['fm_ftp_username']) : '';?>'>
+							</td>
+						</tr>
+						<tr>
+							<td><h4><?php _e("FTP/SFTP Password", 'file-manager');?></h4></td>
+							<td>
+								<label for='fm_ftp_password'></label>
+								<input id='fm_ftp_password' type='password' name='fm_ftp_password' value='<?php echo   (isset($FileManager->options['file_manager_settings']['fm_ftp_password']) && !empty($FileManager->options['file_manager_settings']['fm_ftp_password'])) ? esc_attr($FileManager->options['file_manager_settings']['fm_ftp_password']) : '';?>'>
+							</td>
+						</tr>
+						<tr>
+							<td><h4><?php _e("FTP/SFTP Port", 'file-manager');?></h4></td>
+							<td>
+								<label for='fm_ftp_port'></label>
+								<input id='fm_ftp_port' type='number' name='fm_ftp_port' value='<?php echo   (isset($FileManager->options['file_manager_settings']['fm_ftp_port']) && !empty($FileManager->options['file_manager_settings']['fm_ftp_port'])) ? esc_attr($FileManager->options['file_manager_settings']['fm_ftp_port']) : '';?>'>
+							</td>
+						</tr>
+						<tr>
+							<td><h4><?php _e("FTP/SFTP Path", 'file-manager');?></h4></td>
+							<td>
+								<label for='fm_ftp_path'></label>
+								<input id='fm_ftp_path' type='text' name='fm_ftp_path' value='<?php echo   (isset($FileManager->options['file_manager_settings']['fm_ftp_path']) && !empty($FileManager->options['file_manager_settings']['fm_ftp_path'])) ? esc_attr($FileManager->options['file_manager_settings']['fm_ftp_path']) : '';?>'>
+							</td>
 						</tr>
 						<tr>
 							<td></td>

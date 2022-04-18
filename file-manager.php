@@ -197,6 +197,22 @@ class FM extends FM_BootStart {
 					'accessControl' => array(new FMAccessControl(), 'control'),
 					'disabled'      => array(),    // List of disabled operations
 				),
+
+				array(
+					'driver'        => 'FTP',
+					'host'          => 'localhost',
+					'user'          => 'hasan',
+					'pass'          => '123456789',
+					'port'          => 21,
+					'mode'          => 'passive',
+					'path'          => '/',
+					'timeout'       => 10,
+					'owner'         => true,
+					'tmbPath'       => '',
+					'tmpPath'       => '',
+					'dirMode'       => 0755,
+					'fileMode'      => 0644
+				)
 			)
 		);
 		/**
