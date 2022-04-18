@@ -29,27 +29,30 @@ wp_enqueue_style('fmp-admin-style');
 						</tr> -->
         <?php
         
+            $changeable_options = ['allow_url_fopen', 'display_errors', 'error_reporting', 'file_uploads', 'include_path', 'log_errors', 'mail.force_extra_parameters',
+        'max_execution_time', 'max_input_time', 'max_input_vars', 'memory_limit', 'open_basedir', 'post_max_size', 'session.save_path', 'short_open_tag', 'upload_max_filesize'];
             $options = ini_get_all();
-            // print_r($options);
             foreach($options as $key => $value){ 
-                if( '' === $value['local_value'] || '1' === $value['local_value'] || '0' === $value['local_value'] ){?>
+                if(in_array($key,  $changeable_options)){
+                    if( '' === $value['local_value'] || '1' === $value['local_value'] || '0' === $value['local_value'] ){?>
+                            <tr>
+                                <td><h4><?php _e($key, 'file-manager');?></h4></td>
+                                <td>
+                                    <label for='<?php echo $key?>'></label>
+                                    <input id='<?php echo $key?>' type='checkbox' name='<?php echo $key?>'  <?php if($value['local_value']) echo "checked"?>   value='<?php echo $value['local_value']?>'>
+                                </td>
+                            </tr>
+                    <?php }else{ ?>
                         <tr>
-							<td><h4><?php _e($key, 'file-manager');?></h4></td>
-							<td>
-								<label for='<?php echo $key?>'></label>
-								<input id='<?php echo $key?>' type='checkbox' name='<?php echo $key?>'  <?php if($value['local_value']) echo "checked"?>   value='<?php echo $value['local_value']?>'>
-							</td>
-						</tr>
-                <?php }else{ ?>
-                    <tr>
-                        <td><h4><?php _e($key, 'file-manager');?></h4></td>
-                        <td>
-                            <label for='<?php echo $key?>'></label>
-                            <input id='<?php echo $key?>' type='text' name='<?php echo $key?>' value='<?php echo $value['local_value']?>'>
-                        </td>
-                    </tr>
-                <?php
-                    }
+                            <td><h4><?php _e($key, 'file-manager');?></h4></td>
+                            <td>
+                                <label for='<?php echo $key?>'></label>
+                                <input id='<?php echo $key?>' type='text' name='<?php echo $key?>' value='<?php echo $value['local_value']?>'>
+                            </td>
+                        </tr>
+                    <?php
+                        }
+                }
             } ?>
                 </table>
             </form>
