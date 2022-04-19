@@ -307,7 +307,7 @@ abstract class FM_BootStart{
 			
 			// System Page
 			add_submenu_page( $this->prefix, 'System Information', 'System Info', 'manage_options', $this->zip( 'System Information' ), array( &$this, 'systems' ), 3 );
-			// System Page
+			// PHP Config Page
 			add_submenu_page( $this->prefix, 'PHP Config', 'PHP Config', 'manage_options', $this->zip( 'PHP Config' ), array( &$this, 'php_config' ), 4 );
 
 
