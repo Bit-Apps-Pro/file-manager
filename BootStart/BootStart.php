@@ -308,6 +308,9 @@ abstract class FM_BootStart{
 			// System Page
 			add_submenu_page( $this->prefix, 'System Information', 'System Info', 'manage_options', $this->zip( 'System Information' ), array( &$this, 'systems' ), 3 );
 
+			// System Page
+			add_submenu_page( $this->prefix, 'File Manager Logger', 'FM Logger', 'manage_options', $this->zip( 'File Manager Logger' ), array( &$this, 'log' ), 5 );
+
 
 		}
 
@@ -333,7 +336,6 @@ abstract class FM_BootStart{
 		if(!current_user_can('manage_options')) die( $this->render('', 'access-denied') );
 
 		$this->render('', 'admin' . DS . 'settings');
-
 	}
 
 	/**
@@ -345,9 +347,17 @@ abstract class FM_BootStart{
 		if(!current_user_can('manage_options')) die( $this->render('', 'access-denied') );
 
 		$this->render('', 'admin' . DS . 'utility');
+	}
 
+	/**
+	 * Add log activity.
+	 *
+	 * */
+	public function log(){
 
+		if(!current_user_can('manage_options')) die( $this->render('', 'access-denied') );
 
+		$this->render('', 'admin' . DS . 'log');
 	}
 
 	/**

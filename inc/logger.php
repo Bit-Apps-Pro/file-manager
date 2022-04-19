@@ -9,7 +9,7 @@
 // Security check
 defined('ABSPATH') || die();
 
-if(!function_exists('fm_logger')):
+if (!function_exists('fm_logger')):
 
 /**
  *
@@ -18,27 +18,69 @@ if(!function_exists('fm_logger')):
  * Logs file library file manager actions
  *
  * */
-function fm_logger($cmd, $result, $args, $elfinder) {
+    function fm_logger($cmd, $result, $args, $elfinder)
+{
 
-	global $FileManager;
+        global $FileManager;
 
-	$log = sprintf("[%s] %s: \n", date('r'), strtoupper($cmd));
+        $log = sprintf("[%s] %s: \n", date('r'), strtoupper($cmd));
+        error_log(print_r($result, true));
+        foreach ($result as $key => $value) {
+            if (empty($value)) {
+                continue;
+            }
+            $data = array();
+            if (in_array($key, array('error', 'warning'))) {
+                array_push($data, implode(' ', $value)); // logs only error and warning.
+            }
+            $log .= sprintf(' %s(%s)', $key, implode(', ', $data));
+        }
+        $log .= "\n";
 
-	foreach ($result as $key => $value) {
-		if (empty($value)) {
-			continue;
+        $log = get_option('fm_log', '') . $log;
+        update_option('fm_log', $log);
+
+    }
+
+/**
+ *
+ * @function logger
+ *
+ * Logs file library file manager actions
+ *
+ * */
+    function fm_logger2($cmd, $result, $args, $elfinder)
+{
+
+        global $FileManager;
+
+        $log['date'] = date('r');
+        $log['cmd'] = strtoupper($cmd);
+        foreach ($result as $key => $value) {
+            if (empty($value)) {
+                continue;
+            }
+            $data = array();
+            if (in_array($key, array('error', 'warning'))) {
+                array_push($data, implode(' ', $value)); // logs only error and warning.
+            }
+            $log['key'] = $key;
+            $log['err'] = $data;
+        }
+		
+        $prev_logs = get_option('fm_log2', array());
+		if(count($prev_logs)){
+			if(count($prev_logs) == 1){
+				$prev_logs[count($prev_logs)] = $log;	
+			}else{
+				$prev_logs[count($prev_logs)] = $log;	
+			}
+		}else{
+			$prev_logs[] = $log;
 		}
-		$data = array();
-		if (in_array($key, array('error', 'warning'))) {
-			array_push($data, implode(' ', $value)); // logs only error and warning.
-		}
-		$log .= sprintf(' %s(%s)', $key, implode(', ', $data));
-	}
-	$log .= "\n";
 
-	$log = get_option('fm_log', '') . $log;
-	update_option('fm_log', $log);
+        update_option('fm_log2', $prev_logs);
 
-}
+    }
 
 endif;
