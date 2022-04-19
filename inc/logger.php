@@ -23,37 +23,6 @@ if (!function_exists('fm_logger')):
 
         global $FileManager;
 
-        $log = sprintf("[%s] %s: \n", date('r'), strtoupper($cmd));
-        error_log(print_r($result, true));
-        foreach ($result as $key => $value) {
-            if (empty($value)) {
-                continue;
-            }
-            $data = array();
-            if (in_array($key, array('error', 'warning'))) {
-                array_push($data, implode(' ', $value)); // logs only error and warning.
-            }
-            $log .= sprintf(' %s(%s)', $key, implode(', ', $data));
-        }
-        $log .= "\n";
-
-        $log = get_option('fm_log', '') . $log;
-        update_option('fm_log', $log);
-
-    }
-
-/**
- *
- * @function logger
- *
- * Logs file library file manager actions
- *
- * */
-    function fm_logger2($cmd, $result, $args, $elfinder)
-{
-
-        global $FileManager;
-
         $log['date'] = date('r');
         $log['cmd'] = strtoupper($cmd);
         foreach ($result as $key => $value) {
@@ -68,7 +37,7 @@ if (!function_exists('fm_logger')):
             $log['err'] = $data;
         }
 		
-        $prev_logs = get_option('fm_log2', array());
+        $prev_logs = get_option('fm_log', array());
 		if(count($prev_logs)){
 			if(count($prev_logs) == 1){
 				$prev_logs[count($prev_logs)] = $log;	
@@ -79,7 +48,7 @@ if (!function_exists('fm_logger')):
 			$prev_logs[] = $log;
 		}
 
-        update_option('fm_log2', $prev_logs);
+        update_option('fm_log', $prev_logs);
 
     }
 
