@@ -28,13 +28,14 @@ if (isset($_POST) && !empty($_POST)) {
     $FileManager->options['file_manager_settings']['fm-create-trash-files-folders'] = isset($_POST['fm-create-trash-files-folders']) && !empty($_POST['fm-create-trash-files-folders']) ? filter_var($_POST['fm-create-trash-files-folders'], FILTER_SANITIZE_STRING) : '';
     $FileManager->options['file_manager_settings']['fm_root_folder_name'] = isset($_POST['fm_root_folder_name']) && !empty($_POST['fm_root_folder_name']) ? filter_var($_POST['fm_root_folder_name'], FILTER_SANITIZE_STRING) : 'WP Root';
 	$FileManager->options['file_manager_settings']['fm_default_view_type'] = isset($_POST['fm_default_view_type']) && !empty($_POST['fm_default_view_type']) ? filter_var($_POST['fm_default_view_type'], FILTER_SANITIZE_STRING) : 'icons';
-	$FileManager->options['file_manager_settings']['fm-remember-last-dir'] = isset($_POST['fm-remember-last-dir']) && !empty($_POST['fm-remember-last-dir']) ? filter_var($_POST['fm-remember-last-dir'], FILTER_SANITIZE_STRING ) : 'checked';
-	$FileManager->options['file_manager_settings']['fm-clear-history-on-reload'] = isset($_POST['fm-clear-history-on-reload']) && !empty($_POST['fm-clear-history-on-reload']) ? filter_var($_POST['fm-clear-history-on-reload'], FILTER_SANITIZE_STRING ) : 'checked';
+	$FileManager->options['file_manager_settings']['fm-remember-last-dir'] = isset($_POST['fm-remember-last-dir']) && !empty($_POST['fm-remember-last-dir']) ? filter_var($_POST['fm-remember-last-dir'], FILTER_SANITIZE_STRING ) : '';
+	$FileManager->options['file_manager_settings']['fm-clear-history-on-reload'] = isset($_POST['fm-clear-history-on-reload']) && !empty($_POST['fm-clear-history-on-reload']) ? filter_var($_POST['fm-clear-history-on-reload'], FILTER_SANITIZE_STRING ) : '';
 	$FileManager->options['file_manager_settings']['fm_display_ui_options'] = isset($_POST['fm_display_ui_options']) && !empty($_POST['fm_display_ui_options']) ? filter_var_array($_POST['fm_display_ui_options']) : ['toolbar', 'places', 'tree', 'path', 'stat'];
 	/**
-	 * FTP Server.
+	 * FTP Server. 
 	 */
-	$FileManager->options['file_manager_settings']['fm_allow_ftp_server'] = isset($_POST['fm_allow_ftp_server']) && !empty($_POST['fm_allow_ftp_server']) ? filter_var($_POST['fm_allow_ftp_server'], FILTER_SANITIZE_STRING ) : 'checked';
+	$FileManager->options['file_manager_settings']['fm_allow_ftp_server'] = isset($_POST['fm_allow_ftp_server']) && !empty($_POST['fm_allow_ftp_server']) ? filter_var($_POST['fm_allow_ftp_server'], FILTER_SANITIZE_STRING ) : '';
+	$FileManager->options['file_manager_settings']['fm_ftp_root_folder_name'] = isset($_POST['fm_ftp_root_folder_name']) && !empty($_POST['fm_ftp_root_folder_name']) ? filter_var($_POST['fm_ftp_root_folder_name'], FILTER_SANITIZE_STRING ) : 'FTP Server';
 	$FileManager->options['file_manager_settings']['fm_ftp_host_name'] = isset($_POST['fm_ftp_host_name']) && !empty($_POST['fm_ftp_host_name']) ? filter_var($_POST['fm_ftp_host_name'], FILTER_SANITIZE_STRING ) : 'localhost';
 	$FileManager->options['file_manager_settings']['fm_ftp_username'] = isset($_POST['fm_ftp_username']) && !empty($_POST['fm_ftp_username']) ? filter_var($_POST['fm_ftp_username'], FILTER_SANITIZE_STRING ) : '';
 	$FileManager->options['file_manager_settings']['fm_ftp_password'] = isset($_POST['fm_ftp_password']) && !empty($_POST['fm_ftp_password']) ? filter_var($_POST['fm_ftp_password'], FILTER_SANITIZE_STRING ) : '';
@@ -284,7 +285,9 @@ $language_code = $language_settings['code'];
 						<tr>
 							<td><h4><label for='fm-remember-last-dir'><?php _e("Remember Last Directory", 'file-manager');?></label></h4></td>
 							<td>
-								<input id='fm-remember-last-dir' type='checkbox' name='fm-remember-last-dir' <?php if (isset($FileManager->options['file_manager_settings']['fm-remember-last-dir']) && !empty($FileManager->options['file_manager_settings']['fm-remember-last-dir'])) echo "checked"?> value="fm-remember-last-dir">
+								<input id='fm-remember-last-dir' type='checkbox' name='fm-remember-last-dir' <?php if (isset($FileManager->options['file_manager_settings']['fm-remember-last-dir']) && !empty($FileManager->options['file_manager_settings']['fm-remember-last-dir'])) {
+    echo "checked";
+} ?> value="fm-remember-last-dir">
 								<small><?php _e("Remeber last opened dir to open it after reload.", 'file-manager');?></small>
 							</td>
 						</tr>
@@ -319,6 +322,13 @@ $language_code = $language_settings['code'];
 							<td>
 								<input id='fm_allow_ftp_server' type='checkbox' name='fm_allow_ftp_server' <?php if (isset($FileManager->options['file_manager_settings']['fm_allow_ftp_server']) && !empty($FileManager->options['file_manager_settings']['fm_allow_ftp_server'])) echo "checked"?> value="fm_allow_ftp_server">
 								<small><?php _e("FTP/SFTP Server.", 'file-manager');?></small>
+							</td>
+						</tr>
+						<tr>
+							<td><h4><?php _e("FTP/SFTP Root Folder Name", 'file-manager');?></h4></td>
+							<td>
+								<label for='fm_ftp_root_folder_name'></label>
+								<input id='fm_ftp_root_folder_name' type='text' name='fm_ftp_root_folder_name' value='<?php echo   (isset($FileManager->options['file_manager_settings']['fm_ftp_root_folder_name']) && !empty($FileManager->options['file_manager_settings']['fm_ftp_root_folder_name'])) ? esc_attr($FileManager->options['file_manager_settings']['fm_ftp_root_folder_name']) : 'FTP Server';?>'>
 							</td>
 						</tr>
 						<tr>

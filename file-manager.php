@@ -198,22 +198,23 @@ class FM extends FM_BootStart {
 					'disabled'      => array(),    // List of disabled operations
 				),
 
-				array(
-					'driver'        => 'FTP',
-					'alias'        => 'FTP Server',
-					'host'          => 'localhost',
-					'user'          => 'hasan',
-					'pass'          => '123456789',
-					'port'          => 21,
-					'mode'          => 'passive',
-					'path'          => '/',
-					'timeout'       => 10,
-					'owner'         => true,
-					'tmbPath'       => '',
-					'tmpPath'       => '',
-					'dirMode'       => 0755,
-					'fileMode'      => 0644
-				)
+
+				// array(
+				// 	'driver'        => 'FTP',
+				// 	'alias'        => isset($this->options['file_manager_settings']['fm_ftp_root_folder_name']) && !empty($this->options['file_manager_settings']['fm_ftp_root_folder_name']) ? $this->options['file_manager_settings']['fm_ftp_root_folder_name'] : "FTP Server",
+				// 	'host'          => isset($this->options['file_manager_settings']['fm_ftp_host_name']) && !empty($this->options['file_manager_settings']['fm_ftp_host_name']) ? $this->options['file_manager_settings']['fm_ftp_host_name'] : "localhost",
+				// 	'user'          => isset($this->options['file_manager_settings']['fm_ftp_username']) && !empty($this->options['file_manager_settings']['fm_ftp_username']) ? $this->options['file_manager_settings']['fm_ftp_username'] : "root",
+				// 	'pass'          => isset($this->options['file_manager_settings']['fm_ftp_password']) && !empty($this->options['file_manager_settings']['fm_ftp_password']) ? $this->options['file_manager_settings']['fm_ftp_password'] : "",
+				// 	'port'          => isset($this->options['file_manager_settings']['fm_ftp_port']) && !empty($this->options['file_manager_settings']['fm_ftp_port']) ? $this->options['file_manager_settings']['fm_ftp_port'] : 21,
+				// 	'mode'          => 'passive',
+				// 	'path'          => isset($this->options['file_manager_settings']['fm_ftp_path']) && !empty($this->options['file_manager_settings']['fm_ftp_path']) ? $this->options['file_manager_settings']['fm_ftp_path'] : '/',
+				// 	'timeout'       => 10,
+				// 	'owner'         => true,
+				// 	'tmbPath'       => '',
+				// 	'tmpPath'       => '',
+				// 	'dirMode'       => 0755,
+				// 	'fileMode'      => 0644
+				// )  
 			)
 		);
 		/**
@@ -234,6 +235,36 @@ class FM extends FM_BootStart {
 				
 			);
 		}
+
+		/**
+		 * Enable/Disable trash directory.
+		 */
+		if( isset($this->options['file_manager_settings']['fm_allow_ftp_server']) && $this->options['file_manager_settings']['fm_allow_ftp_server']){
+			$opts['roots'][] = array(
+					'driver'        => 'FTP',
+					'alias'        => isset($this->options['file_manager_settings']['fm_ftp_root_folder_name']) && !empty($this->options['file_manager_settings']['fm_ftp_root_folder_name']) ? $this->options['file_manager_settings']['fm_ftp_root_folder_name'] : "FTP Server",
+					'host'          => isset($this->options['file_manager_settings']['fm_ftp_host_name']) && !empty($this->options['file_manager_settings']['fm_ftp_host_name']) ? $this->options['file_manager_settings']['fm_ftp_host_name'] : "localhost",
+					'user'          => isset($this->options['file_manager_settings']['fm_ftp_username']) && !empty($this->options['file_manager_settings']['fm_ftp_username']) ? $this->options['file_manager_settings']['fm_ftp_username'] : "root",
+					'pass'          => isset($this->options['file_manager_settings']['fm_ftp_password']) && !empty($this->options['file_manager_settings']['fm_ftp_password']) ? $this->options['file_manager_settings']['fm_ftp_password'] : "",
+					'port'          => isset($this->options['file_manager_settings']['fm_ftp_port']) && !empty($this->options['file_manager_settings']['fm_ftp_port']) ? $this->options['file_manager_settings']['fm_ftp_port'] : 21,
+					'mode'          => 'passive',
+					'path'          => isset($this->options['file_manager_settings']['fm_ftp_path']) && !empty($this->options['file_manager_settings']['fm_ftp_path']) ? $this->options['file_manager_settings']['fm_ftp_path'] : '/',
+					'timeout'       => 10,
+					'owner'         => true,
+					'tmbPath'       => '',
+					'tmpPath'       => '',
+					'dirMode'       => 0755,
+					'fileMode'      => 0644,
+					'uploadDeny'    => array(),                // All Mimetypes not allowed to upload
+					'uploadAllow'   => $mime->get_types(), // All MIME types is allowed
+					'uploadOrder'   => array('order', 'allow', 'deny'),      // allowed Mimetype `image` and `text/plain` only
+					'accessControl' => array($fmAccessControll, 'control'),
+					'acceptedName' =>  array($fmAccessControll, 'accepted__name'), // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#acceptedName
+					'disabled'      => array(),    // List of disabled operations
+					'dispInlineRegex' => '^(?:image|application/(?:vnd\.)?(?:ms(?:-office|word|-excel|-powerpoint)|openxmlformats-officedocument)|text/plain$)',// https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#dispInlineRegex
+				);
+		}
+
 
 		/**
 		 *
