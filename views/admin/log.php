@@ -2,8 +2,44 @@
 if (!defined('ABSPATH')) {
     die();
 }
-
 global $FileManager;
+// echo '<pre>'; print_r( _get_cron_array() ); echo '</pre>';
+
+// Settings processing
+if (isset($_POST) && !empty($_POST)) {
+    if (!wp_verify_nonce($_POST['file-manager-log-security-token'], 'file-manager-log-security-token') || !current_user_can('manage_options')) {
+        wp_die();
+    }
+    $FileManager->options['file_manager_settings']['fm_delete_log_every'] = filter_var($_POST['fm_delete_log_every'], FILTER_VALIDATE_INT) ? $_POST['fm_delete_log_every'] : 30;
+}
+
+add_filter( 'cron_schedules', 'fm_add_cron_interval');
+function fm_add_cron_interval( $schedules ) { 
+    $days = isset(get_option( 'file-manager')['file_manager_settings']['fm_delete_log_every'])? get_option( 'file-manager')['file_manager_settings']['fm_delete_log_every']: 30;
+    $schedules['fm_schedule'] = array(
+        'interval' =>  $days * DAY_IN_SECONDS,
+        'display'  => esc_html__( 'Every '.$days.' Days' ), 
+    );
+    return $schedules;
+}
+
+
+
+// make sure this event is not scheduled
+if( !wp_next_scheduled( 'fm_delete_option' ) ) {
+    // schedule an event
+    wp_schedule_event( time(), 'fm_schedule', 'fm_delete_option' );
+}
+
+add_action( 'fm_delete_option', 'delete_fm_log_option' );
+
+
+function delete_fm_log_option() {
+    delete_option('fm_log');
+}
+
+
+
 
 $admin_page_url = admin_url() . "admin.php?page={$FileManager->prefix}";
 
@@ -20,27 +56,18 @@ global $fm_languages;
 	<div class='col-main' >
 		<div class='gb-fm-row fmp-settings'>
         <h2><?php _e("File Manger Log", 'file-manager');?></h2>
-        <!-- <table id="customers">
-            <tr>
-                <th>Sr</th>
-                <th>Date</th>
-                <th>Command</th>
-                <th>Key</th>
-                <th>Error</th>
-            </tr>
-            <?php
-//foreach($logs as $key => $log){?>
-                <tr>
-                    <td><?php echo $key + 1; ?></td>
-                    <td><?php echo $log['date']; ?></td>
-                    <td><?php echo $log['cmd']; ?></td>
-                    <td><?php echo (isset($log['key']) && !empty($log['key'])) ? $log['key'] : ""; ?></td>
-                    <td><?php print_r((isset($log['err']) && !empty($log['err'])) ? $log['err'] : "");?></td>
-                </tr>
-            <?php// } ?>
-
-            </table> -->
-
+            <form action='' method='post' class='fmp-settings-form'>
+            <input type='hidden' name='file-manager-log-security-token' value='<?php echo wp_create_nonce('file-manager-log-security-token'); ?>'>
+                <h4><?php _e("Delete Log Every", 'file-manager');?></h4>
+                    <label for='fm_delete_log_every'></label>
+                    <input id='fm_delete_log_every' type='number' name='fm_delete_log_every' value='<?php if (isset($FileManager->options['file_manager_settings']['fm_delete_log_every']) && !empty($FileManager->options['file_manager_settings']['fm_delete_log_every'])) {
+                        echo esc_attr($FileManager->options['file_manager_settings']['fm_delete_log_every']);
+                    } else {
+                        echo 30;
+                    }
+                    ?>'>
+                    <input type='submit' value='<?php _e("Save", 'file-manager');?>' />
+            </form>
             <style>
                 table th , table td{
                 text-align: center;
@@ -49,47 +76,40 @@ global $fm_languages;
                 table tr:nth-child(even){
                 background-color: #BEF2F5
                 }
-
-                /* .pagination li:hover{
-                cursor: pointer;
-                } */
-                    table tbody tr {
+                table tbody tr {
                         display: none;
                 }
                 .center {
-  text-align: center;
-}
+                    text-align: center;
+                }
 
-.pagination {
-  display: inline-block;
-}
+                .pagination {
+                    display: inline-block;
+                }
 
-.pagination li {
-  color: black;
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
-  transition: background-color .3s;
-  border: 1px solid #ddd;
-  margin: 0 4px;
-}
+                .pagination li {
+                    color: black;
+                    float: left;
+                    padding: 8px 16px;
+                    text-decoration: none;
+                    transition: background-color .3s;
+                    border: 1px solid #ddd;
+                    margin: 0 4px;
+                }
 
-.pagination li.active {
-  background-color: #4CAF50;
-  color: white;
-  border: 1px solid #4CAF50;
-  cursor : pointer;
-}
+                .pagination li.active {
+                    background-color: #4CAF50;
+                    color: white;
+                    border: 1px solid #4CAF50;
+                    cursor : pointer;
+                }
 
-.pagination li:hover:not(.active) 
-{
-    background-color: #ddd;
-    cursor : pointer;
-}
-                </style>
-
-
-            <div class="form-group"> 	<!--		Show Numbers Of Rows 		-->
+                .pagination li:hover:not(.active){
+                    background-color: #ddd;
+                    cursor : pointer;
+                }
+            </style>
+            <div class="form-group"> 	<!--Show Numbers Of Rows 		-->
             <select class="form-control" name="state" id="maxRows">
                         <option value="5000">Show ALL Rows</option>
 						 <option value="5">5</option>
@@ -102,8 +122,7 @@ global $fm_languages;
                 </select>
             </div>
 
-                <table class="table table-striped table-class customers" id= "table-id">
-
+                <table class="table-class customers" id= "table-id">
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -111,50 +130,45 @@ global $fm_languages;
                         <th>Key</th>
                         <th>Error</th>
                     </tr>
-
                 </thead>
-
                 <tbody>
-                <?php foreach($logs as $key => $log){?>
+                <?php foreach ($logs as $key => $log) {?>
                     <tr>
                         <td><?php echo $log['date']; ?></td>
                         <td><?php echo $log['cmd']; ?></td>
                         <td><?php echo (isset($log['key']) && !empty($log['key'])) ? $log['key'] : ""; ?></td>
                         <td><?php print_r((isset($log['err']) && !empty($log['err'])) ? $log['err'] : "");?></td>
                     </tr>
-                <?php } ?>
+                <?php }?>
                 </tbody>
             </table>
             <div class="center pagination-container">
-            <ul class="pagination">
-            <li data-page="prev">
-                    <span> &lt; <span class="sr-only"></span></span>
-                </li>
-            <li  class="active"><span><span class="sr-only"></span></span>								</li><li data-page="3">								  <span>3<span class="sr-only">(current)</span></span>								</li><li data-page="next" id="prev" style="display: inline;">
-                    <span> &gt; <span class="sr-only"></span></span>
-</li>
-</ul>
-</div>
+                <ul class="pagination">
+                    <li data-page="prev">
+                        <span> &lt; <span class="sr-only"></span></span>
+                    </li>
+                    <li  class="active"><span><span class="sr-only"></span></span>								</li><li data-page="3">								  <span>3<span class="sr-only">(current)</span></span>								</li><li data-page="next" id="prev" style="display: inline;">
+                        <span> &gt; <span class="sr-only"></span></span>
+                    </li>
+                </ul>
+            </div>
             <script>
                     getPagination('#table-id');
-					//getPagination('.table-class');
-					//getPagination('table');
 
-                            /*					PAGINATION 
-                            - on change max rows select options fade out all rows gt option value mx = 5
-                            - append pagination list as per numbers of rows / max rows option (20row/5= 4pages )
-                            - each pagination li on click -> fade out all tr gt max rows * li num and (5*pagenum 2 = 10 rows)
-                            - fade out all tr lt max rows * li num - max rows ((5*pagenum 2 = 10) - 5)
-                            - fade in all tr between (maxRows*PageNum) and (maxRows*pageNum)- MaxRows 
-                            */
-                            
-
+                    /* PAGINATION
+                    - on change max rows select options fade out all rows gt option value mx = 5
+                    - append pagination list as per numbers of rows / max rows option (20row/5= 4pages )
+                    - each pagination li on click -> fade out all tr gt max rows * li num and (5*pagenum 2 = 10 rows)
+                    - fade out all tr lt max rows * li num - max rows ((5*pagenum 2 = 10) - 5)
+                    - fade in all tr between (maxRows*PageNum) and (maxRows*pageNum)- MaxRows
+                    */
                     function getPagination(table) {
                     var lastPage = 1;
 
                     jQuery('#maxRows')
                         .on('change', function(evt) {
-                        //jQuery('.paginationprev').html('');						// reset pagination
+                        //jQuery('.paginationprev').html('');
+                        // reset pagination
 
                         lastPage = 1;
                         jQuery('.pagination')
@@ -285,13 +299,7 @@ global $fm_languages;
                         jQuery(this).prepend('<td>' + id + '</td>');
                     });
                     });
-
-                    //  Developed By Yasser Mas
-                    // yasser.mas2@gmail.com
-
             </script>
-
-
         </div>
     </div>
 </div>

@@ -22,7 +22,7 @@ if (!function_exists('fm_logger')):
 {
 
         global $FileManager;
-
+        // error_log(print_r($result, true));
         $log['date'] = date('r');
         $log['cmd'] = strtoupper($cmd);
         foreach ($result as $key => $value) {
