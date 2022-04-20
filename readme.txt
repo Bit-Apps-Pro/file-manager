@@ -1,10 +1,10 @@
 === Library File Manager ===
 Contributors: aihimel
 Tags: file manager, wp file manager, FTP, elfinder, file Browser, manage files, upload, delete, rename, copy, move, online file browser, remote file manager, drag and drop, folder upload
-Requires at least: 4.0.0
+Requires at least: 4.0
 Tested up to: 5.9.3
 Requires PHP: 5.6
-Stable tag: 5.2.5
+Stable tag: 5.2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,7 +76,47 @@ Just install the plugin by following the standard WordPress plugin install proce
 We try to make our plugin compatible with as many plugin/theme as possible. If you find any compatability issue with any 3rd party plugin/theme, kindly report it to us via our plugin support forum or on our website.
 
 **Plugins**
+
 + WPML -- Best WP plugin to translate and display your website in any languages
+
+== Supported Languages(36) ==
+
++ Arabic
++ Bulgarian
++ Catalan
++ Czech
++ Danish
++ German
++ Greek
++ English
++ Español
++ Persian/Farsi
++ Faroese
++ Française/French
++ Canadienne française/French Canadian
++ Hebrew/hébreu
++ Croatian
++ Hungarian
++ Indonesian
++ Italiano/Italian
++ Japanese
++ Korean
++ Dutch
++ Norwegian
++ Polskie/Polish
++ Português/Porguese
++ Română/Romanian/Moldavian/Moldovan
++ Russian
++ Sinhala
++ Slovak
++ Slovenian
++ Serbian
++ Swedish
++ Türkçe/Turkish
++ Uyghur
++ Ukrainian
++ Vietnamese
++ Chinese
 
 == Installation ==
 
@@ -103,19 +143,19 @@ We try to make our plugin compatible with as many plugin/theme as possible. If y
 
 = Invalid backend configuration. Readable volumes not available. =
 
-Please check your file permission from your hosting panel. The permission must be 0755 for file/folder. If you are using a vps(virtual private server) then you must ensure that the owner of your installation is PHP aka www-data
+Please check your file permission from your hosting panel. The permission must be 0755 for file/folder. If you are using a vps(virtual private server) then you must ensure that the owner of your installation is PHP aka www-data. Another reason could be wrong root folder path/url. Inserting a correct root folder path/URL should fix the issue.
 
 = I can not upload larger files then *MB =
 
-You can upload any size of file.
+You can upload any size of file. Library file manager plugin uploads files in chunks. So a very large file can be easily uploaded & downloaded.
 
 = Can I preview .psd and document files? =
 
-Yes you can.
+Yes, documents like PSD, DOCX can be previewd via file manager preview.
 
-= Will I support the plugin? =
+= Can I change file permission like cPanel? =
 
-Yes, I will support the plugin.
+Yes, file/folder permission can be changed like cPanel and other hosting management interfaces. It is very easy. Just right click on the file and you will see a menu named **Change Mode **. Clicking will open a dialogue box, where you can update the file permission, just like cPanel.
 
 
 == Screenshots ==
@@ -130,16 +170,25 @@ Yes, I will support the plugin.
 8. Edit file
 9. Right Click Menu
 10. Library File manager settings page
-11. Server details.
+11. Server details
+12. Emailing File
+13. Changing file permission
 
 
 == Upgrade Notice ==
 
-= 5.2.5 =
+= 5.2.6 =
 + No special requirements.
 
 
 == Changelog ==
+
+= 5.2.6 (19 Aprin, 2022) =
+* File permission change added
+* Logo updated
+* FAQ updated
+* New screenshot added
+* Minor bug fixes
 
 = 5.2.5 (14 April, 2022) =
 * File preview design issue fixed.
@@ -209,13 +258,13 @@ Yes, I will support the plugin.
 * PDF preview added
 * PSD preview added
 
-= 5.1.1 (22 February 2019)=
+= 5.1.1 (22 February 2019) =
 * Minor Bug fixed.
 * Code & Image editor added.
 * WYSIWYG Editor added.
 * Chunked file upload added. Upload large file regardless your php.ini settings.
 
-= 5.1.0 (21 February 2019)=
+= 5.1.0 (21 February 2019) =
 * Updated to elFinder 2.1.46
 * Code Editor added for easy editing [Ace, Codemirror, TinyMCE & others].
 * Supported file format extended.
