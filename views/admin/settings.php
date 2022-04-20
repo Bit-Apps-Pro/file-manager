@@ -31,7 +31,37 @@ if (isset($_POST) && !empty($_POST)) {
 	$FileManager->options['file_manager_settings']['fm-remember-last-dir'] = isset($_POST['fm-remember-last-dir']) && !empty($_POST['fm-remember-last-dir']) ? filter_var($_POST['fm-remember-last-dir'], FILTER_SANITIZE_STRING ) : 'checked';
 	$FileManager->options['file_manager_settings']['fm-clear-history-on-reload'] = isset($_POST['fm-clear-history-on-reload']) && !empty($_POST['fm-clear-history-on-reload']) ? filter_var($_POST['fm-clear-history-on-reload'], FILTER_SANITIZE_STRING ) : 'checked';
 	$FileManager->options['file_manager_settings']['fm_display_ui_options'] = isset($_POST['fm_display_ui_options']) && !empty($_POST['fm_display_ui_options']) ? filter_var_array($_POST['fm_display_ui_options']) : ['toolbar', 'places', 'tree', 'path', 'stat'];
+	// Cron schedule
+	$FileManager->options['file_manager_settings']['fm_delete_log_every'] = filter_var($_POST['fm_delete_log_every'], FILTER_VALIDATE_INT) ? $_POST['fm_delete_log_every'] : 30;
 
+}
+
+
+/**
+ * Cron schedule.
+ */
+add_filter('cron_schedules', 'fm_add_cron_interval');
+function fm_add_cron_interval($schedules)
+{
+    $days = isset(get_option(FM_PREFIX)['file_manager_settings']['fm_delete_log_every']) ? get_option('file-manager')['file_manager_settings']['fm_delete_log_every'] : 30;
+    $schedules['fm_schedule'] = array(
+        'interval' => $days * DAY_IN_SECONDS,
+        'display' => esc_html__('Every ' . $days . ' Days'),
+    );
+    return $schedules;
+}
+
+// make sure this event is not scheduled
+if (!wp_next_scheduled('fm_delete_option')) {
+    // schedule an event
+    wp_schedule_event(time(), 'fm_schedule', 'fm_delete_option');
+}
+
+add_action('fm_delete_option', 'delete_fm_log_option');
+
+function delete_fm_log_option()
+{
+    delete_option('lfm_log');
 }
 
 /**
@@ -309,6 +339,21 @@ $language_code = $language_settings['code'];
 								</select>
 						</td>
 						</tr>
+						<tr>
+							<td><h4><?php _e("Delete Log Every", 'file-manager');?></h4></td>
+							<td>
+							<label for='fm_delete_log_every'></label>
+							<input id='fm_delete_log_every' type='number' name='fm_delete_log_every' value='<?php if (isset($FileManager->options['file_manager_settings']['fm_delete_log_every']) && !empty($FileManager->options['file_manager_settings']['fm_delete_log_every'])) {
+									echo esc_attr($FileManager->options['file_manager_settings']['fm_delete_log_every']);
+								} else {
+									echo 30;
+								}
+								?>'>
+							</td>
+						</tr>
+						
+                    
+
 						<tr>
 							<td></td>
 							<td>

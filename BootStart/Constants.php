@@ -14,7 +14,7 @@ if( !defined( 'DS' ) ) define("DS", DIRECTORY_SEPARATOR);
 if( !defined( 'FILE_MANAGER_PATH' ) ) define("FILE_MANAGER_PATH", plugin_dir_path( __FILE__ ));
 
 // file manger url
-if( !defined( 'FILE_MANAGER_URL' ) ) define("FILE_MANAGER_URL", plugin_dir_url( __FILE__ ));
+if( !defined( 'FILE_MANAGER_URL' ) ) define("FILE_MANAGER_URL", plugin_dir_url( dirname(__FILE__) ));
 
 // Elfinder path
 if( !defined( 'ELFINDER_PATH' ) ) define("ELFINDER_PATH", plugin_dir_path( __FILE__ ) . 'elFinder');
@@ -75,5 +75,8 @@ if ( ! defined( 'FM_TRASH_DIR_PATH' )) {
 
 // File manager trash tmb dir url
 defined( 'FM_TRASH_TMB_DIR_URL' ) || define( 'FM_TRASH_TMB_DIR_URL', FM_WP_UPLOAD_DIR['baseurl'] . '/file-manager/trash/.tmb/');
+
+
+
 
 

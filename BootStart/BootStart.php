@@ -97,7 +97,8 @@ abstract class FM_BootStart{
 
 		// Assigning prefix
 		$this->prefix = str_replace( ' ', '-', strtolower(trim($this->name)) );
-
+		// File manager prefix
+		defined( 'FM_PREFIX' ) || define( 'FM_PREFIX', $this->prefix);
 		// Assigning path
 		$this->path = __FILE__;
 
@@ -223,7 +224,7 @@ abstract class FM_BootStart{
 	 * */
 	public function elfinder_assets(){
 
-		$jquery_ui_url = $this->url('jquery-ui-1.11.4/jquery-ui.min.css');
+		$jquery_ui_url = $this->url('lib/jquery-ui-1.11.4/jquery-ui.min.css');
 		$jquery_ui_url = apply_filters('fm_jquery_ui_theme_hook', $jquery_ui_url);
 
 		// Jquery UI CSS
@@ -234,7 +235,7 @@ abstract class FM_BootStart{
 		wp_register_style( $elfinder_style['handle'], $this->url('elFinder/css/elfinder'.$elfinder_style['file_type'].'css'), array('fmp-jquery-ui-css') );
 
 		// elFinder theme CSS
-		if($this->url('jquery-ui-1.11.4/jquery-ui.min.css') == $jquery_ui_url ) wp_register_style( 'fmp-elfinder-theme-css', $this->url('elFinder/css/theme.css'), array('fmp-elfinder-css') );
+		if($this->url('lib/jquery-ui-1.11.4/jquery-ui.min.css') == $jquery_ui_url ) wp_register_style( 'fmp-elfinder-theme-css', $this->url('elFinder/css/theme.css'), array('fmp-elfinder-css') );
 
 		// elFinder Scripts depends on jQuery UI core, selectable, draggable, droppable, resizable, dialog and slider.
 		$elfinder_script = $this->is_minified_file_load('fmp-elfinder-script');

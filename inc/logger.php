@@ -37,7 +37,7 @@ if (!function_exists('fm_logger')):
             $log['err'] = $data;
         }
 		
-        $prev_logs = get_option('fm_log', array());
+        $prev_logs = get_option('lfm_log', array());
 		if(count($prev_logs)){
 			if(count($prev_logs) == 1){
 				$prev_logs[count($prev_logs)] = $log;	
@@ -48,7 +48,7 @@ if (!function_exists('fm_logger')):
 			$prev_logs[] = $log;
 		}
 
-        update_option('fm_log', $prev_logs);
+        update_option('lfm_log', $prev_logs);
 
     }
 
