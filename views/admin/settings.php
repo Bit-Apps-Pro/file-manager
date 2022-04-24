@@ -339,6 +339,7 @@ $language_code = $language_settings['code'];
 								</select>
 						</td>
 						</tr>
+						<!-- Log duration -->
 						<tr>
 							<td><h4><?php _e("Delete Log Every", 'file-manager');?></h4></td>
 							<td>
@@ -348,7 +349,7 @@ $language_code = $language_settings['code'];
 								} else {
 									echo 30;
 								}
-								?>'>
+								?>'>Days
 							</td>
 						</tr>
 						

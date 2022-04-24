@@ -17,14 +17,15 @@ if (!function_exists('fm_logger')):
  *
  * Logs file library file manager actions
  *
- * */
+ **/
     function fm_logger($cmd, $result, $args, $elfinder)
 {
 
         global $FileManager;
-        // error_log(print_r($result, true));
         $log['date'] = date('r');
+        apply_filters( 'lfm_log_commands', ['open','editor', 'info']);
         $log['cmd'] = strtoupper($cmd);
+
         foreach ($result as $key => $value) {
             if (empty($value)) {
                 continue;
@@ -47,8 +48,9 @@ if (!function_exists('fm_logger')):
 		}else{
 			$prev_logs[] = $log;
 		}
-
+        $prev_logs = apply_filters( 'lfm_before_log', $prev_logs );
         update_option('lfm_log', $prev_logs);
+        apply_filters( 'lfm_after_log', $prev_logs );
 
     }
 
