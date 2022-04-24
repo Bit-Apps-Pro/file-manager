@@ -23,7 +23,7 @@ if (!function_exists('fm_logger')):
 
         global $FileManager;
         $log['date'] = date('r');
-        apply_filters( 'lfm_log_commands', ['open','editor', 'info']);
+        apply_filters( 'lfm_log_commands', ['open','editor', 'info', $cmd]);
         $log['cmd'] = strtoupper($cmd);
 
         foreach ($result as $key => $value) {
