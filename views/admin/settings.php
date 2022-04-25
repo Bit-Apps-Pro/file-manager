@@ -352,7 +352,38 @@ $language_code = $language_settings['code'];
 								?>'>Days
 							</td>
 						</tr>
-						
+						<!-- Configure Google Drive. -->
+						<tr>
+							<td><h4><?php _e("Google Drive Client Id", 'file-manager');?></h4></td>
+							<td>
+							<label for='fm_google_drive_client_id'></label>
+							<input id='fm_google_drive_client_id' type='text' name='fm_google_drive_client_id' value='<?php if (isset($FileManager->options['file_manager_settings']['fm_google_drive_client_id']) && !empty($FileManager->options['file_manager_settings']['fm_google_drive_client_id'])) {
+									echo esc_attr($FileManager->options['file_manager_settings']['fm_google_drive_client_id']);
+								} else {
+									echo '';
+								}
+								?>'>
+							</td>
+						</tr>
+						<tr>
+							<td><h4><?php _e("Google Drive Client Secret", 'file-manager');?></h4></td>
+							<td>
+							<label for='fm_google_drive_client_secret'></label>
+							<input id='fm_google_drive_client_secret' type='text' name='fm_google_drive_client_secret' value='<?php if (isset($FileManager->options['file_manager_settings']['fm_google_drive_client_secret']) && !empty($FileManager->options['file_manager_settings']['fm_google_drive_client_secret'])) {
+									echo esc_attr($FileManager->options['file_manager_settings']['fm_google_drive_client_secret']);
+								} else {
+									echo '';
+								}
+								?>'>
+							</td>
+						</tr>
+
+						<tr>
+							<td></td>
+							<td>
+								<a type='button' href="" value='<?php _e("Authorize", 'file-manager');?>'>Authorize</a>
+							</td>
+						</tr>
                     
 
 						<tr>

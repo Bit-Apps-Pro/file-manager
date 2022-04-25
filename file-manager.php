@@ -17,9 +17,14 @@
  // Including elFinder class
  require_once('BootStart' . DIRECTORY_SEPARATOR . 'Constants.php');
 
-// Including elFinder class
-require_once('elFinder' . DS . 'php' . DS . 'autoload.php');
 
+// Including google-api-php-client
+define('ELFINDER_GOOGLEDRIVE_GOOGLEAPICLIENT', __DIR__ . '/vendor/autoload.php');
+require_once(__DIR__ . '/vendor/autoload.php');
+require_once('elFinder' . DS . 'php' . DS . 'autoload.php');
+// https://accounts.google.com/o/oauth2/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%2Fazizulhasan%2Fpro%2Fwp-admin%2Fadmin.php%3Fpage%3Dfile-manager&client_id=37822303838-n6l779kqfmqsiu3331jah8iq9o09i08o.apps.googleusercontent.com&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive.file+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&access_type=offline&approval_prompt=auto&state=&user_id=
+
+session_start();
 // Including Boot Starter
 require_once('BootStart' . DS . 'BootStart.php');
 
@@ -104,7 +109,14 @@ class FM extends FM_BootStart {
 
 		// Admin Notices
 		add_action('admin_notices', array(&$this, 'admin_notice'));
-		
+
+
+		$this->client = new \Google_Client();
+		if(isset($_GET['code'])){
+			$this->client->authenticate($_GET['code']);
+			$_SESSION['GOOGLE_ACCESS_TOKEN'] = $this->client->getAccessToken();
+			$_SESSION['GOOGLE_REFRESH_TOKEN'] =  $this->client->getRefreshToken();
+		}
 	}
 
   /**
@@ -115,6 +127,16 @@ class FM extends FM_BootStart {
    * @throws Exception
    */
 	public function connector(){
+
+
+
+
+		elFinder::$netDrivers['googledrive'] = 'GoogleDrive';
+		// // GoogleDrive Netmount driver need next two settings. You can get at https://console.developers.google.com
+		// // AND reuire regist redirect url to "YOUR_CONNECTOR_URL?cmd=netmount&protocol=googledrive&host=1"
+		define('ELFINDER_GOOGLEDRIVE_CLIENTID',     '37822303838-ljdgpvpgl3jn0ejcta8j7odq2n9vg4bv.apps.googleusercontent.com');
+		define('ELFINDER_GOOGLEDRIVE_CLIENTSECRET', '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');
+		// // Required case of without composer
 
 		// Allowed mime types
 		$mime = new FMMIME( plugin_dir_path(__FILE__) . 'elFinder/php/mime.types' );
@@ -191,6 +213,19 @@ class FM extends FM_BootStart {
 					'driver'        => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
 					'path'          => FM_MEDIA_BASE_DIR_PATH,                     // path to files (REQUIRED)
 					'URL'           => FM_MEDIA_BASE_DIR_URL,                  // URL to files (REQUIRED)
+					'uploadDeny'    => array(),                // All Mimetypes not allowed to upload
+					'uploadAllow'   => $mime->get_types(), // All MIME types is allowed
+					'uploadOrder'   => array('allow', 'deny'),      // allowed Mimetype `image` and `text/plain` only
+					'accessControl' => array(new FMAccessControl(), 'control'),
+					'disabled'      => array(),    // List of disabled operations
+				),
+
+				array(
+					'alias'        => 'Driver',
+					'driver'        => 'GoogleDrive',   
+					'access_token' => $_SESSION['GOOGLE_ACCESS_TOKEN'],
+					'refresh_token' => $_SESSION['GOOGLE_REFRESH_TOKEN'],
+					'path'          => '/',  // path to files (REQUIRED)
 					'uploadDeny'    => array(),                // All Mimetypes not allowed to upload
 					'uploadAllow'   => $mime->get_types(), // All MIME types is allowed
 					'uploadOrder'   => array('allow', 'deny'),      // allowed Mimetype `image` and `text/plain` only
