@@ -1,4 +1,4 @@
-=== Library File Manager ===
+=== Bit File Manager - 100% free file manager for WordPress ===
 Contributors: aihimel
 Tags: file manager, wp file manager, FTP, elfinder, file Browser, manage files, upload, delete, rename, copy, move, online file browser, remote file manager, drag and drop, folder upload
 Requires at least: 4.0.0
@@ -32,9 +32,6 @@ Just install the plugin by following the standard WordPress plugin install proce
 + Calculate directory sizes
 + Video and audio preview/play
 + File manager supports file search and sort
-
-= Extended Features =
-
 + High performance server backend
 + Uses a local file system therefore no need for a database.
 + Keyboard shortcuts available
@@ -53,7 +50,7 @@ Just install the plugin by following the standard WordPress plugin install proce
 + Responsive(Works on tablet and phone)
 
 
-= Extend Library File Manager =
+= Coming Soon =
 
 + **Frontend:** Enable Library File Manager plugin for frontend users.
 + **Shortcode Support:** Shortcode support for Library File Manager to post it anywhere on your website.
@@ -68,14 +65,20 @@ Just install the plugin by following the standard WordPress plugin install proce
 + **Operation Control:** Control 13+ operations for specific user and user roles.
 + **Ban Roles/Users:** Ban Users and Roles.
 
-**[Extend Library File Manager](https://wpjos.com/library-file-manager-plugin/)**
+**[Github](https://github.com/Bit-Apps-Pro/file-manager/)**
 
 == Compatibility ==
 
-We try to make our plugin compatible with as many plugin/theme as possible. If you find any compatability issue with any 3rd party plugin/theme, kindly report it to us via our plugin support forum or on our website.
+We try to make our plugin compatible with as many plugin/theme as possible. If you find any compatibility issue with any 3rd party plugin/theme, kindly report it to us via our plugin support forum or on our website.
 
-**Plugins**
-+ WPML -- Best WP plugin to translate and display your website in any languages
+✨ Overview of other products we are offering :
+
+📝 [**Bit Form**](https://wordpress.org/plugins/bit-form/): One of our best selling product. Bit Form is an amazing drag & drop form builder that allows you to create custom forms to interact with your visitors. It gives you the freedom to create any form you want, no coding required.
+
+🚀 [**Bit Integrations**](https://wordpress.org/plugins/bit-integrations/): Send WordPress Forms, WooCommerce, LMS, Membership plugin and other data to your Google Sheet, CRM, Email Marketing Tools and other platforms.
+
+📧 [**Bit SMTP**](https://wordpress.org/plugins/bit-smtp/): The ultimate goal of Bit SMTP plugin to make your email deliverability more easy as well as secure.
+
 
 == Installation ==
 
