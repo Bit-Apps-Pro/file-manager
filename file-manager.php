@@ -2,9 +2,10 @@
 /**
  *
  * Plugin Name: Library File Manager
+ * Plugin URI: https://wpjos.com/library-file-manager-plugin/
  * Author: Aftabul Islam
  * Author URI: https://wpjos.com
- * Version: 5.2.4
+ * Version: 5.2.5
  * Author Email: toaihimel@gmail.com
  * PHP version: 5.6
  * Text domain: file-manager
@@ -13,80 +14,8 @@
  *
  * */
 
-/**
- *
- * Constant Definition
- *
- * @since v5.2.0
- *
- * */
-// Directory Separator
-if( !defined( 'DS' ) ) define("DS", DIRECTORY_SEPARATOR);
-
-
-// file manger path
-if( !defined( 'FILE_MANAGER_PATH' ) ) define("FILE_MANAGER_PATH", plugin_dir_path( __FILE__ ));
-
-// file manger url
-if( !defined( 'FILE_MANAGER_URL' ) ) define("FILE_MANAGER_URL", plugin_dir_url( __FILE__ ));
-
-// Elfinder path
-if( !defined( 'ELFINDER_PATH' ) ) define("ELFINDER_PATH", plugin_dir_path( __FILE__ ) . 'elFinder');
-
-// Elfinder url
-if( !defined( 'ELFINDER_URL' ) ) define("ELFINDER_URL", plugin_dir_url( __FILE__ ) . 'elFinder/');
-
-$upload_dir = wp_upload_dir();
-// Upload dir path
-if( !defined( 'FM_UPLOAD_DIR_PATH' ) ) define("FM_UPLOAD_DIR_PATH", $upload_dir['path']);
-
-// Upload dir url
-if( !defined( 'FM_UPLOAD_DIR_URL' ) ) define("FM_UPLOAD_DIR_URL", $upload_dir['url']);
-
-// Media basedir
-if( !defined( 'FM_MEDIA_BASE_DIR_PATH' ) ) define("FM_MEDIA_BASE_DIR_PATH", $upload_dir['basedir']);
-
-// Media baseurl
-if( !defined( 'FM_MEDIA_BASE_DIR_URL' ) ) define("FM_MEDIA_BASE_DIR_URL", $upload_dir['baseurl']);
-
-// File manager upload dir basedir
-defined( 'FM_UPLOAD_BASE_DIR' ) || define( 'FM_UPLOAD_BASE_DIR', $upload_dir['basedir'] . DS . 'file-manager' . DS );
-
-// File manager upload dir baseurl
-defined( 'FM_UPLOAD_BASE_URL' ) || define( 'FM_UPLOAD_BASE_URL', $upload_dir['baseurl'] . DS . 'file-manager' . DS );
-
-// File manager trash dir path
-if ( ! defined( 'FM_TRASH_DIR_PATH' )) {
-    /**
-     * Custom Trash Directory.
-     */
-    $fm_trash_dir = $upload_dir['basedir'] .'/file-manager/trash/';
-    define( 'FM_TRASH_DIR_PATH', $fm_trash_dir  );
-    if ( ! file_exists( $fm_trash_dir ) && is_writable( $upload_dir['basedir'] ) ) {
-        mkdir( $fm_trash_dir, 0777, true );
-        // Protect files from public access.
-        touch( FM_TRASH_DIR_PATH . '.htaccess' );
-        $content = 'deny from all';
-        $fp      = fopen( FM_TRASH_DIR_PATH . '.htaccess', 'wb' );
-        fwrite( $fp, $content );
-        fclose( $fp );
-    }elseif ( ! file_exists( $fm_trash_dir ) && ! is_writable($fm_trash_dir) && ! is_writable( $upload_dir['basedir'] ) ) {
-        add_action('admin_notices', function(){ ?>
-			<div class="notice notice-error is-dismissible">
-				<p>
-					<?php
-					_e('<h1>File Manager</h1>  <b>Your uploads folder is not writable. Please make <code style="color: red;">wp-content/uploads</code> folder writable to create trash folder.</b>', 'file-manager'); 
-					?>
-				</p>
-			</div> <?php
-		});
-    }
-}
-
-// File manager trash tmb dir url
-defined( 'FM_TRASH_TMB_DIR_URL' ) || define( 'FM_TRASH_TMB_DIR_URL', $upload_dir['baseurl'] . '/file-manager/trash/.tmb/');
-
-
+ // Including elFinder class
+ require_once('BootStart' . DIRECTORY_SEPARATOR . 'Constants.php');
 
 // Including elFinder class
 require_once('elFinder' . DS . 'php' . DS . 'autoload.php');
@@ -148,8 +77,8 @@ class FM extends FM_BootStart {
 
 	public function __construct($name){
 
-		$this->version = '5.2.4';
-		$this->version_no = 524;
+		$this->version = '5.2.5';
+		$this->version_no = 525;
 		$this->site = 'https://wpjos.com';
 		$this->giribaz_landing_page = 'https://wpjos.com/library-file-manager-plugin';
 		$this->support_page = 'https://wpjos.com/support/';
@@ -199,9 +128,8 @@ class FM extends FM_BootStart {
 				 'upload' => array(new FMMediaSync(), 'onFileUpload'),
                  '*' => 'fm_logger',
 			),
-			'debug' => true,
+			'debug' => WP_DEBUG,
 			'roots' => array(
-
 				array(
 					'alias'         => isset($this->options['file_manager_settings']['fm_root_folder_name']) && !empty($this->options['file_manager_settings']['fm_root_folder_name']) ? $this->options['file_manager_settings']['fm_root_folder_name'] : "WP Root",
 					'driver'        => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
@@ -217,6 +145,8 @@ class FM extends FM_BootStart {
 					'trashHash'     =>   isset($this->options['file_manager_settings']['fm-create-trash-files-folders']) && !empty($this->options['file_manager_settings']['fm-create-trash-files-folders']) ? 't1_Lw' :'',                     // elFinder's hash of trash folder
 					'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too						
 					// 'defaults'   => array('read' => true, 'write' => true,'locked'=>true),
+					'allowChmodReadOnly'=> true, // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#allowChmodReadOnly
+					'statOwner' => true, // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#statOwner
 					
 					'attributes' => array( // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#attributes
 						array(// hide specipic folder.
@@ -240,7 +170,7 @@ class FM extends FM_BootStart {
 						// 	'write'  => true,
 						// 	'locked' => false,
 						// ),
-						// array( // hide specipic file type.
+						// array( // hide all files type.
 						// 	'pattern' => '/^.+/',
 						// 	'hidden' => false,
 						// 	'read'   => true,
@@ -249,8 +179,13 @@ class FM extends FM_BootStart {
 						// ),
 
 						),
-						
-				),
+						'copyTo'=> true, //https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#copyTo
+						'uploadMaxSize'=> 0, // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#uploadMaxSize
+						'archiveMimes' => array() ,// https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#archiveMimes
+						//'dirMode'        => 0755,            // new dirs mode (default 0755)
+						//'fileMode'       => 0644,            // new files mode (default 0644)
+					// 'maxTargets'=> 0,
+					),
 				array(
 					'alias'        => 'Media',
 					'driver'        => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
@@ -262,13 +197,12 @@ class FM extends FM_BootStart {
 					'accessControl' => array(new FMAccessControl(), 'control'),
 					'disabled'      => array(),    // List of disabled operations
 				),
-
-				
 			)
 		);
-
-		$upload_dir = wp_upload_dir(  );
-		if( $this->options['file_manager_settings']['fm-create-trash-files-folders']  && is_writable( $upload_dir['basedir'] )){
+		/**
+		 * Enable/Disable trash directory.
+		 */
+		if( isset($this->options['file_manager_settings']['fm-create-trash-files-folders']) && $this->options['file_manager_settings']['fm-create-trash-files-folders']  && is_writable( FM_WP_UPLOAD_DIR['basedir'] )){
 			$opts['roots'][] = array(
 				'id'            => '1',
 				'driver'        => 'Trash',
@@ -278,7 +212,9 @@ class FM extends FM_BootStart {
 				'uploadDeny'    => array(),                // Recomend the same settings as the original volume that uses the trash
 				'uploadAllow'   => $mime->get_types(),// Same as above
 				'uploadOrder'   => array('deny', 'allow'),      // Same as above
-				'accessControl' => array(new FMAccessControl(), 'control'),                    // Same as above
+				'accessControl' => array(new FMAccessControl(), 'control'),      
+				'acceptedName' =>  array($fmAccessControll, 'accepted__name'),              // Same as above
+				
 			);
 		}
 

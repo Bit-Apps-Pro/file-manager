@@ -19,7 +19,7 @@ class FMAccessControl{
 	function control($attr, $path, $data, $volume) {
     	if(!isset($this->settings['fm-show-hidden-files']) || empty($this->settings['fm-show-hidden-files']))
     		return strpos(basename($path), '.') === 0    
-		        ? ( '' == $this->settings['fm-create-hidden-files-folders']) ? !($attr == 'read' || $attr == 'write') :  ($attr == 'read' || $attr == 'write')
+		        ? ( isset($this->settings['fm-create-hidden-files-folders']) && '' == $this->settings['fm-create-hidden-files-folders']) ? !($attr == 'read' || $attr == 'write') :  ($attr == 'read' || $attr == 'write')
 		        :  null;                                    
 	}
 
