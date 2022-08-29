@@ -1,10 +1,10 @@
-=== Library File Manager ===
-Contributors: aihimel
+=== Bit File Manager - 100% free file manager for WordPress ===
+Contributors: bitpressadmin, aihimel
 Tags: file manager, wp file manager, FTP, elfinder, file Browser, manage files, upload, delete, rename, copy, move, online file browser, remote file manager, drag and drop, folder upload
-Requires at least: 4.0.0
-Tested up to: 5.9.3
+Requires at least: 4.0
+Tested up to: 6.0.1
 Requires PHP: 5.6
-Stable tag: 5.2.4
+Stable tag: 5.2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,7 +18,6 @@ Just install the plugin by following the standard WordPress plugin install proce
 
 = Key Features =
 
-+ Automatic media sync
 + Upload, Download and Delete operations
 + All operations with files and folders (copy, move, upload, create folder/file, rename, archive, extract, edit, etc.)
 + Download, upload, cut, copy, duplicate, paste, delete, create directory, create file, edit file, rename, archive, extract
@@ -32,9 +31,8 @@ Just install the plugin by following the standard WordPress plugin install proce
 + Calculate directory sizes
 + Video and audio preview/play
 + File manager supports file search and sort
-
-= Extended Features =
-
++ Automatic media sync
++ Trash folder
 + High performance server backend
 + Uses a local file system therefore no need for a database.
 + Keyboard shortcuts available
@@ -53,10 +51,10 @@ Just install the plugin by following the standard WordPress plugin install proce
 + Responsive(Works on tablet and phone)
 
 
-= Extend Library File Manager =
+= Coming Soon =
 
-+ **Frontend:** Enable Library File Manager plugin for frontend users.
-+ **Shortcode Support:** Shortcode support for Library File Manager to post it anywhere on your website.
++ **Frontend:** Enable Bit File Manager plugin for frontend users.
++ **Shortcode Support:** Shortcode support for Bit File Manager to post it anywhere on your website.
 + **Personal User Folder:** Every user has personal/private folder.
 + **Public User Folder:** All the user can share a common folder.
 + **User Role Folder:** User with same role can have common shared folder.
@@ -68,14 +66,61 @@ Just install the plugin by following the standard WordPress plugin install proce
 + **Operation Control:** Control 13+ operations for specific user and user roles.
 + **Ban Roles/Users:** Ban Users and Roles.
 
-**[Extend Library File Manager](https://wpjos.com/library-file-manager-plugin/)**
+**[Github](https://github.com/Bit-Apps-Pro/file-manager/)**
 
 == Compatibility ==
 
-We try to make our plugin compatible with as many plugin/theme as possible. If you find any compatability issue with any 3rd party plugin/theme, kindly report it to us via our plugin support forum or on our website.
+We try to make our plugin compatible with as many plugin/theme as possible. If you find any compatibility issue with any 3rd party plugin/theme, kindly report it to us via our plugin support forum or on our website.
 
-**Plugins**
-+ WPML -- Best WP plugin to translate and display your website in any languages
+✨ Overview of other products we are offering :
+
+📝 [**Bit Form**](https://wordpress.org/plugins/bit-form/): Bit Form is an amazing drag & drop form builder that allows you to create custom forms to interact with your visitors. It gives you the freedom to create any form you want, no coding required.
+
+🚀 [**Bit Integrations**](https://wordpress.org/plugins/bit-integrations/): Send WordPress Forms, WooCommerce, LMS, Membership plugin and other data to your Google Sheet, CRM, Email Marketing Tools and other platforms.
+
+📧 [**Bit SMTP**](https://wordpress.org/plugins/bit-smtp/): The ultimate goal of Bit SMTP plugin to make your email deliverability more easy as well as secure.
+
+
+📢 **Join our community [Bit Apps](https://www.facebook.com/groups/bitapps) & get updates of our plugins.**
+
+== Supported Languages(36) ==
+
++ Arabic
++ Bulgarian
++ Catalan
++ Czech
++ Danish
++ German
++ Greek
++ English
++ Español
++ Persian/Farsi
++ Faroese
++ Française/French
++ Canadienne française/French Canadian
++ Hebrew/hébreu
++ Croatian
++ Hungarian
++ Indonesian
++ Italiano/Italian
++ Japanese
++ Korean
++ Dutch
++ Norwegian
++ Polskie/Polish
++ Português/Porguese
++ Română/Romanian/Moldavian/Moldovan
++ Russian
++ Sinhala
++ Slovak
++ Slovenian
++ Serbian
++ Swedish
++ Türkçe/Turkish
++ Uyghur
++ Ukrainian
++ Vietnamese
++ Chinese
 
 == Installation ==
 
@@ -87,13 +132,13 @@ We try to make our plugin compatible with as many plugin/theme as possible. If y
  + Recommended 5.6+
  + Upto 7.2
  + Supports 7.3 on production environment
-+ DISALLOW_FILE_EDIT must be false to edit files from Library File Manager.
+ + DISALLOW_FILE_EDIT must be false to edit files from Bit File Manager.
 
 = Installation process =
 
 + Upload and install the plugin.
 + Go to admin dashboard
-+ Click on Library File Manager side menu
++ Click on Bit File Manager side menu
 
 **Congratulations** you have done it!
 
@@ -102,19 +147,19 @@ We try to make our plugin compatible with as many plugin/theme as possible. If y
 
 = Invalid backend configuration. Readable volumes not available. =
 
-Please check your file permission from your hosting panel. The permission must be 0755 for file/folder. If you are using a vps(virtual private server) then you must ensure that the owner of your installation is PHP aka www-data
+Please check your file permission from your hosting panel. The permission must be 0755 for file/folder. If you are using a vps(virtual private server) then you must ensure that the owner of your installation is PHP aka www-data. Another reason could be wrong root folder path/url. Inserting a correct root folder path/URL should fix the issue.
 
 = I can not upload larger files then *MB =
 
-You can upload any size of file.
+You can upload any size of file. Bit file manager plugin uploads files in chunks. So a very large file can be easily uploaded & downloaded.
 
 = Can I preview .psd and document files? =
 
-Yes you can.
+Yes, documents like PSD, DOCX can be previewd via file manager preview.
 
-= Will I support the plugin? =
+= Can I change file permission like cPanel? =
 
-Yes, I will support the plugin.
+Yes, file/folder permission can be changed like cPanel and other hosting management interfaces. It is very easy. Just right click on the file and you will see a menu named **Change Mode **. Clicking will open a dialogue box, where you can update the file permission, just like cPanel.
 
 
 == Screenshots ==
@@ -129,16 +174,39 @@ Yes, I will support the plugin.
 8. Edit file
 9. Right Click Menu
 10. Library File manager settings page
-11. Server details.
+11. Server details
+12. Emailing File
+13. Changing file permission
 
 
 == Upgrade Notice ==
 
-= 5.2.4 =
+= 5.2.7 =
 + No special requirements.
 
 
 == Changelog ==
+
+= 5.2.7 (29 August, 2022) =
+* Plugin ownership changed from Aftabul Islam to Bit Apps
+
+= 5.2.6 (19 April, 2022) =
+* File permission change added
+* Logo updated
+* FAQ updated
+* New screenshot added
+* Minor bug fixes
+
+= 5.2.5 (14 April, 2022) =
+* File preview design issue fixed.
+* Code editor design issue fixed.
+* Full screen design issue fixed.
+* Trash folder feature added.
+* Plugin debug is synchronized with WP_DEBUG
+* Setttings configuration issue fixed
+* Codemirror issue fixed
+* Code quality improvement
+* Other minor bug fixes
 
 = 5.2.4 (10 April, 2022) =
 * Tested compatability for WordPress 5.9.3
@@ -178,7 +246,7 @@ Yes, I will support the plugin.
 * Uploaded file to appropriate directory will automatically synchronized to media library. (since 5.1.7)
 
 = 5.1.6 (07 July 2019) =
-* Library File Manager security issue fixed
+* Bit File Manager security issue fixed
 
 = 5.1.5 (16 May 2019) =
 * elFinder updated to 2.1.49 (security update) (since 5.1.5)
@@ -192,18 +260,18 @@ Yes, I will support the plugin.
 
 = 5.1.2 (23 February 2019) =
 * Share file via email.
-* Root folder path & url added.(You can decide from where your Library File Manager should start).
+* Root folder path & url added.(You can decide from where your Bit File Manager should start).
 * Syntax checker added. (You don't have to worry about breaking your website while editing any more.)
 * PDF preview added
 * PSD preview added
 
-= 5.1.1 (22 February 2019)=
+= 5.1.1 (22 February 2019) =
 * Minor Bug fixed.
 * Code & Image editor added.
 * WYSIWYG Editor added.
 * Chunked file upload added. Upload large file regardless your php.ini settings.
 
-= 5.1.0 (21 February 2019)=
+= 5.1.0 (21 February 2019) =
 * Updated to elFinder 2.1.46
 * Code Editor added for easy editing [Ace, Codemirror, TinyMCE & others].
 * Supported file format extended.
@@ -225,7 +293,7 @@ Yes, I will support the plugin.
 * DISALLOW_FILE_EDIT reporting added [disallow_file_edit has to be false](https://wordpress.org/support/topic/disallow_file_edit-has-to-be-false/)
 * PHP 7 double underscore(__) warning fixed [PHP issues](https://wordpress.org/support/topic/php-issues-11/)
 * Undefined index warning fixed [Notice: Undefined index in debug mode](https://wordpress.org/support/topic/notice-undefined-index-in-debug-mode/)
-* Control Hide width of Library File Manager window.
+* Control Hide width of Bit File Manager window.
 
 = 4.1.6 (10 Jun, 2017) =
 * Empty Downloaded file fixed
