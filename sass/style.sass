@@ -7,8 +7,8 @@ input[type=radio]
     -webkit-appearance:radio !important
 
 .fm-header
-    box-shadow: 0px 1px 0px
-    padding-left: 50px
+    // box-shadow: 0px 1px 0px
+    padding-left: 25px
     width: 94%
     >h1
         color: #0073AA
@@ -51,9 +51,10 @@ input[type=radio]
                 text-align: center
 
 .fm-container
-    width: 98%
+    width: 86vw
     min-height: 500px
-    margin-top: 20px
+    // margin-top: 20px
+    height: 73vh
     .col-main
         width: 69.6%
         min-height: 200px
@@ -106,3 +107,25 @@ input[type=radio]
 @import "parts/elfinder"
 @import "parts/permission-system-demo"
 @import "parts/review"
+
+@media (max-width: 480px)
+
+    .fm-container
+        width: 98vw
+        .col-main
+            width: 100%
+        .col-sidebar
+            width: 100%
+
+    .fm-header
+        display: flex
+        flex-flow: column
+        >h1
+           min-width: max-content
+        >ul
+           display: none
+
+    .fm-footer
+        width: 100%
+        position: fixed
+        bottom: 0px

@@ -1,10 +1,10 @@
 === Bit File Manager - 100% free file manager for WordPress ===
-Contributors: aihimel
+Contributors: bitpressadmin, aihimel
 Tags: file manager, wp file manager, FTP, elfinder, file Browser, manage files, upload, delete, rename, copy, move, online file browser, remote file manager, drag and drop, folder upload
 Requires at least: 4.0
-Tested up to: 5.9.3
+Tested up to: 6.0.1
 Requires PHP: 5.6
-Stable tag: 5.2.6
+Stable tag: 5.2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,8 +53,8 @@ Just install the plugin by following the standard WordPress plugin install proce
 
 = Coming Soon =
 
-+ **Frontend:** Enable Library File Manager plugin for frontend users.
-+ **Shortcode Support:** Shortcode support for Library File Manager to post it anywhere on your website.
++ **Frontend:** Enable Bit File Manager plugin for frontend users.
++ **Shortcode Support:** Shortcode support for Bit File Manager to post it anywhere on your website.
 + **Personal User Folder:** Every user has personal/private folder.
 + **Public User Folder:** All the user can share a common folder.
 + **User Role Folder:** User with same role can have common shared folder.
@@ -79,6 +79,9 @@ We try to make our plugin compatible with as many plugin/theme as possible. If y
 🚀 [**Bit Integrations**](https://wordpress.org/plugins/bit-integrations/): Send WordPress Forms, WooCommerce, LMS, Membership plugin and other data to your Google Sheet, CRM, Email Marketing Tools and other platforms.
 
 📧 [**Bit SMTP**](https://wordpress.org/plugins/bit-smtp/): The ultimate goal of Bit SMTP plugin to make your email deliverability more easy as well as secure.
+
+
+📢 **Join our community [Bit Apps](https://www.facebook.com/groups/bitapps) & get updates of our plugins.**
 
 == Supported Languages(36) ==
 
@@ -129,13 +132,13 @@ We try to make our plugin compatible with as many plugin/theme as possible. If y
  + Recommended 5.6+
  + Upto 7.2
  + Supports 7.3 on production environment
-+ DISALLOW_FILE_EDIT must be false to edit files from Library File Manager.
+ + DISALLOW_FILE_EDIT must be false to edit files from Bit File Manager.
 
 = Installation process =
 
 + Upload and install the plugin.
 + Go to admin dashboard
-+ Click on Library File Manager side menu
++ Click on Bit File Manager side menu
 
 **Congratulations** you have done it!
 
@@ -148,7 +151,7 @@ Please check your file permission from your hosting panel. The permission must b
 
 = I can not upload larger files then *MB =
 
-You can upload any size of file. Library file manager plugin uploads files in chunks. So a very large file can be easily uploaded & downloaded.
+You can upload any size of file. Bit file manager plugin uploads files in chunks. So a very large file can be easily uploaded & downloaded.
 
 = Can I preview .psd and document files? =
 
@@ -240,7 +243,7 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 * Uploaded file to appropriate directory will automatically synchronized to media library. (since 5.1.7)
 
 = 5.1.6 (07 July 2019) =
-* Library File Manager security issue fixed
+* Bit File Manager security issue fixed
 
 = 5.1.5 (16 May 2019) =
 * elFinder updated to 2.1.49 (security update) (since 5.1.5)
@@ -254,7 +257,7 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 
 = 5.1.2 (23 February 2019) =
 * Share file via email.
-* Root folder path & url added.(You can decide from where your Library File Manager should start).
+* Root folder path & url added.(You can decide from where your Bit File Manager should start).
 * Syntax checker added. (You don't have to worry about breaking your website while editing any more.)
 * PDF preview added
 * PSD preview added
@@ -287,7 +290,7 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 * DISALLOW_FILE_EDIT reporting added [disallow_file_edit has to be false](https://wordpress.org/support/topic/disallow_file_edit-has-to-be-false/)
 * PHP 7 double underscore(__) warning fixed [PHP issues](https://wordpress.org/support/topic/php-issues-11/)
 * Undefined index warning fixed [Notice: Undefined index in debug mode](https://wordpress.org/support/topic/notice-undefined-index-in-debug-mode/)
-* Control Hide width of Library File Manager window.
+* Control Hide width of Bit File Manager window.
 
 = 4.1.6 (10 Jun, 2017) =
 * Empty Downloaded file fixed
