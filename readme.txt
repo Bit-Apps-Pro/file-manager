@@ -74,7 +74,7 @@ We try to make our plugin compatible with as many plugin/theme as possible. If y
 
 ✨ Overview of other products we are offering :
 
-📝 [**Bit Form**](https://wordpress.org/plugins/bit-form/): One of our best selling product. Bit Form is an amazing drag & drop form builder that allows you to create custom forms to interact with your visitors. It gives you the freedom to create any form you want, no coding required.
+📝 [**Bit Form**](https://wordpress.org/plugins/bit-form/): Bit Form is an amazing drag & drop form builder that allows you to create custom forms to interact with your visitors. It gives you the freedom to create any form you want, no coding required.
 
 🚀 [**Bit Integrations**](https://wordpress.org/plugins/bit-integrations/): Send WordPress Forms, WooCommerce, LMS, Membership plugin and other data to your Google Sheet, CRM, Email Marketing Tools and other platforms.
 
@@ -181,13 +181,16 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 
 == Upgrade Notice ==
 
-= 5.2.6 =
+= 5.2.7 =
 + No special requirements.
 
 
 == Changelog ==
 
-= 5.2.6 (19 Aprin, 2022) =
+= 5.2.7 (29 August, 2022) =
+* Plugin ownership changed from Aftabul Islam to Bit Apps
+
+= 5.2.6 (19 April, 2022) =
 * File permission change added
 * Logo updated
 * FAQ updated
