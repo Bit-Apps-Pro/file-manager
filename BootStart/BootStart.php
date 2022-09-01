@@ -209,12 +209,23 @@ abstract class FM_BootStart
     {
 
         $this->elfinder_assets(); // Loads all the assets necessary for elFinder
+        
+        wp_register_style('fmp_permission-system-css', $this->url('css/fmp_permission_system.css'));
+        wp_register_style('fmp_permission-system-font-awsome-css', $this->url('external/font-awesome-4.7.0/css/font-awesome.min.css'));
+        wp_register_style('fmp_permission-system-tippy-css', $this->url('external/tippy-v0.2.8/tippy.css'));
+
+        // Admin scripts
+        wp_register_script('fmp_permission-system-tippy-script', $this->url('external/tippy-v0.2.8/tippy.js'), array('jquery'));
+        wp_register_script('fmp_permission-system-admin-script', $this->url('js/admin-script.js'), array('fmp_permission-system-tippy-script'));
+
+        wp_enqueue_style('fmp_permission-system-css', $this->url('css/fmp_permission_system.css'));
 
         // Including admin-style.css
         wp_register_style('fmp-admin-style', $this->url('css/style.min.css'));
 
         // Including admin-script.js
         wp_register_script('fmp-admin-script', $this->url('js/admin-script.js'), array('jquery'));
+
     }
 
     /**
@@ -293,22 +304,19 @@ abstract class FM_BootStart
             // Main Menu
             add_menu_page('Bit File Manager | Dashboard', 'Bit File Manager', $capabilities, $this->prefix, array(&$this, 'admin_panel'), $this->url('img/icon-24x24.png'), 2);
             // Settings Page
+            add_submenu_page($this->prefix, 'Bit File Manager | Dashboard', 'Home', 'manage_options', $this->prefix, array(&$this, 'admin_panel'));
             add_submenu_page($this->prefix, 'Bit File Manager Settings', 'Settings', 'manage_options', $this->zip('Bit File Manager Settings'), array(&$this, 'settings'));
 
-
-
-            // if(!defined('FILE_MANAGER_PREMIUM')){
-            // 	add_submenu_page(
-            // 		'file-manager', // Parent Slug
-            // 		__('Library File Manager Permission System(pro)', 'file-manager'), // Page title
-            // 		__('Permission System', 'file-manager'), // Menu title
-            // 		'manage_options', // User capabilities
-            // 		'file-manager-permission-system', // Menu Slug
-            // 		function(){include plugin_dir_path( __FILE__ ) . ".." . DS . "views" . DS . "admin" . DS . "permission_system.php";}, 2
-            // 	);
-            // }
-
-
+            add_submenu_page(
+                'file-manager', // Parent Slug
+                'Bit File Manager | Permission System', // Page title
+                'Permission System', // Menu title
+                'manage_options', // User capabilities
+                'file-manager-permission-system', // Menu Slug
+                function () {
+                    include_once BFM_BASEDIR . 'views' . DS . 'admin' . DS . 'permission_system.php';
+                }
+            );
             // System Page
             add_submenu_page($this->prefix, 'System Information', 'System Info', 'manage_options', $this->zip('System Information'), array(&$this, 'systems'), 3);
         }
@@ -359,6 +367,7 @@ abstract class FM_BootStart
     public function url($string)
     {
 
+        return BFM_BASEURL . $string;
         return plugins_url('/' . $this->prefix . '/' . $string);
     }
 
@@ -451,7 +460,7 @@ abstract class FM_BootStart
             $view_file .= '.php';
         }
 
-        include(plugin_dir_path(__FILE__) . ".." . DS . "views" . DS . $view_file);
+        include BFM_BASEDIR . DS . "views" . DS . $view_file;
     }
 
     /**

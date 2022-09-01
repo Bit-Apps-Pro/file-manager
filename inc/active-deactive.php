@@ -4,7 +4,7 @@ defined('ABSPATH') || die();
 
 if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 
-function gb_fm_activate(){
+function bfm_activate(){
 
   // Initilizing the option to store logging
   if( !get_option('fm_log', false) ){

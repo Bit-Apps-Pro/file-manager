@@ -15,20 +15,21 @@
  * */
 
 // Including elFinder class
-require_once('BootStart' . DIRECTORY_SEPARATOR . 'Constants.php');
+require_once 'BootStart' . DIRECTORY_SEPARATOR . 'Constants.php';
+define('BFM_BASEDIR', plugin_dir_path(__FILE__));
+define('BFM_BASEURL', plugin_dir_url(__FILE__));
 
 // Including elFinder class
-require_once('elFinder' . DS . 'php' . DS . 'autoload.php');
+require_once 'elFinder' . DS . 'php' . DS . 'autoload.php';
 
 // Including Boot Starter
-require_once('BootStart' . DS . 'BootStart.php');
+require_once 'BootStart' . DS . 'BootStart.php';
 
 // Including other necessary files
-require_once('inc/__init__.php');
+require_once 'inc/__init__.php';
 
 // After library Loaded
 do_action('file_manager_init');
-
 class FM extends FM_BootStart
 {
 
@@ -123,14 +124,14 @@ class FM extends FM_BootStart
         $fmAccessControll = new FMAccessControl();
 
         $opts = array(
-            'bind' => array(
-                'put.pre' => array(new FMPHPSyntaxChecker, 'checkSyntax'), // Syntax Checking.
-                'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre' => array(&$this, 'security_check'),
-                //				 'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre file.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre get.pre' => array(&$this, 'security_check'),
-                'upload' => array(new FMMediaSync(), 'onFileUpload'),
-                '*' => 'fm_logger',
-            ),
-            'debug' => WP_DEBUG,
+            // 'bind' => array(
+            //     'put.pre' => array(new FMPHPSyntaxChecker, 'checkSyntax'), // Syntax Checking.
+            //     'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre' => array(&$this, 'security_check'),
+            //     //				 'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre file.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre get.pre' => array(&$this, 'security_check'),
+            //     'upload' => array(new FMMediaSync(), 'onFileUpload'),
+            //     '*' => 'fm_logger',
+            // ),
+            // 'debug' => WP_DEBUG,
             'roots' => array(
                 array(
                     'alias'         => isset($this->options['file_manager_settings']['fm_root_folder_name']) && !empty($this->options['file_manager_settings']['fm_root_folder_name']) ? $this->options['file_manager_settings']['fm_root_folder_name'] : "WP Root",
@@ -181,9 +182,9 @@ class FM extends FM_BootStart
                         // ),
 
                     ),
-                    'copyTo' => true, //https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#copyTo
+                    // 'copyTo' => true, //https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#copyTo
                     'uploadMaxSize' => 0, // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#uploadMaxSize
-                    'archiveMimes' => array(), // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#archiveMimes
+                    // 'archiveMimes' => array(), // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#archiveMimes
                     //'dirMode'        => 0755,            // new dirs mode (default 0755)
                     //'fileMode'       => 0644,            // new files mode (default 0644)
                     // 'maxTargets'=> 0,
@@ -258,10 +259,6 @@ class FM extends FM_BootStart
             array_unshift($links, '<a href="admin.php?page=bit-file-manager-settings">' . "Settings" . '</a>');
 
             array_unshift($links, '<a href="' . admin_url('admin.php?page=file-manager') . '">' . "Home" . '</a>');
-
-            // if( !defined('FILE_MANAGER_PREMIUM') && !defined('FILE_MANAGER_BACKEND') )
-            // array_unshift( $links, '<a target=\'blank\' class="file-manager-admin-panel-pro" href="https://wpjos.com/library-file-manager-plugin/" style="color: white; font-weight: bold; background-color: red; padding-right: 5px; padding-left: 5px; border-radius: 40%;">'. "Pro" .'</a>');
-
         }
 
         return $links;
@@ -294,19 +291,8 @@ class FM extends FM_BootStart
 }
 
 // Activation Deactivation hook
-register_activation_hook(__FILE__, 'gb_fm_activate');
+register_activation_hook(__FILE__, 'bfm_activate');
 
-global $FileManager;
+global $FileManager, $FMP;
 $FileManager = new FM('File Manager');
-
-
-
-if (!function_exists('pr')) :
-    function pr($obj)
-    {
-        if (!defined('GB_DEBUG')) return;
-        echo "<pre>";
-        print_r($obj);
-        echo "</pre>";
-    }
-endif;
+$FMP = new FileManagerPermission();

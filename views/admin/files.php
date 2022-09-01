@@ -39,7 +39,7 @@ $commandOptions = [];
 $commandOptions['info'] = [];
 $commandOptions['info']['hideItems'] = ['md5', 'sha256'];
 $commandOptions['download']['maxRequests'] = 10;
-$commandOptions['download']['minFilesZipdl'] = 2000;
+$commandOptions['download']['minFilesZipdl'] = 2;//need to check
 $commandOptions['quicklook']['googleDocsMimes'] = ['application/pdf', 'image/tiff', 'application/vnd.ms-office', 'application/msword', 'application/vnd.ms-word', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
 
 if($FileManager->options['file_manager_settings']['show_url_path'] && $FileManager->options['file_manager_settings']['show_url_path'] == 'hide'){
