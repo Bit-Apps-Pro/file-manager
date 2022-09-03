@@ -233,8 +233,6 @@ class FileManagerPermission
         if (!isset($settings['do-not-use-for-admin']) || empty($settings['do-not-use-for-admin']) || $user_role != 'administrator') $security_check_callback = array(&$FileManager, 'security_check');
         else $security_check_callback = array(&$this, 'security_check');
 
-        var_dump($folder_list);
-
         // Returnable $options variable
         $options = array(
             'bind' => array(

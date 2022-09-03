@@ -227,10 +227,12 @@ class FM extends FM_BootStart
          * Implementation Example: add_filter('fm_options', array($this, 'fm_options_test'), 10, 1);
          *
          * */
-        $opts = apply_filters('fm_options_filter', $opts);
+        $filetered_opts = apply_filters('fm_options_filter', $opts);
+        if (!empty($filetered_opts['roots'])) {
+            $opts = $filetered_opts;
+        }
         $elFinder = new elFinderConnector(new elFinder($opts));
         $elFinder->run();
-
         wp_die();
     }
 

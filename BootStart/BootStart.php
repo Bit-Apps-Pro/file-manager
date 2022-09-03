@@ -130,7 +130,7 @@ abstract class FM_BootStart
                 ),
                 'size' => array(
                     'width' => 'auto',
-                    'height' => 600
+                    'height' => '70vh'
                 ),
                 'fm_default_view_type' => 'icons',
                 'fm_display_ui_options' => ['toolbar', 'places', 'tree', 'path', 'stat']

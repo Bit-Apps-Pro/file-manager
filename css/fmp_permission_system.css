@@ -19,7 +19,7 @@ td {
 }
 
 .col-main-permission-system{
-	width: 98% !important;
+	width: inherit;
 }
 
 .col-main-permission-system > .gb-fm-row{

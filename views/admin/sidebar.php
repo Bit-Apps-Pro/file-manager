@@ -10,7 +10,7 @@ global $FileManager;
 ?>
 
 <div class='col-sidebar'>
-    <div class='gb-fm-row' style="padding: 20px;border-bottom-width: 16px;border-bottom-style: solid;">
+    <div class='gb-fm-row' style="/* padding: 20px; */">
         You can contribute on <a href="https://github.com/Bit-Apps-Pro/file-manager/" target="_blank">Github</a>
         <br />
         <br />

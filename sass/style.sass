@@ -1,4 +1,4 @@
-x//This the backend sass file
+//This the backend sass file
 
 input[type=checkbox]
     -webkit-appearance:checkbox !important
@@ -51,24 +51,26 @@ input[type=radio]
                 text-align: center
 
 .fm-container
-    width: 86vw
-    min-height: 500px
+    width: 100%
+    // min-height: 500px
     // margin-top: 20px
-    height: 73vh
+    // height: 73vh
     .col-main
-        width: 69.6%
+        width: 69%
         min-height: 200px
+        // height: 70vh
         float: left
     .col-sidebar
-        min-width: 29.6
+        width: 25%
+        padding: 3%
+        background: white
         min-height: 200px
         float: right
+        user-select: none
     .gb-fm-row
-        width: 98%
+        width: 100%
         background-color: white
-        min-height: 100px
-        margin: 5px
-        margin-bottom: 20px
+        // height: 70vh
 
 .fm-marketing
     a
@@ -90,10 +92,16 @@ input[type=radio]
         color: white
 
 .fm-footer
-    width: 98%
-    float: left
-    background-color: #DDDDDD
+    width: max-content
+    position: fixed
     text-align: center
+    bottom: 0
+    left: 45%
+    z-index: 99
+    background: white
+    border-radius: 20px
+    padding-left: 20px
+    padding-right: 20px
     ul
         li
             display: inline-block
@@ -115,7 +123,10 @@ input[type=radio]
         .col-main
             width: 100%
         .col-sidebar
-            width: 100%
+            width: 90%
+            padding: 7%
+        .gb-fm-row
+            height: fit-content
 
     .fm-header
         display: flex
@@ -127,5 +138,7 @@ input[type=radio]
 
     .fm-footer
         width: 100%
-        position: fixed
         bottom: 0px
+        left: 0
+        border-radius: 0
+        padding: 0
