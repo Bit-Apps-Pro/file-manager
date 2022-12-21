@@ -10,21 +10,6 @@
 // Directory Separator
 if (!defined('DS')) define("DS", DIRECTORY_SEPARATOR);
 
-
-// file manger path
-if (!defined('FILE_MANAGER_PATH')) define("FILE_MANAGER_PATH", plugin_dir_path(__FILE__));
-
-// file manger url
-if (!defined('FILE_MANAGER_URL')) define("FILE_MANAGER_URL", plugin_dir_url(__FILE__));
-
-// Elfinder path
-if (!defined('ELFINDER_PATH')) define("ELFINDER_PATH", plugin_dir_path(__FILE__) . 'elFinder');
-
-// Elfinder url
-if (!defined('ELFINDER_URL')) define("ELFINDER_URL", plugin_dir_url(__FILE__) . 'elFinder/');
-
-// FM_WP_UPLOAD_DIR = wp_upload_dir();
-
 // Upload dir path
 if (!defined('FM_WP_UPLOAD_DIR')) define("FM_WP_UPLOAD_DIR", wp_upload_dir());
 

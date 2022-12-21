@@ -1,0 +1,13 @@
+{
+    "name": "bitapps/file-manager",
+    "description": "An File Manager plugin for wordpress",
+    "license": "gpl-2",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "BitApps\\FM\\": "./backend/app",
+            "BitApps\\FM\\Core\\": "./backend/core"
+        }
+    },
+    "require-dev": {}
+}

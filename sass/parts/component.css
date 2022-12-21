@@ -1,0 +1,44 @@
+.badge-pro {
+  position: relative;
+}
+
+.badge-pro[data-badge]:after {
+  content: attr(data-badge);
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 1em;
+  background: #B10C0C;
+  color: white;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  line-height: 24px;
+  border-radius: 50%;
+  box-shadow: 0 0 1px #333;
+}
+
+.badge-free {
+  position: relative;
+}
+
+.badge-free[data-badge]:after {
+  content: attr(data-badge);
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 1em;
+  background: white;
+  color: black;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  line-height: 24px;
+  border-radius: 50%;
+  box-shadow: 0 0 1px #333;
+}
+
+.fm-error {
+  border-left: 4px solid red;
+  display: block;
+}/*# sourceMappingURL=component.css.map */

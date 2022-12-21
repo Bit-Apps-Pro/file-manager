@@ -1,0 +1,42 @@
+.review-block {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  text-align: center;
+  font-size: 1.2em;
+  border: 1px dashed #0d5ed9;
+  border-radius: 10px;
+}
+.review-block .message {
+  margin: 16px;
+  margin-top: 8px;
+}
+.review-block .actions {
+  margin-top: 24px;
+}
+.review-block .actions a {
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+  border: 1px solid #0d5ed9;
+}
+.review-block .actions .btn {
+  border-radius: 5px;
+}
+.review-block .actions .btn-review {
+  background-color: #0d5ed9;
+  color: white;
+  font-weight: 700;
+  border-radius: 5px;
+  transition-duration: 0.6s;
+}
+.review-block .actions .btn-review:hover {
+  transition-duration: 0.6s;
+  color: #0d5ed9;
+  background-color: white;
+  border: 2px solid #0d5ed9;
+}
+.review-block .actions .btn-not-interested {
+  color: gray;
+  font-weight: 400;
+  border: 0px;
+  font-size: 1em;
+}/*# sourceMappingURL=review.css.map */

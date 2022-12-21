@@ -126,7 +126,7 @@ abstract class FM_BootStart
                 'language' => array(
                     'code' => 'LANG',
                     'name' => 'Default',
-                    'file-url' => plugins_url('../elFinder/js/i18n/elfinder.LANG.js', __FILE__),
+                    'file-url' => plugins_url('js/i18n/elfinder.LANG.js', BFM_FINDER_DIR),
                 ),
                 'size' => array(
                     'width' => 'auto',
@@ -209,7 +209,7 @@ abstract class FM_BootStart
     {
 
         $this->elfinder_assets(); // Loads all the assets necessary for elFinder
-        
+
         wp_register_style('fmp_permission-system-css', $this->url('css/fmp_permission_system.css'));
         wp_register_style('fmp_permission-system-font-awsome-css', $this->url('external/font-awesome-4.7.0/css/font-awesome.min.css'));
         wp_register_style('fmp_permission-system-tippy-css', $this->url('external/tippy-v0.2.8/tippy.css'));
@@ -225,7 +225,6 @@ abstract class FM_BootStart
 
         // Including admin-script.js
         wp_register_script('fmp-admin-script', $this->url('js/admin-script.js'), array('jquery'));
-
     }
 
     /**
@@ -237,7 +236,7 @@ abstract class FM_BootStart
     public function elfinder_assets()
     {
 
-        $jquery_ui_url = $this->url('jquery-ui-1.11.4/jquery-ui.min.css');
+        $jquery_ui_url = BFM_ROOT_URL . 'jquery-ui-1.11.4/jquery-ui.min.css';
         $jquery_ui_url = apply_filters('fm_jquery_ui_theme_hook', $jquery_ui_url);
 
         // Jquery UI CSS
@@ -245,25 +244,25 @@ abstract class FM_BootStart
 
         $elfinder_style = $this->is_minified_file_load('fmp-elfinder-css');
         // elFinder CSS
-        wp_register_style($elfinder_style['handle'], $this->url('elFinder/css/elfinder' . $elfinder_style['file_type'] . 'css'), array('fmp-jquery-ui-css'));
+        wp_register_style($elfinder_style['handle'], BFM_FINDER_URL . 'css/elfinder' . $elfinder_style['file_type'] . 'css', array('fmp-jquery-ui-css'));
 
         // elFinder theme CSS
-        if ($this->url('jquery-ui-1.11.4/jquery-ui.min.css') == $jquery_ui_url) wp_register_style('fmp-elfinder-theme-css', $this->url('elFinder/css/theme.css'), array('fmp-elfinder-css'));
+        if (BFM_ROOT_URL . 'jquery-ui-1.11.4/jquery-ui.min.css' == $jquery_ui_url) wp_register_style('fmp-elfinder-theme-css', BFM_FINDER_URL . 'css/theme.css', array('fmp-elfinder-css'));
 
         // elFinder Scripts depends on jQuery UI core, selectable, draggable, droppable, resizable, dialog and slider.
         $elfinder_script = $this->is_minified_file_load('fmp-elfinder-script');
-        wp_register_script($elfinder_script['handle'], $this->url('elFinder/js/elfinder' . $elfinder_script['file_type'] . 'js'), array('jquery', 'jquery-ui-core', 'jquery-ui-selectable', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-resizable', 'jquery-ui-dialog', 'jquery-ui-slider', 'jquery-ui-tabs'));
+        wp_register_script($elfinder_script['handle'], BFM_FINDER_URL . 'js/elfinder' . $elfinder_script['file_type'] . 'js', array('jquery', 'jquery-ui-core', 'jquery-ui-selectable', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-resizable', 'jquery-ui-dialog', 'jquery-ui-slider', 'jquery-ui-tabs'));
         $editor_script = $this->is_minified_file_load('fmp-elfinder-editor-script');
-        wp_register_script($editor_script['handle'], $this->url('elFinder/js/extras/editors.default' . $editor_script['file_type'] . 'js'), array($elfinder_script['handle']));
+        wp_register_script($editor_script['handle'], BFM_FINDER_URL . 'js/extras/editors.default' . $editor_script['file_type'] . 'js', array($elfinder_script['handle']));
 
         $fm_nonce = wp_create_nonce('fm_nonce');
         wp_localize_script($elfinder_script['handle'], "fm", array(
             'ajax_url'         => admin_url('admin-ajax.php'),
             'nonce'         => $fm_nonce,
-            'plugin_dir'    => plugin_dir_path(__DIR__),
-            'plugin_url'     => plugin_dir_url(__DIR__),
-            'js_url'         => plugin_dir_url(__DIR__) . "elFinder/js/",
-            'elfinder'         => plugin_dir_url(__DIR__) . "elFinder/"
+            'plugin_dir'    => BFM_ROOT_DIR,
+            'plugin_url'     => BFM_ROOT_URL,
+            'js_url'         => BFM_FINDER_URL . "js/",
+            'elfinder'         => BFM_FINDER_URL
         ));
     }
 
@@ -314,7 +313,7 @@ abstract class FM_BootStart
                 'manage_options', // User capabilities
                 'file-manager-permission-system', // Menu Slug
                 function () {
-                    include_once BFM_BASEDIR . 'views' . DS . 'admin' . DS . 'permission_system.php';
+                    include_once BFM_ROOT_DIR . 'views' . DS . 'admin' . DS . 'permission_system.php';
                 }
             );
             // System Page
@@ -358,7 +357,18 @@ abstract class FM_BootStart
     }
 
     /**
+     * Absolute URL plugin root
      *
+     * @param string $string the relative url
+     *
+     * */
+    public function finderUrl($string)
+    {
+
+        return BFM_FINDER_URL . $string;
+    }
+    
+    /**
      * Absolute URL finder
      *
      * @param string $string the relative url
@@ -367,8 +377,7 @@ abstract class FM_BootStart
     public function url($string)
     {
 
-        return BFM_BASEURL . $string;
-        return plugins_url('/' . $this->prefix . '/' . $string);
+        return BFM_ROOT_URL . $string;
     }
 
     /**
@@ -460,7 +469,7 @@ abstract class FM_BootStart
             $view_file .= '.php';
         }
 
-        include BFM_BASEDIR . DS . "views" . DS . $view_file;
+        include BFM_ROOT_DIR . DS . "views" . DS . $view_file;
     }
 
     /**

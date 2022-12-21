@@ -159,7 +159,7 @@ class FileManagerPermission
     public function file_manager_view($data)
     {
 
-        include BFM_BASEDIR . 'views/shortcode/file_manager_view.php';
+        include BFM_ROOT_DIR . 'views/shortcode/file_manager_view.php';
 
         return $this->shortcode_output;
     }
@@ -172,7 +172,7 @@ class FileManagerPermission
     public function file_manager_public_view($data)
     {
 
-        include BFM_BASEDIR . 'views/shortcode/file_manager_public_view.php';
+        include BFM_ROOT_DIR . 'views/shortcode/file_manager_public_view.php';
     }
 
     /**
@@ -194,8 +194,11 @@ class FileManagerPermission
          * */
 
         $current_user = wp_get_current_user();
-        if (empty($current_user->roles)) $opts = $this->guest_processor($settings);
-        else $opts = $this->user_processor($settings);
+        if (empty($current_user->roles)) {
+            $opts = $this->guest_processor($settings);
+        } else {
+            $opts = $this->user_processor($settings);
+        }
 
         var_dump($current_user->roles);
         exit;
@@ -244,7 +247,6 @@ class FileManagerPermission
 
         // Folder list for the current user.
         $folder_list = array();
-
         // Loading permissions
         $permission_list = isset($settings[$user_login]) && count($settings[$user_login]) > 1 ? $settings[$user_login] : $settings[$user_role]; // Cascading permission. If specific has the permission then the users permission is accepted else the roles permission will be inherited.
         //auto::  $permission_list = in_array('ban', $permission_list) ? array() && $this->current_user_banned = 'ban' : $permission_list; // If the user is banned then their will be no permissions
@@ -493,9 +495,14 @@ class FileManagerPermission
     {
 
         $current_user = wp_get_current_user();
-        $settings = get_option('fmp_permission_system');
+        $settings = get_option('fmp_permission_system', []);
 
-        if ($settings['do-not-use-for-admin'] == 'do-not-use-for-admin' && $current_user->roles[0] == 'administrator') return $options;
+        if (
+            isset($settings['do-not-use-for-admin']) && $settings['do-not-use-for-admin'] == 'do-not-use-for-admin'
+            && $current_user->roles[0] == 'administrator'
+        ) {
+            return $options;
+        }
 
         /**
          *
@@ -505,8 +512,9 @@ class FileManagerPermission
          *  b. else the user is a guest then it will call guest processing function.
          * */
 
-        if (!empty($current_user->roles)) $options = $this->user_processor($settings);
-        else return $options;
+        if (!empty($current_user->roles) && !empty($settings)) {
+            $options = $this->user_processor($settings);
+        }
         return $options;
     }
 

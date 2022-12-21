@@ -8,7 +8,7 @@ if (!function_exists('bfm_file_name_validator')) {
 }
 
 // Including the widget class
-require_once BFM_BASEDIR . 'views/widgets/file-manager-widget.php';
+require_once BFM_ROOT_DIR . 'views/widgets/file-manager-widget.php';
 
 if (!function_exists('pr')) :
     /**

@@ -1,0 +1,14 @@
+.fm-donation {
+  text-align: center;
+  margin: 10px;
+}
+.fm-donation > form {
+  padding-bottom: 20px;
+}
+.fm-donation > p {
+  text-align: justify;
+}
+.fm-donation > h2 {
+  color: #0073AA;
+  padding-top: 20px;
+}/*# sourceMappingURL=donation.css.map */
