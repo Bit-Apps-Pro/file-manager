@@ -235,7 +235,6 @@ abstract class FM_BootStart
      * */
     public function elfinder_assets()
     {
-
         $jquery_ui_url = BFM_ROOT_URL . 'jquery-ui-1.11.4/jquery-ui.min.css';
         $jquery_ui_url = apply_filters('fm_jquery_ui_theme_hook', $jquery_ui_url);
 

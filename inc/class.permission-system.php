@@ -200,8 +200,8 @@ class FileManagerPermission
             $opts = $this->user_processor($settings);
         }
 
-        var_dump($current_user->roles);
-        exit;
+        // var_dump($current_user->roles);
+        // exit;
 
         $opts = apply_filters('fmp_options_filter', $opts);
         $elFinder = new elFinderConnector(new elFinder($opts));

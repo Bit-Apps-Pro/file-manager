@@ -29,6 +29,13 @@ global $FileManager;
         <br />
         <br />
         <a href="https://wordpress.org/plugins/bit-smtp/" target="_blank">
+            💬 Bit Assist
+        </a> Connect your all support assistant in a single button.
+        Connect with your visitor using their favorite Facebook Messenger, WhatsApp, Tawk to, Telegram, Viber, Slack etc.
+        <br />
+        <br />
+
+        <a href="https://wordpress.org/plugins/bit-smtp/" target="_blank">
             📧 Bit SMTP
         </a> The ultimate goal of Bit SMTP plugin to make your email deliverability more easy as well as secure.
         <br />

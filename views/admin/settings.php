@@ -23,13 +23,13 @@ if (isset($_POST) && !empty($_POST)) {
 
     $FileManager->options['file_manager_settings']['size']['width'] = filter_var($_POST['width'], FILTER_VALIDATE_INT) ? $_POST['width'] : 'auto';
     $FileManager->options['file_manager_settings']['size']['height'] = filter_var($_POST['height'], FILTER_VALIDATE_INT) ? $_POST['height'] : '70vh';
-    $FileManager->options['file_manager_settings']['fm-show-hidden-files'] = isset($_POST['fm-show-hidden-files']) && !empty($_POST['fm-show-hidden-files']) ? filter_var($_POST['fm-show-hidden-files'], FILTER_SANITIZE_STRING) : '';
-    $FileManager->options['file_manager_settings']['fm-create-hidden-files-folders'] = isset($_POST['fm-create-hidden-files-folders']) && !empty($_POST['fm-create-hidden-files-folders']) ? filter_var($_POST['fm-create-hidden-files-folders'], FILTER_SANITIZE_STRING) : '';
-    $FileManager->options['file_manager_settings']['fm-create-trash-files-folders'] = isset($_POST['fm-create-trash-files-folders']) && !empty($_POST['fm-create-trash-files-folders']) ? filter_var($_POST['fm-create-trash-files-folders'], FILTER_SANITIZE_STRING) : '';
-    $FileManager->options['file_manager_settings']['fm_root_folder_name'] = isset($_POST['fm_root_folder_name']) && !empty($_POST['fm_root_folder_name']) ? filter_var($_POST['fm_root_folder_name'], FILTER_SANITIZE_STRING) : 'WP Root';
-    $FileManager->options['file_manager_settings']['fm_default_view_type'] = isset($_POST['fm_default_view_type']) && !empty($_POST['fm_default_view_type']) ? filter_var($_POST['fm_default_view_type'], FILTER_SANITIZE_STRING) : 'icons';
-    $FileManager->options['file_manager_settings']['fm-remember-last-dir'] = isset($_POST['fm-remember-last-dir']) && !empty($_POST['fm-remember-last-dir']) ? filter_var($_POST['fm-remember-last-dir'], FILTER_SANITIZE_STRING) : 'checked';
-    $FileManager->options['file_manager_settings']['fm-clear-history-on-reload'] = isset($_POST['fm-clear-history-on-reload']) && !empty($_POST['fm-clear-history-on-reload']) ? filter_var($_POST['fm-clear-history-on-reload'], FILTER_SANITIZE_STRING) : 'checked';
+    $FileManager->options['file_manager_settings']['fm-show-hidden-files'] = isset($_POST['fm-show-hidden-files']) && !empty($_POST['fm-show-hidden-files']) ? sanitize_text_field($_POST['fm-show-hidden-files']) : '';
+    $FileManager->options['file_manager_settings']['fm-create-hidden-files-folders'] = isset($_POST['fm-create-hidden-files-folders']) && !empty($_POST['fm-create-hidden-files-folders']) ? sanitize_text_field($_POST['fm-create-hidden-files-folders']) : '';
+    $FileManager->options['file_manager_settings']['fm-create-trash-files-folders'] = isset($_POST['fm-create-trash-files-folders']) && !empty($_POST['fm-create-trash-files-folders']) ? sanitize_text_field($_POST['fm-create-trash-files-folders']) : '';
+    $FileManager->options['file_manager_settings']['fm_root_folder_name'] = isset($_POST['fm_root_folder_name']) && !empty($_POST['fm_root_folder_name']) ? sanitize_text_field($_POST['fm_root_folder_name']) : 'WP Root';
+    $FileManager->options['file_manager_settings']['fm_default_view_type'] = isset($_POST['fm_default_view_type']) && !empty($_POST['fm_default_view_type']) ? sanitize_text_field($_POST['fm_default_view_type']) : 'icons';
+    $FileManager->options['file_manager_settings']['fm-remember-last-dir'] = isset($_POST['fm-remember-last-dir']) && !empty($_POST['fm-remember-last-dir']) ? sanitize_text_field($_POST['fm-remember-last-dir']) : 'checked';
+    $FileManager->options['file_manager_settings']['fm-clear-history-on-reload'] = isset($_POST['fm-clear-history-on-reload']) && !empty($_POST['fm-clear-history-on-reload']) ? sanitize_text_field($_POST['fm-clear-history-on-reload']) : 'checked';
     $FileManager->options['file_manager_settings']['fm_display_ui_options'] = isset($_POST['fm_display_ui_options']) && !empty($_POST['fm_display_ui_options']) ? filter_var_array($_POST['fm_display_ui_options']) : ['toolbar', 'places', 'tree', 'path', 'stat'];
 }
 

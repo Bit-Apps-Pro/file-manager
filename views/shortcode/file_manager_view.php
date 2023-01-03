@@ -39,12 +39,14 @@ wp_enqueue_script($FileManager->is_minified_file_load('fmp-elfinder-script')['ha
 wp_enqueue_script($FileManager->is_minified_file_load('fmp-elfinder-editor-script')['handle']);
 wp_enqueue_script('fm-front-script');
 if (isset($lang_file_url)) wp_enqueue_script('fmp-elfinder-lang', $lang_file_url, array('fmp-elfinder-script'));
-var_dump($FMP->no_permission());
+// var_dump($FMP->no_permission());
 ob_start();
 ?>
 
 <div id='file-manager-pro-wrapper'></div>
-
+<?php
+ob_start();
+?>
 <script>
     PLUGINS_URL = '<?php echo plugins_url(); ?>';
     ajaxurl = '<?php echo $ajax_url; ?>';
@@ -70,7 +72,7 @@ ob_start();
                     files: [],
                 },
                 uiOptions: {
-                    toolbar: false,
+                    toolbar: [],
                 },
             <?php endif; ?>
             debug: ['error', 'warning', 'event-destroy'],
@@ -93,7 +95,10 @@ ob_start();
          });
     });
 </script>
-
+<?php
+$script = ob_get_clean();
+wp_add_inline_script('fmp-elfinder-editor-script', $script);
+?>
 <style>
     div.ui-widget-content:nth-child(11)>div:nth-child(1) {
         display: none !important;

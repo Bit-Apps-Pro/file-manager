@@ -50,7 +50,8 @@ class FMLanguage
 
         global $FileManager;
 
-        $elfinder_files = scandir(plugin_dir_path(__FILE__) . ".." . DS . ".." . DS . "elFinder" . DS . "js" . DS . "i18n");
+        // $elfinder_files = scandir(plugin_dir_path(__FILE__) . ".." . DS . ".." . DS . "elFinder" . DS . "js" . DS . "i18n");
+        $elfinder_files = scandir(BFM_FINDER_DIR . DS . "js" . DS . "i18n");
         for ($I = 2, $lang = array(); $I < count($elfinder_files); $I++) {
             $file_name = $elfinder_files[$I];
             if ($file_name == 'elfinder.fallback.js' || $file_name == 'help') {

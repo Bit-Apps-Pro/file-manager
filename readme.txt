@@ -2,9 +2,9 @@
 Contributors: bitpressadmin, aihimel
 Tags: file manager, wp file manager, FTP, elfinder, file Browser, manage files, upload, delete, rename, copy, move, online file browser, remote file manager, drag and drop, folder upload
 Requires at least: 4.0
-Tested up to: 6.0.1
+Tested up to: 6.1.1
 Requires PHP: 5.6
-Stable tag: 5.2.7
+Stable tag: 5.2.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,9 +49,6 @@ Just install the plugin by following the standard WordPress plugin install proce
 + Creating the archive by specifying the file name
 + File browsing history
 + Responsive(Works on tablet and phone)
-
-
-= Coming Soon =
 
 + **Frontend:** Enable Bit File Manager plugin for frontend users.
 + **Shortcode Support:** Shortcode support for Bit File Manager to post it anywhere on your website.

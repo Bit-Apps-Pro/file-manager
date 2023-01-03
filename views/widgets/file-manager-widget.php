@@ -20,7 +20,7 @@ if (!class_exists('FileManagerWidget')) :
                 'description' => 'Add file manager as a widget where you want.'
             );
 
-            parent::__construct('FimeManagerWidget', 'File Manager Widget', $options);
+            parent::__construct('FileManagerWidget', 'File Manager Widget', $options);
         }
 
         public function widget($args, $instance)
