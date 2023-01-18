@@ -80,6 +80,10 @@ abstract class FM_BootStart
      * */
     protected $menu_data;
 
+    public $devEnv;
+
+    public $STD;
+
     /**
      *
      * Constructor function
@@ -124,13 +128,13 @@ abstract class FM_BootStart
             'file_manager_settings' => array(
                 'show_url_path' => 'show',
                 'language' => array(
-                    'code' => 'LANG',
+                    'code' => 'en',
                     'name' => 'Default',
-                    'file-url' => plugins_url('js/i18n/elfinder.LANG.js', BFM_FINDER_DIR),
+                    'file-url' => plugins_url('libs/elFinder/js/i18n/elfinder.en.js', BFM_FINDER_DIR),
                 ),
                 'size' => array(
                     'width' => 'auto',
-                    'height' => '70vh'
+                    'height' => '500'
                 ),
                 'fm_default_view_type' => 'icons',
                 'fm_display_ui_options' => ['toolbar', 'places', 'tree', 'path', 'stat']
@@ -211,11 +215,11 @@ abstract class FM_BootStart
         $this->elfinder_assets(); // Loads all the assets necessary for elFinder
 
         wp_register_style('fmp_permission-system-css', $this->url('css/fmp_permission_system.css'));
-        wp_register_style('fmp_permission-system-font-awsome-css', $this->url('external/font-awesome-4.7.0/css/font-awesome.min.css'));
-        wp_register_style('fmp_permission-system-tippy-css', $this->url('external/tippy-v0.2.8/tippy.css'));
+        wp_register_style('fmp_permission-system-font-awesome-css', $this->url('external/font-awesome-4.7.0/css/font-awesome.min.css'));
+        wp_register_style('fmp_permission-system-tippy-css', $this->url('libs/js/tippy-v0.2.8/tippy.css'));
 
         // Admin scripts
-        wp_register_script('fmp_permission-system-tippy-script', $this->url('external/tippy-v0.2.8/tippy.js'), array('jquery'));
+        wp_register_script('fmp_permission-system-tippy-script', $this->url('libs/js/tippy-v0.2.8/tippy.js'), array('jquery'));
         wp_register_script('fmp_permission-system-admin-script', $this->url('js/admin-script.js'), array('fmp_permission-system-tippy-script'));
 
         wp_enqueue_style('fmp_permission-system-css', $this->url('css/fmp_permission_system.css'));
@@ -235,7 +239,7 @@ abstract class FM_BootStart
      * */
     public function elfinder_assets()
     {
-        $jquery_ui_url = BFM_ROOT_URL . 'jquery-ui-1.11.4/jquery-ui.min.css';
+        $jquery_ui_url = BFM_ROOT_URL . 'libs/js/jquery-ui-1.11.4/jquery-ui.min.css';
         $jquery_ui_url = apply_filters('fm_jquery_ui_theme_hook', $jquery_ui_url);
 
         // Jquery UI CSS
@@ -246,7 +250,9 @@ abstract class FM_BootStart
         wp_register_style($elfinder_style['handle'], BFM_FINDER_URL . 'css/elfinder' . $elfinder_style['file_type'] . 'css', array('fmp-jquery-ui-css'));
 
         // elFinder theme CSS
-        if (BFM_ROOT_URL . 'jquery-ui-1.11.4/jquery-ui.min.css' == $jquery_ui_url) wp_register_style('fmp-elfinder-theme-css', BFM_FINDER_URL . 'css/theme.css', array('fmp-elfinder-css'));
+        if (BFM_ROOT_URL . 'libs/js/jquery-ui-1.11.4/jquery-ui.min.css' == $jquery_ui_url) {
+            wp_register_style('fmp-elfinder-theme-css', BFM_FINDER_URL . 'css/theme.css', array('fmp-elfinder-css'));
+        }
 
         // elFinder Scripts depends on jQuery UI core, selectable, draggable, droppable, resizable, dialog and slider.
         $elfinder_script = $this->is_minified_file_load('fmp-elfinder-script');
@@ -366,7 +372,7 @@ abstract class FM_BootStart
 
         return BFM_FINDER_URL . $string;
     }
-    
+
     /**
      * Absolute URL finder
      *

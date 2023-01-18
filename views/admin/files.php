@@ -20,7 +20,7 @@ if ($language_settings['code'] != 'LANG') {
   $lang_file_url =  BFM_FINDER_URL . 'js/i18n/elfinder.' . $language_code . '.js';
   $lang_file_path = BFM_FINDER_DIR . 'js/i18n/elfinder.' . $language_code . '.js';
   if (!file_exists($lang_file_path)) {
-    $lang_file_url = BFM_FINDER_URL . 'js/i18n/elfinder.LANG.js';
+    $lang_file_url = BFM_FINDER_URL . 'js/i18n/elfinder.en.js';
   }
 }
 function get_lang_code()
@@ -58,7 +58,6 @@ wp_enqueue_script($FileManager->is_minified_file_load('fmp-elfinder-editor-scrip
 
 // Testing
 $fm_php_syntax_checker = new FMPHPSyntaxChecker();
-// $fm_php_syntax_checker->pl("Bal Chal");
 
 // Loading lanugage file
 if (isset($lang_file_url)) wp_enqueue_script('fmp-elfinder-lang', $lang_file_url, array('fmp-elfinder-script'));

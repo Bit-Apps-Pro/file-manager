@@ -29,6 +29,8 @@ class FileManagerPermission
      * */
     public $path;
 
+    public $url;
+
     /**
      *
      * @var string $shortcode_output
@@ -106,16 +108,11 @@ class FileManagerPermission
         add_shortcode('file_manager_public', array(&$this, 'file_manager_public_view'));
 
         // Adding Ajax for private folder
-        // $this->add_ajax('gb_file_manager_pro_connector');
+        // $this->add_ajax('bfm_permissions_system_connector');
 
         // Adding Ajax
-        add_action('wp_ajax_gb_file_manager_pro_connector', array(&$this, 'gb_file_manager_pro_connector')); // Logged in users
-        add_action('wp_ajax_nopriv_gb_file_manager_pro_connector', array(&$this, 'gb_file_manager_pro_connector')); // Guest in users
-
-        // Widget registration
-        add_action('widgets_init', function () {
-            return register_widget(FileManagerWidget::class);
-        });
+        add_action('wp_ajax_bfm_permissions_system_connector', array(&$this, 'handlePermissionSystemAjax')); // Logged in users
+        add_action('wp_ajax_nopriv_bfm_permissions_system_connector', array(&$this, 'handlePermissionSystemAjax')); // Guest in users
 
 
         // Checking for update
@@ -160,7 +157,6 @@ class FileManagerPermission
     {
 
         include BFM_ROOT_DIR . 'views/shortcode/file_manager_view.php';
-
         return $this->shortcode_output;
     }
 
@@ -180,10 +176,10 @@ class FileManagerPermission
      * File Manager Pro Connector function new
      *
      * */
-    public function gb_file_manager_pro_connector()
+    public function handlePermissionSystemAjax()
     {
 
-        $settings = get_option('fmp_permission_system');
+        $settings = get_option('fmp_permission_system', []);
 
         /**
          *
@@ -239,7 +235,8 @@ class FileManagerPermission
         // Returnable $options variable
         $options = array(
             'bind' => array(
-                //auto::  'ls.pre tree.pre parents.pre tmb.pre zipdl.pre size.pre mkdir.pre mkfile.pre rm.pre rename.pre duplicate.pre paste.pre upload.pre get.pre put.pre archive.pre extract.pre search.pre info.pre dim.pre resize.pre netmount.pre url.pre callback.pre chmod.pre' => $security_check_callback,
+                //auto::
+                'ls.pre tree.pre parents.pre tmb.pre zipdl.pre size.pre mkdir.pre mkfile.pre rm.pre rename.pre duplicate.pre paste.pre upload.pre get.pre put.pre archive.pre extract.pre search.pre info.pre dim.pre resize.pre netmount.pre url.pre callback.pre chmod.pre' => $security_check_callback,
             ),
             'debug' => true,
             'roots' => array(),
@@ -248,7 +245,7 @@ class FileManagerPermission
         // Folder list for the current user.
         $folder_list = array();
         // Loading permissions
-        $permission_list = isset($settings[$user_login]) && count($settings[$user_login]) > 1 ? $settings[$user_login] : $settings[$user_role]; // Cascading permission. If specific has the permission then the users permission is accepted else the roles permission will be inherited.
+        $permission_list = $this->processPermissionList($settings, $current_user);
         //auto::  $permission_list = in_array('ban', $permission_list) ? array() && $this->current_user_banned = 'ban' : $permission_list; // If the user is banned then their will be no permissions
         if (in_array('ban', $permission_list)) {
             $permission_list = array();
@@ -433,6 +430,26 @@ class FileManagerPermission
         return $options;
     }
 
+    /**
+     * Process permission list from permission settings
+     * 
+     * @param array $settings
+     * 
+     * @return array
+     */
+    public function processPermissionList($settings, $current_user)
+    {
+        if (empty($settings)) {
+            return [];
+        }
+        $permissionList = [];
+        if (isset($settings[$current_user->data->user_login]) && count($settings[$current_user->data->user_login]) > 1) {
+            $permissionList = $settings[$current_user->data->user_login];
+        } elseif(isset($settings[$current_user->roles[0]])) {
+            $permissionList = $settings[$current_user->roles[0]];
+        }
+        return $permissionList;
+    }
     public function security_check()
     {
         // Checks if the current user have enough authorization to operate.
@@ -449,16 +466,19 @@ class FileManagerPermission
      * */
     public function is_bannned()
     {
-
         if (!is_user_logged_in()) {
             return false;
         }
-        $settings = get_option('fmp_permission_system');
+        $settings = get_option('fmp_permission_system', []);
+        if (empty($settings)) {
+            return false;
+        }
+
         $current_user = wp_get_current_user();
         $user_role = $current_user->roles[0];
         $user_login = $current_user->data->user_login;
         $user_id = $current_user->ID;
-        $permission_list = isset($settings[$user_login]) && count($settings[$user_login]) > 1 ? $settings[$user_login] : $settings[$user_role]; // Cascading permission. If specific has the permission then the users permission is accepted else the roles permission will be inherited.
+        $permission_list = $this->processPermissionList($settings, $current_user);
         if (in_array('ban', $permission_list)) {
             $permission_list = array();
             $this->current_user_banned = 'ban';
@@ -479,12 +499,12 @@ class FileManagerPermission
         if (!is_user_logged_in()) {
             return false;
         }
-        $settings = get_option('fmp_permission_system');
+        $settings = get_option('fmp_permission_system', []);
+        if (empty($settings)) {
+            return false;
+        }
         $current_user = wp_get_current_user();
-        $user_role = $current_user->roles[0];
-        $user_login = $current_user->data->user_login;
-        $user_id = $current_user->ID;
-        $permission_list = isset($settings[$user_login]) && count($settings[$user_login]) > 1 ? $settings[$user_login] : $settings[$user_role]; // Cascading permission. If specific has the permission then the users permission is accepted else the roles permission will be inherited.
+        $permission_list = $this->processPermissionList($settings, $current_user);
 
         if (count($permission_list) > 1) return false;
         else return true;

@@ -69,10 +69,6 @@ global $FileManager;
                     <td>Copy and paste this php function anywhere in you template to show file manager.</td>
                     <td class='file-manager-shortcode-table-shortcode'>file_manager_permission_system_frontend()</td>
                 </tr>
-                <tr>
-                    <td>Use File Manager as a widget from the widget panel.</td>
-                    <td class='file-manager-shortcode-table-shortcode'>File Manager Widget</td>
-                </tr>
             </table>
         </div>
 

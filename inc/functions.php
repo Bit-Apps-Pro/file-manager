@@ -7,9 +7,6 @@ if (!function_exists('bfm_file_name_validator')) {
     }
 }
 
-// Including the widget class
-require_once BFM_ROOT_DIR . 'views/widgets/file-manager-widget.php';
-
 if (!function_exists('pr')) :
     /**
      * Debugging function
@@ -90,7 +87,7 @@ if (!function_exists('file_manager_permission_system_frontend')) :
                     url: ajaxurl,
                     debug: ['error', 'warning', 'event-destroy'],
                     customData: {
-                        action: 'connector_pro'
+                        action: 'bfm_permissions_system_connector'
                     },
                 });
             });

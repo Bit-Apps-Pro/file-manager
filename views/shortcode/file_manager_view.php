@@ -17,7 +17,7 @@ if ($language_settings['code'] != 'LANG') {
     $language_code = $language_settings['code'];
     $lang_file_url = $language_settings['file-url'];
 }
-$settings = get_option('fmp_permission_system');
+$settings = get_option('fmp_permission_system', []);
 // pr($settings);
 if (!is_user_logged_in() && count($settings['fmp_guest']) <= 1) return;
 if ($FMP->is_bannned()) {
@@ -34,25 +34,24 @@ wp_enqueue_style('fmp-jquery-ui-css');
 wp_enqueue_style('fmp-elfinder-css');
 wp_enqueue_style('fmp-elfinder-theme-css');
 wp_enqueue_style('fm-front-style');
-
+$editorScriptHandle = $FileManager->is_minified_file_load('fmp-elfinder-editor-script')['handle'];
 wp_enqueue_script($FileManager->is_minified_file_load('fmp-elfinder-script')['handle']);
-wp_enqueue_script($FileManager->is_minified_file_load('fmp-elfinder-editor-script')['handle']);
+wp_enqueue_script($editorScriptHandle);
 wp_enqueue_script('fm-front-script');
 if (isset($lang_file_url)) wp_enqueue_script('fmp-elfinder-lang', $lang_file_url, array('fmp-elfinder-script'));
-// var_dump($FMP->no_permission());
+var_dump($FMP->no_permission());
 ob_start();
 ?>
 
-<div id='file-manager-pro-wrapper'></div>
+<div id='file-manager-wrapper'></div>
 <?php
 ob_start();
 ?>
-<script>
     PLUGINS_URL = '<?php echo plugins_url(); ?>';
     ajaxurl = '<?php echo $ajax_url; ?>';
 
     jQuery(document).ready(function() {
-        let bfmElm = jQuery('#file-manager-pro-wrapper');
+        let bfmElm = jQuery('#file-manager-wrapper');
         let bfm = bfmElm.elfinder({
 
             url: ajaxurl,
@@ -77,7 +76,7 @@ ob_start();
             <?php endif; ?>
             debug: ['error', 'warning', 'event-destroy'],
             customData: {
-                action: 'gb_file_manager_pro_connector',
+                action: 'bfm_permissions_system_connector',
                 file_manager_pro_security_token: '<?php echo wp_create_nonce("file-manager-pro-security-token"); ?>'
             },
             lang: '<?php if (isset($language_code)) echo $language_code ?>',
@@ -94,10 +93,13 @@ ob_start();
             console.log('sec', event)
          });
     });
-</script>
 <?php
 $script = ob_get_clean();
-wp_add_inline_script('fmp-elfinder-editor-script', $script);
+if (wp_script_is($editorScriptHandle, 'registered')) {
+    wp_add_inline_script($editorScriptHandle, $script);
+} else {
+    echo "<script>$script</script>";
+}
 ?>
 <style>
     div.ui-widget-content:nth-child(11)>div:nth-child(1) {

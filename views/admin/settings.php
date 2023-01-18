@@ -22,7 +22,7 @@ if (isset($_POST) && !empty($_POST)) {
     $FileManager->options['file_manager_settings']['language'] = sanitize_text_field($_POST['language']);
 
     $FileManager->options['file_manager_settings']['size']['width'] = filter_var($_POST['width'], FILTER_VALIDATE_INT) ? $_POST['width'] : 'auto';
-    $FileManager->options['file_manager_settings']['size']['height'] = filter_var($_POST['height'], FILTER_VALIDATE_INT) ? $_POST['height'] : '70vh';
+    $FileManager->options['file_manager_settings']['size']['height'] = filter_var($_POST['height'], FILTER_VALIDATE_INT) ? $_POST['height'] : '500';
     $FileManager->options['file_manager_settings']['fm-show-hidden-files'] = isset($_POST['fm-show-hidden-files']) && !empty($_POST['fm-show-hidden-files']) ? sanitize_text_field($_POST['fm-show-hidden-files']) : '';
     $FileManager->options['file_manager_settings']['fm-create-hidden-files-folders'] = isset($_POST['fm-create-hidden-files-folders']) && !empty($_POST['fm-create-hidden-files-folders']) ? sanitize_text_field($_POST['fm-create-hidden-files-folders']) : '';
     $FileManager->options['file_manager_settings']['fm-create-trash-files-folders'] = isset($_POST['fm-create-trash-files-folders']) && !empty($_POST['fm-create-trash-files-folders']) ? sanitize_text_field($_POST['fm-create-trash-files-folders']) : '';
