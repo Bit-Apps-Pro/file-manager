@@ -214,21 +214,21 @@ abstract class FM_BootStart
 
         $this->elfinder_assets(); // Loads all the assets necessary for elFinder
 
-        wp_register_style('fmp_permission-system-css', $this->url('css/fmp_permission_system.css'));
-        wp_register_style('fmp_permission-system-font-awesome-css', $this->url('external/font-awesome-4.7.0/css/font-awesome.min.css'));
+        wp_register_style('fmp_permission-system-css', $this->url('assets/css/fmp_permission_system.css'));
+        wp_register_style('fmp_permission-system-font-awesome-css', $this->url('libs/font-awesome-4.7.0/css/font-awesome.min.css'));
         wp_register_style('fmp_permission-system-tippy-css', $this->url('libs/js/tippy-v0.2.8/tippy.css'));
 
         // Admin scripts
         wp_register_script('fmp_permission-system-tippy-script', $this->url('libs/js/tippy-v0.2.8/tippy.js'), array('jquery'));
-        wp_register_script('fmp_permission-system-admin-script', $this->url('js/admin-script.js'), array('fmp_permission-system-tippy-script'));
+        wp_register_script('fmp_permission-system-admin-script', $this->url('assets/js/admin-script.js'), array('fmp_permission-system-tippy-script'));
 
-        wp_enqueue_style('fmp_permission-system-css', $this->url('css/fmp_permission_system.css'));
+        wp_enqueue_style('fmp_permission-system-css', $this->url('assets/css/fmp_permission_system.css'));
 
         // Including admin-style.css
-        wp_register_style('fmp-admin-style', $this->url('css/style.min.css'));
+        wp_register_style('fmp-admin-style', $this->url('assets/css/style.min.css'));
 
         // Including admin-script.js
-        wp_register_script('fmp-admin-script', $this->url('js/admin-script.js'), array('jquery'));
+        wp_register_script('fmp-admin-script', $this->url('assets/js/admin-script.js'), array('jquery'));
     }
 
     /**
@@ -267,7 +267,20 @@ abstract class FM_BootStart
             'plugin_dir'    => BFM_ROOT_DIR,
             'plugin_url'     => BFM_ROOT_URL,
             'js_url'         => BFM_FINDER_URL . "js/",
-            'elfinder'         => BFM_FINDER_URL
+            'elfinder'         => BFM_FINDER_URL,
+            'themes'       => [
+                "Material" => [
+                    "name" => "Material Gray",
+                    "cssurls" => BFM_ASSET_URL . 'themes/Material-Theme/css/theme-gray.min.css',
+                    "author" => "Author Name",
+                    "email" => "Author Email",
+                    "license" => "License",
+                    "link" => "Web Site URL",
+                    "image" => "Screen Shot URL",
+                    "description" => "Description"
+                ]
+            ],
+            "theme" => 'Default'
         ));
     }
 
@@ -306,7 +319,7 @@ abstract class FM_BootStart
             $capabilities = apply_filters('fm_capabilities', $capabilities);
 
             // Main Menu
-            add_menu_page('Bit File Manager | Dashboard', 'Bit File Manager', $capabilities, $this->prefix, array(&$this, 'admin_panel'), $this->url('img/icon-24x24.png'), 2);
+            add_menu_page('Bit File Manager | Dashboard', 'Bit File Manager', $capabilities, $this->prefix, array(&$this, 'admin_panel'), $this->url('assets/img/icon-24x24.png'), 2);
             // Settings Page
             add_submenu_page($this->prefix, 'Bit File Manager | Dashboard', 'Home', 'manage_options', $this->prefix, array(&$this, 'admin_panel'));
             add_submenu_page($this->prefix, 'Bit File Manager Settings', 'Settings', 'manage_options', $this->zip('Bit File Manager Settings'), array(&$this, 'settings'));

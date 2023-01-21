@@ -1,4 +1,4 @@
-assets
+svn-assets
 build
 node_modules
 sass
@@ -10,3 +10,4 @@ yarn.lock
 .gitmodules
 package.json
 pnpm-lock.yaml
+testing
