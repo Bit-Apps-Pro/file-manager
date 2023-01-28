@@ -5,8 +5,8 @@
   "author": "Aftabul Islam",
   "license": "GPL-3.0-or-later",
   "scripts": {
-    "sass:compile": "node-sass sass/style.sass -o css --output-style expanded --source-map true",
-    "sass:minify": "cleancss --format breakWith=lf --source-map --source-map-inline-sources --output css/style.min.css css/style.css",
+    "sass:compile": "node-sass sass/style.sass -o ./assets/css --output-style expanded --source-map true",
+    "sass:minify": "cleancss --format breakWith=lf --source-map --source-map-inline-sources --output ./assets/css/style.min.css ./assets/css/style.css",
     "sass:build": "npm run sass:compile && npm run sass:minify",
     "sass:watch": "npm run sass:build && onchange 'sass/**/*.sass' -- npm run sass:build",
     "build:elfinder": "./tools/build_elfinder.sh",

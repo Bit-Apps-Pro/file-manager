@@ -22,6 +22,7 @@ define('BFM_BASEURL', plugin_dir_url(__FILE__));
 
 define('BFM_ROOT_DIR', BFM_BASEDIR);
 define('BFM_ROOT_URL', BFM_BASEURL);
+define('BFM_ASSET_URL', BFM_BASEURL . 'assets/');
 
 define('BFM_FINDER_DIR', BFM_ROOT_DIR . 'libs' . DIRECTORY_SEPARATOR . 'elFinder' . DIRECTORY_SEPARATOR);
 define('BFM_FINDER_URL', plugin_dir_url(BFM_FINDER_DIR . 'php'));
@@ -90,7 +91,6 @@ class FM extends FM_BootStart
         $this->version = '5.2.8';
         $this->version_no = 528;
         $this->site = 'https://bitapps.pro';
-        $this->giribaz_landing_page = 'https://wpjos.com/library-file-manager-plugin';
         $this->support_page = 'https://www.bitapps.pro/contact';
         $this->feedback_page = 'https://wordpress.org/support/plugin/file-manager/reviews/';
         $this->file_manager_view_path = plugin_dir_path(__FILE__);

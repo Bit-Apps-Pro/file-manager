@@ -28,7 +28,7 @@ if ($FMP->is_bannned()) {
     return;
 }
 
-$ajax_url = site_url() . "/wp-admin/admin-ajax.php";
+$ajax_url = admin_url("admin-ajax.php");
 
 wp_enqueue_style('fmp-jquery-ui-css');
 wp_enqueue_style('fmp-elfinder-css');
@@ -39,7 +39,6 @@ wp_enqueue_script($FileManager->is_minified_file_load('fmp-elfinder-script')['ha
 wp_enqueue_script($editorScriptHandle);
 wp_enqueue_script('fm-front-script');
 if (isset($lang_file_url)) wp_enqueue_script('fmp-elfinder-lang', $lang_file_url, array('fmp-elfinder-script'));
-var_dump($FMP->no_permission());
 ob_start();
 ?>
 
@@ -88,7 +87,6 @@ ob_start();
             height: '<?php echo $FileManager->options['file_manager_settings']['size']['height'] ?>',
 
         }).elfinder('instance');
-        console.log('first', bfm)
         bfmElm.on('load', function(event) {
             console.log('sec', event)
          });
