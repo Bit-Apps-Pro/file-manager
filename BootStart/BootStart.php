@@ -268,20 +268,36 @@ abstract class FM_BootStart
             'plugin_url'     => BFM_ROOT_URL,
             'js_url'         => BFM_FINDER_URL . "js/",
             'elfinder'         => BFM_FINDER_URL,
-            'themes'       => [
-                "Material" => [
-                    "name" => "Material Gray",
-                    "cssurls" => BFM_ASSET_URL . 'themes/Material-Theme/css/theme-gray.min.css',
-                    "author" => "Author Name",
-                    "email" => "Author Email",
-                    "license" => "License",
-                    "link" => "Web Site URL",
-                    "image" => "Screen Shot URL",
-                    "description" => "Description"
-                ]
-            ],
+            'themes'       => $this->themes(),
             "theme" => 'Default'
         ));
+    }
+
+    /**
+     * Returns all available themes
+     *
+     * @return array
+     */
+    public function themes()
+    {
+        $themeBase = BFM_ROOT_DIR . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'themes';
+        $themeDirs = scandir($themeBase);
+        $themes = [];
+        foreach ($themeDirs as $theme) {
+            if ($theme === '.' || $theme === '..') {
+                continue;
+            }
+            $variants = scandir($themeBase . DIRECTORY_SEPARATOR . $theme);
+            foreach ($variants as $variant) {
+                if ($variant === '.' || $variant === '..') {
+                    continue;
+                }
+                if (is_readable($themeBase . DIRECTORY_SEPARATOR . $theme . DIRECTORY_SEPARATOR . $variant. DIRECTORY_SEPARATOR . $variant . '.json')) {
+                    $themes[$variant] = BFM_ASSET_URL . "themes/$theme/$variant/$variant.json";
+                }
+            }
+        }
+        return $themes;
     }
 
     /**
@@ -503,9 +519,11 @@ abstract class FM_BootStart
     }
 
     /**
+     * String compression function
      *
-     * string compression function
+     * @param string $string String to compress
      *
+     * @return string
      * */
     public function zip($string)
     {

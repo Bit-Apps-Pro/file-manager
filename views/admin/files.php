@@ -48,9 +48,9 @@ if ($FileManager->options['file_manager_settings']['show_url_path'] && $FileMana
   $commandOptions['info']['hideItems'][] = 'link';
   $commandOptions['info']['hideItems'][] = 'path';
 }
-wp_enqueue_style('fmp-jquery-ui-css');
+// wp_enqueue_style('fmp-jquery-ui-css');
 wp_enqueue_style($FileManager->is_minified_file_load('fmp-elfinder-css')['handle']);
-wp_enqueue_style('fmp-elfinder-theme-css');
+// wp_enqueue_style('fmp-elfinder-theme-css');
 
 
 wp_enqueue_script($FileManager->is_minified_file_load('fmp-elfinder-script')['handle']);
@@ -73,6 +73,9 @@ if (isset($lang_file_url)) wp_enqueue_script('fmp-elfinder-lang', $lang_file_url
   jQuery(document).ready(function() {
     jQuery('#file-manager').elfinder({
       url: ajaxurl,
+      themes: fm.themes,
+      theme: fm.theme,
+      cssAutoLoad: false,
       contextmenu: {
         commands: ['*'],
 

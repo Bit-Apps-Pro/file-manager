@@ -276,7 +276,9 @@ class FM extends FM_BootStart
     /**
      *
      * @function admin_notice
+     * 
      * @description Adds admin notices to the admin page
+     * 
      * @param void
      * @return void
      *

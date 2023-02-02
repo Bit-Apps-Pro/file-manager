@@ -1,0 +1,37 @@
+{
+  "material": {
+    "variants": {
+      "material-default": {
+        "path": "submodule/sources/elFinder-Material-Theme/Material/css/theme.min.css",
+        "name": "Material Default",
+        "author": "Róbert Kelčák",
+        "license": "MIT",
+        "link": "https://github.com/RobiNN1/elFinder-Material-Theme",
+        "image": "https://raw.githubusercontent.com/RobiNN1/elFinder-Material-Theme/master/.github/img/preview-default.png",
+        "description": "Material Theme for elFinder."
+      },
+      "material-gray": {
+        "path": "submodule/sources/elFinder-Material-Theme/Material/css/theme-gray.min.css",
+        "name": "Material Gray",
+        "author": "Róbert Kelčák",
+        "license": "MIT",
+        "link": "https://github.com/RobiNN1/elFinder-Material-Theme",
+        "image": "https://raw.githubusercontent.com/RobiNN1/elFinder-Material-Theme/master/.github/img/preview-gray.png",
+        "description": "Material Theme for elFinder."
+      },
+      "material-light": {
+        "path": "submodule/sources/elFinder-Material-Theme/Material/css/theme-light.min.css",
+        "name": "Material Light",
+        "author": "Róbert Kelčák",
+        "license": "MIT",
+        "link": "https://github.com/RobiNN1/elFinder-Material-Theme",
+        "image": "https://raw.githubusercontent.com/RobiNN1/elFinder-Material-Theme/master/.github/img/preview-gray.png",
+        "description": "Material Theme for elFinder."
+      }
+    },
+    "resources": [
+      "submodule/sources/elFinder-Material-Theme/Material/icons",
+      "submodule/sources/elFinder-Material-Theme/Material/images"
+    ]
+  }
+}

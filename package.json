@@ -13,7 +13,8 @@
     "elfinder:watch": "npm run build:elfinder && onchange 'submodule/sources/elFinder/**/*' -- npm run build:elfinder",
     "build:copy": "node tools/build_copy.js",
     "build:zip": "node tools/zip_build.js",
-    "build:prod": "npm run build:elfinder && npm run sass:build && npm run build:copy && npm run build:zip"
+    "build:theme": "./tools/copy_themes.js",
+    "build:prod": "npm run build:elfinder && npm run sass:build && npm run build:copy && npm run build:zip && npm run build:theme"
   },
   "dependencies": {
     "clean-css-cli": "^5.5.2",
