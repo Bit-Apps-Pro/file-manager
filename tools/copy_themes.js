@@ -29,8 +29,6 @@ const copyFolderRecursiveSync = ( source, target ) => {
         files = fs.readdirSync( source );
         files.forEach( function ( file ) {
             const curSource = path.join( source, file );
-            console.log('curSource', curSource, fs.lstatSync( curSource ).isDirectory())
-            console.log("\n")
             if ( fs.lstatSync( curSource ).isDirectory() ) {
                 copyFolderRecursiveSync( curSource, targetFolder );
             } else {

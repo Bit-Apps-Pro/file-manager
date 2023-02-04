@@ -33,5 +33,21 @@
       "submodule/sources/elFinder-Material-Theme/Material/icons",
       "submodule/sources/elFinder-Material-Theme/Material/images"
     ]
+  },
+    "bootstrap": {
+    "variants": {
+      "bootstrap": {
+        "path": "submodule/sources/LibreICONS/themes/elFinder/css/theme-bootstrap-libreicons-svg.css",
+        "name": "Bootstrap Default",
+        "author": "DiemenDesign",
+        "license": "MIT",
+        "link": "https://github.com/DiemenDesign/LibreICONS/tree/master/themes/elFinder",
+        "image": "https://raw.githubusercontent.com/DiemenDesign/LibreICONS/master/themes/elFinder/elfinder-bootstrap-theme.png",
+        "description": "Bootstrap and LibreICONS theme for elFinder"
+      }
+    },
+    "resources": [
+      "submodule/sources/LibreICONS/themes/elFinder/img"
+    ]
   }
 }

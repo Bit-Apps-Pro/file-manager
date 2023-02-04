@@ -4,3 +4,6 @@
 [submodule "submodule/sources/elFinder-Material-Theme"]
 	path = submodule/sources/elFinder-Material-Theme
 	url = git@github.com:RobiNN1/elFinder-Material-Theme.git
+[submodule "submodule/sources/LibreICONS"]
+	path = submodule/sources/LibreICONS
+	url = git@github.com:DiemenDesign/LibreICONS.git
