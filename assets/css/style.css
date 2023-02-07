@@ -381,11 +381,6 @@ input[type=radio] {
   display: none !important;
 }
 
-.elfinder-quicklook-titlebar-icon .ui-icon.ui-icon-closethick {
-  left: 20px;
-  top: 8px;
-}
-
 .ui-helper-clearfix.ui-dialog-buttonpane.ui-widget-content {
   font-size: 12px;
 }

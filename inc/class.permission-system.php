@@ -136,7 +136,7 @@ class FileManagerPermission
      * */
     public function admin_menu_file_manager($capabilities)
     {
-        $settings = get_option('fmp_permission_system');
+        $settings = get_option('file-manager-permissions');
         $current_user = wp_get_current_user();
         $user_role = $current_user->roles[0];
         $user_login = $current_user->data->user_login;
@@ -179,7 +179,7 @@ class FileManagerPermission
     public function handlePermissionSystemAjax()
     {
 
-        $settings = get_option('fmp_permission_system', []);
+        $settings = get_option('file-manager-permissions', []);
 
         /**
          *
@@ -259,7 +259,7 @@ class FileManagerPermission
         $settings['root_folder'] = isset($settings['root_folder']) && !empty($settings['root_folder']) ? trailingslashit($settings['root_folder']) : trailingslashit($FileManager->upload_path);
         $settings['root_folder_url'] = isset($settings['root_folder_url']) && !empty($settings['root_folder_url']) ? trailingslashit($settings['root_folder_url']) : trailingslashit($FileManager->upload_url);
         if (!is_dir($settings['root_folder'])) {
-            mkdir($settings['root_folder'], 0777, true);
+            mkdir($settings['root_folder'], 0755, true);
         } // Creating root folder if it doesn't exists.
 
         // Personal Folder
@@ -328,7 +328,9 @@ class FileManagerPermission
 
         $fm_access_control = new FMAccessControl();
         foreach ($folder_list as $folder) {
-            // pl($folder);
+            if (!is_array($folder)) {
+                continue;
+            }
             $options['roots'][] = array(
                 'driver'        => 'LocalFileSystem',      // driver for accessing file system (REQUIRED)
                 'path'          => $folder['path'],        // path to files (REQUIRED)
@@ -343,8 +345,7 @@ class FileManagerPermission
                 'accessControl' => array(&$fm_access_control, 'control'),
             );
             if ((isset($folder['path']) && !empty($folder['path'])) && !is_dir($folder['path'])) {
-                // mkdir($folder['path'], 0755);
-                // pl($folder['path']);
+                mkdir($folder['path'], 0755);
             }
         }
 
@@ -445,7 +446,7 @@ class FileManagerPermission
         $permissionList = [];
         if (isset($settings[$current_user->data->user_login]) && count($settings[$current_user->data->user_login]) > 1) {
             $permissionList = $settings[$current_user->data->user_login];
-        } elseif(isset($settings[$current_user->roles[0]])) {
+        } elseif (isset($settings[$current_user->roles[0]])) {
             $permissionList = $settings[$current_user->roles[0]];
         }
         return $permissionList;
@@ -453,8 +454,8 @@ class FileManagerPermission
     public function security_check()
     {
         // Checks if the current user have enough authorization to operate.
-        if (!wp_verify_nonce($_POST['file_manager_pro_security_token'], 'file-manager-pro-security-token')) wp_die();
-        check_ajax_referer('file-manager-pro-security-token', 'file_manager_pro_security_token');
+        if (!wp_verify_nonce($_POST['bfm_nonce'], 'bfm_nonce')) wp_die();
+        check_ajax_referer('bfm_nonce', 'bfm_nonce');
     }
 
     /**
@@ -469,7 +470,7 @@ class FileManagerPermission
         if (!is_user_logged_in()) {
             return false;
         }
-        $settings = get_option('fmp_permission_system', []);
+        $settings = get_option('file-manager-permissions', []);
         if (empty($settings)) {
             return false;
         }
@@ -499,7 +500,7 @@ class FileManagerPermission
         if (!is_user_logged_in()) {
             return false;
         }
-        $settings = get_option('fmp_permission_system', []);
+        $settings = get_option('file-manager-permissions', []);
         if (empty($settings)) {
             return false;
         }
@@ -515,7 +516,7 @@ class FileManagerPermission
     {
 
         $current_user = wp_get_current_user();
-        $settings = get_option('fmp_permission_system', []);
+        $settings = get_option('file-manager-permissions', []);
 
         if (
             isset($settings['do-not-use-for-admin']) && $settings['do-not-use-for-admin'] == 'do-not-use-for-admin'

@@ -16,10 +16,11 @@ if (isset($_POST) && !empty($_POST)) {
     if (isset($_POST['show_url_path']) && ($_POST['show_url_path'] == 'show' || $_POST['show_url_path'] == 'hide')) {
         $FileManager->options['file_manager_settings']['show_url_path'] = $_POST['show_url_path'];
     }
-    $FileManager->options['file_manager_settings']['root_folder_path'] = sanitize_text_field($_POST['root_folder_path']) ? sanitize_text_field(truepath($_POST['root_folder_path'])) : '';
+    $FileManager->options['file_manager_settings']['root_folder_path'] = sanitize_text_field($_POST['root_folder_path']) ? sanitize_text_field(bfmRealpath($_POST['root_folder_path'])) : '';
     $FileManager->options['file_manager_settings']['root_folder_url'] = esc_url_raw($_POST['root_folder_url']) ? esc_url_raw($_POST['root_folder_url']) : '';
 
     $FileManager->options['file_manager_settings']['language'] = sanitize_text_field($_POST['language']);
+    $FileManager->options['file_manager_settings']['theme'] = sanitize_text_field($_POST['theme']);
 
     $FileManager->options['file_manager_settings']['size']['width'] = filter_var($_POST['width'], FILTER_VALIDATE_INT) ? $_POST['width'] : 'auto';
     $FileManager->options['file_manager_settings']['size']['height'] = filter_var($_POST['height'], FILTER_VALIDATE_INT) ? $_POST['height'] : '500';
@@ -35,10 +36,12 @@ if (isset($_POST) && !empty($_POST)) {
 
 /**
  * This function is to replace PHP's extremely buggy realpath().
- * @param string The original path, can be relative etc.
+ *
+ * @param $path string The original path, can be relative etc.
+ *
  * @return string The resolved path, it might not exist.
  */
-function truepath($path)
+function bfmRealpath($path)
 {
     // whether $path is unix or not
     $unipath = strlen($path) == 0 || $path[0] != '/';
@@ -78,6 +81,14 @@ $admin_page_url = admin_url() . "admin.php?page={$FileManager->prefix}";
 // Enqueing admin assets
 $FileManager->admin_assets();
 
+$themes = [
+    'default' => 'Default',
+    'material-default' => 'Material Default',
+    'material-gray' => 'Material Gray',
+    'material-light' => 'Material Light',
+    'bootstrap' => 'Bootstrap',
+];
+$selectedTheme = isset($FileManager->options['file_manager_settings']['theme']) ? $FileManager->options['file_manager_settings']['theme'] : '';
 // Language
 require 'language-code.php';
 global $fm_languages;
@@ -201,6 +212,19 @@ global $fm_languages;
                             <select name='language'>
                                 <?php foreach ($lang as $L) : ?>
                                     <option <?php selected($L['code'], $language_code); ?> value='<?php echo esc_attr(serialize($L)); ?>'><?php echo esc_html($L['name']); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4><?php _e("Select Theme", 'file-manager'); ?></h4>
+                        </td>
+                        <td>
+                            <select name='theme'>
+                                <?php foreach ($themes as $themeID => $theme) : ?>
+                                    <option 
+                                    <?php selected($themeID, $selectedTheme); ?> value='<?php echo $themeID; ?>'><?php echo esc_html($theme); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </td>

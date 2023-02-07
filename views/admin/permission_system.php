@@ -10,10 +10,14 @@ if (!empty($_POST)) {
     // Checks if the current user have enough authorization to operate.
     if (!wp_verify_nonce($_POST['file_manager_pro_settings_security_token'], 'file-manager-pro-settings-security-token') || !current_user_can('manage_options')) wp_die();
     check_ajax_referer('file-manager-pro-settings-security-token', 'file_manager_pro_settings_security_token');
-    update_option('fmp_permission_system', $_POST);
+    $data = [];
+    foreach ($_POST as $option => $value) {
+        $data[$option] = sanitize_text_field($value);
+    }
+    update_option('file-manager-permissions', $data);
 }
-// delete_option('fmp_permission_system');
-$previous_settings = get_option('fmp_permission_system');
+// delete_option('file-manager-permissions');
+$previous_settings = get_option('file-manager-permissions');
 // pr($previous_settings);
 
 // Extracting user role

@@ -18,7 +18,7 @@ class SettingsInitializer{
         SettingsInitializer::$settings['folder_options-userrole'] = 'userrole-folder';
         SettingsInitializer::$settings['administrator'] = array('download', 'upload', 'cut', 'copy', 'duplicate', 'paste', 'rm', 'mkdir', 'mkfile', 'edit', 'rename', 'archive', 'extract', 'path' => '');
 
-        update_option('fmp_permission_system', SettingsInitializer::$settings);
+        update_option('file-manager-permissions', SettingsInitializer::$settings);
     }
 
 }

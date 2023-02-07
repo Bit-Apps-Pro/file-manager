@@ -21,5 +21,4 @@ require_once 'class.mime.php';
 require_once 'class.media-sync.php';
 require_once 'class.permission-system.php';
 require_once 'functions.php';
-require_once 'class.update.php';
 require_once 'class.initializer.php';

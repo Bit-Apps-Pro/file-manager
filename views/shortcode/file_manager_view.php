@@ -17,7 +17,7 @@ if ($language_settings['code'] != 'LANG') {
     $language_code = $language_settings['code'];
     $lang_file_url = $language_settings['file-url'];
 }
-$settings = get_option('fmp_permission_system', []);
+$settings = get_option('file-manager-permissions', []);
 // pr($settings);
 if (!is_user_logged_in() && count($settings['fmp_guest']) <= 1) return;
 if ($FMP->is_bannned()) {
@@ -76,7 +76,7 @@ ob_start();
             debug: ['error', 'warning', 'event-destroy'],
             customData: {
                 action: 'bfm_permissions_system_connector',
-                file_manager_pro_security_token: '<?php echo wp_create_nonce("file-manager-pro-security-token"); ?>'
+                bfm_nonce: '<?php echo wp_create_nonce("bfm_nonce"); ?>'
             },
             lang: '<?php if (isset($language_code)) echo $language_code ?>',
             requestType: 'post',

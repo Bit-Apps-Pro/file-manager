@@ -57,10 +57,10 @@ if (!function_exists('file_manager_permission_system_frontend')) :
 
         // Adding necessary Scripts these will be added to the footer section.
         // Jquery UI CSS
-        wp_enqueue_style('fmp_jquery-ui-css', $FMP->url('jquery-ui-1.11.4/jquery-ui.min.css'));
+        wp_enqueue_style('fmp_jquery-ui-css', $FMP->url('libs/js/jquery-ui/jquery-ui.min.css'));
 
         // Jquery UI theme
-        wp_enqueue_style('fmp_jquery-ui-css-theme', $FMP->url('jquery-ui-1.11.4/jquery-ui.theme.css'));
+        wp_enqueue_style('fmp_jquery-ui-css-theme', $FMP->url('libs/js/jquery-ui/jquery-ui.theme.css'));
 
         // elFinder CSS
         wp_enqueue_style('fmp_elfinder-css', $FMP->url('elFinder/css/elfinder.min.css'));
@@ -75,7 +75,7 @@ if (!function_exists('file_manager_permission_system_frontend')) :
 
 ?>
 
-        <div id='file-manager-pro-wrapper'></div>
+        <div id='file-manager-frontend'></div>
 
         <script>
             PLUGINS_URL = '<?php echo plugins_url(); ?>';
@@ -83,7 +83,7 @@ if (!function_exists('file_manager_permission_system_frontend')) :
 
             jQuery(document).ready(function() {
 
-                jQuery('#file-manager-pro-wrapper').elfinder({
+                jQuery('#file-manager-frontend').elfinder({
                     url: ajaxurl,
                     debug: ['error', 'warning', 'event-destroy'],
                     customData: {

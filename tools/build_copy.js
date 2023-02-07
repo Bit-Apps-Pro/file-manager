@@ -11,7 +11,7 @@ var options = {
         'elFinder/**/*',
         'assets/**/*',
         'inc/**/*',
-        'jquery-ui-1.11.4/**/*',
+        'jquery-ui/**/*',
         'libs/**/*',
         'languages/**/*',
         'views/**/*',

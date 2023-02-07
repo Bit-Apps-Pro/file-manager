@@ -6,6 +6,11 @@
  *
  * */
 defined('ABSPATH') or die();
+/**
+ * Global object of FM
+ *
+ * @var FM $FileManager
+ */
 global $FileManager;
 //auto::  pr($FileManager->options);
 if (!is_array($FileManager->options['file_manager_settings']['language'])) $language_settings = unserialize(stripslashes($FileManager->options['file_manager_settings']['language']));
@@ -48,9 +53,11 @@ if ($FileManager->options['file_manager_settings']['show_url_path'] && $FileMana
   $commandOptions['info']['hideItems'][] = 'link';
   $commandOptions['info']['hideItems'][] = 'path';
 }
-// wp_enqueue_style('fmp-jquery-ui-css');
-wp_enqueue_style($FileManager->is_minified_file_load('fmp-elfinder-css')['handle']);
-// wp_enqueue_style('fmp-elfinder-theme-css');
+wp_enqueue_style('fmp-jquery-ui-css');
+// wp_enqueue_style($FileManager->is_minified_file_load('fmp-elfinder-css')['handle']);
+if (in_array($FileManager->selectedTheme(), ['default', 'bootstrap'])) {
+    wp_enqueue_style('fmp-elfinder-theme-css');
+}
 
 
 wp_enqueue_script($FileManager->is_minified_file_load('fmp-elfinder-script')['handle']);
@@ -75,7 +82,7 @@ if (isset($lang_file_url)) wp_enqueue_script('fmp-elfinder-lang', $lang_file_url
       url: ajaxurl,
       themes: fm.themes,
       theme: fm.theme,
-      cssAutoLoad: false,
+      cssAutoLoad: true,
       contextmenu: {
         commands: ['*'],
 

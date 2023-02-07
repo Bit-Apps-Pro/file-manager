@@ -16,25 +16,25 @@ if( !is_user_logged_in() && empty($settings['guest']) ) die();
 
 // Adding necessary Scripts these will be added to the footer section.
 // Jquery UI CSS
-wp_enqueue_style( 'fmp_jquery-ui-css', $FMP->url('jquery-ui-1.11.4/jquery-ui.min.css') );
+wp_enqueue_style( 'fmp_jquery-ui-css', $FMP->url('libs/js/jquery-ui/jquery-ui.min.css') );
 
 // Jquery UI theme
-wp_enqueue_style( 'fmp_jquery-ui-css-theme', $FMP->url('jquery-ui-1.11.4/jquery-ui.theme.css') );
+wp_enqueue_style( 'fmp_jquery-ui-css-theme', $FMP->url('libs/js/jquery-ui/jquery-ui.theme.min.css') );
 
 // elFinder CSS
-wp_enqueue_style( 'fmp_elfinder-css', $FMP->url('elFinder/css/elfinder.min.css') );
+wp_enqueue_style( 'fmp_elfinder-css', $FMP->url('libs/elFinder/css/elfinder.min.css') );
 
 // elFinder theme CSS
 wp_enqueue_style( 'fmp_elfinder-theme-css', $FMP->url('elFinder/css/theme.css') );
 
 // elFinder Scripts depends on jQuery UI core, selectable, draggable, droppable, resizable, dialog and slider.
-wp_enqueue_script( 'fmp_elfinder-script', $FMP->url('elFinder/js/elfinder.full.js'), array('jquery', 'jquery-ui-core', 'jquery-ui-selectable', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-resizable', 'jquery-ui-dialog', 'jquery-ui-slider', ) );
+wp_enqueue_script( 'fmp_elfinder-script', $FMP->url('libs/elFinder/js/elfinder.full.js'), array('jquery', 'jquery-ui-core', 'jquery-ui-selectable', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-resizable', 'jquery-ui-dialog', 'jquery-ui-slider', ) );
 
 $ajax_url = site_url() . "/wp-admin/admin-ajax.php";
 
 ?>
 
-<div id='file-manager-pro-wrapper'></div>
+<div id='file-manager-short-code'></div>
 
 <script>
 
@@ -43,7 +43,7 @@ ajaxurl = '<?php echo $ajax_url; ?>';
 
 jQuery(document).ready(function(){
 	
-	jQuery('#file-manager-pro-wrapper').elfinder({
+	jQuery('#file-manager-short-code').elfinder({
 		url: ajaxurl,
 		debug : ['error', 'warning', 'event-destroy'],
 		customData:{action: 'connector_public'},

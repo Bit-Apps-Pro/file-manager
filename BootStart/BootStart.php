@@ -4,22 +4,17 @@
 defined('ABSPATH') or die();
 
 /**
- *
- * The starter file that holds everything togather.
+ * The starter file that holds everything together.
  *
  * @package BootStart_1_0_0
  *
  * @since version 0.1.1
- *
- * */
+ **/
 
 /**
- *
  * Holds almost all the functionality that this nano framework supports.
  *
- *
  * We will eventually add more detailed description later.
- *
  * */
 abstract class FM_BootStart
 {
@@ -214,7 +209,7 @@ abstract class FM_BootStart
 
         $this->elfinder_assets(); // Loads all the assets necessary for elFinder
 
-        wp_register_style('fmp_permission-system-css', $this->url('assets/css/fmp_permission_system.css'));
+        wp_register_style('fmp_permission-system-css', $this->url('assets/css/bfm_permissions.css'));
         wp_register_style('fmp_permission-system-font-awesome-css', $this->url('libs/font-awesome-4.7.0/css/font-awesome.min.css'));
         wp_register_style('fmp_permission-system-tippy-css', $this->url('libs/js/tippy-v0.2.8/tippy.css'));
 
@@ -222,7 +217,7 @@ abstract class FM_BootStart
         wp_register_script('fmp_permission-system-tippy-script', $this->url('libs/js/tippy-v0.2.8/tippy.js'), array('jquery'));
         wp_register_script('fmp_permission-system-admin-script', $this->url('assets/js/admin-script.js'), array('fmp_permission-system-tippy-script'));
 
-        wp_enqueue_style('fmp_permission-system-css', $this->url('assets/css/fmp_permission_system.css'));
+        wp_enqueue_style('fmp_permission-system-css', $this->url('assets/css/bfm_permissions.css'));
 
         // Including admin-style.css
         wp_register_style('fmp-admin-style', $this->url('assets/css/style.min.css'));
@@ -239,7 +234,7 @@ abstract class FM_BootStart
      * */
     public function elfinder_assets()
     {
-        $jquery_ui_url = BFM_ROOT_URL . 'libs/js/jquery-ui-1.11.4/jquery-ui.min.css';
+        $jquery_ui_url = BFM_ROOT_URL . 'libs/js/jquery-ui/jquery-ui.min.css';
         $jquery_ui_url = apply_filters('fm_jquery_ui_theme_hook', $jquery_ui_url);
 
         // Jquery UI CSS
@@ -247,12 +242,9 @@ abstract class FM_BootStart
 
         $elfinder_style = $this->is_minified_file_load('fmp-elfinder-css');
         // elFinder CSS
-        wp_register_style($elfinder_style['handle'], BFM_FINDER_URL . 'css/elfinder' . $elfinder_style['file_type'] . 'css', array('fmp-jquery-ui-css'));
-
-        // elFinder theme CSS
-        if (BFM_ROOT_URL . 'libs/js/jquery-ui-1.11.4/jquery-ui.min.css' == $jquery_ui_url) {
-            wp_register_style('fmp-elfinder-theme-css', BFM_FINDER_URL . 'css/theme.css', array('fmp-elfinder-css'));
-        }
+        wp_register_style($elfinder_style['handle'], BFM_FINDER_URL . 'css/elfinder' . $elfinder_style['file_type'] . 'css');
+        // wp_register_style($elfinder_style['handle'], BFM_FINDER_URL . 'css/elfinder' . $elfinder_style['file_type'] . 'css', array('fmp-jquery-ui-css'));
+        wp_register_style('fmp-elfinder-theme-css', BFM_ROOT_URL . 'libs/js/jquery-ui/jquery-ui.theme.min.css');
 
         // elFinder Scripts depends on jQuery UI core, selectable, draggable, droppable, resizable, dialog and slider.
         $elfinder_script = $this->is_minified_file_load('fmp-elfinder-script');
@@ -260,17 +252,20 @@ abstract class FM_BootStart
         $editor_script = $this->is_minified_file_load('fmp-elfinder-editor-script');
         wp_register_script($editor_script['handle'], BFM_FINDER_URL . 'js/extras/editors.default' . $editor_script['file_type'] . 'js', array($elfinder_script['handle']));
 
-        $fm_nonce = wp_create_nonce('fm_nonce');
-        wp_localize_script($elfinder_script['handle'], "fm", array(
-            'ajax_url'         => admin_url('admin-ajax.php'),
-            'nonce'         => $fm_nonce,
-            'plugin_dir'    => BFM_ROOT_DIR,
-            'plugin_url'     => BFM_ROOT_URL,
-            'js_url'         => BFM_FINDER_URL . "js/",
-            'elfinder'         => BFM_FINDER_URL,
-            'themes'       => $this->themes(),
-            "theme" => 'Default'
-        ));
+        wp_localize_script(
+            $elfinder_script['handle'],
+            "fm",
+            array(
+                'ajax_url'         => admin_url('admin-ajax.php'),
+                'nonce'         => wp_create_nonce('fm_nonce'),
+                'plugin_dir'    => BFM_ROOT_DIR,
+                'plugin_url'     => BFM_ROOT_URL,
+                'js_url'         => BFM_FINDER_URL . "js/",
+                'elfinder'         => BFM_FINDER_URL,
+                'themes'       => $this->themes(),
+                "theme" => $this->selectedTheme()
+            )
+        );
     }
 
     /**
@@ -292,12 +287,26 @@ abstract class FM_BootStart
                 if ($variant === '.' || $variant === '..') {
                     continue;
                 }
-                if (is_readable($themeBase . DIRECTORY_SEPARATOR . $theme . DIRECTORY_SEPARATOR . $variant. DIRECTORY_SEPARATOR . $variant . '.json')) {
+                if (is_readable($themeBase . DIRECTORY_SEPARATOR . $theme . DIRECTORY_SEPARATOR . $variant . DIRECTORY_SEPARATOR . $variant . '.json')) {
                     $themes[$variant] = BFM_ASSET_URL . "themes/$theme/$variant/$variant.json";
                 }
             }
         }
         return $themes;
+    }
+
+    /**
+     * Returns selected theme from settings
+     *
+     * @return array
+     */
+    public function selectedTheme()
+    {
+        $theme = 'default';
+        if (isset($this->options['file_manager_settings']['theme'])) {
+            $theme = $this->options['file_manager_settings']['theme'];
+        }
+        return $theme;
     }
 
     /**
@@ -342,8 +351,8 @@ abstract class FM_BootStart
 
             add_submenu_page(
                 'file-manager', // Parent Slug
-                'Bit File Manager | Permission System', // Page title
-                'Permission System', // Menu title
+                'Bit File Manager | Sets permission for specific user or by user role', // Page title
+                'Permissions', // Menu title
                 'manage_options', // User capabilities
                 'file-manager-permission-system', // Menu Slug
                 function () {

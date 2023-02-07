@@ -289,7 +289,7 @@ class FM extends FM_BootStart
         // DISALLOW_FILE_EDIT Macro checking
         if (defined('DISALLOW_FILE_EDIT') && DISALLOW_FILE_EDIT) :
 ?>
-            <div class='update-nag fm-error'><b>DISALLOW_FILE_EDIT</b> <?php _e("is set to", 'file-manager'); ?> <b>TRUE</b>. <?php _e("You will not be able to edit files with", 'file-manager'); ?> <a href='admin.php?page=file-manager-settings'>Library File Manager</a>. <?php _e("Please set", 'file-manager'); ?> <b>DISALLOW_FILE_EDIT</b> <?php _e("to", 'file-manager'); ?> <b>FALSE</b></div>
+            <div class='update-nag fm-error'><b>DISALLOW_FILE_EDIT</b> <?php _e("is set to", 'file-manager'); ?> <b>TRUE</b>. <?php _e("You will not be able to edit files with", 'file-manager'); ?> <a href='admin.php?page=file-manager-settings'>Bit File Manager</a>. <?php _e("Please set", 'file-manager'); ?> <b>DISALLOW_FILE_EDIT</b> <?php _e("to", 'file-manager'); ?> <b>FALSE</b></div>
             <style>
                 .fm-error {
                     border-left: 4px solid red;

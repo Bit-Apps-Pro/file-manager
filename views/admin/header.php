@@ -9,9 +9,9 @@
 // Security Check
 if (!defined('ABSPATH')) die();
 global $FileManager;
-wp_enqueue_style('fmp_permission-system-font-awsome-css');
+// wp_enqueue_style('fmp_permission-system-font-awsome-css');
 wp_enqueue_style('fmp_permission-system-tippy-css');
-wp_enqueue_style('fmp-admin-style');
+// wp_enqueue_style('fmp-admin-style');
 wp_enqueue_script('fmp_permission-system-admin-script');
 wp_enqueue_style('fmp-admin-style');
 wp_enqueue_script('fmp-admin-script');
