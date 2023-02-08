@@ -25,7 +25,7 @@ wp_enqueue_style( 'fmp_jquery-ui-css-theme', $FMP->url('libs/js/jquery-ui/jquery
 wp_enqueue_style( 'fmp_elfinder-css', $FMP->url('libs/elFinder/css/elfinder.min.css') );
 
 // elFinder theme CSS
-wp_enqueue_style( 'fmp_elfinder-theme-css', $FMP->url('elFinder/css/theme.css') );
+wp_enqueue_style( 'fmp_elfinder-theme-css', $FMP->url('libs/elFinder/css/theme.css') );
 
 // elFinder Scripts depends on jQuery UI core, selectable, draggable, droppable, resizable, dialog and slider.
 wp_enqueue_script( 'fmp_elfinder-script', $FMP->url('libs/elFinder/js/elfinder.full.js'), array('jquery', 'jquery-ui-core', 'jquery-ui-selectable', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-resizable', 'jquery-ui-dialog', 'jquery-ui-slider', ) );

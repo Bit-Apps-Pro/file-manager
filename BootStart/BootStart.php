@@ -209,15 +209,11 @@ abstract class FM_BootStart
 
         $this->elfinder_assets(); // Loads all the assets necessary for elFinder
 
-        wp_register_style('fmp_permission-system-css', $this->url('assets/css/bfm_permissions.css'));
-        wp_register_style('fmp_permission-system-font-awesome-css', $this->url('libs/font-awesome-4.7.0/css/font-awesome.min.css'));
         wp_register_style('fmp_permission-system-tippy-css', $this->url('libs/js/tippy-v0.2.8/tippy.css'));
 
         // Admin scripts
         wp_register_script('fmp_permission-system-tippy-script', $this->url('libs/js/tippy-v0.2.8/tippy.js'), array('jquery'));
         wp_register_script('fmp_permission-system-admin-script', $this->url('assets/js/admin-script.js'), array('fmp_permission-system-tippy-script'));
-
-        wp_enqueue_style('fmp_permission-system-css', $this->url('assets/css/bfm_permissions.css'));
 
         // Including admin-style.css
         wp_register_style('fmp-admin-style', $this->url('assets/css/style.min.css'));

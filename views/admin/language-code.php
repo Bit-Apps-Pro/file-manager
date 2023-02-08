@@ -64,7 +64,7 @@ class FMLanguage
             $lang[] = array(
                 'code' => $code,
                 'name' => $name,
-                'file-url' => $FileManager->url('elFinder/js/i18n/') . $file_name
+                'file-url' => $FileManager->url('libs/elFinder/js/i18n/') . $file_name
             );
         }
 
@@ -124,6 +124,7 @@ $fm_languages = new FMLanguage(
         "fj" => __("Fijian", 'file-manager'),
         "fo" => __("Faroese", 'file-manager'),
         "fr" => __("French", 'file-manager'),
+        "fr_CA" => __("Française", 'file-manager'),
         "fy" => __("Western Frisian", 'file-manager'),
         "ga" => __("Irish", 'file-manager'),
         "gd" => __("Scottish Gaelic", 'file-manager'),

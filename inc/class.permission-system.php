@@ -136,14 +136,15 @@ class FileManagerPermission
      * */
     public function admin_menu_file_manager($capabilities)
     {
-        $settings = get_option('file-manager-permissions');
+        $settings = get_option('file-manager-permissions', []);
         $current_user = wp_get_current_user();
         $user_role = $current_user->roles[0];
         $user_login = $current_user->data->user_login;
         //auto::  pr($current_user);
-        if (
-            isset($settings[$user_role])
-            && (count($settings[$user_role]) > 1 || count($settings[$user_login]) > 1)
+        if (isset($settings[$user_role])
+            && ((is_array($settings[$user_role]) && count($settings[$user_role]) > 1)
+                || (is_array($settings[$user_login]) && count($settings[$user_login]) > 1)
+            )
         ) return $user_role;
         else return $capabilities;
     }

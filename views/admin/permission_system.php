@@ -8,16 +8,12 @@ global $wp_roles, $wpdb, $FileManager, $FMP;
 // Processing Post data
 if (!empty($_POST)) {
     // Checks if the current user have enough authorization to operate.
-    if (!wp_verify_nonce($_POST['file_manager_pro_settings_security_token'], 'file-manager-pro-settings-security-token') || !current_user_can('manage_options')) wp_die();
-    check_ajax_referer('file-manager-pro-settings-security-token', 'file_manager_pro_settings_security_token');
-    $data = [];
-    foreach ($_POST as $option => $value) {
-        $data[$option] = sanitize_text_field($value);
-    }
-    update_option('file-manager-permissions', $data);
+    if (!wp_verify_nonce($_POST['bfm_permissions_nonce'], 'bfm_permissions_nonce') || !current_user_can('manage_options')) wp_die();
+    check_ajax_referer('bfm_permissions_nonce', 'bfm_permissions_nonce');
+    update_option('file-manager-permissions', $_POST, 'yes');
 }
-// delete_option('file-manager-permissions');
-$previous_settings = get_option('file-manager-permissions');
+$previous_settings = get_option('file-manager-permissions', []);
+
 // pr($previous_settings);
 
 // Extracting user role
@@ -78,7 +74,7 @@ global $FileManager;
 
         <div class='gb-fm-row'>
             <form method="post" action="">
-                <input type='hidden' name='file_manager_pro_settings_security_token' value='<?php echo wp_create_nonce("file-manager-pro-settings-security-token"); ?>'>
+                <input type='hidden' name='bfm_permissions_nonce' value='<?php echo wp_create_nonce("bfm_permissions_nonce"); ?>'>
 
                 <label for='do-not-use-for-admin-id'>Do not use this settings for administrator </label>
                 <input type='checkbox' name='do-not-use-for-admin' id='do-not-use-for-admin-id' value='do-not-use-for-admin' <?php if (isset($previous_settings['do-not-use-for-admin']) && !empty($previous_settings['do-not-use-for-admin'])) echo "checked"; ?>>
@@ -128,7 +124,7 @@ global $FileManager;
                     <br>
                     <label for='public-folder-url-id'>URL &nbsp;&nbsp;</label>
                     <input type='text' name='public-folder-url' id='public-folder-url-id' placeholder='<?php echo $root_folder_url . 'public'; ?>' value='<?php if (isset($previous_settings['public-folder-url']) && !empty($previous_settings['public-folder-url'])) echo $previous_settings['public-folder-url'];
-                                                                                                                                                            else echo $root_folder_url . 'public'; ?>'>
+                                                                                                                                                            else echo $root_folder_url . '/public'; ?>'>
                     <small>default is <b><?php echo $root_folder_path . 'public'; ?></b></small>
 
                 </div>
@@ -168,9 +164,9 @@ global $FileManager;
                             <?php foreach ($operations as $operation) : ?>
                                 <td>
                                     <?php if ($operation == 'ban') { ?>
-                                        <input type='checkbox' name='<?php echo $role; ?>[]' onClick='FMP.banned_notification("<?php echo $role . '_' . $operation; ?>", "<?php echo $role; ?>");' id='<?php echo $role . '_' . $operation; ?>' class='<?php echo $operation; ?>' value='<?php echo $operation; ?>' <?php if (isset($previous_settings[$role]) && in_array($operation, $previous_settings[$role])) echo "checked"; ?> />
+                                        <input type='checkbox' name='<?php echo $role; ?>[]' onClick='FMP.banned_notification("<?php echo $role . '_' . $operation; ?>", "<?php echo $role; ?>");' id='<?php echo $role . '_' . $operation; ?>' class='<?php echo $operation; ?>' value='<?php echo $operation; ?>' <?php if (isset($previous_settings[$role]) && is_array($previous_settings[$role]) && in_array($operation, $previous_settings[$role])) echo "checked"; ?> />
                                     <?php } else { ?>
-                                        <input type='checkbox' name='<?php echo $role; ?>[]' id='<?php echo $role . '_' . $operation; ?>' class='<?php echo $operation; ?>' value='<?php echo $operation; ?>' <?php if (isset($previous_settings[$role]) && in_array($operation, $previous_settings[$role])) echo "checked"; ?> />
+                                        <input type='checkbox' name='<?php echo $role; ?>[]' id='<?php echo $role . '_' . $operation; ?>' class='<?php echo $operation; ?>' value='<?php echo $operation; ?>' <?php if (isset($previous_settings[$role]) && is_array($previous_settings[$role]) && in_array($operation, $previous_settings[$role])) echo "checked"; ?> />
                                     <?php }; ?>
                                 </td>
                             <?php endforeach; ?>
@@ -224,7 +220,7 @@ global $FileManager;
 
                             <?php foreach ($operations as $operation) : ?>
                                 <td>
-                                    <input type='checkbox' name='<?php echo $FMP->zip($user['user_login']); ?>[]' value="<?php echo $operation; ?>" <?php if (isset($previous_settings[$FMP->zip($user['user_login'])]) && in_array($operation, $previous_settings[$FMP->zip($user['user_login'])])) echo "checked"; ?> />
+                                    <input type='checkbox' name='<?php echo $FMP->zip($user['user_login']); ?>[]' value="<?php echo $operation; ?>" <?php if (isset($previous_settings[$FMP->zip($user['user_login'])]) && is_array($previous_settings[$FMP->zip($user['user_login'])]) && in_array($operation, $previous_settings[$FMP->zip($user['user_login'])])) echo "checked"; ?> />
                                 </td>
                             <?php endforeach; ?>
 
