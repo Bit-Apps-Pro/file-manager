@@ -91,7 +91,7 @@ if (isset($lang_file_url)) wp_enqueue_script('fmp-elfinder-lang', $lang_file_url
       },
       customData: {
         action: 'connector',
-        file_manager_security_token: fm.nonce
+        bfm_token: fm.nonce
       },
       lang: '<?php if (isset($language_code)) echo esc_js($language_code); ?>',
       requestType: 'post',

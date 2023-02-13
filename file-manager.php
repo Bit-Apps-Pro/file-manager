@@ -131,14 +131,14 @@ class FM extends FM_BootStart
         $fmAccessControll = new FMAccessControl();
 
         $opts = array(
-            // 'bind' => array(
-            //     'put.pre' => array(new FMPHPSyntaxChecker, 'checkSyntax'), // Syntax Checking.
-            //     'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre' => array(&$this, 'security_check'),
-            //     //				 'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre file.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre get.pre' => array(&$this, 'security_check'),
-            //     'upload' => array(new FMMediaSync(), 'onFileUpload'),
-            //     '*' => 'fm_logger',
-            // ),
-            // 'debug' => WP_DEBUG,
+            'bind' => array(
+                'put.pre' => array(new FMPHPSyntaxChecker, 'checkSyntax'), // Syntax Checking.
+                'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre' => array(&$this, 'security_check'),
+                //				 'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre file.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre get.pre' => array(&$this, 'security_check'),
+                'upload' => array(new FMMediaSync(), 'onFileUpload'),
+                '*' => 'fm_logger',
+            ),
+            'debug' => WP_DEBUG,
             'roots' => array(
                 array(
                     'alias'         => isset($this->options['file_manager_settings']['fm_root_folder_name']) && !empty($this->options['file_manager_settings']['fm_root_folder_name']) ? $this->options['file_manager_settings']['fm_root_folder_name'] : "WP Root",
@@ -246,8 +246,10 @@ class FM extends FM_BootStart
     public function security_check()
     {
         // Checks if the current user have enough authorization to operate.
-        if (!wp_verify_nonce($_POST['file_manager_security_token'], 'fm_nonce') || !current_user_can('manage_options')) wp_die();
-        check_ajax_referer('fm_nonce', 'file_manager_security_token');
+        if (!current_user_can('manage_options')) {
+            wp_die();
+        }
+        check_ajax_referer('fm_nonce', 'bfm_token');
     }
 
     /**
