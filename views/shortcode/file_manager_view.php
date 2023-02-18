@@ -17,7 +17,7 @@ if ($language_settings['code'] != 'LANG') {
     $language_code = $language_settings['code'];
     $lang_file_url = $language_settings['file-url'];
 }
-$settings = get_option('file-manager-permissions', []);
+$settings = get_option('file_manager_permissions', []);
 // pr($settings);
 if (!is_user_logged_in() && count($settings['fmp_guest']) <= 1) return;
 if ($FMP->is_bannned()) {

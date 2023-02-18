@@ -83,12 +83,6 @@ class FileManagerPermission
 
         $this->current_user_banned = 'not-banned';
 
-        register_activation_hook(
-            // plugin_dir_path(__FILE__) . 'inc' . DIRECTORY_SEPARATOR . 'class.initializer.php',
-            __FILE__,
-            array('SettingsInitializer', 'init_settings')
-        );
-
         // Adding a menu at admin area
         add_action('admin_menu', array(&$this, 'menu'), 11);
 
@@ -136,7 +130,7 @@ class FileManagerPermission
      * */
     public function admin_menu_file_manager($capabilities)
     {
-        $settings = get_option('file-manager-permissions', []);
+        $settings = get_option('file_manager_permissions', []);
         $current_user = wp_get_current_user();
         $user_role = $current_user->roles[0];
         $user_login = $current_user->data->user_login;
@@ -180,7 +174,7 @@ class FileManagerPermission
     public function handlePermissionSystemAjax()
     {
 
-        $settings = get_option('file-manager-permissions', []);
+        $settings = get_option('file_manager_permissions', []);
 
         /**
          *
@@ -380,7 +374,7 @@ class FileManagerPermission
         // Root Folder
         $settings['root_folder'] = isset($settings['root_folder']) && !empty($settings['root_folder']) ? trailingslashit($settings['root_folder']) : trailingslashit($FileManager->upload_path);
         $settings['root_folder_url'] = isset($settings['root_folder_url']) && !empty($settings['root_folder_url']) ? trailingslashit($settings['root_folder_url']) : trailingslashit($FileManager->upload_url);
-        if (!is_dir($settings['root_folder'])) mkdir($settings['root_folder'], 0777); // Creating root folder if it doesn't exists.
+        if (!is_dir($settings['root_folder'])) mkdir($settings['root_folder'], 0755); // Creating root folder if it doesn't exists.
 
         // Public Folder
         if (isset($settings['fmp_guest']['path']) && !empty($settings['fmp_guest']['path'])) {
@@ -471,7 +465,7 @@ class FileManagerPermission
         if (!is_user_logged_in()) {
             return false;
         }
-        $settings = get_option('file-manager-permissions', []);
+        $settings = get_option('file_manager_permissions', []);
         if (empty($settings)) {
             return false;
         }
@@ -501,7 +495,7 @@ class FileManagerPermission
         if (!is_user_logged_in()) {
             return false;
         }
-        $settings = get_option('file-manager-permissions', []);
+        $settings = get_option('file_manager_permissions', []);
         if (empty($settings)) {
             return false;
         }
@@ -517,7 +511,7 @@ class FileManagerPermission
     {
 
         $current_user = wp_get_current_user();
-        $settings = get_option('file-manager-permissions', []);
+        $settings = get_option('file_manager_permissions', []);
 
         if (
             isset($settings['do-not-use-for-admin']) && $settings['do-not-use-for-admin'] == 'do-not-use-for-admin'

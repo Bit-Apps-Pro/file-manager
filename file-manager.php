@@ -249,7 +249,7 @@ class FM extends FM_BootStart
         if (!current_user_can('manage_options')) {
             wp_die();
         }
-        check_ajax_referer('fm_nonce', 'bfm_token');
+        check_ajax_referer('bfm_nonce', 'bfm_nonce');
     }
 
     /**

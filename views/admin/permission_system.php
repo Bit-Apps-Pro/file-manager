@@ -10,9 +10,11 @@ if (!empty($_POST)) {
     // Checks if the current user have enough authorization to operate.
     if (!wp_verify_nonce($_POST['bfm_permissions_nonce'], 'bfm_permissions_nonce') || !current_user_can('manage_options')) wp_die();
     check_ajax_referer('bfm_permissions_nonce', 'bfm_permissions_nonce');
-    update_option('file-manager-permissions', $_POST, 'yes');
+    update_option('file_manager_permissions', $_POST, 'yes');
 }
-$previous_settings = get_option('file-manager-permissions', []);
+$previous_settings = get_option('file_manager_permissions', []);
+
+$permissionSettings = new BFMFileManagerPermissionSettings();
 
 // pr($previous_settings);
 
@@ -77,11 +79,11 @@ global $FileManager;
                 <input type='hidden' name='bfm_permissions_nonce' value='<?php echo wp_create_nonce("bfm_permissions_nonce"); ?>'>
 
                 <label for='do-not-use-for-admin-id'>Do not use this settings for administrator </label>
-                <input type='checkbox' name='do-not-use-for-admin' id='do-not-use-for-admin-id' value='do-not-use-for-admin' <?php if (isset($previous_settings['do-not-use-for-admin']) && !empty($previous_settings['do-not-use-for-admin'])) echo "checked"; ?>>
+                <input type='checkbox' name='do-not-use-for-admin' id='do-not-use-for-admin-id' value='do-not-use-for-admin' <?php if ($permissionSettings->isEnabledForAdmin()) echo "checked"; ?>>
 
                 <h3>Allowed MIME types and size</h3>
                 <?php foreach ($file_types as $file_type) : ?>
-                    <input type='checkbox' name="file_type[]" value="<?php echo $file_type; ?>" id='<?php echo $file_type . "_id"; ?>' <?php if (isset($file_type, $previous_settings['file_type']) && in_array($file_type, $previous_settings['file_type'])) echo "checked"; ?> />
+                    <input type='checkbox' name="file_type[]" value="<?php echo $file_type; ?>" id='<?php echo $file_type . "_id"; ?>' <?php echo in_array($file_type, $permissionSettings->getEnabledFileType())? "checked" : ""; ?> />
                     <label for="<?php echo $file_type . "_id"; ?>"><?php echo $FMP->__p($file_type); ?></label>
                 <?php endforeach; ?>
                 <small><a href="http://www.iana.org/assignments/media-types/media-types.xhtml">What is MIME types?</a></small>

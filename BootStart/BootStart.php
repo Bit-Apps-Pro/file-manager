@@ -253,7 +253,7 @@ abstract class FM_BootStart
             "fm",
             array(
                 'ajax_url'         => admin_url('admin-ajax.php'),
-                'nonce'         => wp_create_nonce('fm_nonce'),
+                'nonce'         => wp_create_nonce('bfm_nonce'),
                 'plugin_dir'    => BFM_ROOT_DIR,
                 'plugin_url'     => BFM_ROOT_URL,
                 'js_url'         => BFM_FINDER_URL . "js/",
