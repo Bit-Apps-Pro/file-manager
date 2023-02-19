@@ -78,67 +78,48 @@ global $FileManager;
             <form method="post" action="">
                 <input type='hidden' name='bfm_permissions_nonce' value='<?php echo wp_create_nonce("bfm_permissions_nonce"); ?>'>
 
-                <label for='do-not-use-for-admin-id'>Do not use this settings for administrator </label>
-                <input type='checkbox' name='do-not-use-for-admin' id='do-not-use-for-admin-id' value='do-not-use-for-admin' <?php if ($permissionSettings->isEnabledForAdmin()) echo "checked"; ?>>
+                <label for='do_not_use_for_admin-id'>Do not use this settings for administrator </label>
+                <input type='checkbox' name='do_not_use_for_admin' id='do_not_use_for_admin-id' value='do_not_use_for_admin' <?php if ($permissionSettings->isEnabledForAdmin()) echo "checked"; ?>>
 
                 <h3>Allowed MIME types and size</h3>
                 <?php foreach ($file_types as $file_type) : ?>
-                    <input type='checkbox' name="file_type[]" value="<?php echo $file_type; ?>" id='<?php echo $file_type . "_id"; ?>' <?php echo in_array($file_type, $permissionSettings->getEnabledFileType())? "checked" : ""; ?> />
+                    <input type='checkbox' name="file_type[]" value="<?php echo $file_type; ?>" id='<?php echo $file_type . "_id"; ?>' <?php echo in_array($file_type, $permissionSettings->getEnabledFileType()) ? "checked" : ""; ?> />
                     <label for="<?php echo $file_type . "_id"; ?>"><?php echo $FMP->__p($file_type); ?></label>
                 <?php endforeach; ?>
                 <small><a href="http://www.iana.org/assignments/media-types/media-types.xhtml">What is MIME types?</a></small>
                 </br>
                 </br>
                 <label for="file_size_id">Maximum File Size</label>
-                <input type='number' name="file_size" id='file_size_id' value="<?php if (isset($previous_settings['file_size']) && !empty($previous_settings['file_size'])) echo $previous_settings['file_size'];
-                                                                                else echo 2; ?>" />
+                <input type='number' name="file_size" id='file_size_id' value="<?php echo $permissionSettings->getMaximumUploadSize(); ?>" />
                 <small>MB(mega byte).</small><small> 0 for unlimited size</small>
 
                 </br>
                 </br>
                 <h3>Root Folder</h3>
                 <label for="root_folder_id">Root Folder Path</label>
-                <input style="width:500px;" type='text' placeholder='<?php echo $default_root_folder_path; ?>' name="root_folder" id='root_folder_id' value="<?php echo $root_folder_path; ?>" />
-                <small>default is <b><?php echo $default_root_folder_path; ?></b></small>
+                <input style="width:500px;" type='text' placeholder='<?php echo $permissionSettings->getDefaultPublicRootPath(); ?>' name="root_folder" id='root_folder_id' value="<?php echo $permissionSettings->getPublicRootPath(); ?>" />
+                <small>default is <b><?php echo $permissionSettings->getDefaultPublicRootPath(); ?></b></small>
 
                 </br>
                 </br>
                 <label for="root_folder_url_id">Root Folder URL</label>
-                <input style="width:500px;" type='text' placeholder='<?php echo $default_root_folder_url; ?>' name="root_folder_url" id='root_folder_url_id' value="<?php echo $root_folder_url; ?>" />
-                <small>default is <b><?php echo $default_root_folder_url; ?></b></small>
+                <input style="width:500px;" type='text' placeholder='<?php echo $permissionSettings->getDefaultPublicRootURL(); ?>' name="root_folder_url" id='root_folder_url_id' value="<?php echo $permissionSettings->getPublicRootURL(); ?>" />
+                <small>default is <b><?php echo $permissionSettings->getDefaultPublicRootURL(); ?></b></small>
 
                 <br />
                 <br />
 
                 <h3>Folder Options</h3>
-                <input type='checkbox' name="folder_options-single" id='folder_options_single_id' value="single-folder" <?php if (isset($previous_settings['folder_options-single']) && !empty($previous_settings['folder_options-single'])) echo "checked"; ?> />
+                <input type='radio' name="folder_options" id='folder_options_single_id' value="common" <?php echo $permissionSettings->getFolderOption() === "common" ? "checked" : ""; ?> />
                 <label for="folder_options_single_id">Enable a common folder for everyone</label>
-
-                <div id='public-folder-wrapper' style="display: <?php if (isset($previous_settings['folder_options-single']) && !empty($previous_settings['folder_options-single'])) echo 'block;';
-                                                                else echo 'none'; ?>">
-
-                    <h4>Public Folder Settings</h4>
-                    <label for='public-folder-path-id'>Path &nbsp;</label>
-                    <input type='text' name='public-folder-path' id='public-folder-path-id' placeholder='<?php echo $root_folder_path . 'public'; ?>' value='<?php if (isset($previous_settings['public-folder-path']) && !empty($previous_settings['public-folder-path'])) echo $previous_settings['public-folder-path'];
-                                                                                                                                                                else echo $root_folder_path . 'public'; ?>'>
-                    <small>default is <b><?php echo $root_folder_path . 'public'; ?></b></small>
-
-                    <br>
-                    <label for='public-folder-url-id'>URL &nbsp;&nbsp;</label>
-                    <input type='text' name='public-folder-url' id='public-folder-url-id' placeholder='<?php echo $root_folder_url . 'public'; ?>' value='<?php if (isset($previous_settings['public-folder-url']) && !empty($previous_settings['public-folder-url'])) echo $previous_settings['public-folder-url'];
-                                                                                                                                                            else echo $root_folder_url . '/public'; ?>'>
-                    <small>default is <b><?php echo $root_folder_path . 'public'; ?></b></small>
-
-                </div>
-
                 <br>
                 <br>
-                <input type='checkbox' name="folder_options-separate" id='folder_options_separate_id' value="separate-folder" <?php if (isset($previous_settings['folder_options-separate']) && !empty($previous_settings['folder_options-separate'])) echo "checked"; ?> />
+                <input type='radio' name="folder_options" id='folder_options_separate_id' value="user" <?php echo $permissionSettings->getFolderOption() === "user" ? "checked" : ""; ?> />
                 <label for="folder_options_separate_id">Enable separate folders for each user</label>
 
                 <br>
                 <br>
-                <input type='checkbox' name="folder_options-userrole" id='folder_options_userrole_id' value="userrole-folder" <?php if (isset($previous_settings['folder_options-userrole']) && !empty($previous_settings['folder_options-userrole'])) echo "checked"; ?> />
+                <input type='radio' name="folder_options" id='folder_options_userrole_id' value="role" <?php echo $permissionSettings->getFolderOption() === "role" ? "checked" : ""; ?> />
                 <label for="folder_options_userrole_id">Enable folders for each user role</label>
 
                 <h3>Roles Permission</h3>

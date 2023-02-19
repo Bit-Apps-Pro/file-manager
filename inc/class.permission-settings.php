@@ -13,9 +13,17 @@ class BFMFileManagerPermissionSettings
 
     public $roles;
 
+    /**
+     * FileManager Instance
+     *
+     * @var FM
+     */
+    public $fileManager;
+
     public function __construct()
     {
-        global $wp_roles;
+        global $wp_roles, $FileManager;
+        $this->fileManager = $FileManager;
         $this->settings = get_option(
             'file_manager_permissions',
             $this->defaultPermissions()
@@ -26,12 +34,10 @@ class BFMFileManagerPermissionSettings
 
     public static function defaultPermissions()
     {
-        $permissions['do-not-use-for-admin'] = 'do-not-use-for-admin';
-        $permissions['file-type'] = ['text', 'image', 'application', 'video', 'audio'];
-        $permissions['file-size'] = 2;
-        $permissions['single-folder'] = 'folder_options_single';
-        $permissions['folder_options-separate'] = 'separate-folder';
-        $permissions['folder_options-userrole'] = 'userrole-folder';
+        $permissions['do_not_use_for_admin'] = 'do_not_use_for_admin';
+        $permissions['file_type'] = ['text', 'image', 'application', 'video', 'audio'];
+        $permissions['file_size'] = 2;
+        $permissions['folder_options']= 'common'; // common | role | user
         $permissions['by_role']['administrator'] = [
             'commands' => [
                 'download', 'upload', 'cut', 'copy', 'duplicate',
@@ -44,6 +50,17 @@ class BFMFileManagerPermissionSettings
         return $permissions;
     }
 
+    public function getDefaultPublicRootPath()
+    {
+        return $this->fileManager->upload_path . DIRECTORY_SEPARATOR;
+    }
+
+    public function getDefaultPublicRootURL()
+    {
+        return $this->fileManager->upload_url;
+    }
+
+
     public function getByRole($role)
     {
     }
@@ -53,21 +70,47 @@ class BFMFileManagerPermissionSettings
     }
 
 
+    public function getFolderOption()
+    {
+        return isset($this->settings['folder_options'])
+            ? $this->settings['folder_options'] : 'common';
+    }
+
     public function getEnabledFileType()
     {
-        return isset($this->settings['file-type'])
-            ? $this->settings['file-type'] : [];
+        return isset($this->settings['file_type'])
+            ? $this->settings['file_type'] : [];
     }
 
     public function getMaximumUploadSize()
     {
-        return isset($this->settings['file-size'])
-            ? $this->settings['file-size'] : 2;
+        return isset($this->settings['file_size'])
+            ? $this->settings['file_size'] : 2;
+    }
+
+    public function getPublicRootPath()
+    {
+        return isset($this->settings['root_folder'])
+            ? stripslashes($this->settings['root_folder'])
+            : $this->fileManager->upload_path . DIRECTORY_SEPARATOR;
+    }
+
+    public function getPublicRootURL()
+    {
+        return isset($this->settings['root_folder_url'])
+            ? stripslashes($this->settings['root_folder_url'])
+            : $this->fileManager->upload_url . DIRECTORY_SEPARATOR;
     }
 
     public function isEnabledForAdmin()
     {
-        return isset($this->settings['do-not-use-for-admin'])
-            && $this->settings['do-not-use-for-admin'] === 'do-not-use-for-admin';
+        return isset($this->settings['do_not_use_for_admin'])
+            && $this->settings['do_not_use_for_admin'] === 'do_not_use_for_admin';
+    }
+
+    public function isCommonFolderEnabled()
+    {
+        return isset($this->settings['do_not_use_for_admin'])
+            && $this->settings['do_not_use_for_admin'] === 'do_not_use_for_admin';
     }
 }

@@ -224,7 +224,7 @@ class FileManagerPermission
         $user_id = $current_user->ID;
 
         // File manager and File Manager pro security check synchronization
-        if (!isset($settings['do-not-use-for-admin']) || empty($settings['do-not-use-for-admin']) || $user_role != 'administrator') $security_check_callback = array(&$FileManager, 'security_check');
+        if (!isset($settings['do_not_use_for_admin']) || empty($settings['do_not_use_for_admin']) || $user_role != 'administrator') $security_check_callback = array(&$FileManager, 'security_check');
         else $security_check_callback = array(&$this, 'security_check');
 
         // Returnable $options variable
@@ -258,7 +258,7 @@ class FileManagerPermission
         } // Creating root folder if it doesn't exists.
 
         // Personal Folder
-        if (isset($settings['folder_options-separate']) && !empty($settings['folder_options-separate'])) {
+        if (isset($settings['folder_options_separate']) && !empty($settings['folder_options_separate'])) {
             $folder_list[] = array(
                 'path' => $settings['root_folder'] . $user_login,
                 'url' => $settings['root_folder_url'] . $user_login,
@@ -266,12 +266,12 @@ class FileManagerPermission
         }
 
         // Public Folder
-        if (isset($settings['folder_options-single']) && !empty($settings['folder_options-single'])) {
+        if (isset($settings['folder_options_single']) && !empty($settings['folder_options_single'])) {
             $folder_list[] = array(
-                'path' => $settings['public-folder-path'],
+                'path' => $settings['public_folder_path'],
                 'url' => '',
             );
-            if ($FileManager->options['file_manager_settings']['show_url_path'] == 'show') $folder_list['url'] = $settings['public-folder-url'];
+            if ($FileManager->options['file_manager_settings']['show_url_path'] == 'show') $folder_list['url'] = $settings['public_folder_url'];
         }
 
         // Extra User personal Folder from the input field
@@ -294,7 +294,7 @@ class FileManagerPermission
         }
 
         // User Role Folder
-        if (isset($settings['folder_options-userrole']) && !empty($settings['folder_options-userrole'])) {
+        if (isset($settings['folder_options_userrole']) && !empty($settings['folder_options_userrole'])) {
             $folder_list[] = array(
                 'path' => $settings['root_folder'] . $user_role,
                 'url' => $settings['root_folder_url'] . $user_role,
@@ -514,7 +514,7 @@ class FileManagerPermission
         $settings = get_option('file_manager_permissions', []);
 
         if (
-            isset($settings['do-not-use-for-admin']) && $settings['do-not-use-for-admin'] == 'do-not-use-for-admin'
+            isset($settings['do_not_use_for_admin']) && $settings['do_not_use_for_admin'] == 'do_not_use_for_admin'
             && $current_user->roles[0] == 'administrator'
         ) {
             return $options;
