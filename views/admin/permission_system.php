@@ -8,7 +8,11 @@ global $wp_roles, $wpdb, $FileManager, $FMP;
 // Processing Post data
 if (!empty($_POST)) {
     // Checks if the current user have enough authorization to operate.
-    if (!wp_verify_nonce($_POST['bfm_permissions_nonce'], 'bfm_permissions_nonce') || !current_user_can('manage_options')) wp_die();
+    if (
+        !wp_verify_nonce($_POST['bfm_permissions_nonce'], 'bfm_permissions_nonce')
+        || !current_user_can('manage_options')
+    ) wp_die();
+    // var_dump($_POST); die;
     check_ajax_referer('bfm_permissions_nonce', 'bfm_permissions_nonce');
     update_option('file_manager_permissions', $_POST, 'yes');
 }
@@ -144,19 +148,15 @@ global $FileManager;
 
                             <td><?php echo $FMP->__p($role); ?></td>
 
-                            <?php foreach ($operations as $operation) : ?>
+                            <?php
+                            $settingsForRole = $permissionSettings->getByRole($role);
+                            foreach ($operations as $operation) :
+                                ?>
                                 <td>
-                                    <?php if ($operation == 'ban') { ?>
-                                        <input type='checkbox' name='<?php echo $role; ?>[]' onClick='FMP.banned_notification("<?php echo $role . '_' . $operation; ?>", "<?php echo $role; ?>");' id='<?php echo $role . '_' . $operation; ?>' class='<?php echo $operation; ?>' value='<?php echo $operation; ?>' <?php if (isset($previous_settings[$role]) && is_array($previous_settings[$role]) && in_array($operation, $previous_settings[$role])) echo "checked"; ?> />
-                                    <?php } else { ?>
-                                        <input type='checkbox' name='<?php echo $role; ?>[]' id='<?php echo $role . '_' . $operation; ?>' class='<?php echo $operation; ?>' value='<?php echo $operation; ?>' <?php if (isset($previous_settings[$role]) && is_array($previous_settings[$role]) && in_array($operation, $previous_settings[$role])) echo "checked"; ?> />
-                                    <?php }; ?>
-                                </td>
+                                    <input type='checkbox' name='by_role[<?php echo $role; ?>][commands][]' id='<?php echo $role . '_' . $operation; ?>' class='<?php echo $operation; ?>' value='<?php echo $operation; ?>' <?php echo in_array($operation, $settingsForRole['commands']) ? "checked" : ""; ?> />
                             <?php endforeach; ?>
-
                             <td>
-
-                                <input type='text' name='<?php echo $role; ?>[path]' value='<?php if (isset($previous_settings[$role]['path']) && !empty($previous_settings[$role]['path'])) echo $previous_settings[$role]['path']; ?>' />
+                                <input type='text' name='by_role[<?php echo $role; ?>][path]' value='<?php echo $settingsForRole['path']; ?>' />
 
                             </td>
 
@@ -170,10 +170,10 @@ global $FileManager;
                 <table>
                     <tr>
                         <th>Guests can Download file</th>
-                        <td><input type='checkbox' name='fmp_guest[]' value='download' <?php if (!empty($previous_settings['fmp_guest']) && in_array('download', $previous_settings['fmp_guest'])) echo 'checked' ?>> <i class="fa fa-question-circle tippy" aria-hidden="true" title='Hello Help'></i> </td>
+                        <td><input type='checkbox' name='guest[commands][]' value='download' <?php echo  in_array('download', $permissionSettings->getGuestSettings()['commands'])? 'checked' : '' ?>> <i class="fa fa-question-circle tippy" aria-hidden="true" title='Hello Help'></i> </td>
 
                         <th>Guests File Path</th>
-                        <td><input type='text' name='fmp_guest[path]' value='<?php if (isset($previous_settings['fmp_guest']['path']) && !empty($previous_settings['fmp_guest']['path'])) echo $previous_settings['fmp_guest']['path']; ?>'></td>
+                        <td><input type='text' name='guest[path]' value='<?php echo $permissionSettings->getGuestSettings()['path']; ?>'></td>
                     </tr>
                 </table>
 
@@ -196,20 +196,23 @@ global $FileManager;
                         <th>Path <small>(relative to root folder or absolute path)</small></th>
 
                     </tr>
-                    <?php foreach ($users as $user) : ?>
+                    <?php foreach ($users as $user) :
+                        $userID = $user['id'];
+                        $settingsForRole = $permissionSettings->getByUser($userID);
+                        ?>
                         <tr>
 
                             <td><?php echo $FMP->__p($user['user_login']); ?></td>
 
                             <?php foreach ($operations as $operation) : ?>
                                 <td>
-                                    <input type='checkbox' name='<?php echo $FMP->zip($user['user_login']); ?>[]' value="<?php echo $operation; ?>" <?php if (isset($previous_settings[$FMP->zip($user['user_login'])]) && is_array($previous_settings[$FMP->zip($user['user_login'])]) && in_array($operation, $previous_settings[$FMP->zip($user['user_login'])])) echo "checked"; ?> />
+                                    <input type='checkbox' name='by_user[<?php echo $userID; ?>][commands][]' value="<?php echo $operation; ?>" <?php echo in_array($operation, $settingsForRole['commands']) ? "checked" : ""; ?> />
                                 </td>
                             <?php endforeach; ?>
 
                             <td>
 
-                                <input type='text' name='<?php echo $FMP->zip($user['user_login']); ?>[path]' value='<?php if (isset($previous_settings[$FMP->zip($user['user_login'])]['path']) && !empty($previous_settings[$FMP->zip($user['user_login'])]['path'])) echo $previous_settings[$FMP->zip($user['user_login'])]['path']; ?>' />
+                                <input type='text' name='by_user[<?php echo $userID; ?>][path]' value='<?php echo $settingsForRole['path']; ?>' />
 
                             </td>
 
