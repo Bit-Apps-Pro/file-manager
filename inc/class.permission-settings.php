@@ -20,9 +20,17 @@ class BFMFileManagerPermissionSettings
      */
     public $fileManager;
 
+    /**
+     * FileManager Instance
+     *
+     * @var WP_User
+     */
+    public $currentUser;
+
     public function __construct()
     {
         global $wp_roles, $FileManager;
+
         $this->fileManager = $FileManager;
         $this->settings = get_option(
             'file_manager_permissions',
@@ -78,7 +86,8 @@ class BFMFileManagerPermissionSettings
             'path' => '',
         ];
 
-        if (isset($this->settings[$type])
+        if (
+            isset($this->settings[$type])
             && is_array($this->settings[$type])
             && isset($this->settings[$type][$name])
             && is_array($this->settings[$type][$name])
@@ -91,7 +100,7 @@ class BFMFileManagerPermissionSettings
         }
         return $settings;
     }
-    
+
     public function getGuestSettings()
     {
         $settings = [
@@ -99,7 +108,8 @@ class BFMFileManagerPermissionSettings
             'path' => '',
         ];
 
-        if (isset($this->settings['guest'])
+        if (
+            isset($this->settings['guest'])
             && is_array($this->settings['guest'])
         ) {
             $settings['path'] = isset($this->settings['guest']['path']) ?
@@ -154,5 +164,41 @@ class BFMFileManagerPermissionSettings
     {
         return isset($this->settings['do_not_use_for_admin'])
             && $this->settings['do_not_use_for_admin'] === 'do_not_use_for_admin';
+    }
+
+    public function currentUser()
+    {
+        if (!isset($this->currentUser) && function_exists('wp_get_current_user')) {
+            $this->currentUser = wp_get_current_user();
+        }
+        return $this->currentUser;
+    }
+
+    public function currentUserRole()
+    {
+        if (!$this->currentUser() instanceof WP_User) {
+            return false;
+        }
+        return $this->currentUser()->roles[0];
+    }
+
+    public function currentUserID()
+    {
+        if (!$this->currentUser() instanceof WP_User) {
+            return false;
+        }
+        return $this->currentUser()->ID;
+    }
+
+    public function isCurrentUserHasPermission()
+    {
+        $hasPermission = false;
+
+        if (!empty($this->getByUser($this->currentUserID()))
+            || !empty($this->getByRole($this->currentUserRole()))
+        ) {
+            $hasPermission = true;
+        }
+        return $hasPermission;
     }
 }

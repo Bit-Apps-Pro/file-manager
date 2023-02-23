@@ -25,7 +25,7 @@ global $FileManager;
 
     </div>
 
-    <?php if (!defined('GB_CLIENT_COMPLAIN')) require_once 'sidebar.php'; ?>
+    <?php if (!defined('BFM_CLIENT_COMPLAIN')) require_once 'sidebar.php'; ?>
 
 </div>
 

@@ -6,107 +6,92 @@ defined('ABSPATH') or die();
 
 class FileManagerPermission
 {
-
     /**
+     * Version Number
      *
-     * @var $prefix
-     *
-     * */
-    public $prefix;
-
-    /**
-     *
-     * @variable $version Version number of the plugin
-     *
+     * @var $version Version number of the plugin
      * */
     public $version;
 
     /**
+     * Root path of the plugin
      *
      * @var string $path
-     * @description Root path of the plugin
-     *
      * */
     public $path;
 
     public $url;
 
     /**
+     * Stores the shortcode output
      *
      * @var string $shortcode_output
-     * @description Stores the shortcode output
-     *
      * */
     public $shortcode_output;
 
     /**
+     * Works on the update notification
      *
      * @var object $fmp_updater
-     * @description Works on the update notification
-     *
      * */
     public $fmp_updater;
 
     /**
+     * Holds the list of operations
      *
      * @var array $list_of_operations
-     * @description Holds the list of operations
-     *
      * */
     public $list_of_operations;
 
     /**
+     * Defines if the current user is banned
      *
      * @var boolean $current_user_banned
-     * @description Defines if the current user is banned
-     *
      * */
     public $current_user_banned;
 
     /**
+     * Permissions settings helper
      *
+     * @var BFMFileManagerPermissionSettings $permissionSettings
+     * */
+    public $permissionSettings;
+
+    /**
      * Constructor function
      *
      * Does all the initialization part
-     *
      * */
     public function __construct()
     {
-
-        $this->prefix = 'file-manager-permission-system';
-        $this->path = plugin_dir_path(__FILE__);
-        $this->url = plugin_dir_url(__FILE__);
-
-        $this->version = 511;
 
         $this->list_of_operations = array('download', 'upload', 'cut', 'copy', 'duplicate', 'paste', 'rm', 'mkdir', 'mkfile', 'edit', 'rename', 'archive', 'extract', 'ban');
 
         $this->current_user_banned = 'not-banned';
 
-        // Adding a menu at admin area
-        add_action('admin_menu', array(&$this, 'menu'), 11);
+        $this->permissionSettings = new BFMFileManagerPermissionSettings();
 
         // Changing footer
-        add_filter('fm_footer', array(&$this, 'footer'));
+        add_filter('fm_footer', [$this, 'footer']);
 
         // Admin Menu for all user roles
-        add_filter('fm_capabilities', array(&$this, 'admin_menu_file_manager'));
+        add_filter('fm_capabilities', [$this, 'filterAdminMenuCapabilities']);
 
         // Adding general shortcode
-        add_shortcode('file_manager', array(&$this, 'file_manager_view'));
+        add_shortcode('file_manager', [$this, 'file_manager_view']);
 
         // Managing Admin backend options
-        add_filter('fm_options_filter', array(&$this, 'admin_options'));
+        add_filter('fm_options_filter', [$this, 'admin_options']);
 
         // Adding public shortcode
-        add_shortcode('file_manager_public', array(&$this, 'file_manager_public_view'));
+        add_shortcode('file_manager_public', [$this, 'file_manager_public_view']);
 
         // Adding Ajax for private folder
         // $this->add_ajax('bfm_permissions_system_connector');
 
         // Adding Ajax
-        add_action('wp_ajax_bfm_permissions_system_connector', array(&$this, 'handlePermissionSystemAjax')); // Logged in users
-        add_action('wp_ajax_nopriv_bfm_permissions_system_connector', array(&$this, 'handlePermissionSystemAjax')); // Guest in users
+        add_action('wp_ajax_bfm_permissions_system_connector', [$this, 'handlePermissionSystemAjax']); // Logged in users
+        add_action('wp_ajax_nopriv_bfm_permissions_system_connector', [$this, 'handlePermissionSystemAjax']); // Guest in users
 
 
         // Checking for update
@@ -128,19 +113,13 @@ class FileManagerPermission
      * @description All the other user who have access to the admin dashboard can see the file manager
      *
      * */
-    public function admin_menu_file_manager($capabilities)
+    public function filterAdminMenuCapabilities($capabilities)
     {
-        $settings = get_option('file_manager_permissions', []);
-        $current_user = wp_get_current_user();
-        $user_role = $current_user->roles[0];
-        $user_login = $current_user->data->user_login;
-        //auto::  pr($current_user);
-        if (isset($settings[$user_role])
-            && ((is_array($settings[$user_role]) && count($settings[$user_role]) > 1)
-                || (is_array($settings[$user_login]) && count($settings[$user_login]) > 1)
-            )
-        ) return $user_role;
-        else return $capabilities;
+        if ($this->permissionSettings->isCurrentUserHasPermission()) {
+            return $this->permissionSettings->currentUserRole();
+        }
+
+        return $capabilities;
     }
 
     /**

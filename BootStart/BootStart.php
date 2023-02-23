@@ -340,10 +340,10 @@ abstract class FM_BootStart
             $capabilities = apply_filters('fm_capabilities', $capabilities);
 
             // Main Menu
-            add_menu_page('Bit File Manager | Dashboard', 'Bit File Manager', $capabilities, $this->prefix, array(&$this, 'admin_panel'), $this->url('assets/img/icon-24x24.png'), 2);
+            add_menu_page('Bit File Manager | Dashboard', 'Bit File Manager', $capabilities, $this->prefix, [$this, 'admin_panel'], $this->url('assets/img/icon-24x24.png'), 2);
             // Settings Page
-            add_submenu_page($this->prefix, 'Bit File Manager | Dashboard', 'Home', 'manage_options', $this->prefix, array(&$this, 'admin_panel'));
-            add_submenu_page($this->prefix, 'Bit File Manager Settings', 'Settings', 'manage_options', $this->zip('Bit File Manager Settings'), array(&$this, 'settings'));
+            add_submenu_page($this->prefix, 'Bit File Manager | Dashboard', 'Home', $capabilities, $this->prefix, [$this, 'admin_panel']);
+            add_submenu_page($this->prefix, 'Bit File Manager Settings', 'Settings', 'manage_options', $this->zip('Bit File Manager Settings'), [$this, 'settings']);
 
             add_submenu_page(
                 'file-manager', // Parent Slug
@@ -356,7 +356,7 @@ abstract class FM_BootStart
                 }
             );
             // System Page
-            add_submenu_page($this->prefix, 'System Information', 'System Info', 'manage_options', $this->zip('System Information'), array(&$this, 'systems'), 3);
+            add_submenu_page($this->prefix, 'System Information', 'System Info', 'manage_options', $this->zip('System Information'), [$this, 'systems'], 3);
         }
     }
 
