@@ -389,8 +389,10 @@ final class RouteRegister
         foreach ($reflectionMethod->getParameters() as $id => $param) {
             $params[] = $this->getParamValue($param);
         }
-
-        return $reflectionMethod->invoke($reflectionMethod->isStatic() ? null : new $class(), ...$params);
+        
+        $classObj = is_string($class) ? new $class() : $class;
+        
+        return $reflectionMethod->invoke($reflectionMethod->isStatic() ? null : $classObj, ...$params);
     }
 
     private function setResponse($response)

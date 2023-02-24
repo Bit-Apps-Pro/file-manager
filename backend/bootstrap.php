@@ -1,6 +1,6 @@
 <?php
 
-defined('ABSPATH') or die();
+\defined('ABSPATH') or exit();
 
 require_once 'config' . DIRECTORY_SEPARATOR . 'app.php';
 require_once 'functions' . DIRECTORY_SEPARATOR . 'installer.php';

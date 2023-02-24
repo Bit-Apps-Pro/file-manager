@@ -3,12 +3,10 @@
 use BFMSettingsInitializer;
 use BitApps\FM\Providers\FileManager;
 
-defined('ABSPATH') || die();
-
+\defined('ABSPATH') || exit();
 
 function bfmActivate()
 {
-
     // Initilizing the option to store logging
     if (!get_option('fm_log', false)) {
         add_option('fm_log', '');
@@ -16,33 +14,32 @@ function bfmActivate()
 
     // Creating necessary folders for library file manager
     $uploadDir = wp_upload_dir();
-    $index = $uploadDir['basedir'] . DS . 'file-manager' . DS . 'index.html';
-    wp_mkdir_p(dirname($index));
+    $index     = $uploadDir['basedir'] . DS . 'file-manager' . DS . 'index.html';
+    wp_mkdir_p(\dirname($index));
 
     // Creating indexfile
     if (!file_exists($index)) {
         $fp = fopen($index, 'a');
-        fwrite($fp, " ");
+        fwrite($fp, ' ');
         fclose($fp);
     }
 
-    /* ------------------------------ Initilizing Statistical Data ------------------------------ */
+    // ------------------------------ Initilizing Statistical Data ------------------------------
     $statistics = [
         'start-time' => time(),
         'review'     => [
             'initial-popup'     => time() + 7 * 24 * 60 * 60,
-            'popup-interval'    => 2 * 24 * 60 * 60,
+            'popup-interval'    => 2          * 24 * 60 * 60,
             'most-recent-popup' => 0, // Last when the popup was triggered.
             'current-status'    => 0, // 1 = initial-popup, 2 = remind-me-later, 3 = already-provided-feedback, 4 = don't show this message
         ],
     ];
-    /* ------------------------------ Initilizing Statistical Data ENDS ------------------------- */
-
+    // ------------------------------ Initilizing Statistical Data ENDS -------------------------
 
     // Logger table
     global $wpdb;
     $tablePrefix = $wpdb->prefix;
-    $sql = "
+    $sql         = "
     CREATE TABLE {$tablePrefix}fm_log (
         id int(11) NOT NULL,
         user_id int(11) NOT NULL,
@@ -63,12 +60,12 @@ function bfmActivate()
 
 function bfmUninstall()
 {
-    //Todo: on uninstall
+    // Todo: on uninstall
 }
 
 function bfmDeactivate()
 {
-    //Todo: on deactivate
+    // Todo: on deactivate
 }
 
 function bfmLoaded()
@@ -89,9 +86,8 @@ function bfmLoaded()
     //     . DIRECTORY_SEPARATOR . 'Providers'
     //     . DIRECTORY_SEPARATOR . 'FileManager.php';
 
-
     // Autoload vendor files.
-    require_once BFM_BASEDIR . DIRECTORY_SEPARATOR . 'vendor'. DIRECTORY_SEPARATOR .'autoload.php';
+    require_once BFM_BASEDIR . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
     // Initialize the plugin.
     BitApps\FM\Plugin::load();

@@ -90,7 +90,7 @@ if (isset($lang_file_url)) wp_enqueue_script('fmp-elfinder-lang', $lang_file_url
         files: ['getfile', '|', 'emailto', 'open', 'opennew', 'download', 'opendir', 'quicklook', 'email', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', 'empty', 'hide', '|', 'rename', 'edit', 'resize', '|', 'archive', 'extract', '|', 'selectall', 'selectinvert', '|', 'places', 'info', 'chmod', 'netunmount']
       },
       customData: {
-        action: 'connector',
+        action: 'file_manager_connector',
         bfm_nonce: fm.nonce
       },
       lang: '<?php if (isset($language_code)) echo esc_js($language_code); ?>',

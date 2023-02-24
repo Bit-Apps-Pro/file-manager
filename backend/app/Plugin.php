@@ -2,10 +2,7 @@
 
 namespace BitApps\FM;
 
-/*
- * Main class for the plugin.
- *
- */
+// Main class for the plugin.
 
 use BitApps\FM\Core\Hooks\Hooks;
 use BitApps\FM\Core\Http\RequestType;
@@ -30,7 +27,8 @@ final class Plugin
      */
     public function __construct()
     {
-        Hooks::addAction('init', [$this, 'registerProviders'], 11);
+        Hooks::addAction('init', [$this, 'registerProviders']);
+        Hooks::addAction('admin_notices', [$this, 'admin_notice']);
         Hooks::addFilter('plugin_action_links_' . Config::get('BASENAME'), [$this, 'actionLinks']);
     }
 
@@ -66,10 +64,9 @@ final class Plugin
             // new Layout();
         }
 
-
         global $FileManager, $FMP;
         $FileManager = new FileManager('File Manager');
-        $FMP = new FileManagerPermission();
+        $FMP         = new FileManagerPermission();
 
         new HookProvider();
     }
@@ -91,6 +88,27 @@ final class Plugin
         return $links;
     }
 
+
+    /**
+     * Adds admin notices to the admin page
+     *
+     * @return void
+     * */
+    public function admin_notice()
+    {
+        // DISALLOW_FILE_EDIT Macro checking
+        if (\defined('DISALLOW_FILE_EDIT') && DISALLOW_FILE_EDIT) {
+            ?>
+            <div class='update-nag fm-error notice notice-success is-dismissible'><b>DISALLOW_FILE_EDIT</b> <?php _e('is set to', 'file-manager'); ?> <b>TRUE</b>. <?php _e('You will not be able to edit files with', 'file-manager'); ?> <a href='admin.php?page=file-manager-settings'>Bit File Manager</a>. <?php _e('Please set', 'file-manager'); ?> <b>DISALLOW_FILE_EDIT</b> <?php _e('to', 'file-manager'); ?> <b>FALSE</b></div>
+            <style>
+                .fm-error {
+                    border-left: 4px solid red;
+                    display: block;
+                }
+            </style>
+<?php
+        }
+    }
     /**
      * Retrieves the main instance of the plugin.
      *

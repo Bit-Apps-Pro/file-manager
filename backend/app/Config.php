@@ -4,7 +4,6 @@
 
 namespace BitApps\FM;
 
-
 if (!\defined('ABSPATH')) {
     exit;
 }
@@ -31,7 +30,6 @@ class Config
     const API_VERSION = '1.0';
 
     const APP_BASE = BFM_MAIN_FILE;
-
 
     /**
      * Provides configuration for plugin.
