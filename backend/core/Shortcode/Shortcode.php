@@ -8,7 +8,7 @@ use RuntimeException;
  * A forwarder class for actions and filters.
  *
  * @method static void doShortcode( $content, $ignoreHtml = false )
- * @method static void addShortcode($tag, $callback)
+ * @method static void addShortcode(string $tag,callable $callback)
  * @method static void removeShortcode($tag)
  * @method static bool shortcodeExists($tag)
  * @method static bool hasShortcode($content, $tag)

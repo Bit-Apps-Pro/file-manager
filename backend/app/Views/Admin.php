@@ -17,8 +17,8 @@ class Admin
     {
         Hooks::addAction('in_admin_header', [$this, 'removeAdminNotices']);
         Hooks::addAction('admin_menu', [$this, 'sideBarMenuItem']);
-        Hooks::addAction('admin_enqueue_scripts', [$this, 'head']);
         Hooks::addAction('admin_notices', [$this, 'adminNotice']);
+        Hooks::addFilter(Config::withPrefix('localized_script'), [$this, 'filterConfigVariable']);
     }
 
     /**
@@ -47,7 +47,7 @@ class Admin
                         $menu['name'],
                         $menu['capability'],
                         $menu['slug'],
-                        $menu['callback'],
+                        $menu['callback']
                     );
                 } else {
                     $submenu[$menu['parent']][] = [
@@ -58,88 +58,6 @@ class Admin
                 }
             }
         }
-    }
-
-    /**
-     * Load the asset libraries.
-     *
-     * @param string $currentScreen $top_level_page variable for current page
-     */
-    public function head($currentScreen)
-    {
-        if (strpos($currentScreen, Config::SLUG) === false) {
-            return;
-        }
-
-        $version = Config::VERSION;
-
-        $this->loadFinderAssets(); // Loads all the assets necessary for elFinder
-
-        wp_register_style('fmp_permission-system-tippy-css', BFM_ROOT_URL . 'libs/js/tippy-v0.2.8/tippy.css', $version);
-
-        // Admin scripts
-        wp_register_script(
-            'fmp_permission-system-tippy-script',
-            BFM_ROOT_URL . 'libs/js/tippy-v0.2.8/tippy.js',
-            ['jquery'],
-            $version
-        );
-
-        wp_register_script(
-            'fmp_permission-system-admin-script',
-            BFM_ROOT_URL . 'assets/js/admin-script.js',
-            ['fmp_permission-system-tippy-script'],
-            $version
-        );
-
-        // Including admin-style.css
-        wp_register_style('fmp-admin-style', BFM_ROOT_URL . 'assets/css/style.min.css');
-
-        // Including admin-script.js
-        wp_register_script('fmp-admin-script', BFM_ROOT_URL . 'assets/js/admin-script.js', ['jquery']);
-
-        // wp_localize_script(Config::SLUG . '-index-MODULE', Config::VAR_PREFIX, self::createConfigVariable());
-    }
-
-    /**
-     * Registers all the elfinder assets
-     * */
-    public function loadFinderAssets()
-    {
-        wp_register_style(
-            'fmp-jquery-ui-css',
-            Hooks::applyFilter(
-                'fm_jquery_ui_theme_hook',
-                BFM_ROOT_URL . 'libs/js/jquery-ui/jquery-ui.min.css'
-            )
-        );
-
-        wp_register_style(
-            'fmp-elfinder-css',
-            BFM_FINDER_URL . 'css/elfinder.min.css',
-            Config::VERSION
-        );
-
-        wp_register_style('fmp-elfinder-theme-css', BFM_ROOT_URL . 'libs/js/jquery-ui/jquery-ui.theme.min.css');
-
-        // elFinder Scripts depends on jQuery UI core, selectable, draggable, droppable, resizable, dialog and slider.
-        wp_register_script(
-            'fmp-elfinder-script',
-            BFM_FINDER_URL . 'js/elfinder.min.js',
-            ['jquery', 'jquery-ui-core', 'jquery-ui-selectable', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-resizable', 'jquery-ui-dialog', 'jquery-ui-slider', 'jquery-ui-tabs']
-        );
-
-        wp_register_script(
-            'fmp-elfinder-editor-script',
-            BFM_FINDER_URL . 'js/extras/editors.default.min.js',
-            ['fmp-elfinder-script']
-        );
-
-        wp_localize_script(
-            'fmp-elfinder-script',
-            'fm',
-            $this->createConfigVariable()
-        );
     }
 
     public function removeAdminNotices()
@@ -155,21 +73,12 @@ class Admin
         $this->adminNotice();
     }
 
-    public function createConfigVariable()
+    public function filterConfigVariable($config)
     {
-        return apply_filters(
-            Config::withPrefix('localized_script'),
-            [
-                'ajax_url'   => admin_url('admin-ajax.php'),
-                'nonce'      => wp_create_nonce('bfm_nonce'),
-                'plugin_dir' => BFM_ROOT_DIR,
-                'plugin_url' => BFM_ROOT_URL,
-                'js_url'     => BFM_FINDER_URL . 'js/',
-                'elfinder'   => BFM_FINDER_URL,
+        return (array)$config + [
                 'themes'     => $this->themes(),
                 'theme'      => $this->selectedTheme(),
-            ]
-        );
+            ];
     }
 
     /**
