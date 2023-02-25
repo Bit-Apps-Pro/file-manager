@@ -7,11 +7,11 @@ use RuntimeException;
 /**
  * A forwarder class for actions and filters.
  *
- * @method static HooksWrapper doAction($tag, ...$arg)
- * @method static HooksWrapper addAction($tag, $functionToAdd, $priority = 10, $acceptedArgs = 1)
- * @method static HooksWrapper removeAction($tag, $functionToRemove, $priority = 10)
- * @method static HooksWrapper addFilter($tag, $functionToAdd, $priority = 10, $acceptedArgs = 1)
- * @method static HooksWrapper applyFilter($tag, $value, ...$args)
+ * @method static HooksWrapper doAction(string $tag, ...$arg)
+ * @method static HooksWrapper addAction(string $tag,callable $functionToAdd,int $priority = 10, int $acceptedArgs = 1)
+ * @method static HooksWrapper removeAction(string $tag,callable $functionToRemove,int $priority = 10)
+ * @method static HooksWrapper addFilter(string $tag,callable $functionToAdd, int $priority = 10, int $acceptedArgs = 1)
+ * @method static HooksWrapper applyFilter(string $tag, $value, ...$args)
  */
 final class Hooks
 {

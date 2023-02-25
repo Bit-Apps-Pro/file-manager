@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "junstyle.php-cs-fixer",
+    "bmewburn.vscode-intelephense-client",
+    "mattpocock.ts-error-translator",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "stylelint.vscode-stylelint",
+    "sainoba.px-to-rem"
+  ]
+}

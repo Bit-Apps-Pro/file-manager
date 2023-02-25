@@ -5,11 +5,14 @@
  * Security check. No one can access without Wordpress itself
  *
  * */
+
+use BitApps\FM\Providers\FileManager;
+
 defined('ABSPATH') or die();
 /**
  * Global object of FM
  *
- * @var FM $FileManager
+ * @var FileManager $FileManager
  */
 global $FileManager;
 //auto::  pr($FileManager->options);
@@ -55,13 +58,14 @@ if ($FileManager->options['file_manager_settings']['show_url_path'] && $FileMana
 }
 wp_enqueue_style('fmp-jquery-ui-css');
 // wp_enqueue_style($FileManager->is_minified_file_load('fmp-elfinder-css')['handle']);
+var_dump('$FileManager->selectedTheme()', $FileManager->selectedTheme());
 if (in_array($FileManager->selectedTheme(), ['default', 'bootstrap'])) {
     wp_enqueue_style('fmp-elfinder-theme-css');
 }
 
 
-wp_enqueue_script($FileManager->is_minified_file_load('fmp-elfinder-script')['handle']);
-wp_enqueue_script($FileManager->is_minified_file_load('fmp-elfinder-editor-script')['handle']);
+wp_enqueue_script('fmp-elfinder-script');
+wp_enqueue_script('fmp-elfinder-editor-script');
 
 // Testing
 $fm_php_syntax_checker = new FMPHPSyntaxChecker();

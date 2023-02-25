@@ -1,5 +1,5 @@
 <?php
-!defined('PHP_CS_FIXER_IGNORE_ENV') && define('PHP_CS_FIXER_IGNORE_ENV', true);
+putenv('PHP_CS_FIXER_IGNORE_ENV=1');
 $finder = PhpCsFixer\Finder::create()
     ->exclude(__DIR__ . '/vendor')
     ->ignoreVCSIgnored(true)

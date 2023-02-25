@@ -1,15 +1,13 @@
 <?php
 
 // Security Check
-defined('ABSPATH') or die();
+\defined('ABSPATH') or exit();
 
 /**
  * The starter file that holds everything together.
  *
- * @package BootStart_1_0_0
- *
  * @since version 0.1.1
- **/
+ */
 
 /**
  * Holds almost all the functionality that this nano framework supports.
@@ -18,81 +16,70 @@ defined('ABSPATH') or die();
  * */
 abstract class FM_BootStart
 {
-
     /**
-     *
      * @var string $name name of the plugin
      *
      * */
     public $name;
 
     /**
-     *
      * @var string $prefix Plugin wide prefix that will be used to differentiate from other plugin / or system vars
      *
      * */
     public $prefix;
 
     /**
-     *
-     * @var string $path Absolute path of the plugin.
-     *
-     * */
-    protected $path;
-
-    /**
-     *
-     * @var array $SCD Short Code Data
-     *
-     * */
-    protected $SCD;
-
-    /**
-     *
      * @var object $options The object of the options class
      *
      * */
     public $options;
 
     /**
-     *
      * @var string $upload_path :: This variable holds the path of the default upload folder
      *
      * */
     public $upload_path;
 
     /**
-     *
      * @var string $upload_url :: This variable holds the url of the default upload folder
      *
      * */
     public $upload_url;
-
-    /**
-     *
-     * @var array $menu :: Defines how the menu would be
-     *
-     * */
-    protected $menu_data;
 
     public $devEnv;
 
     public $STD;
 
     /**
+     * @var string $path Absolute path of the plugin.
      *
+     * */
+    protected $path;
+
+    /**
+     * @var array $SCD Short Code Data
+     *
+     * */
+    protected $SCD;
+
+    /**
+     * @var array $menu :: Defines how the menu would be
+     *
+     * */
+    protected $menu_data;
+
+    /**
      * Constructor function
-     *
      *
      * This function does the works that every plugin must do like checking ABSPATH,
      * triggering activation and deactivation hooks etc.
      *
      * @todo Add an uninstall function
      *
+     * @param mixed $name
      * */
     function __construct($name)
     {
-
         // Assigning name
         $this->name = __(trim($name), 'file-manager');
 
@@ -106,11 +93,11 @@ abstract class FM_BootStart
         $this->devEnv = false;
 
         // Upload folder path
-        $upload = wp_upload_dir();
+        $upload            = wp_upload_dir();
         $this->upload_path = $upload['basedir'] . DS . $this->prefix;
 
         // Upload folder url
-        $upload = wp_upload_dir();
+        $upload           = wp_upload_dir();
         $this->upload_url = $upload['baseurl'] . '/' . $this->prefix;
 
         // Setting php.ini variables
@@ -120,20 +107,20 @@ abstract class FM_BootStart
 
         // Default options
         $default_options = [
-            'file_manager_settings' => array(
+            'file_manager_settings' => [
                 'show_url_path' => 'show',
-                'language' => array(
-                    'code' => 'en',
-                    'name' => 'Default',
+                'language'      => [
+                    'code'     => 'en',
+                    'name'     => 'Default',
                     'file-url' => plugins_url('libs/elFinder/js/i18n/elfinder.en.js', BFM_FINDER_DIR),
-                ),
-                'size' => array(
-                    'width' => 'auto',
+                ],
+                'size' => [
+                    'width'  => 'auto',
                     'height' => '500'
-                ),
-                'fm_default_view_type' => 'icons',
+                ],
+                'fm_default_view_type'  => 'icons',
                 'fm_display_ui_options' => ['toolbar', 'places', 'tree', 'path', 'stat']
-            ),
+            ],
         ];
 
         $this->options = get_option($this->prefix);
@@ -143,88 +130,45 @@ abstract class FM_BootStart
             $this->options = array_merge($default_options, $this->options);
         }
 
-        register_shutdown_function(array(&$this, 'save_options'));
+        register_shutdown_function([&$this, 'save_options']);
 
         // Creating upload folder.
         $this->upload_folder();
 
         // Frontend asset loading
-        add_action('wp_enqueue_scripts', array(&$this, 'assets'));
+        // add_action('wp_enqueue_scripts', [$this, 'assets']);
 
         // Dashboard asset loading
-        add_action('admin_enqueue_scripts', array(&$this, 'admin_assets'));
+        // add_action('admin_enqueue_scripts', array(&$this, 'admin_assets'));
 
         // Adding a menu at admin area
-        add_action('admin_menu', array(&$this, 'menu'));
+        // add_action('admin_menu', array(&$this, 'menu'));
 
         // Shortcode hook
-        add_action('init', array(&$this, 'shortcode'));
+        add_action('init', [&$this, 'shortcode']);
     }
 
-    /**
-     *
-     * Set the all necessary variables of php.ini file.
-     *
-     * @todo Add some php.ini variables.
-     *
-     * */
-    protected function php_ini_settings()
-    {
-
-        // This should have a standard variable list.
-        /**
-         *
-         * ## Increase file upload limit
-         * ## Turn on error if of php if debugging variable is defined and set to true.
-         *
-         * */
-        ini_set('post_max_size', '128M');
-        ini_set('upload_max_filesize', '128M');
-    }
-
-    /**
-     *
-     * Loads frontend assets
-     *
-     * */
-    public function assets()
-    {
-
-        $this->elfinder_assets(); // Loads all the assets necessary for elFinder
-
-        // Including front-style.css
-        wp_register_style('fm-front-style', $this->url('css/front-style.css'), false);
-
-        // Including front-script.js
-        wp_register_script('fm-front-script', $this->url('js/front-script.js'), array(), '1.0.0', true);
-    }
-
-    /*
-     *
-     * Loads the backend / admin assets
-     *
-     * */
+    // Loads the backend / admin assets
     public function admin_assets()
     {
-
         $this->elfinder_assets(); // Loads all the assets necessary for elFinder
 
         wp_register_style('fmp_permission-system-tippy-css', $this->url('libs/js/tippy-v0.2.8/tippy.css'));
 
         // Admin scripts
-        wp_register_script('fmp_permission-system-tippy-script', $this->url('libs/js/tippy-v0.2.8/tippy.js'), array('jquery'));
-        wp_register_script('fmp_permission-system-admin-script', $this->url('assets/js/admin-script.js'), array('fmp_permission-system-tippy-script'));
+        wp_register_script('fmp_permission-system-tippy-script', $this->url('libs/js/tippy-v0.2.8/tippy.js'), ['jquery']);
+        wp_register_script('fmp_permission-system-admin-script', $this->url('assets/js/admin-script.js'), ['fmp_permission-system-tippy-script']);
 
         // Including admin-style.css
         wp_register_style('fmp-admin-style', $this->url('assets/css/style.min.css'));
 
         // Including admin-script.js
-        wp_register_script('fmp-admin-script', $this->url('assets/js/admin-script.js'), array('jquery'));
+        wp_register_script('fmp-admin-script', $this->url('assets/js/admin-script.js'), ['jquery']);
     }
 
     /**
-     *
      * @function elfinder_assets
+     *
      * @description Registers all the elfinder assets
      *
      * */
@@ -244,23 +188,23 @@ abstract class FM_BootStart
 
         // elFinder Scripts depends on jQuery UI core, selectable, draggable, droppable, resizable, dialog and slider.
         $elfinder_script = $this->is_minified_file_load('fmp-elfinder-script');
-        wp_register_script($elfinder_script['handle'], BFM_FINDER_URL . 'js/elfinder' . $elfinder_script['file_type'] . 'js', array('jquery', 'jquery-ui-core', 'jquery-ui-selectable', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-resizable', 'jquery-ui-dialog', 'jquery-ui-slider', 'jquery-ui-tabs'));
+        wp_register_script($elfinder_script['handle'], BFM_FINDER_URL . 'js/elfinder' . $elfinder_script['file_type'] . 'js', ['jquery', 'jquery-ui-core', 'jquery-ui-selectable', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-resizable', 'jquery-ui-dialog', 'jquery-ui-slider', 'jquery-ui-tabs']);
         $editor_script = $this->is_minified_file_load('fmp-elfinder-editor-script');
-        wp_register_script($editor_script['handle'], BFM_FINDER_URL . 'js/extras/editors.default' . $editor_script['file_type'] . 'js', array($elfinder_script['handle']));
+        wp_register_script($editor_script['handle'], BFM_FINDER_URL . 'js/extras/editors.default' . $editor_script['file_type'] . 'js', [$elfinder_script['handle']]);
 
         wp_localize_script(
             $elfinder_script['handle'],
-            "fm",
-            array(
+            'fm',
+            [
                 'ajax_url'         => admin_url('admin-ajax.php'),
-                'nonce'         => wp_create_nonce('bfm_nonce'),
-                'plugin_dir'    => BFM_ROOT_DIR,
-                'plugin_url'     => BFM_ROOT_URL,
-                'js_url'         => BFM_FINDER_URL . "js/",
+                'nonce'            => wp_create_nonce('bfm_nonce'),
+                'plugin_dir'       => BFM_ROOT_DIR,
+                'plugin_url'       => BFM_ROOT_URL,
+                'js_url'           => BFM_FINDER_URL . 'js/',
                 'elfinder'         => BFM_FINDER_URL,
-                'themes'       => $this->themes(),
-                "theme" => $this->selectedTheme()
-            )
+                'themes'           => $this->themes(),
+                'theme'            => $this->selectedTheme()
+            ]
         );
     }
 
@@ -273,7 +217,7 @@ abstract class FM_BootStart
     {
         $themeBase = BFM_ROOT_DIR . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'themes';
         $themeDirs = scandir($themeBase);
-        $themes = [];
+        $themes    = [];
         foreach ($themeDirs as $theme) {
             if ($theme === '.' || $theme === '..') {
                 continue;
@@ -284,10 +228,11 @@ abstract class FM_BootStart
                     continue;
                 }
                 if (is_readable($themeBase . DIRECTORY_SEPARATOR . $theme . DIRECTORY_SEPARATOR . $variant . DIRECTORY_SEPARATOR . $variant . '.json')) {
-                    $themes[$variant] = BFM_ASSET_URL . "themes/$theme/$variant/$variant.json";
+                    $themes[$variant] = BFM_ASSET_URL . "themes/{$theme}/{$variant}/{$variant}.json";
                 }
             }
         }
+
         return $themes;
     }
 
@@ -300,42 +245,43 @@ abstract class FM_BootStart
     {
         $theme = 'default';
         if (isset($this->options['file_manager_settings']['theme'])) {
-            $theme = $this->options['file_manager_settings']['theme'];
+            // $theme = $this->options['file_manager_settings']['theme'];
         }
+
         return $theme;
     }
 
     /**
      * Load minified files if WP_DEBUG || WP_DEBUG_LOG true
+     *
+     * @param mixed $handle_name
      */
     public function is_minified_file_load($handle_name)
     {
-
         if (WP_DEBUG) {
             return [
-                'handle' => $handle_name,
-                'file_type' => ('fmp-elfinder-script' === $handle_name || 'fmp-elfinder-css' === $handle_name) ? '.full.' :  '.'
+                'handle'    => $handle_name,
+                'file_type' => ('fmp-elfinder-script' === $handle_name || 'fmp-elfinder-css' === $handle_name) ? '.full.' : '.'
             ];
         }
 
         return [
-            'handle' => $handle_name . '-min',
+            'handle'    => $handle_name . '-min',
             'file_type' => '.min.'
         ];
     }
 
     /**
-     *
      * Adds a sidebar/sub/top menu
      *
      * */
     public function menu()
     {
-
-        if (empty($this->menu_data)) return;
+        if (empty($this->menu_data)) {
+            return;
+        }
 
         if ($this->menu_data['type'] == 'menu') {
-
             $capabilities = 'administrator';
             $capabilities = apply_filters('fm_capabilities', $capabilities);
 
@@ -361,13 +307,11 @@ abstract class FM_BootStart
     }
 
     /**
-     *
      * Adds an admin page to the backend.
      *
      * */
     public function admin_panel()
     {
-
         $this->render('', 'admin' . DS . 'index');
     }
 
@@ -377,8 +321,9 @@ abstract class FM_BootStart
      * */
     public function settings()
     {
-
-        if (!current_user_can('manage_options')) die($this->render('', 'access-denied'));
+        if (!current_user_can('manage_options')) {
+            exit($this->render('', 'access-denied'));
+        }
 
         $this->render('', 'admin' . DS . 'settings');
     }
@@ -389,8 +334,9 @@ abstract class FM_BootStart
      * */
     public function systems()
     {
-
-        if (!current_user_can('manage_options')) die($this->render('', 'access-denied'));
+        if (!current_user_can('manage_options')) {
+            exit($this->render('', 'access-denied'));
+        }
 
         $this->render('', 'admin' . DS . 'utility');
     }
@@ -403,7 +349,6 @@ abstract class FM_BootStart
      * */
     public function finderUrl($string)
     {
-
         return BFM_FINDER_URL . $string;
     }
 
@@ -415,52 +360,45 @@ abstract class FM_BootStart
      * */
     public function url($string)
     {
-
         return BFM_ROOT_URL . $string;
     }
 
     /**
-     *
      * Adds ajax hooks and functions automatically
      *
-     *
-     * @param string $name Name of the function
-     *
-     * @param bool $guest Should the function work for guests *Default: false*
+     * @param string $name  Name of the function
+     * @param bool   $guest Should the function work for guests *Default: false*
      *
      * */
     public function add_ajax($name, $guest = false)
     {
-
         // Adds admin ajax
         $hook = 'wp_ajax_' . $name;
-        add_action($hook, array($this, $name));
+        add_action($hook, [$this, $name]);
 
         // Allow guests
-        if (!$guest) return;
+        if (!$guest) {
+            return;
+        }
 
         $hook = 'wp_ajax_nopriv_' . $name;
-        add_action($hook, array($this, $name));
+        add_action($hook, [$this, $name]);
     }
 
     /**
-     *
      * Get the script for ajax request
      *
-     *
      * @param string $name Name of the ajax request fuction.
-     *
-     * @param array $data Post data to send
+     * @param array  $data Post data to send
      *
      * @return string $script A jQuery.post() request function to show on the the main page.
      *
      * */
     public function get_ajax_script($name, $data)
     {
-
         $data['action'] = $name;
 
-?>
+        ?>
 
         jQuery.post(
         '<?php echo admin_url('admin-ajax.php'); ?>',
@@ -473,54 +411,18 @@ abstract class FM_BootStart
     }
 
     /**
-     *
      * Adds Shortcodes
      *
      * */
     public function shortcode()
     {
-
-        if (empty($this->STD)) return;
+        if (empty($this->STD)) {
+            return;
+        }
 
         foreach ($this->STD as $std) {
-
-            $ret = add_shortcode($std, array($this, $std . '_view'));
+            $ret = add_shortcode($std, [$this, $std . '_view']);
         }
-    }
-
-    /**
-     *
-     * Includes a view file form the view folder which matches the called functions name
-     *
-     * @param string $view_file Name of the view file.
-     *
-     * */
-    protected function render($data = null, $view_file = null)
-    {
-
-        if ($view_file == null) {
-
-            // Generates file name from function name
-            $trace = debug_backtrace();
-            $view_file = $trace[1]['function'] . '.php';
-        } else {
-
-            $view_file .= '.php';
-        }
-
-        include BFM_ROOT_DIR . DS . "views" . DS . $view_file;
-    }
-
-    /**
-     *
-     * @function upload_folder Checks if the upload folder is present. If not creates a upload folder.
-     *
-     * */
-    protected function upload_folder()
-    {
-
-        // Creats upload directory for this specific plugin
-        if (!is_dir($this->upload_path)) mkdir($this->upload_path, 0777);
     }
 
     /**
@@ -532,20 +434,69 @@ abstract class FM_BootStart
      * */
     public function zip($string)
     {
-
         $string = trim($string);
         $string = str_replace(' ', '-', $string);
-        $string = strtolower($string);
-        return $string;
+
+        return strtolower($string);
     }
 
     /**
-     *
      * @function save_options
      *
      * */
     public function save_options()
     {
         update_option($this->prefix, $this->options);
+    }
+
+    /**
+     * Set the all necessary variables of php.ini file.
+     *
+     * @todo Add some php.ini variables.
+     *
+     * */
+    protected function php_ini_settings()
+    {
+        // This should have a standard variable list.
+        /**
+         * ## Increase file upload limit
+         * ## Turn on error if of php if debugging variable is defined and set to true.
+         *
+         * */
+        var_dump(\ini_get('upload_max_filesize'));
+        ini_set('post_max_size', '128M');
+        ini_set('upload_max_filesize', '128M');
+    }
+
+    /**
+     * Includes a view file form the view folder which matches the called functions name
+     *
+     * @param string     $view_file Name of the view file.
+     * @param null|mixed $data
+     *
+     * */
+    protected function render($data = null, $view_file = null)
+    {
+        if ($view_file == null) {
+            // Generates file name from function name
+            $trace     = debug_backtrace();
+            $view_file = $trace[1]['function'] . '.php';
+        } else {
+            $view_file .= '.php';
+        }
+
+        include BFM_ROOT_DIR . DS . 'views' . DS . $view_file;
+    }
+
+    /**
+     * @function upload_folder Checks if the upload folder is present. If not creates a upload folder.
+     *
+     * */
+    protected function upload_folder()
+    {
+        // Creats upload directory for this specific plugin
+        if (!is_dir($this->upload_path)) {
+            mkdir($this->upload_path, 0777);
+        }
     }
 }
