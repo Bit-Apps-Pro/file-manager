@@ -34,12 +34,12 @@ $operations = $FMP->list_of_operations;
 $file_types = array('text', 'image', 'application', 'video', 'audio');
 
 // Initializing root folder path
-$default_root_folder_path = $FileManager->upload_path . DS;
+$default_root_folder_path = FM_UPLOAD_BASE_DIR . DS;
 if (isset($previous_settings['root_folder']) && !empty($previous_settings['root_folder'])) $root_folder_path = stripslashes($previous_settings['root_folder']);
 else $root_folder_path = $default_root_folder_path;
 
 // Initilizing root folder URL
-$default_root_folder_url = $FileManager->upload_url;
+$default_root_folder_url = FM_UPLOAD_DIR_URL;
 if (isset($previous_settings['root_folder_url']) && !empty($previous_settings['root_folder_url'])) $root_folder_url = stripslashes($previous_settings['root_folder_url']);
 else $root_folder_url = $default_root_folder_url;
 ?>

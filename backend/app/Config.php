@@ -19,7 +19,11 @@ class Config
 
     const VAR_PREFIX = 'file_manager_';
 
-    const VERSION = '5.2.8';
+    const DB_PREFIX = 'fm_';
+
+    const VERSION = '6.0';
+
+    const VERSION_ID = 600;
 
     const DB_VERSION = '1.0';
 
@@ -30,6 +34,10 @@ class Config
     const API_VERSION = '1.0';
 
     const APP_BASE = BFM_MAIN_FILE;
+
+    const SUPPORT_URL = 'https://www.bitapps.pro/contact';
+
+    const REVIEW_URL = 'https://wordpress.org/support/plugin/file-manager/reviews/';
 
     /**
      * Provides configuration for plugin.
@@ -94,7 +102,7 @@ class Config
      *
      * @param string $option Variable name
      *
-     * @return array
+     * @return string
      */
     public static function withPrefix($option)
     {

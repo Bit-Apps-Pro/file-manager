@@ -60,12 +60,12 @@ class BFMFileManagerPermissionSettings
 
     public function getDefaultPublicRootPath()
     {
-        return $this->fileManager->upload_path . DIRECTORY_SEPARATOR;
+        return FM_UPLOAD_BASE_DIR . DIRECTORY_SEPARATOR;
     }
 
     public function getDefaultPublicRootURL()
     {
-        return $this->fileManager->upload_url;
+        return FM_UPLOAD_BASE_URL;
     }
 
 
@@ -144,14 +144,14 @@ class BFMFileManagerPermissionSettings
     {
         return isset($this->settings['root_folder'])
             ? stripslashes($this->settings['root_folder'])
-            : $this->fileManager->upload_path . DIRECTORY_SEPARATOR;
+            : $this->getDefaultPublicRootPath() . DIRECTORY_SEPARATOR;
     }
 
     public function getPublicRootURL()
     {
         return isset($this->settings['root_folder_url'])
             ? stripslashes($this->settings['root_folder_url'])
-            : $this->fileManager->upload_url . DIRECTORY_SEPARATOR;
+            : $this->getDefaultPublicRootURL();
     }
 
     public function isEnabledForAdmin()

@@ -87,6 +87,10 @@ class Blueprint
 
     private $_edit = [];
 
+    private $_fkID;
+
+    private $_newName;
+
     /**
      * Create a new schema blueprint.
      *
@@ -432,7 +436,7 @@ class Blueprint
 
     public function foreign($ref, $refCol)
     {
-        $this->fkID          = \count($this->foreignKeys);
+        $this->_fkID          = \count($this->foreignKeys);
         $this->foreignKeys[] = [
             'column'  => $this->columns[$this->columnIndex]['name'],
             'ref'     => $this->_prefix . $ref,
@@ -444,24 +448,24 @@ class Blueprint
 
     public function onDelete()
     {
-        $this->foreignKeys[$this->fkID]['method'] = 'onDelete';
+        $this->foreignKeys[$this->_fkID]['method'] = 'onDelete';
 
         return $this;
     }
 
     public function onUpdate()
     {
-        $this->foreignKeys[$this->fkID]['method'] = 'onUpdate';
+        $this->foreignKeys[$this->_fkID]['method'] = 'onUpdate';
 
         return $this;
     }
 
     public function restrict()
     {
-        if (\array_key_exists('method', $this->foreignKeys[$this->fkID])) {
-            $this->foreignKeys[$this->fkID][$this->foreignKeys[$this->fkID]['method']] = 'RESTRICT';
+        if (\array_key_exists('method', $this->foreignKeys[$this->_fkID])) {
+            $this->foreignKeys[$this->_fkID][$this->foreignKeys[$this->_fkID]['method']] = 'RESTRICT';
         } else {
-            $this->foreignKeys[$this->fkID]['both'] = 'RESTRICT';
+            $this->foreignKeys[$this->_fkID]['both'] = 'RESTRICT';
         }
 
         return $this;
@@ -469,10 +473,10 @@ class Blueprint
 
     public function setNull()
     {
-        if (\array_key_exists('method', $this->foreignKeys[$this->fkID])) {
-            $this->foreignKeys[$this->fkID][$this->foreignKeys[$this->fkID]['method']] = 'SET NULL';
+        if (\array_key_exists('method', $this->foreignKeys[$this->_fkID])) {
+            $this->foreignKeys[$this->_fkID][$this->foreignKeys[$this->_fkID]['method']] = 'SET NULL';
         } else {
-            $this->foreignKeys[$this->fkID]['both'] = 'SET NULL';
+            $this->foreignKeys[$this->_fkID]['both'] = 'SET NULL';
         }
 
         return $this;
@@ -480,10 +484,10 @@ class Blueprint
 
     public function cascade()
     {
-        if (\array_key_exists('method', $this->foreignKeys[$this->fkID])) {
-            $this->foreignKeys[$this->fkID][$this->foreignKeys[$this->fkID]['method']] = 'CASCADE';
+        if (\array_key_exists('method', $this->foreignKeys[$this->_fkID])) {
+            $this->foreignKeys[$this->_fkID][$this->foreignKeys[$this->_fkID]['method']] = 'CASCADE';
         } else {
-            $this->foreignKeys[$this->fkID]['both'] = 'CASCADE';
+            $this->foreignKeys[$this->_fkID]['both'] = 'CASCADE';
         }
 
         return $this;
@@ -754,9 +758,9 @@ class Blueprint
         }
 
         $query = '';
-        foreach ($this->foreignKeys as $fkId => $foreignKey) {
-            /* $query .= "\nCONSTRAINT f_c_{$this->table}_{$fkId} "
-                ." FOREIGN KEY f_key_{$this->table}_{$fkId} ({$foreignKey['column']})"
+        foreach ($this->foreignKeys as $_fkId => $foreignKey) {
+            /* $query .= "\nCONSTRAINT f_c_{$this->table}_{$_fkId} "
+                ." FOREIGN KEY f_key_{$this->table}_{$_fkId} ({$foreignKey['column']})"
                 ." REFERENCES {$foreignKey['ref']} ({$foreignKey['ref_col']})"
                 . (isset($foreignKey['onUpdate']) ? " ON DELETE {$foreignKey['onUpdate']}" : null)
                 . (isset($foreignKey['onUpdate']) ? " ON UPDATE {$foreignKey['onUpdate']}" : null)

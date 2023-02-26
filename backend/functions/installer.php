@@ -1,12 +1,19 @@
 <?php
 
-use BFMSettingsInitializer;
-use BitApps\FM\Providers\FileManager;
+use BitApps\FM\Config;
+use BitApps\FM\Providers\InstallerProvider;
 
 \defined('ABSPATH') || exit();
 
 function bfmActivate()
 {
+    include_once BFM_BASEDIR . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+
+    $installerProvider = new InstallerProvider();
+    $installerProvider->register();
+
+    do_action(Config::withPrefix('activate'));
+
     // Initilizing the option to store logging
     if (!get_option('fm_log', false)) {
         add_option('fm_log', '');
@@ -37,35 +44,35 @@ function bfmActivate()
     // ------------------------------ Initilizing Statistical Data ENDS -------------------------
 
     // Logger table
-    global $wpdb;
-    $tablePrefix = $wpdb->prefix;
-    $sql         = "
-    CREATE TABLE {$tablePrefix}fm_log (
-        id int(11) NOT NULL,
-        user_id int(11) NOT NULL,
-        operation_id varchar(32) NOT NULL,
-        file_path varchar(1024) NOT NULL,
-        time datetime NOT NULL
-    ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-    ALTER TABLE {$tablePrefix}fm_log ADD PRIMARY KEY (id);
-    ALTER TABLE {$tablePrefix}fm_log MODIFY id int(11) NOT NULL AUTO_INCREMENT;
-    ";
+    // global $wpdb;
+    // $tablePrefix = $wpdb->prefix;
+    // $sql         = "
+    // CREATE TABLE {$tablePrefix}fm_log (
+    //     id int(11) NOT NULL,
+    //     user_id int(11) NOT NULL,
+    //     operation_id varchar(32) NOT NULL,
+    //     file_path varchar(1024) NOT NULL,
+    //     time datetime NOT NULL
+    // ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+    // ALTER TABLE {$tablePrefix}fm_log ADD PRIMARY KEY (id);
+    // ALTER TABLE {$tablePrefix}fm_log MODIFY id int(11) NOT NULL AUTO_INCREMENT;
+    // ";
 
-    include_once ABSPATH . 'wp-admin/includes/upgrade.php';
+    // include_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
-    dbDelta($sql);
+    // dbDelta($sql);
 
     BFMSettingsInitializer::init_settings();
 }
 
 function bfmUninstall()
 {
-    // Todo: on uninstall
+    do_action(Config::withPrefix('uninstall'));
 }
 
 function bfmDeactivate()
 {
-    // Todo: on deactivate
+    do_action(Config::withPrefix('deactivate'));
 }
 
 function bfmLoaded()
@@ -80,11 +87,6 @@ function bfmLoaded()
 
     // Including other necessary files
     require_once BFM_BASEDIR . DS . 'inc/__init__.php';
-
-    // require_once BFM_BASEDIR . DS . 'backend'
-    //     . DIRECTORY_SEPARATOR . 'app'
-    //     . DIRECTORY_SEPARATOR . 'Providers'
-    //     . DIRECTORY_SEPARATOR . 'FileManager.php';
 
     // Autoload vendor files.
     require_once BFM_BASEDIR . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';

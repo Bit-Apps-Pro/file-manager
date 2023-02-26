@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 global $FileManager;
 ?>
 <?php
-wp_enqueue_style('fmp-admin-style');
+wp_enqueue_style('bfm-admin-style');
 
 ?>
 <div class='fm-container'>

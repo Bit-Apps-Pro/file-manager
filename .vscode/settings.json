@@ -35,6 +35,7 @@
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "css.lint.validProperties": ["composes"],
   "cSpell.words": [
+    "elfinder",
   ],
   "[typescript, javascript, typescriptreact, json, css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

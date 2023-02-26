@@ -22,9 +22,11 @@ final class Connection
 {
     public static $instance;
 
-    private static $_previousErrorState;
+    private static $_dbPrefix;
 
     private static $_previousError;
+
+    private static $_previousErrorState;
 
     private static $_isLogEnabled = false;
 
@@ -90,7 +92,17 @@ final class Connection
 
     public static function getPrefix()
     {
-        return self::wpPrefix() . Config::VAR_PREFIX;
+        return self::wpPrefix() . self::pluginDBPrefix();
+    }
+
+    public static function pluginDBPrefix()
+    {
+        return isset(self::$_dbPrefix) ? self::$_dbPrefix : Config::DB_PREFIX;
+    }
+
+    public static function setPluginDBPrefix($prefix)
+    {
+        self::$_dbPrefix = $prefix;
     }
 
     public static function wpPrefix()

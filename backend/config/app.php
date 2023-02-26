@@ -50,10 +50,10 @@ if (!\defined('FM_MEDIA_BASE_DIR_URL')) {
 }
 
 // File manager upload dir basedir
-\defined('FM_UPLOAD_BASE_DIR') || \define('FM_UPLOAD_BASE_DIR', FM_WP_UPLOAD_DIR['basedir'] . DS . 'file-manager' . DS);
+\defined('FM_UPLOAD_BASE_DIR') || \define('FM_UPLOAD_BASE_DIR', FM_WP_UPLOAD_DIR['basedir'] . DS . 'file-manager');
 
 // File manager upload dir baseurl
-\defined('FM_UPLOAD_BASE_URL') || \define('FM_UPLOAD_BASE_URL', FM_WP_UPLOAD_DIR['baseurl'] . DS . 'file-manager' . DS);
+\defined('FM_UPLOAD_BASE_URL') || \define('FM_UPLOAD_BASE_URL', FM_WP_UPLOAD_DIR['baseurl'] . '/file-manager');
 
 // File manager trash dir path
 if (!\defined('FM_TRASH_DIR_PATH')) {

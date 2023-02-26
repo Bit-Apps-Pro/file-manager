@@ -56,22 +56,22 @@ if ($FileManager->options['file_manager_settings']['show_url_path'] && $FileMana
   $commandOptions['info']['hideItems'][] = 'link';
   $commandOptions['info']['hideItems'][] = 'path';
 }
-wp_enqueue_style('fmp-jquery-ui-css');
+wp_enqueue_style('bfm-jquery-ui-css');
 // wp_enqueue_style($FileManager->is_minified_file_load('fmp-elfinder-css')['handle']);
 var_dump('$FileManager->selectedTheme()', $FileManager->selectedTheme());
 if (in_array($FileManager->selectedTheme(), ['default', 'bootstrap'])) {
-    wp_enqueue_style('fmp-elfinder-theme-css');
+    wp_enqueue_style('bfm-elfinder-theme-css');
 }
 
 
-wp_enqueue_script('fmp-elfinder-script');
-wp_enqueue_script('fmp-elfinder-editor-script');
+wp_enqueue_script('bfm-elfinder-script');
+wp_enqueue_script('bfm-elfinder-editor-script');
 
 // Testing
 $fm_php_syntax_checker = new FMPHPSyntaxChecker();
 
 // Loading lanugage file
-if (isset($lang_file_url)) wp_enqueue_script('fmp-elfinder-lang', $lang_file_url, array('fmp-elfinder-script'));
+if (isset($lang_file_url)) wp_enqueue_script('bfm-elfinder-lang', $lang_file_url, array('fmp-elfinder-script'));
 ?>
 
 <div id='file-manager'>

@@ -75,10 +75,10 @@ class Admin
 
     public function filterConfigVariable($config)
     {
-        return (array)$config + [
-                'themes'     => $this->themes(),
-                'theme'      => $this->selectedTheme(),
-            ];
+        return (array) $config + [
+            'themes' => $this->themes(),
+            'theme'  => $this->selectedTheme(),
+        ];
     }
 
     /**

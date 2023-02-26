@@ -4,6 +4,7 @@ namespace BitApps\FM\Providers;
 
 \defined('ABSPATH') or exit();
 
+use BitApps\FM\Plugin;
 use elFinder;
 use elFinderConnector;
 use FM_BootStart;
@@ -55,24 +56,24 @@ class FileManager extends FM_BootStart
 
     public function __construct($name)
     {
-        $this->version                = '5.2.8';
+        $this->version                = '6.0';
         $this->version_no             = 528;
         $this->site                   = 'https://bitapps.pro';
         $this->support_page           = 'https://www.bitapps.pro/contact';
         $this->feedback_page          = 'https://wordpress.org/support/plugin/file-manager/reviews/';
-        $this->file_manager_view_path = plugin_dir_path(__FILE__);
+        // $this->file_manager_view_path = plugin_dir_path(__FILE__);
 
         // Checking for migration
         new FMMigrate($this->version_no);
 
-        // Adding Menu
-        $this->menu_data = [
-            'type' => 'menu',
-        ];
+        // // Adding Menu
+        // $this->menu_data = [
+        //     'type' => 'menu',
+        // ];
 
         // Adding Ajax
         // $this->add_ajax('connector'); // elFinder ajax call
-        $this->add_ajax('fm_site_backup'); // Site backup function
+        // $this->add_ajax('fm_site_backup'); // Site backup function
 
         parent::__construct($name);
 
@@ -91,7 +92,7 @@ class FileManager extends FM_BootStart
     {
         // Allowed mime types
         $mime             = new FMMIME(BFM_FINDER_DIR . 'php/mime.types');
-        $fmAccessControll = new FMAccessControl();
+        // $fmAccessControll = new FMAccessControl();
 
         $opts = [
             'bind' => [
@@ -111,8 +112,8 @@ class FileManager extends FM_BootStart
                     'uploadDeny'      => [],                // All Mimetypes not allowed to upload
                     'uploadAllow'     => $mime->get_types(), // All MIME types is allowed
                     'uploadOrder'     => ['order', 'allow', 'deny'],      // allowed Mimetype `image` and `text/plain` only
-                    'accessControl'   => [$fmAccessControll, 'control'],
-                    'acceptedName'    => [$fmAccessControll, 'accepted__name'], // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#acceptedName
+                    'accessControl'   => [Plugin::instance()->accessControl(), 'control'],
+                    'acceptedName'    => [Plugin::instance()->accessControl(), 'validateName'], // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#acceptedName
                     'disabled'        => [],    // List of disabled operations
                     'dispInlineRegex' => '^(?:image|application/(?:vnd\.)?(?:ms(?:-office|word|-excel|-powerpoint)|openxmlformats-officedocument)|text/plain$)', // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#dispInlineRegex
                     'trashHash'       => isset($this->options['file_manager_settings']['fm-create-trash-files-folders']) && !empty($this->options['file_manager_settings']['fm-create-trash-files-folders']) ? 't1_Lw' : '',                     // elFinder's hash of trash folder
@@ -167,7 +168,7 @@ class FileManager extends FM_BootStart
                     'uploadDeny'    => [],                // All Mimetypes not allowed to upload
                     'uploadAllow'   => $mime->get_types(), // All MIME types is allowed
                     'uploadOrder'   => ['allow', 'deny'],      // allowed Mimetype `image` and `text/plain` only
-                    'accessControl' => [new FMAccessControl(), 'control'],
+                    'accessControl' => [Plugin::instance()->accessControl(), 'control'],
                     'disabled'      => [],    // List of disabled operations
                 ],
             ]
@@ -186,7 +187,7 @@ class FileManager extends FM_BootStart
                 'uploadAllow'   => $mime->get_types(), // Same as above
                 'uploadOrder'   => ['deny', 'allow'],      // Same as above
                 'accessControl' => [new FMAccessControl(), 'control'],
-                'acceptedName'  => [$fmAccessControll, 'accepted__name'],              // Same as above
+                'acceptedName'  => [$fmAccessControll, 'validateName'],              // Same as above
 
             ];
         }

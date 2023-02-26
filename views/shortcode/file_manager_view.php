@@ -30,15 +30,15 @@ if ($FMP->is_bannned()) {
 
 $ajax_url = admin_url("admin-ajax.php");
 
-wp_enqueue_style('fmp-jquery-ui-css');
-wp_enqueue_style('fmp-elfinder-css');
-wp_enqueue_style('fmp-elfinder-theme-css');
+wp_enqueue_style('bfm-jquery-ui-css');
+wp_enqueue_style('bfm-elfinder-css');
+wp_enqueue_style('bfm-elfinder-theme-css');
 wp_enqueue_style('fm-front-style');
 $editorScriptHandle = $FileManager->is_minified_file_load('fmp-elfinder-editor-script')['handle'];
 wp_enqueue_script($FileManager->is_minified_file_load('fmp-elfinder-script')['handle']);
 wp_enqueue_script($editorScriptHandle);
 wp_enqueue_script('fm-front-script');
-if (isset($lang_file_url)) wp_enqueue_script('fmp-elfinder-lang', $lang_file_url, array('fmp-elfinder-script'));
+if (isset($lang_file_url)) wp_enqueue_script('bfm-elfinder-lang', $lang_file_url, array('fmp-elfinder-script'));
 ob_start();
 ?>
 

@@ -230,8 +230,8 @@ class FileManagerPermission
         foreach ($operation_list as $operation) if (!in_array($operation, $permission_list)) $disabled_permissions[] = $operation;
 
         // Root Folder
-        $settings['root_folder'] = isset($settings['root_folder']) && !empty($settings['root_folder']) ? trailingslashit($settings['root_folder']) : trailingslashit($FileManager->upload_path);
-        $settings['root_folder_url'] = isset($settings['root_folder_url']) && !empty($settings['root_folder_url']) ? trailingslashit($settings['root_folder_url']) : trailingslashit($FileManager->upload_url);
+        $settings['root_folder'] = isset($settings['root_folder']) && !empty($settings['root_folder']) ? trailingslashit($settings['root_folder']) : trailingslashit(FM_UPLOAD_BASE_DIR);
+        $settings['root_folder_url'] = isset($settings['root_folder_url']) && !empty($settings['root_folder_url']) ? trailingslashit($settings['root_folder_url']) : trailingslashit(FM_UPLOAD_BASE_URL);
         if (!is_dir($settings['root_folder'])) {
             mkdir($settings['root_folder'], 0755, true);
         } // Creating root folder if it doesn't exists.
@@ -351,8 +351,8 @@ class FileManagerPermission
         $folder_list = array();
 
         // Root Folder
-        $settings['root_folder'] = isset($settings['root_folder']) && !empty($settings['root_folder']) ? trailingslashit($settings['root_folder']) : trailingslashit($FileManager->upload_path);
-        $settings['root_folder_url'] = isset($settings['root_folder_url']) && !empty($settings['root_folder_url']) ? trailingslashit($settings['root_folder_url']) : trailingslashit($FileManager->upload_url);
+        $settings['root_folder'] = isset($settings['root_folder']) && !empty($settings['root_folder']) ? trailingslashit($settings['root_folder']) : trailingslashit(FM_UPLOAD_BASE_DIR);
+        $settings['root_folder_url'] = isset($settings['root_folder_url']) && !empty($settings['root_folder_url']) ? trailingslashit($settings['root_folder_url']) : trailingslashit(FM_UPLOAD_BASE_URL);
         if (!is_dir($settings['root_folder'])) mkdir($settings['root_folder'], 0755); // Creating root folder if it doesn't exists.
 
         // Public Folder
