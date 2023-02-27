@@ -1,18 +1,19 @@
 <?php
-
-// phpcs:disable Squiz.NamingConventions.ValidVariableName.NotCamelCaps
-
 namespace BitApps\FM\Views;
 
 use BitApps\FM\Config;
 use BitApps\FM\Core\Hooks\Hooks;
 use BitApps\FM\Core\Utils\Capabilities;
 
+use function BitApps\FM\Functions\view;
+
 /**
  * The admin Layout and page handler class.
  */
 class Admin
 {
+    private $_reviewBlock;
+
     public function __construct()
     {
         Hooks::addAction('in_admin_header', [$this, 'removeAdminNotices']);
@@ -125,26 +126,22 @@ class Admin
 
     public function homePage()
     {
-        include_once BFM_ROOT_DIR
-        . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'index.php';
+        return view('admin.index');
     }
 
     public function settingsPage()
     {
-        include_once BFM_ROOT_DIR
-        . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'settings.php';
+        return view('admin.settings');
     }
 
     public function systemInfoPage()
     {
-        include_once BFM_ROOT_DIR
-        . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'utility.php';
+        return view('admin.utility');
     }
 
     public function permissionsPage()
     {
-        include_once BFM_ROOT_DIR
-        . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'permission_system.php';
+        return view('admin.permission_system');
     }
 
     /**

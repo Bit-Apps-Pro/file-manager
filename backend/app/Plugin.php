@@ -4,13 +4,15 @@ namespace BitApps\FM;
 
 // Main class for the plugin.
 
+use BitApps\FM\Core\Database\Connection;
 use BitApps\FM\Core\Hooks\Hooks;
 use BitApps\FM\Core\Http\RequestType;
 use BitApps\FM\HTTP\Middleware\NonceCheckerMiddleware;
 use BitApps\FM\Providers\AccessControlProvider;
 use BitApps\FM\Providers\FileManager;
 use BitApps\FM\Providers\HookProvider;
-use BitApps\FM\Providers\InstallerProvider;
+use BitApps\FM\Providers\Logger;
+use BitApps\FM\Providers\ReviewProvider;
 use BitApps\FM\Providers\VersionMigrationProvider;
 use BitApps\FM\Views\Admin;
 use FileManagerPermission;
@@ -70,7 +72,9 @@ final class Plugin
      */
     public function registerProviders()
     {
+        Connection::setPluginDBPrefix(Config::DB_PREFIX);
         if (RequestType::is('admin')) {
+            $this->_container['review_notifier'] = new ReviewProvider();
             new Admin();
         }
 
@@ -81,6 +85,7 @@ final class Plugin
         new HookProvider();
 
         $this->_container['access_control'] = new AccessControlProvider();
+        $this->_container['logger'] = new Logger();
 
         $migrationProvider = new VersionMigrationProvider();
         $migrationProvider->migrate();
@@ -98,6 +103,34 @@ final class Plugin
         }
 
         return $this->_container['access_control'];
+    }
+
+    /**
+     * Provide review notifier
+     *
+     * @return ReviewProvider
+     */
+    public function reviewNotifier()
+    {
+        if (!isset($this->_container['review_notifier'])) {
+            $this->_container['review_notifier'] = new ReviewProvider();
+        }
+
+        return $this->_container['review_notifier'];
+    }
+
+    /**
+     * Provide Logger for finder
+     *
+     * @return Logger
+     */
+    public function logger()
+    {
+        if (!isset($this->_container['logger'])) {
+            $this->_container['logger'] = new Logger();
+        }
+
+        return $this->_container['logger'];
     }
 
     /**
@@ -166,7 +199,7 @@ final class Plugin
         wp_register_script(
             'bfm-elfinder-editor-script',
             BFM_FINDER_URL . 'js/extras/editors.default.min.js',
-            ['fmp-elfinder-script']
+            ['bfm-elfinder-script']
         );
 
         wp_localize_script(
@@ -239,7 +272,7 @@ final class Plugin
      * */
     protected function setPhpIniVars()
     {
-        if (\defined('WP_DEBUG') && isset($_REQUEST['action']) && $_REQUEST['action'] === 'file_manager_connector') {
+        if (\defined('WP_DEBUG') && isset($_REQUEST['action']) && $_REQUEST['action'] === 'bit_fm_connector') {
             ini_set('post_max_size', '128M');
             ini_set('upload_max_filesize', '128M');
         }

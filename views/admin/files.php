@@ -16,8 +16,8 @@ defined('ABSPATH') or die();
  */
 global $FileManager;
 //auto::  pr($FileManager->options);
-if (!is_array($FileManager->options['file_manager_settings']['language'])) $language_settings = unserialize(stripslashes($FileManager->options['file_manager_settings']['language']));
-else $language_settings = $FileManager->options['file_manager_settings']['language'];
+if (!is_array($FileManager->preferences['language'])) $language_settings = unserialize(stripslashes($FileManager->preferences['language']));
+else $language_settings = $FileManager->preferences['language'];
 //auto::  pr($language_settings);
 if ($language_settings['code'] != 'LANG') {
   $language_code = $language_settings['code'];
@@ -52,13 +52,13 @@ $commandOptions['download']['maxRequests'] = 10;
 $commandOptions['download']['minFilesZipdl'] = 2; //need to check
 $commandOptions['quicklook']['googleDocsMimes'] = ['application/pdf', 'image/tiff', 'application/vnd.ms-office', 'application/msword', 'application/vnd.ms-word', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
 
-if ($FileManager->options['file_manager_settings']['show_url_path'] && $FileManager->options['file_manager_settings']['show_url_path'] == 'hide') {
+if ($FileManager->preferences['show_url_path'] && $FileManager->preferences['show_url_path'] == 'hide') {
   $commandOptions['info']['hideItems'][] = 'link';
   $commandOptions['info']['hideItems'][] = 'path';
 }
 wp_enqueue_style('bfm-jquery-ui-css');
 // wp_enqueue_style($FileManager->is_minified_file_load('fmp-elfinder-css')['handle']);
-var_dump('$FileManager->selectedTheme()', $FileManager->selectedTheme());
+// var_dump('$FileManager->selectedTheme()', $FileManager->selectedTheme());
 if (in_array($FileManager->selectedTheme(), ['default', 'bootstrap'])) {
     wp_enqueue_style('bfm-elfinder-theme-css');
 }
@@ -71,7 +71,7 @@ wp_enqueue_script('bfm-elfinder-editor-script');
 $fm_php_syntax_checker = new FMPHPSyntaxChecker();
 
 // Loading lanugage file
-if (isset($lang_file_url)) wp_enqueue_script('bfm-elfinder-lang', $lang_file_url, array('fmp-elfinder-script'));
+if (isset($lang_file_url)) wp_enqueue_script('bfm-elfinder-lang', $lang_file_url, array('bfm-elfinder-script'));
 ?>
 
 <div id='file-manager'>
@@ -94,18 +94,18 @@ if (isset($lang_file_url)) wp_enqueue_script('bfm-elfinder-lang', $lang_file_url
         files: ['getfile', '|', 'emailto', 'open', 'opennew', 'download', 'opendir', 'quicklook', 'email', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', 'empty', 'hide', '|', 'rename', 'edit', 'resize', '|', 'archive', 'extract', '|', 'selectall', 'selectinvert', '|', 'places', 'info', 'chmod', 'netunmount']
       },
       customData: {
-        action: 'file_manager_connector',
+        action: 'bit_fm_connector',
         bfm_nonce: fm.nonce
       },
       lang: '<?php if (isset($language_code)) echo esc_js($language_code); ?>',
       requestType: 'post',
-      width: '<?php if (isset($FileManager->options['file_manager_settings']['size']['width'])) echo esc_js($FileManager->options['file_manager_settings']['size']['width']); ?>',
-      height: '<?php if (isset($FileManager->options['file_manager_settings']['size']['height'])) echo esc_js($FileManager->options['file_manager_settings']['size']['height']); ?>',
+      width: '<?php if (isset($FileManager->preferences['size']['width'])) echo esc_js($FileManager->preferences['size']['width']); ?>',
+      height: '<?php if (isset($FileManager->preferences['size']['height'])) echo esc_js($FileManager->preferences['size']['height']); ?>',
       commandsOptions: <?php echo json_encode($commandOptions); ?>,
-      rememberLastDir: '<?php if (isset($FileManager->options['file_manager_settings']['fm-remember-last-dir'])) echo esc_js($FileManager->options['file_manager_settings']['fm-remember-last-dir']); ?>',
-      reloadClearHistory: '<?php if (isset($FileManager->options['file_manager_settings']['fm-clear-history-on-reload'])) echo esc_js($FileManager->options['file_manager_settings']['fm-clear-history-on-reload']); ?>',
-      defaultView: '<?php if (isset($FileManager->options['file_manager_settings']['fm_default_view_type'])) echo esc_js($FileManager->options['file_manager_settings']['fm_default_view_type']); ?>', //  'list'  @ref:https://github.com/Studio-42/elFinder/wiki/Client-configuration-options-2.1#defaultView
-      ui: <?php if (isset($FileManager->options['file_manager_settings']['fm_display_ui_options'])) echo json_encode($FileManager->options['file_manager_settings']['fm_display_ui_options']);
+      rememberLastDir: '<?php if (isset($FileManager->preferences['fm-remember-last-dir'])) echo esc_js($FileManager->preferences['fm-remember-last-dir']); ?>',
+      reloadClearHistory: '<?php if (isset($FileManager->preferences['fm-clear-history-on-reload'])) echo esc_js($FileManager->preferences['fm-clear-history-on-reload']); ?>',
+      defaultView: '<?php if (isset($FileManager->preferences['fm_default_view_type'])) echo esc_js($FileManager->preferences['fm_default_view_type']); ?>', //  'list'  @ref:https://github.com/Studio-42/elFinder/wiki/Client-configuration-options-2.1#defaultView
+      ui: <?php if (isset($FileManager->preferences['fm_display_ui_options'])) echo json_encode($FileManager->preferences['fm_display_ui_options']);
           else echo json_encode(['toolbar', 'places', 'tree', 'path', 'stat']) ?>,
 
 
@@ -123,7 +123,7 @@ if (isset($lang_file_url)) wp_enqueue_script('bfm-elfinder-lang', $lang_file_url
 
 <?php
 
-if (isset($FileManager->options->options['file_manager_settings']['show_url_path']) && !empty($FileManager->options->options['file_manager_settings']['show_url_path']) && $FileManager->options->options['file_manager_settings']['show_url_path'] == 'hide') {
+if (isset($FileManager->options->preferences['show_url_path']) && !empty($FileManager->options->preferences['show_url_path']) && $FileManager->options->preferences['show_url_path'] == 'hide') {
 
 ?>
   <style>

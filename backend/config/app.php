@@ -18,6 +18,9 @@ if (!\defined('DS')) {
 // define('BFM_ROOT_URL', plugin_dir_url(BFM_BASEDIR));
 
 \define('BFM_ROOT_DIR', BFM_BASEDIR);
+\define('BFM_VIEW_DIR', BFM_BASEDIR . 'views');
+
+
 \define('BFM_ROOT_URL', BFM_BASEURL);
 \define('BFM_ASSET_URL', BFM_BASEURL . 'assets/');
 

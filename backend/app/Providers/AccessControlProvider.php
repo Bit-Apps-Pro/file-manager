@@ -11,7 +11,7 @@ class AccessControlProvider
     public function __construct()
     {
         global $FileManager;
-        $this->settings = $FileManager->options['file_manager_settings'];
+        $this->settings = $FileManager->preferences;
     }
 
     public function control($attr, $path, $data, $volume)

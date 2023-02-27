@@ -1,15 +1,13 @@
 <?php
 
+namespace BitApps\FM\Providers;
+
 use BitApps\FM\Config;
-use BitApps\FM\Providers\FileManager;
+use WP_User;
 
-defined('ABSPATH') or die();
-
-
-
-class BFMFileManagerPermissionSettings
+\defined('ABSPATH') or exit();
+class PermissionsProvider
 {
-
     public $settings;
 
     public $users;
@@ -35,7 +33,7 @@ class BFMFileManagerPermissionSettings
         global $wp_roles, $FileManager;
 
         $this->fileManager = $FileManager;
-        $this->settings = Config::getOption(
+        $this->settings    = Config::getOption(
             'permissions',
             $this->defaultPermissions()
         );
@@ -45,10 +43,10 @@ class BFMFileManagerPermissionSettings
 
     public static function defaultPermissions()
     {
-        $permissions['do_not_use_for_admin'] = 'do_not_use_for_admin';
-        $permissions['file_type'] = ['text', 'image', 'application', 'video', 'audio'];
-        $permissions['file_size'] = 2;
-        $permissions['folder_options'] = 'common'; // common | role | user
+        $permissions['do_not_use_for_admin']     = 'do_not_use_for_admin';
+        $permissions['file_type']                = ['text', 'image', 'application', 'video', 'audio'];
+        $permissions['file_size']                = 2;
+        $permissions['folder_options']           = 'common'; // common | role | user
         $permissions['by_role']['administrator'] = [
             'commands' => [
                 'download', 'upload', 'cut', 'copy', 'duplicate',
@@ -71,7 +69,6 @@ class BFMFileManagerPermissionSettings
         return FM_UPLOAD_BASE_URL;
     }
 
-
     public function getByRole($role)
     {
         return $this->getSettings('by_role', $role);
@@ -86,21 +83,22 @@ class BFMFileManagerPermissionSettings
     {
         $settings = [
             'commands' => [],
-            'path' => '',
+            'path'     => '',
         ];
 
         if (
             isset($this->settings[$type])
-            && is_array($this->settings[$type])
+            && \is_array($this->settings[$type])
             && isset($this->settings[$type][$name])
-            && is_array($this->settings[$type][$name])
+            && \is_array($this->settings[$type][$name])
         ) {
-            $settings['path'] = isset($this->settings[$type][$name]['path']) ?
-                $this->settings[$type][$name]['path'] : $settings['path'];
+            $settings['path'] = isset($this->settings[$type][$name]['path'])
+                ? $this->settings[$type][$name]['path'] : $settings['path'];
             $settings['commands'] = isset($this->settings[$type][$name]['commands'])
-                && is_array($this->settings[$type][$name]['commands']) ?
-                $this->settings[$type][$name]['commands'] : $settings['commands'];
+                && \is_array($this->settings[$type][$name]['commands'])
+                ? $this->settings[$type][$name]['commands'] : $settings['commands'];
         }
+
         return $settings;
     }
 
@@ -108,22 +106,22 @@ class BFMFileManagerPermissionSettings
     {
         $settings = [
             'commands' => [],
-            'path' => '',
+            'path'     => '',
         ];
 
         if (
             isset($this->settings['guest'])
-            && is_array($this->settings['guest'])
+            && \is_array($this->settings['guest'])
         ) {
-            $settings['path'] = isset($this->settings['guest']['path']) ?
-                $this->settings['guest']['path'] : $settings['path'];
+            $settings['path'] = isset($this->settings['guest']['path'])
+                ? $this->settings['guest']['path'] : $settings['path'];
             $settings['commands'] = isset($this->settings['guest']['commands'])
-                && is_array($this->settings['guest']['commands']) ?
-                $this->settings['guest']['commands'] : $settings['commands'];
+                && \is_array($this->settings['guest']['commands'])
+                ? $this->settings['guest']['commands'] : $settings['commands'];
         }
+
         return $settings;
     }
-
 
     public function getFolderOption()
     {
@@ -171,9 +169,10 @@ class BFMFileManagerPermissionSettings
 
     public function currentUser()
     {
-        if (!isset($this->currentUser) && function_exists('wp_get_current_user')) {
+        if (!isset($this->currentUser) && \function_exists('wp_get_current_user')) {
             $this->currentUser = wp_get_current_user();
         }
+
         return $this->currentUser;
     }
 
@@ -182,6 +181,7 @@ class BFMFileManagerPermissionSettings
         if (!$this->currentUser() instanceof WP_User) {
             return false;
         }
+
         return $this->currentUser()->roles[0];
     }
 
@@ -190,6 +190,7 @@ class BFMFileManagerPermissionSettings
         if (!$this->currentUser() instanceof WP_User) {
             return false;
         }
+
         return $this->currentUser()->ID;
     }
 
@@ -202,6 +203,7 @@ class BFMFileManagerPermissionSettings
         ) {
             $hasPermission = true;
         }
+
         return $hasPermission;
     }
 }

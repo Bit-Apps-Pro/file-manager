@@ -455,6 +455,7 @@ input[type=radio] {
 .review-block {
   padding-top: 24px;
   padding-bottom: 24px;
+  margin-bottom: 24px;
   text-align: center;
   font-size: 1.2em;
   border: 1px dashed #0d5ed9;
@@ -466,10 +467,6 @@ input[type=radio] {
   margin-top: 8px;
 }
 
-.review-block .actions {
-  margin-top: 24px;
-}
-
 .review-block .actions a {
   padding: 5px 10px 5px 10px;
   text-decoration: none;
@@ -477,14 +474,15 @@ input[type=radio] {
 }
 
 .review-block .actions .btn {
-  border-radius: 5px;
+  border-radius: 25px;
+  margin-left: 10px;
 }
 
 .review-block .actions .btn-review {
   background-color: #0d5ed9;
   color: white;
   font-weight: 700;
-  border-radius: 5px;
+  border-radius: 25px;
   transition-duration: 0.6s;
 }
 

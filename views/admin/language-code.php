@@ -64,7 +64,7 @@ class FMLanguage
             $lang[] = array(
                 'code' => $code,
                 'name' => $name,
-                'file-url' => $FileManager->url('libs/elFinder/js/i18n/') . $file_name
+                'file-url' => BFM_FINDER_URL . '/js/i18n/' . $file_name
             );
         }
 

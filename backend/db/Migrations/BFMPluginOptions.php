@@ -12,9 +12,9 @@ final class BFMPluginOptions extends Migration
 {
     public function up()
     {
-        Config::addOption('db_version', Config::DB_VERSION, true);
         Config::addOption('installed', time(), true);
-        Config::addOption('version', Config::VERSION_ID, true);
+        Config::updateOption('version', Config::VERSION_ID, true);
+        Config::updateOption('db_version', Config::DB_VERSION, true);
     }
 
     public function down()
@@ -23,6 +23,8 @@ final class BFMPluginOptions extends Migration
             Config::withPrefix('db_version'),
             Config::withPrefix('installed'),
             Config::withPrefix('version'),
+            Config::withPrefix('preferences'),
+            Config::withPrefix('permissions'),
         ];
 
         DB::query(

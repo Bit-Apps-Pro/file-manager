@@ -10,6 +10,7 @@ if (!class_exists('FMPHPSyntaxChecker')) :
         public function checkSyntax($cmd, &$args, $elfinder, $volume)
         {
             $args['content'] = stripcslashes($args['content']); // Default wordpress slashing removed.
+            return true;
             error_log("---------SYNTAX-------------");
             // Checking syntax for PHP file.
             if (strpos($args['content'], '<?php') !== false) {

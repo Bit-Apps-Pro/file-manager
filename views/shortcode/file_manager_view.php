@@ -34,11 +34,10 @@ wp_enqueue_style('bfm-jquery-ui-css');
 wp_enqueue_style('bfm-elfinder-css');
 wp_enqueue_style('bfm-elfinder-theme-css');
 wp_enqueue_style('fm-front-style');
-$editorScriptHandle = $FileManager->is_minified_file_load('fmp-elfinder-editor-script')['handle'];
-wp_enqueue_script($FileManager->is_minified_file_load('fmp-elfinder-script')['handle']);
-wp_enqueue_script($editorScriptHandle);
+wp_enqueue_script('bfm-elfinder-script');
+wp_enqueue_script('bfm-elfinder-editor-script');
 wp_enqueue_script('fm-front-script');
-if (isset($lang_file_url)) wp_enqueue_script('bfm-elfinder-lang', $lang_file_url, array('fmp-elfinder-script'));
+if (isset($lang_file_url)) wp_enqueue_script('bfm-elfinder-lang', $lang_file_url, array('bfm-elfinder-script'));
 ob_start();
 ?>
 

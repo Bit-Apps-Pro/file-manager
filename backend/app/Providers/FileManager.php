@@ -10,7 +10,6 @@ use elFinderConnector;
 use FM_BootStart;
 use FMAccessControl;
 use FMMediaSync;
-use FMMigrate;
 use FMMIME;
 use FMPHPSyntaxChecker;
 
@@ -56,15 +55,15 @@ class FileManager extends FM_BootStart
 
     public function __construct($name)
     {
-        $this->version                = '6.0';
-        $this->version_no             = 528;
-        $this->site                   = 'https://bitapps.pro';
-        $this->support_page           = 'https://www.bitapps.pro/contact';
-        $this->feedback_page          = 'https://wordpress.org/support/plugin/file-manager/reviews/';
+        // $this->version                = '6.0';
+        // $this->version_no             = 528;
+        // $this->site                   = 'https://bitapps.pro';
+        // $this->support_page           = 'https://www.bitapps.pro/contact';
+        // $this->feedback_page          = 'https://wordpress.org/support/plugin/file-manager/reviews/';
         // $this->file_manager_view_path = plugin_dir_path(__FILE__);
 
         // Checking for migration
-        new FMMigrate($this->version_no);
+        // new FMMigrate($this->version_no);
 
         // // Adding Menu
         // $this->menu_data = [
@@ -100,15 +99,15 @@ class FileManager extends FM_BootStart
                 'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre' => [&$this, 'security_check'],
                 //				 'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre file.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre get.pre' => array(&$this, 'security_check'),
                 'upload' => [new FMMediaSync(), 'onFileUpload'],
-                '*'      => 'fm_logger',
+                '*'      => [Plugin::instance()->logger(), 'save'],
             ],
             'debug' => WP_DEBUG,
             'roots' => [
                 [
-                    'alias'           => isset($this->options['file_manager_settings']['fm_root_folder_name']) && !empty($this->options['file_manager_settings']['fm_root_folder_name']) ? $this->options['file_manager_settings']['fm_root_folder_name'] : 'WP Root',
+                    'alias'           => isset($this->preferences['fm_root_folder_name']) && !empty($this->preferences['fm_root_folder_name']) ? $this->preferences['fm_root_folder_name'] : 'WP Root',
                     'driver'          => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
-                    'path'            => isset($this->options['file_manager_settings']['root_folder_path']) && !empty($this->options['file_manager_settings']['root_folder_path']) ? $this->options['file_manager_settings']['root_folder_path'] : ABSPATH,                     // path to files (REQUIRED)
-                    'URL'             => isset($this->options['file_manager_settings']['root_folder_url'])  && !empty($this->options['file_manager_settings']['root_folder_url']) ? $this->options['file_manager_settings']['root_folder_url'] : site_url(),                  // URL to files (REQUIRED)
+                    'path'            => isset($this->preferences['root_folder_path']) && !empty($this->preferences['root_folder_path']) ? $this->preferences['root_folder_path'] : ABSPATH,                     // path to files (REQUIRED)
+                    'URL'             => isset($this->preferences['root_folder_url'])  && !empty($this->preferences['root_folder_url']) ? $this->preferences['root_folder_url'] : site_url(),                  // URL to files (REQUIRED)
                     'uploadDeny'      => [],                // All Mimetypes not allowed to upload
                     'uploadAllow'     => $mime->get_types(), // All MIME types is allowed
                     'uploadOrder'     => ['order', 'allow', 'deny'],      // allowed Mimetype `image` and `text/plain` only
@@ -116,7 +115,7 @@ class FileManager extends FM_BootStart
                     'acceptedName'    => [Plugin::instance()->accessControl(), 'validateName'], // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#acceptedName
                     'disabled'        => [],    // List of disabled operations
                     'dispInlineRegex' => '^(?:image|application/(?:vnd\.)?(?:ms(?:-office|word|-excel|-powerpoint)|openxmlformats-officedocument)|text/plain$)', // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#dispInlineRegex
-                    'trashHash'       => isset($this->options['file_manager_settings']['fm-create-trash-files-folders']) && !empty($this->options['file_manager_settings']['fm-create-trash-files-folders']) ? 't1_Lw' : '',                     // elFinder's hash of trash folder
+                    'trashHash'       => isset($this->preferences['fm-create-trash-files-folders']) && !empty($this->preferences['fm-create-trash-files-folders']) ? 't1_Lw' : '',                     // elFinder's hash of trash folder
                     'winHashFix'      => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
                     // 'defaults'   => array('read' => true, 'write' => true,'locked'=>true),
                     'allowChmodReadOnly' => true, // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#allowChmodReadOnly
@@ -176,7 +175,7 @@ class FileManager extends FM_BootStart
         /**
          * Enable/Disable trash directory.
          */
-        if (isset($this->options['file_manager_settings']['fm-create-trash-files-folders']) && $this->options['file_manager_settings']['fm-create-trash-files-folders']  && is_writable(FM_WP_UPLOAD_DIR['basedir'])) {
+        if (isset($this->preferences['fm-create-trash-files-folders']) && $this->preferences['fm-create-trash-files-folders']  && is_writable(FM_WP_UPLOAD_DIR['basedir'])) {
             $opts['roots'][] = [
                 'id'            => '1',
                 'driver'        => 'Trash',

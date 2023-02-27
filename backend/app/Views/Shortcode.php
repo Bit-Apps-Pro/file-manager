@@ -16,7 +16,7 @@ class Shortcode
 {
     public function __construct()
     {
-        SWrapper::addShortcode('file-manager', [$this, 'shortCodeView'])
+        SWrapper::addShortcode('file-manager', [$this, 'shortCodeView']);
     }
 
     public function shortCodeView()

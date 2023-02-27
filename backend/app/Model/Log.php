@@ -7,12 +7,14 @@ use BitApps\FM\Core\Database\Model;
 /**
  * Undocumented class
  */
-class Tag extends Model
+class Log extends Model
 {
+    public $timestamps = false;
+
     protected $fillable = [
-        'title',
-        'slug',
-        'filter',
-        'status',
+        'user_id',
+        'operation_id',
+        'file_path',
+        'time',
     ];
 }

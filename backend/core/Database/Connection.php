@@ -7,8 +7,6 @@
 
 namespace BitApps\FM\Core\Database;
 
-use BitApps\FM\Config;
-
 use Exception;
 
 /**
@@ -97,7 +95,7 @@ final class Connection
 
     public static function pluginDBPrefix()
     {
-        return isset(self::$_dbPrefix) ? self::$_dbPrefix : Config::DB_PREFIX;
+        return  self::$_dbPrefix;
     }
 
     public static function setPluginDBPrefix($prefix)

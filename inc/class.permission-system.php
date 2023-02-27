@@ -1,5 +1,7 @@
 <?php
 
+use BitApps\FM\Providers\AccessControlProvider;
+
 defined('ABSPATH') or die();
 
 
@@ -300,7 +302,7 @@ class FileManagerPermission
             }
         }
 
-        $fm_access_control = new FMAccessControl();
+        $fm_access_control = new AccessControlProvider();
         foreach ($folder_list as $folder) {
             if (!is_array($folder)) {
                 continue;
@@ -313,7 +315,7 @@ class FileManagerPermission
                 'uploadAllow'   => $settings['file_type'], // Mimetype `image` and `text/plain` allowed to upload
                 'uploadOrder'   => array('allow', 'deny'), // allowed Mimetype `image` and `text/plain` only
                 'disabled' => $disabled_permissions,
-                'acceptedName' => 'bfm_file_name_validator',
+                'acceptedName' => ['bfm_file_name_validator', 'validateName'],
                 'defaults'   => array('read' => true, 'write' => true, 'hidden' => false, 'locked' => false),
                 'uploadMaxSize' => $settings['file_size'] . "M", // Maximum file upload size
                 'accessControl' => array(&$fm_access_control, 'control'),

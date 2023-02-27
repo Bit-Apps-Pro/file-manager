@@ -17,7 +17,7 @@ class Config
 
     const TITLE = 'Bit File Manager';
 
-    const VAR_PREFIX = 'file_manager_';
+    const VAR_PREFIX = 'bit_fm_';
 
     const DB_PREFIX = 'fm_';
 

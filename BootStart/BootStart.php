@@ -1,6 +1,9 @@
 <?php
 
 // Security Check
+
+use BitApps\FM\Config;
+
 \defined('ABSPATH') or exit();
 
 /**
@@ -33,6 +36,8 @@ abstract class FM_BootStart
      *
      * */
     public $options;
+
+    public $preferences;
 
     /**
      * @var string $upload_path :: This variable holds the path of the default upload folder
@@ -96,30 +101,28 @@ abstract class FM_BootStart
 
         // Default options
         $default_options = [
-            'file_manager_settings' => [
-                'show_url_path' => 'show',
-                'language'      => [
-                    'code'     => 'en',
-                    'name'     => 'Default',
-                    'file-url' => plugins_url('libs/elFinder/js/i18n/elfinder.en.js', BFM_FINDER_DIR),
-                ],
-                'size' => [
-                    'width'  => 'auto',
-                    'height' => '500'
-                ],
-                'fm_default_view_type'  => 'icons',
-                'fm_display_ui_options' => ['toolbar', 'places', 'tree', 'path', 'stat']
+            'show_url_path' => 'show',
+            'language'      => [
+                'code'     => 'en',
+                'name'     => 'Default',
+                'file-url' => plugins_url('libs/elFinder/js/i18n/elfinder.en.js', BFM_FINDER_DIR),
             ],
+            'size' => [
+                'width'  => 'auto',
+                'height' => '500'
+            ],
+            'fm_default_view_type'  => 'icons',
+            'fm_display_ui_options' => ['toolbar', 'places', 'tree', 'path', 'stat']
         ];
 
-        $this->options = get_option($this->prefix);
-        if (empty($this->options)) {
-            $this->options = $default_options;
+        $this->preferences = Config::getOption('preferences');
+        if (empty($this->preferences)) {
+            $this->preferences = $default_options;
         } else {
-            $this->options = array_merge($default_options, $this->options);
+            $this->preferences = array_merge($default_options, $this->preferences);
         }
 
-        register_shutdown_function([&$this, 'save_options']);
+        // register_shutdown_function([&$this, 'save_options']);
 
         // Creating upload folder.
         // $this->upload_folder();
@@ -173,8 +176,8 @@ abstract class FM_BootStart
     public function selectedTheme()
     {
         $theme = 'default';
-        if (isset($this->options['file_manager_settings']['theme'])) {
-            // $theme = $this->options['file_manager_settings']['theme'];
+        if (isset($this->preferences['theme'])) {
+            // $theme = $this->preferences['theme'];
         }
 
         return $theme;
@@ -201,6 +204,6 @@ abstract class FM_BootStart
      * */
     public function save_options()
     {
-        update_option($this->prefix, $this->options);
+        Config::updateOption('preferences', $this->preferences);
     }
 }

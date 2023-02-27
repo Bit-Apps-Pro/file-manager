@@ -1,26 +1,25 @@
 <?php
 
 /**
- * @file index.php The manin admin view file that will show the actual library file manager
- *
+ * The main admin view file that will show the actual library file manager
  * */
+
+use BitApps\FM\Views\Review;
 
 // Security check
 if (!\defined('ABSPATH')) {
     exit();
 }
-
-global $FileManager;
 ?>
-<?php require_once 'header.php'; ?>
+<?php
 
+require_once 'header.php';
+$review = new Review();
+$review->render();
+?>
 <div class='fm-container'>
 
     <div class='col-main'>
-        <?php
-        $review = new FMReviewClass();
-$review->render();
-?>
         <div class='gb-fm-row'>
 
             <?php require 'files.php'; ?>

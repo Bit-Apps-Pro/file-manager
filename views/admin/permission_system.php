@@ -1,6 +1,9 @@
 <?php
 
 // Security Check
+
+use BitApps\FM\Config;
+
 defined('ABSPATH') or die();
 
 global $wp_roles, $wpdb, $FileManager, $FMP;
@@ -14,9 +17,9 @@ if (!empty($_POST)) {
     ) wp_die();
     // var_dump($_POST); die;
     check_ajax_referer('bfm_permissions_nonce', 'bfm_permissions_nonce');
-    update_option('file_manager_permissions', $_POST, 'yes');
+    Config::updateOption('permissions', $_POST, 'yes');
 }
-$previous_settings = get_option('file_manager_permissions', []);
+$previous_settings = Config::getOption('permissions', []);
 
 $permissionSettings = new BFMFileManagerPermissionSettings();
 
