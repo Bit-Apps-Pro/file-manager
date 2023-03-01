@@ -1,6 +1,7 @@
 <?php
 
 use BitApps\FM\Providers\AccessControlProvider;
+use BitApps\FM\Providers\PermissionsProvider;
 
 defined('ABSPATH') or die();
 
@@ -55,7 +56,7 @@ class FileManagerPermission
     /**
      * Permissions settings helper
      *
-     * @var BFMFileManagerPermissionSettings $permissionSettings
+     * @var PermissionsProvider $permissionSettings
      * */
     public $permissionSettings;
 
@@ -71,7 +72,7 @@ class FileManagerPermission
 
         $this->current_user_banned = 'not-banned';
 
-        $this->permissionSettings = new BFMFileManagerPermissionSettings();
+        $this->permissionSettings = new PermissionsProvider();
 
         // Changing footer
         add_filter('fm_footer', [$this, 'footer']);

@@ -8,10 +8,6 @@ use BitApps\FM\Plugin;
 use elFinder;
 use elFinderConnector;
 use FM_BootStart;
-use FMAccessControl;
-use FMMediaSync;
-use FMMIME;
-use FMPHPSyntaxChecker;
 
 class FileManager extends FM_BootStart
 {
@@ -90,16 +86,15 @@ class FileManager extends FM_BootStart
     public function connector()
     {
         // Allowed mime types
-        $mime             = new FMMIME(BFM_FINDER_DIR . 'php/mime.types');
-        // $fmAccessControll = new FMAccessControl();
+        $mime             = Plugin::instance()->mimes();
 
         $opts = [
             'bind' => [
-                'put.pre'                                                                                                                                                                                                                                                                                                                                                                                                                                                => [new FMPHPSyntaxChecker(), 'checkSyntax'], // Syntax Checking.
+                'put.pre'                                                                                                                                                                                                                                                                                                                                                                                                                                                => [Plugin::instance()->syntaxChecker(), 'checkSyntax'], // Syntax Checking.
                 'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre' => [&$this, 'security_check'],
                 //				 'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre file.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre get.pre' => array(&$this, 'security_check'),
-                'upload' => [new FMMediaSync(), 'onFileUpload'],
-                '*'      => [Plugin::instance()->logger(), 'save'],
+                'upload'                                             => [Plugin::instance()->mediaSyncs(), 'onFileUpload'],
+                'zipdl.pre file.pre rename.pre get.pre put.pre'       => [Plugin::instance()->logger(), 'log'],
             ],
             'debug' => WP_DEBUG,
             'roots' => [
@@ -109,7 +104,7 @@ class FileManager extends FM_BootStart
                     'path'            => isset($this->preferences['root_folder_path']) && !empty($this->preferences['root_folder_path']) ? $this->preferences['root_folder_path'] : ABSPATH,                     // path to files (REQUIRED)
                     'URL'             => isset($this->preferences['root_folder_url'])  && !empty($this->preferences['root_folder_url']) ? $this->preferences['root_folder_url'] : site_url(),                  // URL to files (REQUIRED)
                     'uploadDeny'      => [],                // All Mimetypes not allowed to upload
-                    'uploadAllow'     => $mime->get_types(), // All MIME types is allowed
+                    'uploadAllow'     => $mime->getTypes(), // All MIME types is allowed
                     'uploadOrder'     => ['order', 'allow', 'deny'],      // allowed Mimetype `image` and `text/plain` only
                     'accessControl'   => [Plugin::instance()->accessControl(), 'control'],
                     'acceptedName'    => [Plugin::instance()->accessControl(), 'validateName'], // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#acceptedName
@@ -165,7 +160,7 @@ class FileManager extends FM_BootStart
                     'path'          => FM_MEDIA_BASE_DIR_PATH,                     // path to files (REQUIRED)
                     'URL'           => FM_MEDIA_BASE_DIR_URL,                  // URL to files (REQUIRED)
                     'uploadDeny'    => [],                // All Mimetypes not allowed to upload
-                    'uploadAllow'   => $mime->get_types(), // All MIME types is allowed
+                    'uploadAllow'   => $mime->getTypes(), // All MIME types is allowed
                     'uploadOrder'   => ['allow', 'deny'],      // allowed Mimetype `image` and `text/plain` only
                     'accessControl' => [Plugin::instance()->accessControl(), 'control'],
                     'disabled'      => [],    // List of disabled operations
@@ -183,10 +178,10 @@ class FileManager extends FM_BootStart
                 'tmbURL'        => FM_TRASH_TMB_DIR_URL, // path to files (REQUIRED),
                 'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
                 'uploadDeny'    => [],                // Recomend the same settings as the original volume that uses the trash
-                'uploadAllow'   => $mime->get_types(), // Same as above
+                'uploadAllow'   => $mime->getTypes(), // Same as above
                 'uploadOrder'   => ['deny', 'allow'],      // Same as above
-                'accessControl' => [new FMAccessControl(), 'control'],
-                'acceptedName'  => [$fmAccessControll, 'validateName'],              // Same as above
+                'accessControl' => [Plugin::instance()->accessControl(), 'control'],
+                'acceptedName'  => [Plugin::instance()->accessControl(), 'validateName'],              // Same as above
 
             ];
         }

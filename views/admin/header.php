@@ -10,7 +10,6 @@ use BitApps\FM\Config;
 if (!\defined('ABSPATH')) {
     exit();
 }
-
 // wp_enqueue_style('bfm-font-awsome-css');
 wp_enqueue_style('bfm-tippy-css');
 // wp_enqueue_style('bfm-admin-style');

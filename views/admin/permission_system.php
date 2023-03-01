@@ -3,6 +3,7 @@
 // Security Check
 
 use BitApps\FM\Config;
+use BitApps\FM\Providers\PermissionsProvider;
 
 defined('ABSPATH') or die();
 
@@ -21,7 +22,7 @@ if (!empty($_POST)) {
 }
 $previous_settings = Config::getOption('permissions', []);
 
-$permissionSettings = new BFMFileManagerPermissionSettings();
+$permissionSettings = new PermissionsProvider();
 
 // pr($previous_settings);
 

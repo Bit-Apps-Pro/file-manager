@@ -68,7 +68,7 @@ wp_enqueue_script('bfm-elfinder-script');
 wp_enqueue_script('bfm-elfinder-editor-script');
 
 // Testing
-$fm_php_syntax_checker = new FMPHPSyntaxChecker();
+// $fm_php_syntax_checker = new FMPHPSyntaxChecker();
 
 // Loading lanugage file
 if (isset($lang_file_url)) wp_enqueue_script('bfm-elfinder-lang', $lang_file_url, array('bfm-elfinder-script'));

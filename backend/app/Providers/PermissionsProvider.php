@@ -8,7 +8,7 @@ use WP_User;
 \defined('ABSPATH') or exit();
 class PermissionsProvider
 {
-    public $settings;
+    public $permissions;
 
     public $users;
 
@@ -32,8 +32,8 @@ class PermissionsProvider
     {
         global $wp_roles, $FileManager;
 
-        $this->fileManager = $FileManager;
-        $this->settings    = Config::getOption(
+        $this->fileManager    = $FileManager;
+        $this->permissions    = Config::getOption(
             'permissions',
             $this->defaultPermissions()
         );
@@ -87,16 +87,16 @@ class PermissionsProvider
         ];
 
         if (
-            isset($this->settings[$type])
-            && \is_array($this->settings[$type])
-            && isset($this->settings[$type][$name])
-            && \is_array($this->settings[$type][$name])
+            isset($this->permissions[$type])
+            && \is_array($this->permissions[$type])
+            && isset($this->permissions[$type][$name])
+            && \is_array($this->permissions[$type][$name])
         ) {
-            $settings['path'] = isset($this->settings[$type][$name]['path'])
-                ? $this->settings[$type][$name]['path'] : $settings['path'];
-            $settings['commands'] = isset($this->settings[$type][$name]['commands'])
-                && \is_array($this->settings[$type][$name]['commands'])
-                ? $this->settings[$type][$name]['commands'] : $settings['commands'];
+            $settings['path'] = isset($this->permissions[$type][$name]['path'])
+                ? $this->permissions[$type][$name]['path'] : $settings['path'];
+            $settings['commands'] = isset($this->permissions[$type][$name]['commands'])
+                && \is_array($this->permissions[$type][$name]['commands'])
+                ? $this->permissions[$type][$name]['commands'] : $settings['commands'];
         }
 
         return $settings;
@@ -110,14 +110,14 @@ class PermissionsProvider
         ];
 
         if (
-            isset($this->settings['guest'])
-            && \is_array($this->settings['guest'])
+            isset($this->permissions['guest'])
+            && \is_array($this->permissions['guest'])
         ) {
-            $settings['path'] = isset($this->settings['guest']['path'])
-                ? $this->settings['guest']['path'] : $settings['path'];
-            $settings['commands'] = isset($this->settings['guest']['commands'])
-                && \is_array($this->settings['guest']['commands'])
-                ? $this->settings['guest']['commands'] : $settings['commands'];
+            $settings['path'] = isset($this->permissions['guest']['path'])
+                ? $this->permissions['guest']['path'] : $settings['path'];
+            $settings['commands'] = isset($this->permissions['guest']['commands'])
+                && \is_array($this->permissions['guest']['commands'])
+                ? $this->permissions['guest']['commands'] : $settings['commands'];
         }
 
         return $settings;
@@ -125,46 +125,46 @@ class PermissionsProvider
 
     public function getFolderOption()
     {
-        return isset($this->settings['folder_options'])
-            ? $this->settings['folder_options'] : 'common';
+        return isset($this->permissions['folder_options'])
+            ? $this->permissions['folder_options'] : 'common';
     }
 
     public function getEnabledFileType()
     {
-        return isset($this->settings['file_type'])
-            ? $this->settings['file_type'] : [];
+        return isset($this->permissions['file_type'])
+            ? $this->permissions['file_type'] : [];
     }
 
     public function getMaximumUploadSize()
     {
-        return isset($this->settings['file_size'])
-            ? $this->settings['file_size'] : 2;
+        return isset($this->permissions['file_size'])
+            ? $this->permissions['file_size'] : 2;
     }
 
     public function getPublicRootPath()
     {
-        return isset($this->settings['root_folder'])
-            ? stripslashes($this->settings['root_folder'])
+        return isset($this->permissions['root_folder'])
+            ? stripslashes($this->permissions['root_folder'])
             : $this->getDefaultPublicRootPath() . DIRECTORY_SEPARATOR;
     }
 
     public function getPublicRootURL()
     {
-        return isset($this->settings['root_folder_url'])
-            ? stripslashes($this->settings['root_folder_url'])
+        return isset($this->permissions['root_folder_url'])
+            ? stripslashes($this->permissions['root_folder_url'])
             : $this->getDefaultPublicRootURL();
     }
 
     public function isEnabledForAdmin()
     {
-        return isset($this->settings['do_not_use_for_admin'])
-            && $this->settings['do_not_use_for_admin'] === 'do_not_use_for_admin';
+        return isset($this->permissions['do_not_use_for_admin'])
+            && $this->permissions['do_not_use_for_admin'] === 'do_not_use_for_admin';
     }
 
     public function isCommonFolderEnabled()
     {
-        return isset($this->settings['do_not_use_for_admin'])
-            && $this->settings['do_not_use_for_admin'] === 'do_not_use_for_admin';
+        return isset($this->permissions['do_not_use_for_admin'])
+            && $this->permissions['do_not_use_for_admin'] === 'do_not_use_for_admin';
     }
 
     public function currentUser()

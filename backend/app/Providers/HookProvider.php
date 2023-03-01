@@ -7,7 +7,6 @@ use BitApps\FM\Core\Hooks\Hooks;
 use BitApps\FM\Core\Http\RequestType;
 use BitApps\FM\Core\Http\Router\Router;
 use BitApps\FM\Plugin;
-use FilesystemIterator;
 
 class HookProvider
 {
@@ -19,6 +18,7 @@ class HookProvider
         $this->loadAppHooks();
         Hooks::addAction('rest_api_init', [$this, 'loadApi']);
     }
+
     /**
      * Loads API routes.
      */
@@ -30,7 +30,8 @@ class HookProvider
         ) {
             $router = new Router(RequestType::API, Config::SLUG, 'v1');
 
-            include $this->_pluginBackend . 'hooks' . DIRECTORY_SEPARATOR . 'api.php';
+            include_once $this->_pluginBackend . 'hooks' . DIRECTORY_SEPARATOR . 'api.php';
+
             $router->register();
         }
     }
@@ -46,12 +47,12 @@ class HookProvider
         ) {
             $router = new Router(RequestType::AJAX, Config::VAR_PREFIX, '');
             $router->setMiddlewares(Plugin::instance()->middlewares());
-            include $this->_pluginBackend . 'hooks' . DIRECTORY_SEPARATOR . 'ajax.php';
+            include_once $this->_pluginBackend . 'hooks' . DIRECTORY_SEPARATOR . 'ajax.php';
             $router->register();
         }
 
         if (is_readable($this->_pluginBackend . 'hooks.php')) {
-            include $this->_pluginBackend . 'hooks.php';
+            include_once $this->_pluginBackend . 'hooks.php';
         }
     }
 }

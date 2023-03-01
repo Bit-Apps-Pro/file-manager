@@ -12,7 +12,11 @@ use BitApps\FM\Providers\AccessControlProvider;
 use BitApps\FM\Providers\FileManager;
 use BitApps\FM\Providers\HookProvider;
 use BitApps\FM\Providers\Logger;
+use BitApps\FM\Providers\MediaSynchronizer;
+use BitApps\FM\Providers\MimeProvider;
+use BitApps\FM\Providers\PermissionsProvider;
 use BitApps\FM\Providers\ReviewProvider;
+use BitApps\FM\Providers\SyntaxChecker;
 use BitApps\FM\Providers\VersionMigrationProvider;
 use BitApps\FM\Views\Admin;
 use FileManagerPermission;
@@ -85,10 +89,70 @@ final class Plugin
         new HookProvider();
 
         $this->_container['access_control'] = new AccessControlProvider();
-        $this->_container['logger'] = new Logger();
+        $this->_container['logger']         = new Logger();
+        $this->_container['permissions']    = new PermissionsProvider();
+        $this->_container['mimes']          = new MimeProvider(BFM_FINDER_DIR . 'php/mime.types');
+        $this->_container['media_sync']     = new MediaSynchronizer();
+        $this->_container['syntax_checker'] = new SyntaxChecker();
 
         $migrationProvider = new VersionMigrationProvider();
         $migrationProvider->migrate();
+    }
+
+    /**
+     * Provide php syntax checker
+     *
+     * @return SyntaxChecker
+     */
+    public function syntaxChecker()
+    {
+        if (!isset($this->_container['syntax_checker'])) {
+            $this->_container['syntax_checker'] = new SyntaxChecker();
+        }
+
+        return $this->_container['syntax_checker'];
+    }
+
+    /**
+     * Provide media synchronizer
+     *
+     * @return MediaSynchronizer
+     */
+    public function mediaSyncs()
+    {
+        if (!isset($this->_container['media_sync'])) {
+            $this->_container['media_sync'] = new MediaSynchronizer();
+        }
+
+        return $this->_container['media_sync'];
+    }
+
+    /**
+     * Provide finder mime types
+     *
+     * @return MimeProvider
+     */
+    public function mimes()
+    {
+        if (!isset($this->_container['mimes'])) {
+            $this->_container['mimes'] = new MimeProvider(BFM_FINDER_DIR . 'php/mime.types');
+        }
+
+        return $this->_container['mimes'];
+    }
+
+    /**
+     * Provide stored permissions settings
+     *
+     * @return PermissionsProvider
+     */
+    public function permissions()
+    {
+        if (!isset($this->_container['permissions'])) {
+            $this->_container['permissions'] = new PermissionsProvider();
+        }
+
+        return $this->_container['permissions'];
     }
 
     /**
@@ -131,6 +195,15 @@ final class Plugin
         }
 
         return $this->_container['logger'];
+    }
+
+    public function get($name)
+    {
+        if (isset($this->_container[$name])) {
+            return $this->_container[$name];
+        }
+
+        return false;
     }
 
     /**
