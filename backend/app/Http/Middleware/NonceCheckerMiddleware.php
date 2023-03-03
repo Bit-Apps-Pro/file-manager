@@ -1,6 +1,6 @@
 <?php
 
-namespace BitApps\FM\HTTP\Middleware;
+namespace BitApps\FM\Http\Middleware;
 
 use BitApps\FM\Core\Http\Request\Request;
 use BitApps\FM\Core\Http\Response;

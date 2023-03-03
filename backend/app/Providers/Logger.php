@@ -2,36 +2,118 @@
 
 namespace BitApps\FM\Providers;
 
+use BitApps\FM\Config;
+use BitApps\FM\Http\Services\LogService;
 use BitApps\FM\Model\Log;
+use elFinder;
 use elFinderVolumeDriver;
+use elFinderVolumeLocalFileSystem;
 
 \defined('ABSPATH') or exit();
 
 class Logger
 {
-    public function log(...$args)
+    private $logger;
+
+    public function __construct()
     {
+        $this->logger = new LogService();        
+    }
+    /**
+     * Process data for [zipdl file rename get put upload]
+     * commands in order to get formatted data for log service.
+     *
+     * @param string                                               $command
+     * @param array                                                $target
+     * @param elFinder                                             $finder
+     * @param elFinderVolumeDriver | elFinderVolumeLocalFileSystem $volume
+     *
+     * @return void
+     */
+    public function log($command, $target, $finder, $volume)
+    {
+        if (
+            isset($target['targets'], $target['targets'][3])
+            && $target['targets'][3] === 'application/zip'
+        ) {
+            return;
+        }
         /**
          * download: zipdl,file
          * rename: rename
          * view: get
          * update: put
          */
-        error_log(
-            'bind: ' . $args[0] . ' >> count: ' . \func_num_args() . " ] \n"
-            . print_r($args, true) . "\n"
-            // . print_r($args, true) . "\n"
-            // . print_r($finder, true) . "\n"
-            // . print_r($volume, true) . "\n"
-        );
-        if ($volume instanceof elFinderVolumeDriver && !empty($args['target'])) {
-            error_log("command: {$command} " . $volume->getPath($args['target']));
+        $commandDetails = [];
+        if ($command === 'zipdl') {
+            $commandDetails = $this->processFileHashForZipDL($target, $volume);
+        } elseif ($command === 'upload') {
+            $commandDetails = $this->processFileHashForUpload($target, $volume);
         } else {
-            error_log("command: {$command} |");
+            $commandDetails = $this->processFileHash($command, $target, $volume);
         }
-        error_log('command:result: ' . print_r($commandResult, true));
-        // echo json_encode([$command, $b, $c, $d, $e]);exit;
-        // var_dump($command, \array_keys($b['changed']),$c['target'],\get_class($d),\get_class($e));
-        $log = new Log();
+        $this->logger->save($command, $commandDetails);
+    }
+
+    /**
+     * Process targeted file hash to path
+     *
+     * @param string                                               $command
+     * @param array                                                $target
+     * @param elFinderVolumeDriver | elFinderVolumeLocalFileSystem $volume
+     *
+     * @return void
+     */
+    private function processFileHash($command, $target, $volume)
+    {
+        $details = [];
+        if (!empty($target['target'])) {
+            $details['driver']  = \get_class($volume);
+            $details['files'][] = [
+                'path' => str_replace(ABSPATH, '', $volume->getPath($target['target'])),
+                'hash' => $target['target']
+            ];
+        }
+
+        return $details;
+    }
+
+    private function processFileHashForUpload($target, $volume)
+    {
+        $details = [];
+        if (!empty($target['upload_path'])) {
+            $details['driver']  = \get_class($volume);
+            $details['folder']  = [
+                'path' => str_replace(ABSPATH, '', $volume->getPath($target['target'])),
+                'hash' => $target['target']
+            ];
+            foreach ($target['upload_path'] as $index => $file) {
+                $details['files'][] = [
+                    'path' => str_replace(ABSPATH, '', $volume->getPath($file)),
+                    'hash' => $file
+                ];
+                if ($index > 300) {
+                    break;
+                }
+            }
+        }
+
+        return $details;
+    }
+
+    private function processFileHashForZipDL($target, $volume)
+    {
+        $details = [];
+        if (!empty($target['targets'])) {
+            $details['driver']  = \get_class($volume);
+            foreach ($target['targets'] as $file) {
+                $details['files'][] = [
+                    'path' => str_replace(ABSPATH, '', $volume->getPath($file)),
+                    'hash' => $file
+                ];
+            }
+        }
+
+        return $details;
     }
 }

@@ -29,6 +29,8 @@ function bfmActivate()
 
 function bfmUninstall()
 {
+    $installerProvider = new InstallerProvider();
+    $installerProvider->register();
     do_action(Config::withPrefix('uninstall'));
 }
 

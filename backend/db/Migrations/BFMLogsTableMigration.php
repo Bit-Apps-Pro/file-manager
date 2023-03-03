@@ -1,5 +1,6 @@
 <?php
 
+use BitApps\FM\Config;
 use BitApps\FM\Core\Database\Blueprint;
 use BitApps\FM\Core\Database\Migration;
 use BitApps\FM\Core\Database\Schema;
@@ -13,19 +14,19 @@ final class BFMLogsTableMigration extends Migration
     public function up()
     {
         Schema::create(
-            'log',
+            'logs',
             function (Blueprint $table) {
                 $table->id();
                 $table->int('user_id', 11);
-                $table->string('operation_id')->length(32);
-                $table->string('file_path')->length(1024);
-                $table->datetime('time');
+                $table->string('command')->length(32);
+                $table->longtext('details');
+                $table->datetime('created_at');
             }
         );
     }
 
     public function down()
     {
-        Schema::drop('log');
+        Schema::drop('logs');
     }
 }

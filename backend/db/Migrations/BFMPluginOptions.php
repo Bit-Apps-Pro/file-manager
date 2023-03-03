@@ -25,6 +25,7 @@ final class BFMPluginOptions extends Migration
             Config::withPrefix('version'),
             Config::withPrefix('preferences'),
             Config::withPrefix('permissions'),
+            Config::withPrefix('log_deleted_at'),
         ];
 
         DB::query(

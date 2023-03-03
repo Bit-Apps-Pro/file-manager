@@ -46,7 +46,7 @@ class InstallerProvider
     public static function migration()
     {
         $migrations = [
-            'BFMLogTableMigration',
+            'BFMLogsTableMigration',
             'BFMPluginOptions',
         ];
 

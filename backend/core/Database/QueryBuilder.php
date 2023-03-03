@@ -1442,7 +1442,7 @@ class QueryBuilder
      *
      * @param string $sql
      *
-     * @return array|object|string
+     * @return array|object|string|false
      */
     private function exec($sql = null)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BitApps\FM\HTTP\Controllers;
+namespace BitApps\FM\Http\Controllers;
 
 final class FileManagerController
 {

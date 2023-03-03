@@ -4,6 +4,7 @@ namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
 use BitApps\FM\Core\Database\Operator as DBOperator;
+use BitApps\FM\Core\Database\Schema;
 use BitApps\FM\Core\Utils\Capabilities;
 
 \defined('ABSPATH') or exit();
@@ -16,7 +17,7 @@ class VersionMigrationProvider
 
     public function __construct()
     {
-        $this->_oldVersion     = Config::getOption('version', Config::VERSION_ID - 1);
+        $this->_oldVersion     = Config::getOption('version', '528');
         $this->_currentVersion = Config::VERSION_ID;
     }
 
@@ -26,13 +27,11 @@ class VersionMigrationProvider
             return;
         }
 
-        var_dump($this->_oldVersion, $this->_currentVersion);
-
         if ($this->_oldVersion < $this->_currentVersion) {
             $this->migrateToLatest();
         }
 
-        if (version_compare(Config::getOption('db_version'), Config::DB_VERSION, '<')) {
+        if (version_compare(Config::getOption('db_version', '0.0'), Config::DB_VERSION, '<')) {
             DBOperator::migrate(InstallerProvider::migration());
         }
     }
@@ -47,7 +46,7 @@ class VersionMigrationProvider
         if ($this->_oldVersion >= 600) {
             return;
         }
-
+        Schema::drop('log');
         delete_option('fm_current_version');
         delete_option('fm_log');
         $this->renameSettingsOptionV600();

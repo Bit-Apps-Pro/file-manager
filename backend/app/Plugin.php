@@ -7,7 +7,7 @@ namespace BitApps\FM;
 use BitApps\FM\Core\Database\Connection;
 use BitApps\FM\Core\Hooks\Hooks;
 use BitApps\FM\Core\Http\RequestType;
-use BitApps\FM\HTTP\Middleware\NonceCheckerMiddleware;
+use BitApps\FM\Http\Middleware\NonceCheckerMiddleware;
 use BitApps\FM\Providers\AccessControlProvider;
 use BitApps\FM\Providers\FileManager;
 use BitApps\FM\Providers\HookProvider;

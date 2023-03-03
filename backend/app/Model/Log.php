@@ -5,7 +5,12 @@ namespace BitApps\FM\Model;
 use BitApps\FM\Core\Database\Model;
 
 /**
- * Undocumented class
+ * Model for log
+ *
+ * @property string $created_at
+ * @property string $command
+ * @property string $details
+ * @property int    $user_id
  */
 class Log extends Model
 {
@@ -13,8 +18,8 @@ class Log extends Model
 
     protected $fillable = [
         'user_id',
-        'operation_id',
-        'file_path',
-        'time',
+        'command',
+        'details',
+        'created_at',
     ];
 }
