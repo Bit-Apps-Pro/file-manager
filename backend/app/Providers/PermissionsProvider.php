@@ -37,6 +37,7 @@ class PermissionsProvider
             'permissions',
             $this->defaultPermissions()
         );
+
         $this->roles = array_keys($wp_roles->roles);
         $this->users = get_users(['fields' => ['ID', 'user_login', 'display_name']]);
     }
@@ -53,7 +54,7 @@ class PermissionsProvider
                 'paste', 'rm', 'mkdir', 'mkfile', 'edit', 'rename',
                 'archive', 'extract'
             ],
-            'path' => ''
+            'path'     => FM_UPLOAD_BASE_DIR,
         ];
 
         return $permissions;
@@ -61,7 +62,7 @@ class PermissionsProvider
 
     public function getDefaultPublicRootPath()
     {
-        return FM_UPLOAD_BASE_DIR . DIRECTORY_SEPARATOR;
+        return FM_UPLOAD_BASE_DIR;
     }
 
     public function getDefaultPublicRootURL()
@@ -69,21 +70,68 @@ class PermissionsProvider
         return FM_UPLOAD_BASE_URL;
     }
 
+    public function getPublicRootPath()
+    {
+        return isset($this->permissions['root_folder'])
+            ? stripslashes($this->permissions['root_folder'])
+            : $this->getDefaultPublicRootPath();
+    }
+
+    public function getPublicRootURL()
+    {
+        return isset($this->permissions['root_folder_url'])
+            ? stripslashes($this->permissions['root_folder_url'])
+            : $this->getDefaultPublicRootURL();
+    }
+
+    public function getDefaultRootPathByCriteria($criteria, $type)
+    {
+        $defaultPath = $this->getDefaultPublicRootPath();
+        $rootPath    = wp_unslash($defaultPath) . DIRECTORY_SEPARATOR . "{$type}_{$criteria}";
+        if (!file_exists($rootPath) && is_dir($defaultPath) && is_writable($defaultPath)) {
+            wp_mkdir_p($rootPath);
+        }
+
+        if (!file_exists($rootPath) || !is_dir($rootPath) || !is_readable($rootPath)) {
+            $rootPath = '';
+        }
+
+        return $rootPath;
+    }
+
+    public function getDefaultRootPathForUser($userID)
+    {
+        return $this->getDefaultRootPathByCriteria($userID, 'user');
+    }
+
+    public function getDefaultRootPathForRole($role)
+    {
+        return $this->getDefaultRootPathByCriteria($role, 'role');
+    }
+
     public function getByRole($role)
     {
-        return $this->getSettings('by_role', $role);
+        return $this->getPermissions('by_role', $role);
     }
 
-    public function getByUser($user)
+    public function getByUser($userID)
     {
-        return $this->getSettings('by_user', $user);
+        return $this->getPermissions('by_user', $userID);
     }
 
-    public function getSettings($type, $name)
+    public function getPermissions($type, $name)
     {
+        if ($this->isCommonFolderEnabled()) {
+            $defaultPath = $this->getDefaultPublicRootPath();
+        } elseif ($type === 'by_user') {
+            $defaultPath = $this->getDefaultRootPathForUser($name);
+        } else {
+            $defaultPath = $this->getDefaultRootPathForRole($name);
+        }
+
         $settings = [
             'commands' => [],
-            'path'     => '',
+            'path'     => $defaultPath,
         ];
 
         if (
@@ -123,12 +171,6 @@ class PermissionsProvider
         return $settings;
     }
 
-    public function getFolderOption()
-    {
-        return isset($this->permissions['folder_options'])
-            ? $this->permissions['folder_options'] : 'common';
-    }
-
     public function getEnabledFileType()
     {
         return isset($this->permissions['file_type'])
@@ -141,30 +183,20 @@ class PermissionsProvider
             ? $this->permissions['file_size'] : 2;
     }
 
-    public function getPublicRootPath()
-    {
-        return isset($this->permissions['root_folder'])
-            ? stripslashes($this->permissions['root_folder'])
-            : $this->getDefaultPublicRootPath() . DIRECTORY_SEPARATOR;
-    }
-
-    public function getPublicRootURL()
-    {
-        return isset($this->permissions['root_folder_url'])
-            ? stripslashes($this->permissions['root_folder_url'])
-            : $this->getDefaultPublicRootURL();
-    }
-
     public function isEnabledForAdmin()
     {
         return isset($this->permissions['do_not_use_for_admin'])
             && $this->permissions['do_not_use_for_admin'] === 'do_not_use_for_admin';
     }
 
+    public function getFolderOption()
+    {
+        return isset($this->permissions['folder_options']) ? $this->permissions['folder_options'] : 'common';
+    }
+
     public function isCommonFolderEnabled()
     {
-        return isset($this->permissions['do_not_use_for_admin'])
-            && $this->permissions['do_not_use_for_admin'] === 'do_not_use_for_admin';
+        return isset($this->permissions['folder_options']) && $this->permissions['folder_options'] === 'common';
     }
 
     public function currentUser()
@@ -196,14 +228,33 @@ class PermissionsProvider
 
     public function isCurrentUserHasPermission()
     {
-        $hasPermission = false;
+        $hasPermission = true;
 
-        if (!empty($this->getByUser($this->currentUserID()))
-            || !empty($this->getByRole($this->currentUserRole()))
-        ) {
-            $hasPermission = true;
+        if (empty($this->permissionsForCurrentUser()['commands'])) {
+            $hasPermission = false;
         }
 
         return $hasPermission;
+    }
+
+    public function isCurrentRoleHasPermission()
+    {
+        $hasPermission = true;
+
+        if (empty($this->permissionsForCurrentRole()['commands'])) {
+            $hasPermission = false;
+        }
+
+        return $hasPermission;
+    }
+
+    public function permissionsForCurrentUser()
+    {
+        return $this->getByUser($this->currentUserID());
+    }
+
+    public function permissionsForCurrentRole()
+    {
+        return $this->getByRole($this->currentUserRole());
     }
 }

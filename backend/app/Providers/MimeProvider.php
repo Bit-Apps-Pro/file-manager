@@ -19,7 +19,7 @@ class MimeProvider
     public function getTypes()
     {
         $mimeList = [];
-        $fp = fopen($this->_mimePath, 'r');
+        $fp       = fopen($this->_mimePath, 'r');
         if ($fp) {
             while (($line = fgets($fp)) !== false) {
                 if (strpos($line, '#') === 0) {

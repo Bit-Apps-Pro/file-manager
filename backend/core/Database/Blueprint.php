@@ -437,7 +437,7 @@ class Blueprint
     public function foreign($ref, $refCol)
     {
         $this->_fkID          = \count($this->foreignKeys);
-        $this->foreignKeys[] = [
+        $this->foreignKeys[]  = [
             'column'  => $this->columns[$this->columnIndex]['name'],
             'ref'     => $this->_prefix . $ref,
             'ref_col' => $refCol,

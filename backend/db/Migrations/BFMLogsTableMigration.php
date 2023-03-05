@@ -1,6 +1,5 @@
 <?php
 
-use BitApps\FM\Config;
 use BitApps\FM\Core\Database\Blueprint;
 use BitApps\FM\Core\Database\Migration;
 use BitApps\FM\Core\Database\Schema;

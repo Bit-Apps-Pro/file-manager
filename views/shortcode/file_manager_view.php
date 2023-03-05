@@ -1,43 +1,39 @@
 <?php
 
 /**
- *
  * File Manager Frontend View page
  *
  * */
 
 // Security Check
-defined('ABSPATH') or die();
+\defined('ABSPATH') or exit();
 global $FMP, $FileManager;
 
 // language
-$language = $FileManager->options['file_manager_settings']['language'];
-$language_settings = is_array($language) ? $language : unserialize(stripslashes($language));
+$language          = $FileManager->options['file_manager_settings']['language'];
+$language_settings = \is_array($language) ? $language : unserialize(stripslashes($language));
 if ($language_settings['code'] != 'LANG') {
     $language_code = $language_settings['code'];
     $lang_file_url = $language_settings['file-url'];
 }
 $settings = get_option('file_manager_permissions', []);
 // pr($settings);
-if (!is_user_logged_in() && count($settings['fmp_guest']) <= 1) return;
+if (!is_user_logged_in() && \count($settings['fmp_guest']) <= 1) {
+    return;
+}
 if ($FMP->is_bannned()) {
     ob_start();
+
     include 'file_manager_access_not_allowed.php';
+
     $FMP->shortcode_output = ob_get_clean();
     $FMP->shortcode_output = apply_filters('bfm_acces_not_allowed', $FMP->shortcode_output);
+
     return;
 }
 
-$ajax_url = admin_url("admin-ajax.php");
+$ajax_url = admin_url('admin-ajax.php');
 
-wp_enqueue_style('bfm-jquery-ui-css');
-wp_enqueue_style('bfm-elfinder-css');
-wp_enqueue_style('bfm-elfinder-theme-css');
-wp_enqueue_style('fm-front-style');
-wp_enqueue_script('bfm-elfinder-script');
-wp_enqueue_script('bfm-elfinder-editor-script');
-wp_enqueue_script('fm-front-script');
-if (isset($lang_file_url)) wp_enqueue_script('bfm-elfinder-lang', $lang_file_url, array('bfm-elfinder-script'));
 ob_start();
 ?>
 
@@ -53,7 +49,7 @@ ob_start();
         let bfm = bfmElm.elfinder({
 
             url: ajaxurl,
-            <?php if ($FMP->no_permission()) : ?>
+            <?php if ($FMP->no_permission()) { ?>
                 handlers: {
                     dblclick: function(event, elfinderInstance) {
                         console.log(elfinderInstance);
@@ -71,13 +67,15 @@ ob_start();
                 uiOptions: {
                     toolbar: [],
                 },
-            <?php endif; ?>
+            <?php } ?>
             debug: ['error', 'warning', 'event-destroy'],
             customData: {
                 action: 'bfm_permissions_system_connector',
-                bfm_nonce: '<?php echo wp_create_nonce("bfm_nonce"); ?>'
+                bfm_nonce: '<?php echo wp_create_nonce('bfm_nonce'); ?>'
             },
-            lang: '<?php if (isset($language_code)) echo $language_code ?>',
+            lang: '<?php if (isset($language_code)) {
+                echo $language_code;
+            } ?>',
             requestType: 'post',
             messages: {
                 aa: "Hell of Error",
@@ -95,7 +93,7 @@ $script = ob_get_clean();
 if (wp_script_is($editorScriptHandle, 'registered')) {
     wp_add_inline_script($editorScriptHandle, $script);
 } else {
-    echo "<script>$script</script>";
+    echo "<script>{$script}</script>";
 }
 ?>
 <style>

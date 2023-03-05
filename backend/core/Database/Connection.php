@@ -95,7 +95,7 @@ final class Connection
 
     public static function pluginDBPrefix()
     {
-        return  self::$_dbPrefix;
+        return self::$_dbPrefix;
     }
 
     public static function setPluginDBPrefix($prefix)

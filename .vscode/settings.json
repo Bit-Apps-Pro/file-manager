@@ -36,6 +36,7 @@
   "css.lint.validProperties": ["composes"],
   "cSpell.words": [
     "elfinder",
+    "Squiz"
   ],
   "[typescript, javascript, typescriptreact, json, css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

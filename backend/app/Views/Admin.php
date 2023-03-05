@@ -1,4 +1,5 @@
 <?php
+
 namespace BitApps\FM\Views;
 
 use BitApps\FM\Config;

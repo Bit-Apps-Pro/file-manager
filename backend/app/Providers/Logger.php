@@ -2,7 +2,6 @@
 
 namespace BitApps\FM\Providers;
 
-use BitApps\FM\Config;
 use BitApps\FM\Http\Services\LogService;
 use BitApps\FM\Model\Log;
 use elFinder;
@@ -17,8 +16,9 @@ class Logger
 
     public function __construct()
     {
-        $this->logger = new LogService();        
+        $this->logger = new LogService();
     }
+
     /**
      * Process data for [zipdl file rename get put upload]
      * commands in order to get formatted data for log service.
@@ -38,7 +38,9 @@ class Logger
         ) {
             return;
         }
+
         /**
+         * Commands to log
          * download: zipdl,file
          * rename: rename
          * view: get
@@ -52,6 +54,7 @@ class Logger
         } else {
             $commandDetails = $this->processFileHash($command, $target, $volume);
         }
+
         $this->logger->save($command, $commandDetails);
     }
 
@@ -71,7 +74,7 @@ class Logger
             $details['driver']  = \get_class($volume);
             $details['files'][] = [
                 'path' => str_replace(ABSPATH, '', $volume->getPath($target['target'])),
-                'hash' => $target['target']
+                'hash' => $target['target'],
             ];
         }
 
@@ -85,12 +88,12 @@ class Logger
             $details['driver']  = \get_class($volume);
             $details['folder']  = [
                 'path' => str_replace(ABSPATH, '', $volume->getPath($target['target'])),
-                'hash' => $target['target']
+                'hash' => $target['target'],
             ];
             foreach ($target['upload_path'] as $index => $file) {
                 $details['files'][] = [
                     'path' => str_replace(ABSPATH, '', $volume->getPath($file)),
-                    'hash' => $file
+                    'hash' => $file,
                 ];
                 if ($index > 300) {
                     break;
@@ -109,7 +112,7 @@ class Logger
             foreach ($target['targets'] as $file) {
                 $details['files'][] = [
                     'path' => str_replace(ABSPATH, '', $volume->getPath($file)),
-                    'hash' => $file
+                    'hash' => $file,
                 ];
             }
         }

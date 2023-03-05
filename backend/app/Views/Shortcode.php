@@ -4,10 +4,7 @@
 
 namespace BitApps\FM\Views;
 
-use BitApps\FM\Config;
-use BitApps\FM\Core\Hooks\Hooks;
 use BitApps\FM\Core\Shortcode\Shortcode as SWrapper;
-use BitApps\FM\Core\Utils\Capabilities;
 
 /**
  * The admin Layout and page handler class.
@@ -32,10 +29,17 @@ class Shortcode
         return $this->shortcode_output;
     }
 
-    public function settingsPage()
+    public function enqueueAssets()
     {
-        include_once BFM_ROOT_DIR
-        . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'settings.php';
+        wp_enqueue_style('bfm-jquery-ui-css');
+        wp_enqueue_style('bfm-elfinder-css');
+        wp_enqueue_style('bfm-elfinder-theme-css');
+        wp_enqueue_style('fm-front-style');
+        wp_enqueue_script('bfm-elfinder-script');
+        wp_enqueue_script('bfm-elfinder-editor-script');
+        wp_enqueue_script('fm-front-script');
+        if (isset($lang_file_url)) {
+            wp_enqueue_script('bfm-elfinder-lang', $lang_file_url, ['bfm-elfinder-script']);
+        }
     }
-
 }

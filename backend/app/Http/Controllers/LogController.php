@@ -14,10 +14,10 @@ final class LogController
     public function __construct()
     {
         $this->logger = new LogService();
-        $currentTime = time();
-        if ((abs(Config::getOption('log_deleted_at', $currentTime) - $currentTime ) / DAY_IN_SECONDS) > 30) {
+        $currentTime  = time();
+        if ((abs(Config::getOption('log_deleted_at', $currentTime) - $currentTime) / DAY_IN_SECONDS) > 30) {
             $this->logger->deleteOlder();
-        }   
+        }
     }
 
     public function all()
@@ -31,7 +31,7 @@ final class LogController
             return Response::error(['id' => 'log id is required'])->message('failed to delete log');
         }
         $id = $request->id;
-        if (!is_array($id)) {
+        if (!\is_array($id)) {
             return Response::error(['id' => 'array of log id is required'])->message('failed to delete log');
         }
 
@@ -41,6 +41,5 @@ final class LogController
         }
 
         return Response::error([])->message('failed to delete log');
-
     }
 }

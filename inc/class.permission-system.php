@@ -81,7 +81,7 @@ class FileManagerPermission
         add_filter('fm_capabilities', [$this, 'filterAdminMenuCapabilities']);
 
         // Adding general shortcode
-        add_shortcode('file_manager', [$this, 'file_manager_view']);
+        // add_shortcode('file_manager', [$this, 'file_manager_view']);
 
         // Managing Admin backend options
         add_filter('fm_options_filter', [$this, 'admin_options']);

@@ -1,9 +1,10 @@
 <?php
 
+use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager;
 
-if (!defined('ABSPATH')) {
-    die();
+if (!\defined('ABSPATH')) {
+    exit();
 }
 
 /**
@@ -12,35 +13,36 @@ if (!defined('ABSPATH')) {
 global $FileManager;
 
 // Settings processing
-if (isset($_POST) && !empty($_POST)) {
+$preferenceProvider = Plugin::instance()->preferences();
 
+if (isset($_POST) && !empty($_POST)) {
     if (!wp_verify_nonce($_POST['file-manager-settings-security-token'], 'file-manager-settings-security-token') || !current_user_can('manage_options')) {
         wp_die();
     }
 
     $_POST['show_url_path'] = sanitize_text_field($_POST['show_url_path']);
     if (isset($_POST['show_url_path']) && ($_POST['show_url_path'] == 'show' || $_POST['show_url_path'] == 'hide')) {
-        $FileManager->preferences['show_url_path'] = $_POST['show_url_path'];
+        $preferenceProvider->setUrlPathView($_POST['show_url_path']);
     }
+
     $FileManager->preferences['root_folder_path'] = sanitize_text_field($_POST['root_folder_path']) ? sanitize_text_field(bfmRealpath($_POST['root_folder_path'])) : '';
-    $FileManager->preferences['root_folder_url'] = esc_url_raw($_POST['root_folder_url']) ? esc_url_raw($_POST['root_folder_url']) : '';
+    $FileManager->preferences['root_folder_url']  = esc_url_raw($_POST['root_folder_url']) ? esc_url_raw($_POST['root_folder_url']) : '';
 
     $FileManager->preferences['language'] = sanitize_text_field($_POST['language']);
-    $FileManager->preferences['theme'] = sanitize_text_field($_POST['theme']);
+    $FileManager->preferences['theme']    = sanitize_text_field($_POST['theme']);
 
-    $FileManager->preferences['size']['width'] = filter_var($_POST['width'], FILTER_VALIDATE_INT) ? $_POST['width'] : 'auto';
-    $FileManager->preferences['size']['height'] = filter_var($_POST['height'], FILTER_VALIDATE_INT) ? $_POST['height'] : '500';
-    $FileManager->preferences['fm-show-hidden-files'] = isset($_POST['fm-show-hidden-files']) && !empty($_POST['fm-show-hidden-files']) ? sanitize_text_field($_POST['fm-show-hidden-files']) : '';
+    $FileManager->preferences['size']['width']                  = filter_var($_POST['width'], FILTER_VALIDATE_INT) ? $_POST['width'] : 'auto';
+    $FileManager->preferences['size']['height']                 = filter_var($_POST['height'], FILTER_VALIDATE_INT) ? $_POST['height'] : '500';
+    $FileManager->preferences['fm-show-hidden-files']           = isset($_POST['fm-show-hidden-files'])           && !empty($_POST['fm-show-hidden-files']) ? sanitize_text_field($_POST['fm-show-hidden-files']) : '';
     $FileManager->preferences['fm-create-hidden-files-folders'] = isset($_POST['fm-create-hidden-files-folders']) && !empty($_POST['fm-create-hidden-files-folders']) ? sanitize_text_field($_POST['fm-create-hidden-files-folders']) : '';
-    $FileManager->preferences['fm-create-trash-files-folders'] = isset($_POST['fm-create-trash-files-folders']) && !empty($_POST['fm-create-trash-files-folders']) ? sanitize_text_field($_POST['fm-create-trash-files-folders']) : '';
-    $FileManager->preferences['fm_root_folder_name'] = isset($_POST['fm_root_folder_name']) && !empty($_POST['fm_root_folder_name']) ? sanitize_text_field($_POST['fm_root_folder_name']) : 'WP Root';
-    $FileManager->preferences['fm_default_view_type'] = isset($_POST['fm_default_view_type']) && !empty($_POST['fm_default_view_type']) ? sanitize_text_field($_POST['fm_default_view_type']) : 'icons';
-    $FileManager->preferences['fm-remember-last-dir'] = isset($_POST['fm-remember-last-dir']) && !empty($_POST['fm-remember-last-dir']) ? sanitize_text_field($_POST['fm-remember-last-dir']) : 'checked';
-    $FileManager->preferences['fm-clear-history-on-reload'] = isset($_POST['fm-clear-history-on-reload']) && !empty($_POST['fm-clear-history-on-reload']) ? sanitize_text_field($_POST['fm-clear-history-on-reload']) : 'checked';
-    $FileManager->preferences['fm_display_ui_options'] = isset($_POST['fm_display_ui_options']) && !empty($_POST['fm_display_ui_options']) ? filter_var_array($_POST['fm_display_ui_options']) : ['toolbar', 'places', 'tree', 'path', 'stat'];
-    
-    $FileManager->save_options();
+    $FileManager->preferences['fm-create-trash-files-folders']  = isset($_POST['fm-create-trash-files-folders'])  && !empty($_POST['fm-create-trash-files-folders']) ? sanitize_text_field($_POST['fm-create-trash-files-folders']) : '';
+    $FileManager->preferences['fm_root_folder_name']            = isset($_POST['fm_root_folder_name'])            && !empty($_POST['fm_root_folder_name']) ? sanitize_text_field($_POST['fm_root_folder_name']) : 'WP Root';
+    $FileManager->preferences['fm_default_view_type']           = isset($_POST['fm_default_view_type'])           && !empty($_POST['fm_default_view_type']) ? sanitize_text_field($_POST['fm_default_view_type']) : 'icons';
+    $FileManager->preferences['fm-remember-last-dir']           = isset($_POST['fm-remember-last-dir'])           && !empty($_POST['fm-remember-last-dir']) ? sanitize_text_field($_POST['fm-remember-last-dir']) : 'checked';
+    $FileManager->preferences['fm-clear-history-on-reload']     = isset($_POST['fm-clear-history-on-reload'])     && !empty($_POST['fm-clear-history-on-reload']) ? sanitize_text_field($_POST['fm-clear-history-on-reload']) : 'checked';
+    $FileManager->preferences['fm_display_ui_options']          = isset($_POST['fm_display_ui_options'])          && !empty($_POST['fm_display_ui_options']) ? filter_var_array($_POST['fm_display_ui_options']) : ['toolbar', 'places', 'tree', 'path', 'stat'];
 
+    $FileManager->save_options();
 }
 
 /**
@@ -53,16 +55,16 @@ if (isset($_POST) && !empty($_POST)) {
 function bfmRealpath($path)
 {
     // whether $path is unix or not
-    $unipath = strlen($path) == 0 || $path[0] != '/';
+    $unipath = \strlen($path) == 0 || $path[0] != '/';
     // attempts to detect if path is relative in which case, add cwd
     if (strpos($path, ':') === false && $unipath) {
         $path = getcwd() . DIRECTORY_SEPARATOR . $path;
     }
 
     // resolve path parts (single dot, double dot and double delimiters)
-    $path = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
-    $parts = array_filter(explode(DIRECTORY_SEPARATOR, $path), 'strlen');
-    $absolutes = array();
+    $path      = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $path);
+    $parts     = array_filter(explode(DIRECTORY_SEPARATOR, $path), 'strlen');
+    $absolutes = [];
     foreach ($parts as $part) {
         if ('.' == $part) {
             continue;
@@ -81,8 +83,7 @@ function bfmRealpath($path)
     }
 
     // put initial separator that could have been lost
-    $path = !$unipath ? '/' . $path : $path;
-    return $path;
+    return !$unipath ? '/' . $path : $path;
 }
 
 $admin_page_url = admin_url() . "admin.php?page={$FileManager->prefix}";
@@ -91,16 +92,14 @@ $admin_page_url = admin_url() . "admin.php?page={$FileManager->prefix}";
 // $FileManager->admin_assets();
 
 $themes = [
-    'default' => 'Default',
+    'default'          => 'Default',
     'material-default' => 'Material Default',
-    'material-gray' => 'Material Gray',
-    'material-light' => 'Material Light',
-    'bootstrap' => 'Bootstrap',
+    'material-gray'    => 'Material Gray',
+    'material-light'   => 'Material Light',
+    'bootstrap'        => 'Bootstrap',
 ];
-$selectedTheme = isset($FileManager->preferences['theme']) ? $FileManager->preferences['theme'] : '';
-// Language
-require 'language-code.php';
-global $fm_languages;
+$selectedTheme = $preferenceProvider->getTheme();
+
 ?>
 <?php require_once 'header.php'; ?>
 <div class='fm-container'>
@@ -109,37 +108,37 @@ global $fm_languages;
 
         <div class='gb-fm-row fmp-settings'>
 
-            <h2><?php _e("Settings", 'file-manager'); ?></h2>
+            <h2><?php _e('Settings', 'file-manager'); ?></h2>
 
             <form action='' method='post' class='fmp-settings-form'>
                 <input type='hidden' name='file-manager-settings-security-token' value='<?php echo wp_create_nonce('file-manager-settings-security-token'); ?>'>
                 <table>
                     <tr>
                         <td rowspan="2">
-                            <h4><?php _e("URL and Path", 'file-manager'); ?></h4>
+                            <h4><?php _e('URL and Path', 'file-manager'); ?></h4>
                         </td>
                         <td>
-                            <label for='show_url_path_id'> <?php _e("Show", 'file-manager'); ?> </label>
+                            <label for='show_url_path_id'> <?php _e('Show', 'file-manager'); ?> </label>
                             <input type='radio' name='show_url_path' id='show_url_path_id' value='show' <?php if (isset($FileManager->preferences['show_url_path']) && !empty($FileManager->preferences['show_url_path']) && $FileManager->preferences['show_url_path'] == 'show') {
-                                                                                                            echo 'checked';
-                                                                                                        }
-                                                                                                        ?> />
+                                echo 'checked';
+                            }
+?> />
 
                             <label for='hide_url_path_id'> Hide </label>
                             <input type='radio' name='show_url_path' id='hide_url_path_id' value='hide' <?php if (isset($FileManager->preferences['show_url_path']) && !empty($FileManager->preferences['show_url_path']) && $FileManager->preferences['show_url_path'] == 'hide') {
-                                                                                                            echo 'checked';
-                                                                                                        }
-                                                                                                        ?> />
+                                echo 'checked';
+                            }
+?> />
                         </td>
                     </tr>
                     <tr>
 
                         <td>
-                            <label for='root_folder_path_id'> <?php _e("Root Folder Path", 'file-manager'); ?> </label>
+                            <label for='root_folder_path_id'> <?php _e('Root Folder Path', 'file-manager'); ?> </label>
                             <input type='text' name='root_folder_path' onkeyup="pathVlidation()" id='root_folder_path_id' value='<?php if (isset($FileManager->preferences['root_folder_path']) && !empty($FileManager->preferences['root_folder_path'])) {
-                                                                                                                                        echo esc_attr($FileManager->preferences['root_folder_path']);
-                                                                                                                                    }
-                                                                                                                                    ?>' /></br>
+                                echo esc_attr($FileManager->preferences['root_folder_path']);
+                            }
+?>' /></br>
                             <span id="fm_path_err"></span>
                             <script>
                                 function pathVlidation() {
@@ -156,17 +155,17 @@ global $fm_languages;
                                 }
                             </script>
                             <br>
-                            <small><?php _e("Default Path:", 'file-manager'); ?> <b><?php echo ABSPATH; ?></b></small>
+                            <small><?php _e('Default Path:', 'file-manager'); ?> <b><?php echo ABSPATH; ?></b></small>
                             <br><br>
-                            <label for='root_folder_url_id'> <?php _e("Root Folder URL", 'file-manager'); ?> </label>
+                            <label for='root_folder_url_id'> <?php _e('Root Folder URL', 'file-manager'); ?> </label>
                             &nbsp;
                             <input type='text' name='root_folder_url' onkeyup="validURL()" id='root_folder_url_id' value='<?php if (isset($FileManager->preferences['root_folder_url']) && !empty($FileManager->preferences['root_folder_url'])) {
-                                                                                                                                echo esc_attr($FileManager->preferences['root_folder_url']);
-                                                                                                                            }
-                                                                                                                            ?>' /><br />
+                                echo esc_attr($FileManager->preferences['root_folder_url']);
+                            }
+?>' /><br />
                             <span id="url_error"></span>
                             <br>
-                            <small><?php _e("Default URL:", 'file-manager'); ?> <b><?php echo site_url(); ?></b></small>
+                            <small><?php _e('Default URL:', 'file-manager'); ?> <b><?php echo site_url(); ?></b></small>
                             <script>
                                 function validURL() {
                                     string = document.getElementById('root_folder_url_id').value;
@@ -188,11 +187,11 @@ global $fm_languages;
                     </tr>
                     <!-- <tr>
                             <td></td>
-                            <td><small><?php _e("Default Path:", 'file-manager'); ?> <b><?php echo ABSPATH; ?></b></small></td>
+                            <td><small><?php _e('Default Path:', 'file-manager'); ?> <b><?php echo ABSPATH; ?></b></small></td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td><small><?php _e("Default URL:", 'file-manager'); ?> <b><?php echo site_url(); ?></b></small></td>
+                            <td><small><?php _e('Default URL:', 'file-manager'); ?> <b><?php echo site_url(); ?></b></small></td>
                         </tr> -->
                     <tr>
                         <td></td>
@@ -200,126 +199,111 @@ global $fm_languages;
                     </tr>
                     <tr>
                         <td>
-                            <h4><?php _e("Select Language", 'file-manager'); ?></h4>
+                            <h4><?php _e('Select Language', 'file-manager'); ?></h4>
                         </td>
                         <td>
-                            <?php
-                            $lang = $fm_languages->available_languages();
-                            if (!isset($FileManager->preferences['language'])) {
-                                $FileManager->preferences['language'] = array();
-                            }
-
-                            if (!is_array($FileManager->preferences['language'])) {
-                                $language_settings = unserialize(stripslashes($FileManager->preferences['language']));
-                            } else {
-                                $language_settings = $FileManager->preferences['language'];
-                            }
-
-                            $language_code = $language_settings['code'];
-
-                            ?>
-                            <select name='language'>
-                                <?php foreach ($lang as $L) : ?>
-                                    <option <?php selected($L['code'], $language_code); ?> value='<?php echo esc_attr(serialize($L)); ?>'><?php echo esc_html($L['name']); ?></option>
-                                <?php endforeach; ?>
+                          <select name='language'>
+                                <?php foreach ($preferenceProvider->availableLanguages() as $code => $name) { ?>
+                                    <option <?php selected($code, $preferenceProvider->getLangCode()); ?> value='<?php echo esc_attr($code); ?>'><?php echo esc_html($name); ?></option>
+                                <?php } ?>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><?php _e("Select Theme", 'file-manager'); ?></h4>
+                            <h4><?php _e('Select Theme', 'file-manager'); ?></h4>
                         </td>
                         <td>
                             <select name='theme'>
-                                <?php foreach ($themes as $themeID => $theme) : ?>
+                                <?php foreach ($themes as $themeID => $theme) { ?>
                                     <option 
                                     <?php selected($themeID, $selectedTheme); ?> value='<?php echo $themeID; ?>'><?php echo esc_html($theme); ?></option>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><?php _e("Size", 'file-manager'); ?></h4>
+                            <h4><?php _e('Size', 'file-manager'); ?></h4>
                         </td>
                         <td>
-                            <label for='fm-width-id'><?php _e("Width", 'file-manager'); ?></label>
+                            <label for='fm-width-id'><?php _e('Width', 'file-manager'); ?></label>
                             &nbsp;&nbsp;&nbsp;<input id='fm-width-id' type='text' name='width' value='<?php if (isset($FileManager->preferences['size']['width']) && !empty($FileManager->preferences['size']['width'])) {
-                                                                                                            echo esc_attr($FileManager->preferences['size']['width']);
-                                                                                                        } else {
-                                                                                                            echo 'auto';
-                                                                                                        }
-                                                                                                        ?>'>
+                                echo esc_attr($FileManager->preferences['size']['width']);
+                            } else {
+                                echo 'auto';
+                            }
+?>'>
                             <br />
-                            <label for='fm-height-id'><?php _e("Height", 'file-manager'); ?></label>
+                            <label for='fm-height-id'><?php _e('Height', 'file-manager'); ?></label>
                             &nbsp;&nbsp;<input id='fm-height-id' type='text' name='height' value='<?php if (isset($FileManager->preferences['size']['height']) && !empty($FileManager->preferences['size']['height'])) {
-                                                                                                        echo esc_attr($FileManager->preferences['size']['height']);
-                                                                                                    } else {
-                                                                                                        echo 400;
-                                                                                                    }
-                                                                                                    ?>'>
+                                echo esc_attr($FileManager->preferences['size']['height']);
+                            } else {
+                                echo 400;
+                            }
+?>'>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><label for='fm-width-id'><?php _e("Show Hidden Files", 'file-manager'); ?></label></h4>
+                            <h4><label for='fm-width-id'><?php _e('Show Hidden Files', 'file-manager'); ?></label></h4>
                         </td>
                         <td>
                             <input id='fm-media-sync-id' type='checkbox' name='fm-show-hidden-files' <?php if (isset($FileManager->preferences['fm-show-hidden-files']) && !empty($FileManager->preferences['fm-show-hidden-files'])) {
-                                                                                                            echo "checked";
-                                                                                                        }
-                                                                                                        ?> value="fm-show-hidden-files">
-                            <small><?php _e("When checked hidden files and folders will be shown to the users.", 'file-manager'); ?></small>
+                                echo 'checked';
+                            }
+?> value="fm-show-hidden-files">
+                            <small><?php _e('When checked hidden files and folders will be shown to the users.', 'file-manager'); ?></small>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><label for='fm-width-id'><?php _e("Allow Create/Upload Hidden Files/Folders", 'file-manager'); ?></label></h4>
+                            <h4><label for='fm-width-id'><?php _e('Allow Create/Upload Hidden Files/Folders', 'file-manager'); ?></label></h4>
                         </td>
                         <td>
                             <input id='fm-hidden-file-id' type='checkbox' name='fm-create-hidden-files-folders' <?php if (isset($FileManager->preferences['fm-create-hidden-files-folders']) && !empty($FileManager->preferences['fm-create-hidden-files-folders'])) {
-                                                                                                                    echo "checked";
-                                                                                                                }
-                                                                                                                ?> value="fm-create-hidden-files-folders">
-                            <small><?php _e("When checked hidden files and folders will be create by the users.", 'file-manager'); ?></small>
+                                echo 'checked';
+                            }
+?> value="fm-create-hidden-files-folders">
+                            <small><?php _e('When checked hidden files and folders will be create by the users.', 'file-manager'); ?></small>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><label for='fm-width-id'><?php _e("Allow Trash", 'file-manager'); ?></label></h4>
+                            <h4><label for='fm-width-id'><?php _e('Allow Trash', 'file-manager'); ?></label></h4>
                         </td>
                         <td>
                             <input id='fm-trash-id' type='checkbox' name='fm-create-trash-files-folders' <?php if (isset($FileManager->preferences['fm-create-trash-files-folders']) && !empty($FileManager->preferences['fm-create-trash-files-folders'])) {
-                                                                                                                echo "checked";
-                                                                                                            }
-                                                                                                            ?> value="fm-create-trash-files-folders">
-                            <small><?php _e("When checked deleted files and folder will save here.", 'file-manager'); ?></small>
+                                echo 'checked';
+                            }
+?> value="fm-create-trash-files-folders">
+                            <small><?php _e('When checked deleted files and folder will save here.', 'file-manager'); ?></small>
                             <br />
-                            <small><?php _e("Default Path:", 'file-manager'); ?> <b><?php echo FM_TRASH_DIR_PATH; ?></b></small>
+                            <small><?php _e('Default Path:', 'file-manager'); ?> <b><?php echo FM_TRASH_DIR_PATH; ?></b></small>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><?php _e("Root Folder Name", 'file-manager'); ?></h4>
+                            <h4><?php _e('Root Folder Name', 'file-manager'); ?></h4>
                         </td>
                         <td>
                             <label for='fm-root-folder-name-id'></label>
                             <input id='fm-root-folder-name-id' type='text' name='fm_root_folder_name' value='<?php if (isset($FileManager->preferences['fm_root_folder_name']) && !empty($FileManager->preferences['fm_root_folder_name'])) {
-                                                                                                                    echo esc_attr($FileManager->preferences['fm_root_folder_name']);
-                                                                                                                } else {
-                                                                                                                    echo 'WP Root';
-                                                                                                                }
-                                                                                                                ?>'>
+                                echo esc_attr($FileManager->preferences['fm_root_folder_name']);
+                            } else {
+                                echo 'WP Root';
+                            }
+?>'>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><?php _e("Default View Type", 'file-manager'); ?></h4>
+                            <h4><?php _e('Default View Type', 'file-manager'); ?></h4>
                         </td>
                         <td>
                             <?php
                             $default_view_type = isset($FileManager->preferences['fm_default_view_type']) ? $FileManager->preferences['fm_default_view_type'] : 'icon';
-                            ?>
+?>
                             <label for='fm-root-folder-name-id'></label>
                             <select id="fm_default_view_type" name="fm_default_view_type">
                                 <option disabled>Select Defualt View Type</option>
@@ -330,25 +314,29 @@ global $fm_languages;
                     </tr>
                     <tr>
                         <td>
-                            <h4><label for='fm-remember-last-dir'><?php _e("Remember Last Directory", 'file-manager'); ?></label></h4>
+                            <h4><label for='fm-remember-last-dir'><?php _e('Remember Last Directory', 'file-manager'); ?></label></h4>
                         </td>
                         <td>
-                            <input id='fm-remember-last-dir' type='checkbox' name='fm-remember-last-dir' <?php if (isset($FileManager->preferences['fm-remember-last-dir']) && !empty($FileManager->preferences['fm-remember-last-dir'])) echo "checked" ?> value="fm-remember-last-dir">
-                            <small><?php _e("Remeber last opened dir to open it after reload.", 'file-manager'); ?></small>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h4><label for='fm-clear-history-on-reload'><?php _e("Clrear History On Reload", 'file-manager'); ?></label></h4>
-                        </td>
-                        <td>
-                            <input id='fm-clear-history-on-reload' type='checkbox' name='fm-clear-history-on-reload' <?php if (isset($FileManager->preferences['fm-clear-history-on-reload']) && !empty($FileManager->preferences['fm-clear-history-on-reload'])) echo "checked" ?> value="fm-clear-history-on-reload">
-                            <small><?php _e("Clear historys(elFinder) on reload(not browser).", 'file-manager'); ?></small>
+                            <input id='fm-remember-last-dir' type='checkbox' name='fm-remember-last-dir' <?php if (isset($FileManager->preferences['fm-remember-last-dir']) && !empty($FileManager->preferences['fm-remember-last-dir'])) {
+                                echo 'checked';
+                            } ?> value="fm-remember-last-dir">
+                            <small><?php _e('Remeber last opened dir to open it after reload.', 'file-manager'); ?></small>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><?php _e("Default View Type", 'file-manager'); ?></h4>
+                            <h4><label for='fm-clear-history-on-reload'><?php _e('Clrear History On Reload', 'file-manager'); ?></label></h4>
+                        </td>
+                        <td>
+                            <input id='fm-clear-history-on-reload' type='checkbox' name='fm-clear-history-on-reload' <?php if (isset($FileManager->preferences['fm-clear-history-on-reload']) && !empty($FileManager->preferences['fm-clear-history-on-reload'])) {
+                                echo 'checked';
+                            } ?> value="fm-clear-history-on-reload">
+                            <small><?php _e('Clear historys(elFinder) on reload(not browser).', 'file-manager'); ?></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4><?php _e('Default View Type', 'file-manager'); ?></h4>
                         </td>
                         <td>
                             <label for='fm-root-folder-name-id'></label>
@@ -356,8 +344,10 @@ global $fm_languages;
                                 <option disabled>Select Defualt View Type</option>
                                 <?php
                                 $uioptions = ['toolbar', 'places', 'tree', 'path', 'stat'];
-                                foreach ($uioptions as $place) { ?>
-                                    <option <?php if (in_array($place, isset($FileManager->preferences['fm_display_ui_options']) ? $FileManager->preferences['fm_display_ui_options'] : $uioptions)) echo 'selected' ?> value='<?php echo $place; ?>'><?php echo $place; ?></option>
+foreach ($uioptions as $place) { ?>
+                                    <option <?php if (\in_array($place, isset($FileManager->preferences['fm_display_ui_options']) ? $FileManager->preferences['fm_display_ui_options'] : $uioptions)) {
+                                        echo 'selected';
+                                    } ?> value='<?php echo $place; ?>'><?php echo $place; ?></option>
 
                                 <?php } ?>
                             </select>
@@ -366,7 +356,7 @@ global $fm_languages;
                     <tr>
                         <td></td>
                         <td>
-                            <input type='submit' value='<?php _e("Save", 'file-manager'); ?>' />
+                            <input type='submit' value='<?php _e('Save', 'file-manager'); ?>' />
                         </td>
                     </tr>
                 </table>

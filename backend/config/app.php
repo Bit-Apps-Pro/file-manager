@@ -20,12 +20,11 @@ if (!\defined('DS')) {
 \define('BFM_ROOT_DIR', BFM_BASEDIR);
 \define('BFM_VIEW_DIR', BFM_BASEDIR . 'views');
 
-
 \define('BFM_ROOT_URL', BFM_BASEURL);
 \define('BFM_ASSET_URL', BFM_BASEURL . 'assets/');
 
 \define('BFM_FINDER_DIR', BFM_ROOT_DIR . 'libs' . DIRECTORY_SEPARATOR . 'elFinder' . DIRECTORY_SEPARATOR);
-\define('BFM_FINDER_URL', plugin_dir_url(BFM_FINDER_DIR . 'php'));
+\define('BFM_FINDER_URL', BFM_BASEURL . 'libs/elFinder/');
 
 // Upload dir path
 if (!\defined('FM_WP_UPLOAD_DIR')) {

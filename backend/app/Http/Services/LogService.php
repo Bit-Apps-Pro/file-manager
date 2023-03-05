@@ -1,4 +1,5 @@
 <?php
+
 namespace BitApps\FM\Http\Services;
 
 use BitApps\FM\Core\Database\QueryBuilder;

@@ -15,6 +15,7 @@ use BitApps\FM\Providers\Logger;
 use BitApps\FM\Providers\MediaSynchronizer;
 use BitApps\FM\Providers\MimeProvider;
 use BitApps\FM\Providers\PermissionsProvider;
+use BitApps\FM\Providers\PreferenceProvider;
 use BitApps\FM\Providers\ReviewProvider;
 use BitApps\FM\Providers\SyntaxChecker;
 use BitApps\FM\Providers\VersionMigrationProvider;
@@ -94,9 +95,24 @@ final class Plugin
         $this->_container['mimes']          = new MimeProvider(BFM_FINDER_DIR . 'php/mime.types');
         $this->_container['media_sync']     = new MediaSynchronizer();
         $this->_container['syntax_checker'] = new SyntaxChecker();
+        $this->_container['preferences']    = new PreferenceProvider();
 
         $migrationProvider = new VersionMigrationProvider();
         $migrationProvider->migrate();
+    }
+
+    /**
+     * Provide preferences
+     *
+     * @return PreferenceProvider
+     */
+    public function preferences()
+    {
+        if (!isset($this->_container['preferences'])) {
+            $this->_container['preferences'] = new PreferenceProvider();
+        }
+
+        return $this->_container['preferences'];
     }
 
     /**
