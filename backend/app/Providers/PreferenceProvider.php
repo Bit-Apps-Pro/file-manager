@@ -3,6 +3,8 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
+use BitApps\FM\Core\Utils\Capabilities;
+use BitApps\FM\Plugin;
 
 \defined('ABSPATH') or exit();
 class PreferenceProvider
@@ -360,5 +362,186 @@ class PreferenceProvider
         }
 
         return $langUrl;
+    }
+
+    public function setLang($lang)
+    {
+        $this->preferences['language']
+            = \in_array($lang, $this->availableLanguages())
+        ? $lang
+        : $this->getDefaultLangCode();
+    }
+
+    public function setRootPath($path)
+    {
+        $this->preferences['root_folder_path'] = $this->realPath($path);
+    }
+
+    public function getRootPath()
+    {
+        $defaultPath = Capabilities::check('manage_options')
+         ? ABSPATH : Plugin::instance()->permissions()->getDefaultPublicRootPath();
+
+        return isset($this->preferences['root_folder_path'])
+        ? $this->preferences['root_folder_path'] : $defaultPath;
+    }
+
+    public function realPath($path)
+    {
+        if (\is_null($path)) {
+            return $path;
+        }
+
+        // whether $path is unix or not
+        $unipath = \strlen($path) == 0 || $path[0] != '/';
+        // attempts to detect if path is relative in which case, add cwd
+        if (strpos($path, ':') === false && $unipath) {
+            $path = getcwd() . DIRECTORY_SEPARATOR . $path;
+        }
+
+        // resolve path parts (single dot, double dot and double delimiters)
+        $path      = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $path);
+        $parts     = array_filter(explode(DIRECTORY_SEPARATOR, $path), 'strlen');
+        $absolutes = [];
+        foreach ($parts as $part) {
+            if ($part == '.') {
+                continue;
+            }
+
+            if ($part == '..') {
+                array_pop($absolutes);
+            } else {
+                $absolutes[] = $part;
+            }
+        }
+
+        $path = implode(DIRECTORY_SEPARATOR, $absolutes);
+        // resolve any symlinks
+        if (file_exists($path) && linkinfo($path) > 0) {
+            $path = readlink($path);
+        }
+
+        // put initial separator that could have been lost
+        return !$unipath ? '/' . $path : $path;
+    }
+
+    public function setRootUrl($url)
+    {
+        $this->preferences['show_url_path'] = $this->realPath($url);
+    }
+
+    public function getRootUrl()
+    {
+        $defaultUrl = Capabilities::check('manage_options')
+         ? Config::get('SITE_URL') : Plugin::instance()->permissions()->getDefaultPublicRootPath();
+
+        return isset($this->preferences['show_url_path'])
+        ? $this->preferences['show_url_path'] : $defaultUrl;
+    }
+
+    public function setRootVolumeName($name)
+    {
+        $this->preferences['fm_root_folder_name'] = $name;
+    }
+
+    public function getRootVolumeName()
+    {
+        return isset($this->preferences['fm_root_folder_name'])
+        ? $this->preferences['fm_root_folder_name'] : basename(ABSPATH);
+    }
+
+    public function setWidth($width)
+    {
+        $this->preferences['size']['width'] = $width;
+    }
+
+    public function getWidth()
+    {
+        return isset($this->preferences['size']['width'])
+        ? $this->preferences['size']['width'] : 'auto';
+    }
+
+    public function setHeight($height)
+    {
+        $this->preferences['size']['height'] = $height;
+    }
+
+    public function getHeight()
+    {
+        return isset($this->preferences['size']['height'])
+        ? $this->preferences['size']['height'] : '500';
+    }
+
+    public function setVisibilityOfHiddenFile($visibility)
+    {
+        $this->preferences['fm-show-hidden-files'] = $visibility;
+    }
+
+    public function getVisibilityOfHiddenFile()
+    {
+        return isset($this->preferences['fm-show-hidden-files']) ? true : false;
+    }
+
+    public function setPermissionForHiddenFolderCreation($permission)
+    {
+        $this->preferences['fm-create-hidden-files-folders'] = $permission;
+    }
+
+    public function isHiddenFolderAllowed()
+    {
+        return isset($this->preferences['fm-create-hidden-files-folders']) ? true : false;
+    }
+
+    public function setPermissionForTrashCreation($permission)
+    {
+        $this->preferences['fm-create-trash-files-folders'] = $permission;
+    }
+
+    public function isTrashAllowed()
+    {
+        return isset($this->preferences['fm-create-trash-files-folders']) ? true : false;
+    }
+
+    public function setViewType($type)
+    {
+        $this->preferences['fm_default_view_type'] = $type;
+    }
+
+    public function getViewType()
+    {
+        return isset($this->preferences['fm_default_view_type']) ? $this->preferences['fm_default_view_type'] : 'icons';
+    }
+
+    public function setRememberLastDir($remember)
+    {
+        $this->preferences['fm-remember-last-dir'] = $remember;
+    }
+
+    public function getRememberLastDir()
+    {
+        return isset($this->preferences['fm-remember-last-dir'])
+         ? $this->preferences['fm-remember-last-dir'] : 'checked';
+    }
+
+    public function setClearHistoryOnReload($clearHistory)
+    {
+        $this->preferences['fm-clear-history-on-reload'] = $clearHistory;
+    }
+
+    public function getClearHistoryOnReload()
+    {
+        return isset($this->preferences['fm-clear-history-on-reload'])
+         ? $this->preferences['fm-clear-history-on-reload'] : 'checked';
+    }
+
+    public function setUiOptions($options)
+    {
+        $this->preferences['fm_display_ui_options'] = $options;
+    }
+
+    public function getUiOptions()
+    {
+        return isset($this->preferences['fm_display_ui_options'])
+         ? $this->preferences['fm_display_ui_options'] : ['toolbar', 'places', 'tree', 'path', 'stat'];
     }
 }
