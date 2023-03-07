@@ -5,17 +5,13 @@
  *
  * */
 
+use BitApps\FM\Plugin;
+
 // Security Check
 \defined('ABSPATH') or exit();
-global $FMP, $FileManager;
+global $FMP;
+$preferences = Plugin::instance()->preferences();
 
-// language
-$language          = $FileManager->options['file_manager_settings']['language'];
-$language_settings = \is_array($language) ? $language : unserialize(stripslashes($language));
-if ($language_settings['code'] != 'LANG') {
-    $language_code = $language_settings['code'];
-    $lang_file_url = $language_settings['file-url'];
-}
 $settings = get_option('file_manager_permissions', []);
 // pr($settings);
 if (!is_user_logged_in() && \count($settings['fmp_guest']) <= 1) {
@@ -73,15 +69,13 @@ ob_start();
                 action: 'bfm_permissions_system_connector',
                 bfm_nonce: '<?php echo wp_create_nonce('bfm_nonce'); ?>'
             },
-            lang: '<?php if (isset($language_code)) {
-                echo $language_code;
-            } ?>',
+            lang: '<?php echo $preferences->getLangCode(); ?>',
             requestType: 'post',
             messages: {
                 aa: "Hell of Error",
             },
-            width: '<?php echo $FileManager->options['file_manager_settings']['size']['width'] ?>',
-            height: '<?php echo $FileManager->options['file_manager_settings']['size']['height'] ?>',
+            width: '<?php echo $preferences->getWidth(); ?>',
+            height: '<?php echo $preferences->getHeight(); ?>',
 
         }).elfinder('instance');
         bfmElm.on('load', function(event) {

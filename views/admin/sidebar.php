@@ -6,7 +6,6 @@
  * 
  * */
 if (!defined('ABSPATH')) die();
-global $FileManager;
 ?>
 
 <div class='col-sidebar'>

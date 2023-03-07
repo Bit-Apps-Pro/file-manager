@@ -9,7 +9,7 @@ use elFinder;
 use elFinderConnector;
 use FM_BootStart;
 
-class FileManager extends FM_BootStart
+class FileManager
 {
     /**
      * @var $version Wordpress file manager plugin version
@@ -51,31 +51,6 @@ class FileManager extends FM_BootStart
 
     public function __construct($name)
     {
-        // $this->version                = '6.0';
-        // $this->version_no             = 528;
-        // $this->site                   = 'https://bitapps.pro';
-        // $this->support_page           = 'https://www.bitapps.pro/contact';
-        // $this->feedback_page          = 'https://wordpress.org/support/plugin/file-manager/reviews/';
-        // $this->file_manager_view_path = plugin_dir_path(__FILE__);
-
-        // Checking for migration
-        // new FMMigrate($this->version_no);
-
-        // // Adding Menu
-        // $this->menu_data = [
-        //     'type' => 'menu',
-        // ];
-
-        // Adding Ajax
-        // $this->add_ajax('connector'); // elFinder ajax call
-        // $this->add_ajax('fm_site_backup'); // Site backup function
-
-        parent::__construct($name);
-
-        // Adding plugins page links
-        // add_filter('plugin_action_links', array(&$this, 'plugin_page_links'), 10, 2);
-
-        // Admin Notices
     }
 
     /**
@@ -87,8 +62,8 @@ class FileManager extends FM_BootStart
     {
         // Allowed mime types
         $mime             = Plugin::instance()->mimes();
-
-        $opts = [
+        $preferences      = Plugin::instance()->preferences();
+        $opts             = [
             'bind' => [
                 'put.pre'                                                                                                                                                                                                                                                                                                                                                                                                                                                => [Plugin::instance()->syntaxChecker(), 'checkSyntax'], // Syntax Checking.
                 'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre tree.pre parents.pre ls.pre tmb.pre size.pre dim.pre' => [&$this, 'security_check'],
@@ -99,10 +74,10 @@ class FileManager extends FM_BootStart
             'debug' => WP_DEBUG,
             'roots' => [
                 [
-                    'alias'           => isset($this->preferences['fm_root_folder_name']) && !empty($this->preferences['fm_root_folder_name']) ? $this->preferences['fm_root_folder_name'] : 'WP Root',
+                    'alias'           => $preferences->getRootVolumeName(),
                     'driver'          => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
-                    'path'            => isset($this->preferences['root_folder_path']) && !empty($this->preferences['root_folder_path']) ? $this->preferences['root_folder_path'] : ABSPATH,                     // path to files (REQUIRED)
-                    'URL'             => isset($this->preferences['root_folder_url'])  && !empty($this->preferences['root_folder_url']) ? $this->preferences['root_folder_url'] : site_url(),                  // URL to files (REQUIRED)
+                    'path'            => $preferences->getRootPath(),                     // path to files (REQUIRED)
+                    'URL'             => $preferences->getRootUrl(),
                     'uploadDeny'      => [],                // All Mimetypes not allowed to upload
                     'uploadAllow'     => $mime->getTypes(), // All MIME types is allowed
                     'uploadOrder'     => ['order', 'allow', 'deny'],      // allowed Mimetype `image` and `text/plain` only
@@ -110,7 +85,7 @@ class FileManager extends FM_BootStart
                     'acceptedName'    => [Plugin::instance()->accessControl(), 'validateName'], // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#acceptedName
                     'disabled'        => [],    // List of disabled operations
                     'dispInlineRegex' => '^(?:image|application/(?:vnd\.)?(?:ms(?:-office|word|-excel|-powerpoint)|openxmlformats-officedocument)|text/plain$)', // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#dispInlineRegex
-                    'trashHash'       => isset($this->preferences['fm-create-trash-files-folders']) && !empty($this->preferences['fm-create-trash-files-folders']) ? 't1_Lw' : '',                     // elFinder's hash of trash folder
+                    'trashHash'       => $preferences->isTrashAllowed() ? 't1_Lw' : '',                     // elFinder's hash of trash folder
                     'winHashFix'      => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
                     // 'defaults'   => array('read' => true, 'write' => true,'locked'=>true),
                     'allowChmodReadOnly' => true, // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#allowChmodReadOnly
@@ -170,7 +145,7 @@ class FileManager extends FM_BootStart
         /**
          * Enable/Disable trash directory.
          */
-        if (isset($this->preferences['fm-create-trash-files-folders']) && $this->preferences['fm-create-trash-files-folders']  && is_writable(FM_WP_UPLOAD_DIR['basedir'])) {
+        if ($preferences->isTrashAllowed()  && is_writable(FM_WP_UPLOAD_DIR['basedir'])) {
             $opts['roots'][] = [
                 'id'            => '1',
                 'driver'        => 'Trash',

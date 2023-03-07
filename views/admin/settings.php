@@ -1,16 +1,10 @@
 <?php
 
 use BitApps\FM\Plugin;
-use BitApps\FM\Providers\FileManager;
 
 if (!\defined('ABSPATH')) {
     exit();
 }
-
-/**
- * @var FileManager $FileManager
- */
-global $FileManager;
 
 // Settings processing
 $preferenceProvider = Plugin::instance()->preferences();
@@ -40,35 +34,35 @@ if (isset($_POST) && !empty($_POST)) {
     $preferenceProvider->setWidth(isset($_POST['width']) ? filter_var($_POST['width'], FILTER_VALIDATE_INT) : 'auto');
     $preferenceProvider->setHeight(isset($_POST['height']) ? filter_var($_POST['height'], FILTER_VALIDATE_INT) : '500');
     $preferenceProvider->setVisibilityOfHiddenFile(
-        isset($_POST['fm-show-hidden-files']) && !empty($_POST['fm-show-hidden-files'])
+        !empty($_POST['fm-show-hidden-files'])
          ? sanitize_text_field($_POST['fm-show-hidden-files']) : ''
     );
     $preferenceProvider->setPermissionForHiddenFolderCreation(
-        isset($_POST['fm-create-hidden-files-folders']) && !empty($_POST['fm-create-hidden-files-folders'])
+        !empty($_POST['fm-create-hidden-files-folders'])
          ? sanitize_text_field($_POST['fm-create-hidden-files-folders']) : ''
     );
-    $preferenceProvider->setPermissionForHiddenFolderCreation(
-        isset($_POST['fm-create-trash-files-folders']) && !empty($_POST['fm-create-trash-files-folders'])
+    $preferenceProvider->setPermissionForTrashCreation(
+        !empty($_POST['fm-create-trash-files-folders'])
         ? sanitize_text_field($_POST['fm-create-trash-files-folders']) : ''
     );
     $preferenceProvider->setRootVolumeName(
-        isset($_POST['fm_root_folder_name']) && !empty($_POST['fm_root_folder_name'])
+        !empty($_POST['fm_root_folder_name'])
          ? sanitize_text_field($_POST['fm_root_folder_name']) : 'WP Root'
     );
     $preferenceProvider->setViewType(
-        isset($_POST['fm_default_view_type']) && !empty($_POST['fm_default_view_type'])
+        !empty($_POST['fm_default_view_type'])
          ? sanitize_text_field($_POST['fm_default_view_type']) : 'icons'
     );
 
     $preferenceProvider->setRememberLastDir(
-        isset($_POST['fm-remember-last-dir']) && !empty($_POST['fm-remember-last-dir'])
-         ? sanitize_text_field($_POST['fm-remember-last-dir']) : 'checked'
+        !empty($_POST['fm-remember-last-dir'])
+         ? sanitize_text_field($_POST['fm-remember-last-dir']) : ''
     );
 
     $preferenceProvider->setClearHistoryOnReload(
         isset($_POST['fm-clear-history-on-reload'])
         && !empty($_POST['fm-clear-history-on-reload'])
-            ? sanitize_text_field($_POST['fm-clear-history-on-reload']) : 'checked'
+            ? sanitize_text_field($_POST['fm-clear-history-on-reload']) : ''
     );
     $preferenceProvider->setUiOptions(
         isset($_POST['fm_display_ui_options']) && !empty($_POST['fm_display_ui_options'])
@@ -77,11 +71,6 @@ if (isset($_POST) && !empty($_POST)) {
 
     $preferenceProvider->saveOptions();
 }
-
-$admin_page_url = admin_url() . "admin.php?page={$FileManager->prefix}";
-
-// Enqueing admin assets
-// $FileManager->admin_assets();
 
 $themes = [
     'default'          => 'Default',
@@ -111,13 +100,13 @@ $selectedTheme = $preferenceProvider->getTheme();
                         </td>
                         <td>
                             <label for='show_url_path_id'> <?php _e('Show', 'file-manager'); ?> </label>
-                            <input type='radio' name='show_url_path' id='show_url_path_id' value='show' <?php if (isset($FileManager->preferences['show_url_path']) && !empty($FileManager->preferences['show_url_path']) && $FileManager->preferences['show_url_path'] == 'show') {
+                            <input type='radio' name='show_url_path' id='show_url_path_id' value='show' <?php if ($preferenceProvider->getUrlPathView() == 'show') {
                                 echo 'checked';
                             }
 ?> />
 
                             <label for='hide_url_path_id'> Hide </label>
-                            <input type='radio' name='show_url_path' id='hide_url_path_id' value='hide' <?php if (isset($FileManager->preferences['show_url_path']) && !empty($FileManager->preferences['show_url_path']) && $FileManager->preferences['show_url_path'] == 'hide') {
+                            <input type='radio' name='show_url_path' id='hide_url_path_id' value='hide' <?php if ($preferenceProvider->getUrlPathView() == 'hide') {
                                 echo 'checked';
                             }
 ?> />
@@ -132,13 +121,15 @@ $selectedTheme = $preferenceProvider->getTheme();
                             <script>
                                 function pathVlidation() {
                                     let path = document.getElementById('root_folder_path_id').value;
-                                    let res = path.match(/^[a-zA-Z]:\\([a-zA-Z0-9.\-*.+]+([ ][a-zA-Z0-9.\-*.+]+)*\\)*([a-zA-Z0-9.\-*.+]+([ ][a-zA-Z0-9.\-*.+]+)*)*$/gi);
+                                    let isWinPath = path.match(/^[a-zA-Z]:\\([a-zA-Z0-9.\-*.+]+([ ][a-zA-Z0-9.\-*.+]+)*\\)*([a-zA-Z0-9.\-*.+]+([ ][a-zA-Z0-9.\-*.+]+)*)*$/gi);
+                                    let isNixPath = path.match(/^\/([A-z0-9-_+]+\/?)*$/gm);
+
                                     let span = document.getElementById('fm_path_err');
-                                    if (res == null) {
+                                    if (!isWinPath && !isNixPath) {
                                         span.innerHTML = "Path is wrong! Please enter a valid Path.";
                                         span.style.color = 'red';
                                         span.style.visibility = 'visible'
-                                    } else if (res.length) {
+                                    } else if (isNixPath.length || isWinPath.length) {
                                         span.style.visibility = 'hidden'
                                     }
                                 }
@@ -149,7 +140,7 @@ $selectedTheme = $preferenceProvider->getTheme();
                             <label for='root_folder_url_id'> <?php _e('Root Folder URL', 'file-manager'); ?> </label>
                             &nbsp;
                             <input type='text' name='root_folder_url' onkeyup="validURL()" id='root_folder_url_id' 
-                            value='<?php echo esc_attr($preferenceProvider->getLangCode());?>' 
+                            value='<?php echo esc_attr($preferenceProvider->getRootUrl());?>' 
                             />
                             <br />
                             <span id="url_error"></span>
@@ -192,8 +183,11 @@ $selectedTheme = $preferenceProvider->getTheme();
                         </td>
                         <td>
                           <select name='language'>
-                                <?php foreach ($preferenceProvider->availableLanguages() as $code => $name) { ?>
-                                    <option <?php selected($code, $preferenceProvider->getLangCode()); ?> value='<?php echo esc_attr($code); ?>'><?php echo esc_html($name); ?></option>
+                                <?php
+                                $selectedCode = $preferenceProvider->getLangCode();
+foreach ($preferenceProvider->availableLanguages() as $code => $name) {
+    ?>
+                                    <option <?php selected($code, $selectedCode); ?> value='<?php echo esc_attr($code); ?>'><?php echo esc_html($name); ?></option>
                                 <?php } ?>
                             </select>
                         </td>
@@ -244,9 +238,9 @@ $selectedTheme = $preferenceProvider->getTheme();
                             type='checkbox'
                             name='fm-show-hidden-files'
                             <?php
-                            if ($preferenceProvider->getVisibilityOfHiddenFile()) {
-                                echo 'checked';
-                            }?>
+                           if ($preferenceProvider->getVisibilityOfHiddenFile()) {
+                               echo 'checked';
+                           }?>
                              value="fm-show-hidden-files"
                             >
                             <small><?php _e('When checked hidden files and folders will be shown to the users.', 'file-manager'); ?></small>

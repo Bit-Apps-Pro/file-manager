@@ -17,22 +17,13 @@ class PermissionsProvider
     /**
      * FileManager Instance
      *
-     * @var FileManager
-     */
-    public $fileManager;
-
-    /**
-     * FileManager Instance
-     *
      * @var WP_User
      */
     public $currentUser;
 
     public function __construct()
     {
-        global $wp_roles, $FileManager;
-
-        $this->fileManager    = $FileManager;
+        global $wp_roles;
         $this->permissions    = Config::getOption(
             'permissions',
             $this->defaultPermissions()

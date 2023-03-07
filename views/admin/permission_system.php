@@ -7,7 +7,7 @@ use BitApps\FM\Providers\PermissionsProvider;
 
 defined('ABSPATH') or die();
 
-global $wp_roles, $wpdb, $FileManager, $FMP;
+global $wp_roles, $wpdb, $FMP;
 
 // Processing Post data
 if (!empty($_POST)) {
@@ -48,13 +48,6 @@ if (isset($previous_settings['root_folder_url']) && !empty($previous_settings['r
 else $root_folder_url = $default_root_folder_url;
 ?>
 
-<?php
-
-global $FileManager;
-
-//auto::  $FileManager->admin_assets();
-
-?>
 
 <?php require_once 'header.php'; ?>
 

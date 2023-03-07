@@ -8,7 +8,7 @@
 
 // Security Check
 defined('ABSPATH') or die();
-global $FMP, $FileManager;
+global $FMP;
 
 //~ pr($data);
 

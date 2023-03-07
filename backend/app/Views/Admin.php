@@ -5,6 +5,7 @@ namespace BitApps\FM\Views;
 use BitApps\FM\Config;
 use BitApps\FM\Core\Hooks\Hooks;
 use BitApps\FM\Core\Utils\Capabilities;
+use BitApps\FM\Plugin;
 
 use function BitApps\FM\Functions\view;
 
@@ -78,52 +79,11 @@ class Admin
     public function filterConfigVariable($config)
     {
         return (array) $config + [
-            'themes' => $this->themes(),
-            'theme'  => $this->selectedTheme(),
+            'themes' => Plugin::instance()->preferences()->themes(),
+            'theme'  => Plugin::instance()->preferences()->getTheme(),
         ];
     }
 
-    /**
-     * Returns all available themes
-     *
-     * @return array
-     */
-    public function themes()
-    {
-        $themeBase = BFM_ROOT_DIR . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'themes';
-        $themeDirs = scandir($themeBase);
-        $themes    = [];
-        foreach ($themeDirs as $theme) {
-            if ($theme === '.' || $theme === '..') {
-                continue;
-            }
-            $variants = scandir($themeBase . DIRECTORY_SEPARATOR . $theme);
-            foreach ($variants as $variant) {
-                if ($variant === '.' || $variant === '..') {
-                    continue;
-                }
-
-                if (is_readable($themeBase . DIRECTORY_SEPARATOR . $theme . DIRECTORY_SEPARATOR . $variant . DIRECTORY_SEPARATOR . $variant . '.json')) {
-                    $themes[$variant] = BFM_ASSET_URL . "themes/{$theme}/{$variant}/{$variant}.json";
-                }
-            }
-        }
-
-        return $themes;
-    }
-
-    /**
-     * Returns selected theme from settings
-     *
-     * @return array
-     */
-    public function selectedTheme()
-    {
-        return 'default';
-        // if (isset($this->options['file_manager_settings']['theme'])) {
-        //     $theme = $this->options['file_manager_settings']['theme'];
-        // }
-    }
 
     public function homePage()
     {

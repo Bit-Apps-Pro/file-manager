@@ -2,6 +2,8 @@
 
 namespace BitApps\FM\Providers;
 
+use BitApps\FM\Plugin;
+
 \defined('ABSPATH') or exit();
 
 class AccessControlProvider
@@ -10,16 +12,18 @@ class AccessControlProvider
 
     public function __construct()
     {
-        global $FileManager;
-        $this->settings = $FileManager->preferences;
+        $this->settings = Plugin::instance()->preferences();
     }
 
     public function control($attr, $path, $data, $volume)
     {
-        if (!isset($this->settings['fm-show-hidden-files']) || empty($this->settings['fm-show-hidden-files'])) {
+        if (!$this->settings->getVisibilityOfHiddenFile()) {
+            $readWrite          = $attr == 'read' || $attr == 'write';
+            $isReadWriteAllowed = $this->settings->isHiddenFolderAllowed()
+            ? $readWrite : ! $readWrite;
+
             return strpos(basename($path), '.') === 0
-                ? (isset($this->settings['fm-create-hidden-files-folders']) && '' == $this->settings['fm-create-hidden-files-folders']) ? !($attr == 'read' || $attr == 'write') : ($attr == 'read' || $attr == 'write')
-                : null;
+                ? $isReadWriteAllowed : null;
         }
     }
 
@@ -33,7 +37,7 @@ class AccessControlProvider
      */
     public function validateName($name)
     {
-        if (isset($this->settings['fm-create-hidden-files-folders']) && 'fm-create-hidden-files-folders' == $this->settings['fm-create-hidden-files-folders']) {
+        if ($this->settings->isHiddenFolderAllowed()) {
             return true;
         }
 

@@ -11,7 +11,6 @@ if (!defined('ABSPATH')) {
     die();
 }
 
-global $FileManager;
 ?>
 <?php
 wp_enqueue_style('bfm-admin-style');
