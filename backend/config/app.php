@@ -98,6 +98,6 @@ if (!\defined('FM_TRASH_DIR_PATH')) {
 }
 
 // File manager trash tmb dir url
-if (\defined('FM_TRASH_TMB_DIR_URL')) {
+if (!\defined('FM_TRASH_TMB_DIR_URL')) {
     \define('FM_TRASH_TMB_DIR_URL', FM_WP_UPLOAD_DIR['baseurl'] . '/file-manager/trash/.tmb/');
 }

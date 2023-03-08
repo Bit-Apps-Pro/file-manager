@@ -50,9 +50,6 @@ function bfmLoaded()
     // Including elFinder class
     include_once BFM_FINDER_DIR . 'php' . DS . 'autoload.php';
 
-    // Including Boot Starter
-    include_once BFM_BASEDIR . 'BootStart' . DS . 'BootStart.php';
-
     // Including other necessary files
     include_once BFM_BASEDIR . 'inc/__init__.php';
 

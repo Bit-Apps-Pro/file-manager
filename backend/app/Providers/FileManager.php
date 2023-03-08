@@ -7,7 +7,6 @@ namespace BitApps\FM\Providers;
 use BitApps\FM\Plugin;
 use elFinder;
 use elFinderConnector;
-use FM_BootStart;
 
 class FileManager
 {

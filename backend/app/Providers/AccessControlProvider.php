@@ -15,16 +15,35 @@ class AccessControlProvider
         $this->settings = Plugin::instance()->preferences();
     }
 
-    public function control($attr, $path, $data, $volume)
+    /**
+     * Handles hidden file/folder access
+     *
+     * @param string    $attr    attribute name (read|write|locked|hidden)
+     * @param string    $path    absolute file path
+     * @param string    $data    value of volume option `accessControlData`
+     * @param object    $volume  elFinder volume driver object
+     * @param bool|null $isDir   path is directory (true: directory, false: file, null: unknown)
+     * @param string    $relPath file path relative to volume root directory started with directory separator
+     *
+     * @return bool|null
+     */
+    public function control($attr, $path, $data, $volume, $isDir, $relPath)
     {
-        if (!$this->settings->getVisibilityOfHiddenFile()) {
-            $readWrite          = $attr == 'read' || $attr == 'write';
-            $isReadWriteAllowed = $this->settings->isHiddenFolderAllowed()
-            ? $readWrite : ! $readWrite;
-
-            return strpos(basename($path), '.') === 0
-                ? $isReadWriteAllowed : null;
+        if (strpos(basename($path), '.') !== 0 || \strlen($relPath) === 1 || $attr === 'locked') {
+            return;
         }
+
+        $isAccessAllowed = true;
+
+        if ($this->settings->getVisibilityOfHiddenFile() && $attr === 'hidden') {
+            $isAccessAllowed = false;
+        }
+
+        if ($isAccessAllowed && !$this->settings->isHiddenFolderAllowed() && $attr == 'write') {
+            $isAccessAllowed = false;
+        }
+
+        return $isAccessAllowed;
     }
 
     /**
@@ -37,10 +56,6 @@ class AccessControlProvider
      */
     public function validateName($name)
     {
-        if ($this->settings->isHiddenFolderAllowed()) {
-            return true;
-        }
-
-        return strpos($name, '.') !== 0;
+        return ! (strpos($name, '.') === 0 && !$this->settings->isHiddenFolderAllowed());
     }
 }
