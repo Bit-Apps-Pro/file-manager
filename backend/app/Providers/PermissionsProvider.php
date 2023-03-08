@@ -3,6 +3,8 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
+use BitApps\FM\Core\Hooks\Hooks;
+use BitApps\FM\Core\Utils\Capabilities;
 use WP_User;
 
 \defined('ABSPATH') or exit();
@@ -247,5 +249,18 @@ class PermissionsProvider
     public function permissionsForCurrentRole()
     {
         return $this->getByRole($this->currentUserRole());
+    }
+
+    public function currentUserCanRun($command)
+    {
+        $permission = false;
+        if (\in_array($command, $this->permissionsForCurrentUser()['commands'])) {
+            $permissions = true;
+        } elseif (\in_array($command, $this->permissionsForCurrentRole()['commands'])) {
+            $permissions = true;
+        }
+
+        $cap = Config::VAR_PREFIX . 'user_can_' . $command;
+        return Capabilities::filter($cap) || $permission;
     }
 }

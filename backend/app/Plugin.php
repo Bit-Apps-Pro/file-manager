@@ -17,7 +17,7 @@ use BitApps\FM\Providers\MimeProvider;
 use BitApps\FM\Providers\PermissionsProvider;
 use BitApps\FM\Providers\PreferenceProvider;
 use BitApps\FM\Providers\ReviewProvider;
-use BitApps\FM\Providers\SyntaxChecker;
+use BitApps\FM\Providers\FileEditValidator;
 use BitApps\FM\Providers\VersionMigrationProvider;
 use BitApps\FM\Views\Admin;
 use FileManagerPermission;
@@ -94,7 +94,7 @@ final class Plugin
         $this->_container['permissions']    = new PermissionsProvider();
         $this->_container['mimes']          = new MimeProvider(BFM_FINDER_DIR . 'php/mime.types');
         $this->_container['media_sync']     = new MediaSynchronizer();
-        $this->_container['syntax_checker'] = new SyntaxChecker();
+        $this->_container['file_edit_validator'] = new FileEditValidator();
         $this->_container['preferences']    = new PreferenceProvider();
 
         $migrationProvider = new VersionMigrationProvider();
@@ -118,15 +118,15 @@ final class Plugin
     /**
      * Provide php syntax checker
      *
-     * @return SyntaxChecker
+     * @return FileEditValidator
      */
-    public function syntaxChecker()
+    public function fileEditValidator()
     {
-        if (!isset($this->_container['syntax_checker'])) {
-            $this->_container['syntax_checker'] = new SyntaxChecker();
+        if (!isset($this->_container['file_edit_validator'])) {
+            $this->_container['file_edit_validator'] = new FileEditValidator();
         }
 
-        return $this->_container['syntax_checker'];
+        return $this->_container['file_edit_validator'];
     }
 
     /**
