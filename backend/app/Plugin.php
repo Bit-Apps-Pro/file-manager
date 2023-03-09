@@ -9,7 +9,7 @@ use BitApps\FM\Core\Hooks\Hooks;
 use BitApps\FM\Core\Http\RequestType;
 use BitApps\FM\Http\Middleware\NonceCheckerMiddleware;
 use BitApps\FM\Providers\AccessControlProvider;
-use BitApps\FM\Providers\FileManager;
+use BitApps\FM\Providers\FileEditValidator;
 use BitApps\FM\Providers\HookProvider;
 use BitApps\FM\Providers\Logger;
 use BitApps\FM\Providers\MediaSynchronizer;
@@ -17,7 +17,6 @@ use BitApps\FM\Providers\MimeProvider;
 use BitApps\FM\Providers\PermissionsProvider;
 use BitApps\FM\Providers\PreferenceProvider;
 use BitApps\FM\Providers\ReviewProvider;
-use BitApps\FM\Providers\FileEditValidator;
 use BitApps\FM\Providers\VersionMigrationProvider;
 use BitApps\FM\Views\Admin;
 use FileManagerPermission;
@@ -83,19 +82,18 @@ final class Plugin
             new Admin();
         }
 
-        global $FileManager, $FMP;
-        $FileManager = new FileManager('File Manager');
-        $FMP         = new FileManagerPermission();
+        global $FMP;
+        $FMP = new FileManagerPermission();
 
         new HookProvider();
 
-        $this->_container['access_control'] = new AccessControlProvider();
-        $this->_container['logger']         = new Logger();
-        $this->_container['permissions']    = new PermissionsProvider();
-        $this->_container['mimes']          = new MimeProvider(BFM_FINDER_DIR . 'php/mime.types');
-        $this->_container['media_sync']     = new MediaSynchronizer();
+        $this->_container['access_control']      = new AccessControlProvider();
+        $this->_container['logger']              = new Logger();
+        $this->_container['permissions']         = new PermissionsProvider();
+        $this->_container['mimes']               = new MimeProvider(BFM_FINDER_DIR . 'php/mime.types');
+        $this->_container['media_sync']          = new MediaSynchronizer();
         $this->_container['file_edit_validator'] = new FileEditValidator();
-        $this->_container['preferences']    = new PreferenceProvider();
+        $this->_container['preferences']         = new PreferenceProvider();
 
         $migrationProvider = new VersionMigrationProvider();
         $migrationProvider->migrate();
@@ -373,7 +371,7 @@ final class Plugin
     private function uploadFolder()
     {
         if (!is_dir(FM_UPLOAD_BASE_DIR)) {
-            mkdir(FM_UPLOAD_BASE_DIR, 0777);
+            mkdir(FM_UPLOAD_BASE_DIR, 0755);
         }
     }
 }

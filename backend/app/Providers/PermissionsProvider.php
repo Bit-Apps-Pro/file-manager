@@ -3,7 +3,6 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Core\Hooks\Hooks;
 use BitApps\FM\Core\Utils\Capabilities;
 use WP_User;
 
@@ -35,18 +34,48 @@ class PermissionsProvider
         $this->users = get_users(['fields' => ['ID', 'user_login', 'display_name']]);
     }
 
-    public static function defaultPermissions()
+    public function allRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * Returns all available users
+     *
+     * @return array<int, WP_User>
+     */
+    public function allUsers()
+    {
+        return $this->users;
+    }
+
+    public function allCommands()
+    {
+        return [
+            'download', // file, zipdl
+            'cut',// only for frontend. send cmd as paste
+            'copy',// only for frontend. send cmd as paste
+            'edit', // put
+            'rm', // rm
+            'upload',// upload
+            'duplicate', // duplicate
+            'paste', // paste
+            'mkfile',// mkfile
+            'mkdir',// mkdir
+            'rename', // rename
+            'archive', // archive
+            'extract',// extract
+        ];
+    }
+
+    public function defaultPermissions()
     {
         $permissions['do_not_use_for_admin']     = 'do_not_use_for_admin';
         $permissions['file_type']                = ['text', 'image', 'application', 'video', 'audio'];
         $permissions['file_size']                = 2;
         $permissions['folder_options']           = 'common'; // common | role | user
         $permissions['by_role']['administrator'] = [
-            'commands' => [
-                'download', 'upload', 'cut', 'copy', 'duplicate',
-                'paste', 'rm', 'mkdir', 'mkfile', 'edit', 'rename',
-                'archive', 'extract'
-            ],
+            'commands' => $this->allCommands(),
             'path'     => FM_UPLOAD_BASE_DIR,
         ];
 
@@ -143,7 +172,7 @@ class PermissionsProvider
         return $settings;
     }
 
-    public function getGuestSettings()
+    public function getGuestPermissions()
     {
         $settings = [
             'commands' => [],
@@ -254,13 +283,19 @@ class PermissionsProvider
     public function currentUserCanRun($command)
     {
         $permission = false;
-        if (\in_array($command, $this->permissionsForCurrentUser()['commands'])) {
-            $permissions = true;
-        } elseif (\in_array($command, $this->permissionsForCurrentRole()['commands'])) {
-            $permissions = true;
+        if (
+            \in_array($command, $this->permissionsForCurrentUser()['commands'])
+        || \in_array($command, $this->permissionsForCurrentRole()['commands'])
+        ) {
+            $permission = true;
+        }
+
+        if (!is_user_logged_in() && \in_array($command, $this->getGuestPermissions()['commands'])) {
+            $permission = true;
         }
 
         $cap = Config::VAR_PREFIX . 'user_can_' . $command;
+
         return Capabilities::filter($cap) || $permission;
     }
 }

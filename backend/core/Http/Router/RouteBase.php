@@ -9,11 +9,11 @@ use RuntimeException;
 /**
  * Base class for route
  *
- * @method static RouteRegister match($methods, $path, $action)
- * @method static RouteRegister get($path, $action)
- * @method static RouteRegister post($path, $action)
+ * @method static RouteRegister match(string|array $methods,string $path, callable $action)
+ * @method static RouteRegister get(string $path,callable $action)
+ * @method static RouteRegister post(string $path,callable $action)
  * @method static RouteRegister getMethods()
- * @method static RouteRegister action($action)
+ * @method static RouteRegister action(callable $action)
  * @method static RouteRegister getAction()
  * @method static RouteRegister path($path)
  * @method static RouteRegister getPath()

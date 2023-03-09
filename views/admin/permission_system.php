@@ -3,49 +3,32 @@
 // Security Check
 
 use BitApps\FM\Config;
-use BitApps\FM\Providers\PermissionsProvider;
+use BitApps\FM\Core\Utils\Capabilities;
+use BitApps\FM\Plugin;
 
-defined('ABSPATH') or die();
-
-global $wp_roles, $wpdb, $FMP;
+\defined('ABSPATH') or exit();
 
 // Processing Post data
 if (!empty($_POST)) {
     // Checks if the current user have enough authorization to operate.
     if (
         !wp_verify_nonce($_POST['bfm_permissions_nonce'], 'bfm_permissions_nonce')
-        || !current_user_can('manage_options')
-    ) wp_die();
+        || !Capabilities::filter(Config::VAR_PREFIX . 'user_can_set_permission')
+    ) {
+        wp_die();
+    }
+
     // var_dump($_POST); die;
     check_ajax_referer('bfm_permissions_nonce', 'bfm_permissions_nonce');
     Config::updateOption('permissions', $_POST, 'yes');
 }
-$previous_settings = Config::getOption('permissions', []);
 
-$permissionSettings = new PermissionsProvider();
+$permissionSettings = Plugin::instance()->permissions();
 
-// pr($previous_settings);
-
-// Extracting user role
-$roles = array_keys($wp_roles->roles);
-
-$users = $wpdb->get_results("SELECT id, user_login FROM {$wpdb->prefix}users;", ARRAY_A);
-
-// Listing all operations
-$operations = $FMP->list_of_operations;
+$operations = $permissionSettings->allCommands();
 
 // File Types
-$file_types = array('text', 'image', 'application', 'video', 'audio');
-
-// Initializing root folder path
-$default_root_folder_path = FM_UPLOAD_BASE_DIR . DS;
-if (isset($previous_settings['root_folder']) && !empty($previous_settings['root_folder'])) $root_folder_path = stripslashes($previous_settings['root_folder']);
-else $root_folder_path = $default_root_folder_path;
-
-// Initilizing root folder URL
-$default_root_folder_url = FM_UPLOAD_DIR_URL;
-if (isset($previous_settings['root_folder_url']) && !empty($previous_settings['root_folder_url'])) $root_folder_url = stripslashes($previous_settings['root_folder_url']);
-else $root_folder_url = $default_root_folder_url;
+$fileTypes = ['text', 'image', 'application', 'video', 'audio'];
 ?>
 
 
@@ -77,16 +60,18 @@ else $root_folder_url = $default_root_folder_url;
 
         <div class='gb-fm-row'>
             <form method="post" action="">
-                <input type='hidden' name='bfm_permissions_nonce' value='<?php echo wp_create_nonce("bfm_permissions_nonce"); ?>'>
+                <input type='hidden' name='bfm_permissions_nonce' value='<?php echo wp_create_nonce('bfm_permissions_nonce'); ?>'>
 
                 <label for='do_not_use_for_admin-id'>Do not use this settings for administrator </label>
-                <input type='checkbox' name='do_not_use_for_admin' id='do_not_use_for_admin-id' value='do_not_use_for_admin' <?php if ($permissionSettings->isEnabledForAdmin()) echo "checked"; ?>>
+                <input type='checkbox' name='do_not_use_for_admin' id='do_not_use_for_admin-id' value='do_not_use_for_admin' <?php if ($permissionSettings->isEnabledForAdmin()) {
+                    echo 'checked';
+                } ?>>
 
                 <h3>Allowed MIME types and size</h3>
-                <?php foreach ($file_types as $file_type) : ?>
-                    <input type='checkbox' name="file_type[]" value="<?php echo $file_type; ?>" id='<?php echo $file_type . "_id"; ?>' <?php echo in_array($file_type, $permissionSettings->getEnabledFileType()) ? "checked" : ""; ?> />
-                    <label for="<?php echo $file_type . "_id"; ?>"><?php echo $FMP->__p($file_type); ?></label>
-                <?php endforeach; ?>
+                <?php foreach ($fileTypes as $fileType) { ?>
+                    <input type='checkbox' name="fileType[]" value="<?php echo $fileType; ?>" id='<?php echo $fileType . '_id'; ?>' <?php echo \in_array($fileType, $permissionSettings->getEnabledFileType()) ? 'checked' : ''; ?> />
+                    <label for="<?php echo $fileType . '_id'; ?>"><?php echo $fileType; ?></label>
+                <?php } ?>
                 <small><a href="http://www.iana.org/assignments/media-types/media-types.xhtml">What is MIME types?</a></small>
                 </br>
                 </br>
@@ -111,16 +96,16 @@ else $root_folder_url = $default_root_folder_url;
                 <br />
 
                 <h3>Folder Options</h3>
-                <input type='radio' name="folder_options" id='folder_options_single_id' value="common" <?php echo $permissionSettings->getFolderOption() === "common" ? "checked" : ""; ?> />
+                <input type='radio' name="folder_options" id='folder_options_single_id' value="common" <?php echo $permissionSettings->getFolderOption() === 'common' ? 'checked' : ''; ?> />
                 <label for="folder_options_single_id">Enable a common folder for everyone</label>
                 <br>
                 <br>
-                <input type='radio' name="folder_options" id='folder_options_separate_id' value="user" <?php echo $permissionSettings->getFolderOption() === "user" ? "checked" : ""; ?> />
+                <input type='radio' name="folder_options" id='folder_options_separate_id' value="user" <?php echo $permissionSettings->getFolderOption() === 'user' ? 'checked' : ''; ?> />
                 <label for="folder_options_separate_id">Enable separate folders for each user</label>
 
                 <br>
                 <br>
-                <input type='radio' name="folder_options" id='folder_options_userrole_id' value="role" <?php echo $permissionSettings->getFolderOption() === "role" ? "checked" : ""; ?> />
+                <input type='radio' name="folder_options" id='folder_options_userrole_id' value="role" <?php echo $permissionSettings->getFolderOption() === 'role' ? 'checked' : ''; ?> />
                 <label for="folder_options_userrole_id">Enable folders for each user role</label>
 
                 <h3>Roles Permission</h3>
@@ -131,27 +116,27 @@ else $root_folder_url = $default_root_folder_url;
                         <th>Role </th>
 
 
-                        <?php foreach ($operations as $operation) : ?>
+                        <?php foreach ($operations as $operation) { ?>
 
-                            <th><?php echo $FMP->__p($operation); ?></th>
+                            <th><?php echo $operation; ?></th>
 
-                        <?php endforeach; ?>
+                        <?php } ?>
 
                         <th>Path<small>(relative to root folder or absolute path)</small></th>
 
                     </tr>
-                    <?php foreach ($roles as $role) : ?>
+                    <?php foreach ($permissionSettings->allRoles() as $role) { ?>
                         <tr>
 
-                            <td><?php echo $FMP->__p($role); ?></td>
+                            <td><?php echo $role; ?></td>
 
                             <?php
                             $settingsForRole = $permissionSettings->getByRole($role);
-                            foreach ($operations as $operation) :
-                                ?>
+                        foreach ($operations as $operation) {
+                            ?>
                                 <td>
-                                    <input type='checkbox' name='by_role[<?php echo $role; ?>][commands][]' id='<?php echo $role . '_' . $operation; ?>' class='<?php echo $operation; ?>' value='<?php echo $operation; ?>' <?php echo in_array($operation, $settingsForRole['commands']) ? "checked" : ""; ?> />
-                            <?php endforeach; ?>
+                                    <input type='checkbox' name='by_role[<?php echo $role; ?>][commands][]' id='<?php echo $role . '_' . $operation; ?>' class='<?php echo $operation; ?>' value='<?php echo $operation; ?>' <?php echo \in_array($operation, $settingsForRole['commands']) ? 'checked' : ''; ?> />
+                            <?php } ?>
                             <td>
                                 <input type='text' name='by_role[<?php echo $role; ?>][path]' value='<?php echo $settingsForRole['path']; ?>' />
 
@@ -159,7 +144,7 @@ else $root_folder_url = $default_root_folder_url;
 
                         </tr>
 
-                    <?php endforeach; ?>
+                    <?php } ?>
 
                 </table>
 
@@ -167,10 +152,10 @@ else $root_folder_url = $default_root_folder_url;
                 <table>
                     <tr>
                         <th>Guests can Download file</th>
-                        <td><input type='checkbox' name='guest[commands][]' value='download' <?php echo  in_array('download', $permissionSettings->getGuestSettings()['commands'])? 'checked' : '' ?>> <i class="fa fa-question-circle tippy" aria-hidden="true" title='Hello Help'></i> </td>
+                        <td><input type='checkbox' name='guest[commands][]' value='download' <?php echo \in_array('download', $permissionSettings->getGuestPermissions()['commands']) ? 'checked' : '' ?>> <i class="fa fa-question-circle tippy" aria-hidden="true" title='Hello Help'></i> </td>
 
                         <th>Guests File Path</th>
-                        <td><input type='text' name='guest[path]' value='<?php echo $permissionSettings->getGuestSettings()['path']; ?>'></td>
+                        <td><input type='text' name='guest[path]' value='<?php echo $permissionSettings->getGuestPermissions()['path']; ?>'></td>
                     </tr>
                 </table>
 
@@ -182,31 +167,32 @@ else $root_folder_url = $default_root_folder_url;
 
                     <tr>
                         <th>User login</th>
+                        <th>&nbsp;&nbsp;</th>
 
 
-                        <?php foreach ($operations as $operation) : ?>
+                        <?php foreach ($operations as $operation) { ?>
 
-                            <th><?php echo $FMP->__p($operation); ?></th>
+                            <th><?php echo $operation; ?></th>
 
-                        <?php endforeach; ?>
+                        <?php } ?>
 
                         <th>Path <small>(relative to root folder or absolute path)</small></th>
 
                     </tr>
-                    <?php foreach ($users as $user) :
-                        $userID = $user['id'];
+                    <?php foreach ($permissionSettings->allUsers() as $user) {
+                        $userID          = $user->id;
                         $settingsForRole = $permissionSettings->getByUser($userID);
                         ?>
                         <tr>
 
-                            <td><?php echo $FMP->__p($user['user_login']); ?></td>
+                            <td><?php echo $user->display_name; ?></td>
+                            <td>&nbsp;&nbsp;</td>
 
-                            <?php foreach ($operations as $operation) : ?>
+                            <?php foreach ($operations as $operation) { ?>
                                 <td>
-                                    <input type='checkbox' name='by_user[<?php echo $userID; ?>][commands][]' value="<?php echo $operation; ?>" <?php echo in_array($operation, $settingsForRole['commands']) ? "checked" : ""; ?> />
+                                    <input type='checkbox' name='by_user[<?php echo $userID; ?>][commands][]' value="<?php echo $operation; ?>" <?php echo \in_array($operation, $settingsForRole['commands']) ? 'checked' : ''; ?> />
                                 </td>
-                            <?php endforeach; ?>
-
+                            <?php } ?>
                             <td>
 
                                 <input type='text' name='by_user[<?php echo $userID; ?>][path]' value='<?php echo $settingsForRole['path']; ?>' />
@@ -215,7 +201,7 @@ else $root_folder_url = $default_root_folder_url;
 
                         </tr>
 
-                    <?php endforeach; ?>
+                    <?php } ?>
 
                 </table>
 
@@ -227,7 +213,7 @@ else $root_folder_url = $default_root_folder_url;
     <?php require_once 'sidebar.php'; ?>
 </div>
 
-<?php require_once  'footer.php'; ?>
+<?php require_once 'footer.php'; ?>
 
 <style>
     .bootstart-admin-content {

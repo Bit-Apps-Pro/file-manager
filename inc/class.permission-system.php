@@ -1,7 +1,6 @@
 <?php
 
 use BitApps\FM\Plugin;
-use BitApps\FM\Providers\AccessControlProvider;
 use BitApps\FM\Providers\PermissionsProvider;
 
 \defined('ABSPATH') or exit();
@@ -205,16 +204,17 @@ class FileManagerPermission
      * */
     public function user_processor($settings)
     {
-        global $FileManager;
-
         $current_user = wp_get_current_user();
         $user_role    = $current_user->roles[0];
         $user_login   = $current_user->data->user_login;
         $user_id      = $current_user->ID;
 
         // File manager and File Manager pro security check synchronization
-        if (!isset($settings['do_not_use_for_admin']) || empty($settings['do_not_use_for_admin']) || $user_role != 'administrator') $security_check_callback = array(&$FileManager, 'security_check');
-        else $security_check_callback = array(&$this, 'security_check');
+        if (!isset($settings['do_not_use_for_admin']) || empty($settings['do_not_use_for_admin']) || $user_role != 'administrator') {
+            $security_check_callback = [Plugin::instance()->accessControl(), 'checkPermission'];
+        } else {
+            $security_check_callback = [&$this, 'security_check'];
+        }
 
         // Returnable $options variable
         $options = [
@@ -316,7 +316,6 @@ class FileManagerPermission
             }
         }
 
-        $fm_access_control = new AccessControlProvider();
         foreach ($folder_list as $folder) {
             if (!\is_array($folder)) {
                 continue;
@@ -332,7 +331,7 @@ class FileManagerPermission
                 'acceptedName'  => ['bfm_file_name_validator', 'validateName'],
                 'defaults'      => ['read' => true, 'write' => true, 'hidden' => false, 'locked' => false],
                 'uploadMaxSize' => $settings['file_size'] . 'M', // Maximum file upload size
-                'accessControl' => [&$fm_access_control, 'control'],
+                'accessControl' => [Plugin::instance()->accessControl(), 'control'],
             ];
             if ((isset($folder['path']) && !empty($folder['path'])) && !is_dir($folder['path'])) {
                 mkdir($folder['path'], 0755);
@@ -354,8 +353,6 @@ class FileManagerPermission
      * */
     public function guest_processor($settings)
     {
-        global $FileManager;
-
         // Returnable $options variable
         $options = [
             'bind' => [

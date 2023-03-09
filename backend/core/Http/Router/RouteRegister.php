@@ -53,6 +53,15 @@ final class RouteRegister
         $this->_routeBase = $routeBase;
     }
 
+    /**
+     * Match any request method
+     *
+     * @param array|string $methods
+     * @param string       $path
+     * @param callable     $action
+     *
+     * @return RouteRegister
+     */
     public function match($methods, $path, $action)
     {
         if (\is_string($methods)) {
@@ -66,11 +75,27 @@ final class RouteRegister
         return $this;
     }
 
+    /**
+     * Match GET request method
+     *
+     * @param string   $path
+     * @param callable $action
+     *
+     * @return RouteRegister
+     */
     public function get($path, $action)
     {
         return $this->register('GET', $path, $action);
     }
 
+    /**
+     * Match POST request method
+     *
+     * @param string   $path
+     * @param callable $action
+     *
+     * @return RouteRegister
+     */
     public function post($path, $action)
     {
         return $this->register('POST', $path, $action);

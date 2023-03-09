@@ -2,6 +2,7 @@
 
 namespace BitApps\FM\Providers;
 
+use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
 
 \defined('ABSPATH') or exit();
@@ -29,8 +30,9 @@ class AccessControlProvider
      */
     public function control($attr, $path, $data, $volume, $isDir, $relPath)
     {
+        $isAccessAllowed = null;
         if (strpos(basename($path), '.') !== 0 || \strlen($relPath) === 1 || $attr === 'locked') {
-            return;
+            return $isAccessAllowed;
         }
 
         $isAccessAllowed = true;
@@ -57,5 +59,25 @@ class AccessControlProvider
     public function validateName($name)
     {
         return ! (strpos($name, '.') === 0 && !$this->settings->isHiddenFolderAllowed());
+    }
+
+    public function checkPermission($command, ...$args)
+    {
+        $error              = '';
+        $permissionProvider = Plugin::instance()->permissions();
+        $cmd                = $command;
+        if ($command === 'file' || $command === 'zipdl') {
+            $cmd = 'download';
+        } elseif ($command === 'put') {
+            $cmd = 'edit';
+        }
+
+        if (!$permissionProvider->currentUserCanRun($cmd)) {
+            $error = __('Not Authorized', 'file-manager');
+        }
+
+        if (!\is_null($error)) {
+            throw new PreCommandException($error);
+        }
     }
 }
