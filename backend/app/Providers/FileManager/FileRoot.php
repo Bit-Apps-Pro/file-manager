@@ -493,4 +493,255 @@ class FileRoot
      * @var array
      */
     private $_plugin;
+
+    /**
+     * Constructs Volume root
+     *
+     * @param string      $path
+     * @param string      $url
+     * @param null|string $alias
+     * @param string      $driver LocalFileSystem | MySQL | FTP
+     */
+    public function __construct($path, $url, $driver = 'LocalFileSystem', $alias = null)
+    {
+        $this->_path   = $path;
+        $this->_URL    = $url;
+        $this->_driver = $driver;
+        $this->_alias  = $alias;
+    }
+
+    public function setAlias()
+    {
+        
+    }
+    
+    public function getAlias()
+    {
+        
+    }
+
+    public function setDriver()
+    {
+        
+    }
+    
+    public function getDriver()
+    {
+        
+    }
+    
+    public function setPath()
+    {
+        
+    }
+    
+    public function getPath()
+    {
+        
+    }
+    
+    public function setURL()
+    {
+        
+    }
+    
+    public function getURL()
+    {
+        
+    }
+    
+    public function setUploadDeny()
+    {
+        
+    }
+    
+    public function getUploadDeny()
+    {
+        
+    }
+    
+    public function setUploadAllow()
+    {
+        
+    }
+    
+    public function getUploadAllow()
+    {
+        
+    }
+    
+    public function setUploadOrder()
+    {
+        
+    }
+    
+    public function getUploadOrder()
+    {
+        
+    }
+    
+    public function setAccessControl()
+    {
+        
+    }
+    
+    public function getAccessControl()
+    {
+        
+    }
+    
+    public function setAcceptedName()
+    {
+        
+    }
+    
+    public function getAcceptedName()
+    {
+        
+    }
+    
+    public function setDisabled()
+    {
+        
+    }
+    
+    public function getDisabled()
+    {
+        
+    }
+    
+    public function setDispInlineRegex()
+    {
+        
+    }
+    
+    public function getDispInlineRegex()
+    {
+        
+    }
+    
+    public function setTrashHash()
+    {
+        
+    }
+    
+    public function getTrashHash()
+    {
+        
+    }
+    
+    public function setWinHashFix()
+    {
+        
+    }
+    
+    public function getWinHashFix()
+    {
+        
+    }
+    
+    public function setDefaults()
+    {
+        
+    }
+    
+    public function getDefaults()
+    {
+        
+    }
+    
+    public function setAllowChmodReadOnly()
+    {
+        
+    }
+    
+    public function getAllowChmodReadOnly()
+    {
+        
+    }
+    
+    public function setStatOwner()
+    {
+        
+    }
+    
+    public function getStatOwner()
+    {
+        
+    }
+    
+    public function setAttributes()
+    {
+        
+    }
+    
+    public function getAttributes()
+    {
+        
+    }
+    
+    public function setCopyTo()
+    {
+        
+    }
+    
+    public function getCopyTo()
+    {
+        
+    }
+    
+    public function setUploadMaxSize()
+    {
+        
+    }
+    
+    public function getUploadMaxSize()
+    {
+        
+    }
+    
+    public function setArchiveMimes()
+    {
+        
+    }
+    
+    public function getArchiveMimes()
+    {
+        
+    }
+    
+    public function setDirMode()
+    {
+        
+    }
+    
+    public function getDirMode()
+    {
+        
+    }
+    
+    public function setFileMode()
+    {
+        
+    }
+    
+    public function getFileMode()
+    {
+        
+    }
+    
+    public function setMaxTargets()
+    {
+        
+    }
+    
+    public function getMaxTargets()
+    {
+        
+    }
+    
+    public function getOptions()
+    {
+        return [];
+    }
 }

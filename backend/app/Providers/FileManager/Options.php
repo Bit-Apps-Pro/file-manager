@@ -134,4 +134,122 @@ class Options
      * @var array<string, callable>
      */
     private $_bind;
+
+    /**
+     * Finder volume roots
+     *
+     * @var array<int, FileRoot>
+     */
+    private $_roots;
+
+    /**
+     * Constructs Finder
+     *
+     * @param mixed $debug
+     */
+    public function __construct($debug = false)
+    {
+        $this->_debug = $debug;
+    }
+
+    /**
+     * Sets bind for command actions
+     *
+     * @param string   $commandType
+     * @param callable $callback
+     *
+     * @return Options
+     */
+    public function setBind($commandType, callable $callback)
+    {
+        $this->_bind[$commandType] = $callback;
+
+        return $this;
+    }
+
+    /**
+     * Sets debug option
+     *
+     * @param $debug bool
+     *
+     * @return Options
+     */
+    public function setDebug($debug)
+    {
+        $this->_debug = $debug;
+
+        return $this;
+    }
+
+    public function setRoot(FileRoot $root)
+    {
+        $this->_roots[] = $root;
+
+        return $this;
+    }
+    
+    public function getRoots()
+    {
+        $roots = [];
+
+        if (isset($this->_roots)) {
+            foreach ($this->_roots as  $root) {
+                $roots[] = $root->getOptions();
+            }
+        }
+        return $roots;
+    }
+
+    public function getOptions()
+    {
+        $options = [];
+
+        if (isset($this->_locale)) {
+            $options['locale'] = $this->_locale;
+        }
+        if (isset($this->_defaultMimefile)) {
+            $options['defaultMimefile'] = $this->_defaultMimefile;
+        }
+        if (isset($this->_session)) {
+            $options['session'] = $this->_session;
+        }
+        if (isset($this->_sessionCacheKey)) {
+            $options['sessionCacheKey'] = $this->_sessionCacheKey;
+        }
+        if (isset($this->_base64encodeSessionData)) {
+            $options['base64encodeSessionData'] = $this->_base64encodeSessionData;
+        }
+        if (isset($this->_uploadTempPath)) {
+            $options['uploadTempPath'] = $this->_uploadTempPath;
+        }
+        if (isset($this->_commonTempPath)) {
+            $options['commonTempPath'] = $this->_commonTempPath;
+        }
+        if (isset($this->_connectionFlagsPath)) {
+            $options['connectionFlagsPath'] = $this->_connectionFlagsPath;
+        }
+        if (isset($this->_maxArcFilesSize)) {
+            $options['maxArcFilesSize'] = $this->_maxArcFilesSize;
+        }
+        if (isset($this->_optionsNetVolumes)) {
+            $options['optionsNetVolumes'] = $this->_optionsNetVolumes;
+        }
+        if (isset($this->_maxTargets)) {
+            $options['maxTargets'] = $this->_maxTargets;
+        }
+        if (isset($this->_throwErrorOnExec)) {
+            $options['throwErrorOnExec'] = $this->_throwErrorOnExec;
+        }
+        if (isset($this->_debug)) {
+            $options['debug'] = $this->_debug;
+        }
+        if (isset($this->_bind)) {
+            $options['bind'] = $this->_bind;
+        }
+        if (isset($this->_roots)) {
+            $options['roots'] = $this->_roots;
+        }
+
+        return $options;
+    }
 }

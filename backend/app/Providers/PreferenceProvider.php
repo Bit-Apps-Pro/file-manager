@@ -15,10 +15,10 @@ class PreferenceProvider
 
     public function __construct()
     {
-        $this->preferences = Config::getOption('preferences', $this->default());
+        $this->preferences = Config::getOption('preferences', $this->defaultPrefs());
     }
 
-    public function default()
+    public function defaultPrefs()
     {
         return [
             'show_url_path'         => 'show',
