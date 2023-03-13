@@ -208,7 +208,7 @@ class PermissionsProvider
     public function isEnabledForAdmin()
     {
         return isset($this->permissions['do_not_use_for_admin'])
-            && $this->permissions['do_not_use_for_admin'] === 'do_not_use_for_admin';
+            && $this->permissions['do_not_use_for_admin'] !== 'do_not_use_for_admin';
     }
 
     public function getFolderOption()
@@ -282,6 +282,10 @@ class PermissionsProvider
 
     public function currentUserCanRun($command)
     {
+        if (is_admin() && !$this->isEnabledForAdmin()) {
+            return true;
+        }
+error_log('current_afteradmin');
         $permission = false;
         if (
             \in_array($command, $this->permissionsForCurrentUser()['commands'])
@@ -297,5 +301,31 @@ class PermissionsProvider
         $cap = Config::VAR_PREFIX . 'user_can_' . $command;
 
         return Capabilities::filter($cap) || $permission;
+    }
+
+    public function getDisabledCommand()
+    {
+        if (is_admin() && !$this->isEnabledForAdmin()) {
+            return [];
+        }
+
+        $enabledCommands = [];
+
+        if (!is_user_logged_in()) {
+            $enabledCommands = $this->getGuestPermissions()['commands'];
+        } elseif ($this->isCurrentUserHasPermission()) {
+            $enabledCommands = $this->permissionsForCurrentUser()['commands'];
+        } else {
+            $enabledCommands = $this->permissionsForCurrentRole()['commands'];
+        }
+
+        $disabledCommand = [];
+        foreach ($this->allCommands() as $command) {
+            if (!\in_array($command, $enabledCommands)) {
+                $disabledCommand[] = $command;
+            }
+        }
+
+        return $disabledCommand;
     }
 }

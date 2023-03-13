@@ -1,6 +1,8 @@
 <?php
 
-namespace BitApps\FM\FileManager;
+namespace BitApps\FM\Providers\FileManager;
+
+use Exception;
 
 \defined('ABSPATH') || exit();
 
@@ -11,6 +13,8 @@ namespace BitApps\FM\FileManager;
  */
 class FileRoot
 {
+    private $_id;
+
     /**
      * Volume driver. LocalFileSystem | MySQL | FTP
      *
@@ -39,6 +43,13 @@ class FileRoot
      * @var string
      */
     private $_trashHash;
+
+    /**
+     * To make hash same to Linux one on windows too
+     *
+     * @var bool
+     */
+    private $_winHashFix;
 
     /**
      * Root directory path
@@ -144,7 +155,10 @@ class FileRoot
      *
      * @var string
      */
-    private $_dispInlineRegex;
+    private $_dispInlineRegex
+        = '^(?:(?:video|audio)|image/(?!.+\+xml)
+        |application/(?:ogg|x-mpegURL|dash\+xml)
+        |(?:text/plain|application/pdf)$)';
 
     /**
      * Image manipulations library
@@ -252,7 +266,7 @@ class FileRoot
      *
      * @var bool
      */
-    private $_copyJoin;
+    private $_copyJoin = true;
 
     /**
      * Allow to copy from this volume to other ones.
@@ -261,7 +275,7 @@ class FileRoot
      *
      * @var true
      */
-    private $_copyFrom;
+    private $_copyFrom = true;
 
     /**
      * Allow to copy from other volumes to this one
@@ -270,7 +284,7 @@ class FileRoot
      *
      * @var bool
      */
-    private $_copyTo;
+    private $_copyTo = true;
 
     /**
      * (temporary) Directory for extracts etc.
@@ -299,7 +313,7 @@ class FileRoot
      *
      * @var array
      */
-    private $_uploadAllow;
+    private $_uploadAllow = [];
 
     /**
      * Mime types not allowed to upload.
@@ -311,7 +325,7 @@ class FileRoot
      *
      * @var array
      */
-    private $_uploadDeny;
+    private $_uploadDeny = [];
 
     /**
      * Order to process uploadAllow and uploadDeny options.
@@ -321,7 +335,7 @@ class FileRoot
      *
      * @var array
      */
-    private $_uploadOrder;
+    private $_uploadOrder = ['deny', 'allow'];
 
     /**
      * Maximum upload file size.
@@ -350,7 +364,7 @@ class FileRoot
      *
      * @var array
      */
-    private $_defaults;
+    private $_defaults = ['read' => true, 'write' => true];
 
     /**
      * File permission attributes.
@@ -391,7 +405,7 @@ class FileRoot
      *
      * @var array
      */
-    private $_disabled;
+    private $_disabled = [];
 
     /**
      * Include file owner, group & mode in stat results
@@ -400,7 +414,7 @@ class FileRoot
      *
      * @var bool
      */
-    private $_statOwner;
+    private $_statOwner = false;
 
     /**
      * Allow exec chmod of read-only files
@@ -409,7 +423,7 @@ class FileRoot
      *
      * @var bool
      */
-    private $_allowChmodReadOnly;
+    private $_allowChmodReadOnly = false;
 
     /**
      * How many sub dir levels return per request
@@ -448,7 +462,7 @@ class FileRoot
      *
      * @var string
      */
-    private $_dateFormat;
+    private $_dateFormat = 'j M Y H:i';
 
     /**
      * File modification time format
@@ -457,10 +471,10 @@ class FileRoot
      *
      * @var string
      */
-    private $_timeFormat;
+    private $_timeFormat = 'H:i';
 
     /**
-     * Library to crypt/uncrypt files names (not implemented yet)
+     * Library to crypt/decrypt files names (not implemented yet)
      *
      * @var [type]
      */
@@ -502,7 +516,7 @@ class FileRoot
      * @param null|string $alias
      * @param string      $driver LocalFileSystem | MySQL | FTP
      */
-    public function __construct($path, $url, $driver = 'LocalFileSystem', $alias = null)
+    public function __construct($path, $url, $alias = null, $driver = 'LocalFileSystem')
     {
         $this->_path   = $path;
         $this->_URL    = $url;
@@ -510,238 +524,333 @@ class FileRoot
         $this->_alias  = $alias;
     }
 
-    public function setAlias()
+    /**
+     * Set alias for the root
+     *
+     * @param string $alias
+     *
+     * @return FileRoot
+     */
+    public function setAlias($alias)
     {
-        
-    }
-    
-    public function getAlias()
-    {
-        
+        $this->_alias = $alias;
+
+        return $this;
     }
 
-    public function setDriver()
+    /**
+     * Sets driver for the root
+     *
+     * @param string $driver LocalFileSystem | MySQL | FTP
+     *
+     * @return FileRoot
+     */
+    public function setDriver($driver)
     {
-        
+        $this->_driver = $driver;
+
+        return $this;
     }
-    
-    public function getDriver()
+
+    /**
+     * Sets path for the root
+     *
+     * @param string $path
+     *
+     * @return FileRoot
+     */
+    public function setPath($path)
     {
-        
+        $this->_path = $path;
+
+        return $this;
     }
-    
-    public function setPath()
+
+    /**
+     * Sets url
+     *
+     * @param string $url
+     *
+     * @return FileRoot
+     */
+    public function setURL($url)
     {
-        
+        $this->_URL = $url;
+
+        return $this;
     }
-    
-    public function getPath()
+
+    /**
+     * Sets mime types denied to upload
+     *
+     * @param array $mimes
+     *
+     * @return FileRoot
+     */
+    public function setUploadDeny($mimes)
     {
-        
+        $this->_uploadDeny = $mimes;
     }
-    
-    public function setURL()
+
+    /**
+     * Sets mime types allowed to upload
+     *
+     * @param array $mimes
+     *
+     * @return FileRoot
+     */
+    public function setUploadAllow($mimes)
     {
-        
+        $this->_uploadAllow = $mimes;
+
+        return $this;
     }
-    
-    public function getURL()
+
+    /**
+     * Sets which mimes get precedence $_uploadDeny or $_uploadAllow.
+     *
+     * @param array $order
+     *
+     * @return FileRoot
+     */
+    public function setUploadOrder($order)
     {
-        
+        $this->_uploadOrder = $order;
+
+        return $this;
     }
-    
-    public function setUploadDeny()
+
+    /**
+     * Sets a callback function for file folder access control.
+     * What is the permission for this file or folder like read or write.
+     * Or hidden or locked
+     *
+     * @return void
+     */
+    public function setAccessControl(callable $callback)
     {
-        
+        $this->_accessControl = $callback;
+
+        return $this;
     }
-    
-    public function getUploadDeny()
+
+    /**
+     * Sets callback function for file, folder name validation
+     *
+     * @param callable $callback
+     *
+     * @return FileRoot
+     */
+    public function setAcceptedName(callable $callback)
     {
-        
+        $this->_acceptedName = $callback;
+
+        return $this;
     }
-    
-    public function setUploadAllow()
+
+    /**
+     * Sets commands are need to disable for this volume
+     *
+     * @param array $commands
+     *
+     * @return FileRoot
+     */
+    public function setDisabled($commands)
     {
-        
+        $this->_disabled = $commands;
+
+        return $this;
     }
-    
-    public function getUploadAllow()
+
+    /**
+     * Sets regex for allowed mime type for Content-Type Header
+     *
+     * @param string $regex
+     *
+     * @return FileRoot
+     */
+    public function setDispInlineRegex($regex)
     {
-        
+        $this->_dispInlineRegex = $regex;
+
+        return $this;
     }
-    
-    public function setUploadOrder()
+
+    /**
+     * Sets hash for trash bin for this volume
+     * Folder hash value on elFinder to trash bin of this volume, it require 'copyJoin' to true
+     *
+     * @param string $hash
+     *
+     * @return FileRoot
+     */
+    public function setTrashHash(string $hash)
     {
-        
+        $this->_trashHash = $hash;
+
+        return $this;
     }
-    
-    public function getUploadOrder()
+
+    /**
+     * Sets  winHash fix
+     *
+     * @param bool $status
+     *
+     * @return FileRoot
+     */
+    public function setWinHashFix($status)
     {
-        
+        $this->_winHashFix = $status;
+
+        return $this;
     }
-    
-    public function setAccessControl()
+
+    /**
+     * Sets default file permission for this volume
+     *
+     * @param array $permission
+     *
+     * @return FileRoot
+     */
+    public function setDefaults($permission)
     {
-        
+        $this->_defaults = $permission;
+
+        return $this;
     }
-    
-    public function getAccessControl()
+
+    /**
+     * Sets $_allowChmodReadOnly. Which determine exec to readonly file is allowed or not
+     *
+     * @param bool $allow
+     *
+     * @return FileRoot
+     */
+    public function setAllowChmodReadOnly($allow)
     {
-        
+        $this->_allowChmodReadOnly = $allow;
+
+        return $this;
     }
-    
-    public function setAcceptedName()
+
+    /**
+     * Sets $_statOwner. Which determine Inclusion of file owner, group & mode in stat results
+     *
+     * @param bool $allow
+     *
+     * @return FileRoot
+     */
+    public function setStatOwner($allow)
     {
-        
+        $this->_statOwner = $allow;
+
+        return $this;
     }
-    
-    public function getAcceptedName()
+
+    /**
+     * Sets attributes fo file permission using pattern
+     *
+     * @param array $attributes
+     *
+     * @return FileRoot
+     */
+    public function setAttributes(array $attributes)
     {
-        
+        $this->_attributes = $attributes;
+
+        return $this;
     }
-    
-    public function setDisabled()
+
+    /**
+     * Sets copyTo which determines copy from other volume is allowed or not
+     *
+     * @param bool $copyTo
+     *
+     * @return FileRoot
+     */
+    public function setCopyTo($copyTo)
     {
-        
+        $this->_copyTo = $copyTo;
+
+        return $this;
     }
-    
-    public function getDisabled()
+
+    /**
+     * Sets maximum size of file upload
+     *
+     * @param string|int $uploadMaxSize
+     *
+     * @return FileRoot
+     */
+    public function setUploadMaxSize($uploadMaxSize)
     {
-        
+        $this->_uploadMaxSize = $uploadMaxSize;
+
+        return $this;
     }
-    
-    public function setDispInlineRegex()
+
+    /**
+     * Sets allowed archive mime type
+     *
+     * @param array $archiveMimes
+     *
+     * @return void
+     */
+    public function setArchiveMimes($archiveMimes)
     {
-        
+        $this->_archiveMimes = $archiveMimes;
+
+        return $this;
     }
-    
-    public function getDispInlineRegex()
+
+    public function setMaxTargets($archiveMimes)
     {
-        
+        $this->_archiveMimes = $archiveMimes;
+
+        return $this;
     }
-    
-    public function setTrashHash()
+
+    public function setOption($name, $value)
     {
-        
+        if (property_exists($this, "_{$name}")) {
+            return $this->{"_{$name}"} = $value;
+        }
+
+        throw new Exception("Property [{$name}] not Exists in " . __CLASS__);
     }
-    
-    public function getTrashHash()
+
+    public function getOption($name)
     {
-        
+        if (property_exists($this, $name)) {
+            return $this->{$name};
+        }
     }
-    
-    public function setWinHashFix()
-    {
-        
-    }
-    
-    public function getWinHashFix()
-    {
-        
-    }
-    
-    public function setDefaults()
-    {
-        
-    }
-    
-    public function getDefaults()
-    {
-        
-    }
-    
-    public function setAllowChmodReadOnly()
-    {
-        
-    }
-    
-    public function getAllowChmodReadOnly()
-    {
-        
-    }
-    
-    public function setStatOwner()
-    {
-        
-    }
-    
-    public function getStatOwner()
-    {
-        
-    }
-    
-    public function setAttributes()
-    {
-        
-    }
-    
-    public function getAttributes()
-    {
-        
-    }
-    
-    public function setCopyTo()
-    {
-        
-    }
-    
-    public function getCopyTo()
-    {
-        
-    }
-    
-    public function setUploadMaxSize()
-    {
-        
-    }
-    
-    public function getUploadMaxSize()
-    {
-        
-    }
-    
-    public function setArchiveMimes()
-    {
-        
-    }
-    
-    public function getArchiveMimes()
-    {
-        
-    }
-    
-    public function setDirMode()
-    {
-        
-    }
-    
-    public function getDirMode()
-    {
-        
-    }
-    
-    public function setFileMode()
-    {
-        
-    }
-    
-    public function getFileMode()
-    {
-        
-    }
-    
-    public function setMaxTargets()
-    {
-        
-    }
-    
-    public function getMaxTargets()
-    {
-        
-    }
-    
+
     public function getOptions()
     {
-        return [];
+        $options['id']                 = $this->getOption('_id');
+        $options['alias']              = $this->getOption('_alias');
+        $options['driver']             = $this->getOption('_driver');
+        $options['path']               = $this->getOption('_path');
+        $options['URL']                = $this->getOption('_URL');
+        $options['uploadDeny']         = $this->getOption('_uploadDeny');
+        $options['uploadAllow']        = $this->getOption('_uploadAllow');
+        $options['uploadOrder']        = $this->getOption('_uploadOrder');
+        $options['accessControl']      = $this->getOption('_accessControl');
+        $options['acceptedName']       = $this->getOption('_acceptedName');
+        $options['disabled']           = $this->getOption('_disabled');
+        $options['dispInlineRegex']    = $this->getOption('_dispInlineRegex');
+        $options['trashHash']          = $this->getOption('_trashHash');
+        $options['winHashFix']         = $this->getOption('_winHashFix');
+        $options['defaults']           = $this->getOption('_defaults');
+        $options['allowChmodReadOnly'] = $this->getOption('_allowChmodReadOnly');
+        $options['statOwner']          = $this->getOption('_statOwner');
+        $options['attributes']         = $this->getOption('_attributes');
+        $options['copyTo']             = $this->getOption('_copyTo');
+        $options['uploadMaxSize']      = $this->getOption('_uploadMaxSize');
+        $options['archiveMimes']       = $this->getOption('_archiveMimes');
+        $options['maxTargets']         = $this->getOption('_maxTargets');
+
+        return $options;
     }
 }

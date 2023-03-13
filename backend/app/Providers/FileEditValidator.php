@@ -83,7 +83,7 @@ class FileEditValidator
             $error = __('Not Authorized to edit file', 'file-manager');
         }
 
-        if (!\is_null($error)) {
+        if (!empty($error)) {
             throw new PreCommandException($error);
         }
     }

@@ -73,11 +73,21 @@ class AccessControlProvider
         }
 
         if (!$permissionProvider->currentUserCanRun($cmd)) {
-            $error = __('Not Authorized', 'file-manager');
+            $error = wp_sprintf(
+                __(
+                    'You are not authorized to run this command : %s. on file manager',
+                    'file-manager'
+                ),
+                $cmd
+            );
         }
 
-        if (!\is_null($error)) {
-            throw new PreCommandException($error);
+        if (!empty($error)) {
+            try {
+                throw new PreCommandException($error);
+            } catch (PreCommandException $th) {
+                return $th->getError();
+            }
         }
     }
 }

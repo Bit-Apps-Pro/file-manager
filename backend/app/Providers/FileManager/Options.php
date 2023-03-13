@@ -1,6 +1,8 @@
 <?php
 
-namespace BitApps\FM\FileManager;
+namespace BitApps\FM\Providers\FileManager;
+
+use BitApps\FM\Core\Hooks\Hooks;
 
 \defined('ABSPATH') || exit();
 class Options
@@ -187,16 +189,17 @@ class Options
 
         return $this;
     }
-    
+
     public function getRoots()
     {
         $roots = [];
 
         if (isset($this->_roots)) {
-            foreach ($this->_roots as  $root) {
+            foreach ($this->_roots as $root) {
                 $roots[] = $root->getOptions();
             }
         }
+
         return $roots;
     }
 
@@ -207,47 +210,64 @@ class Options
         if (isset($this->_locale)) {
             $options['locale'] = $this->_locale;
         }
+
         if (isset($this->_defaultMimefile)) {
             $options['defaultMimefile'] = $this->_defaultMimefile;
         }
+
         if (isset($this->_session)) {
             $options['session'] = $this->_session;
         }
+
         if (isset($this->_sessionCacheKey)) {
             $options['sessionCacheKey'] = $this->_sessionCacheKey;
         }
+
         if (isset($this->_base64encodeSessionData)) {
             $options['base64encodeSessionData'] = $this->_base64encodeSessionData;
         }
+
         if (isset($this->_uploadTempPath)) {
             $options['uploadTempPath'] = $this->_uploadTempPath;
         }
+
         if (isset($this->_commonTempPath)) {
             $options['commonTempPath'] = $this->_commonTempPath;
         }
+
         if (isset($this->_connectionFlagsPath)) {
             $options['connectionFlagsPath'] = $this->_connectionFlagsPath;
         }
+
         if (isset($this->_maxArcFilesSize)) {
             $options['maxArcFilesSize'] = $this->_maxArcFilesSize;
         }
+
         if (isset($this->_optionsNetVolumes)) {
             $options['optionsNetVolumes'] = $this->_optionsNetVolumes;
         }
+
         if (isset($this->_maxTargets)) {
             $options['maxTargets'] = $this->_maxTargets;
         }
+
         if (isset($this->_throwErrorOnExec)) {
             $options['throwErrorOnExec'] = $this->_throwErrorOnExec;
         }
+
         if (isset($this->_debug)) {
             $options['debug'] = $this->_debug;
         }
+
         if (isset($this->_bind)) {
             $options['bind'] = $this->_bind;
         }
-        if (isset($this->_roots)) {
-            $options['roots'] = $this->_roots;
+
+        $options['roots'] = $this->getRoots();
+
+        $filteredOPtions = Hooks::applyFilter('fm_options_filter', $options);
+        if (!empty($filteredOPtions['roots'])) {
+            $options = $filteredOPtions;
         }
 
         return $options;
