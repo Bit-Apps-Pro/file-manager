@@ -684,7 +684,7 @@ class FileRoot
      *
      * @return FileRoot
      */
-    public function setTrashHash(string $hash)
+    public function setTrashHash($hash)
     {
         $this->_trashHash = $hash;
 
@@ -828,6 +828,7 @@ class FileRoot
 
     public function getOptions()
     {
+        $options['tmbPath']            = $this->getOption('_tmbPath');
         $options['id']                 = $this->getOption('_id');
         $options['alias']              = $this->getOption('_alias');
         $options['driver']             = $this->getOption('_driver');

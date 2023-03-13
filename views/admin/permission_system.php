@@ -63,7 +63,7 @@ $fileTypes = ['text', 'image', 'application', 'video', 'audio'];
                 <input type='hidden' name='bfm_permissions_nonce' value='<?php echo wp_create_nonce('bfm_permissions_nonce'); ?>'>
 
                 <label for='do_not_use_for_admin-id'>Do not use this settings for administrator </label>
-                <input type='checkbox' name='do_not_use_for_admin' id='do_not_use_for_admin-id' value='do_not_use_for_admin' <?php if ($permissionSettings->isEnabledForAdmin()) {
+                <input type='checkbox' name='do_not_use_for_admin' id='do_not_use_for_admin-id' value='do_not_use_for_admin' <?php if ($permissionSettings->isDisabledForAdmin()) {
                     echo 'checked';
                 } ?>>
 

@@ -8,8 +8,7 @@ use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\FileManagerProvider;
 use BitApps\FM\Providers\FileManager\FileRoot;
 use BitApps\FM\Providers\FileManager\Options;
-use elFinder;
-use elFinderConnector;
+use Exception;
 
 final class FileManagerController
 {
@@ -20,8 +19,12 @@ final class FileManagerController
      */
     public function connector()
     {
-        $finderProvider = new FileManagerProvider($this->getFinderOptions());
-        $finderProvider->getFinder()->run();
+        try {
+            $finderProvider = new FileManagerProvider($this->getFinderOptions());
+            $finderProvider->getFinder()->run();
+        } catch (Exception $th) {
+            echo wp_json_encode(['error' => $th->getMessage()]);
+        }
         wp_die();
     }
 
@@ -73,11 +76,16 @@ final class FileManagerController
         $accessControlProvider = Plugin::instance()->accessControl();
         $permissions           = Plugin::instance()->permissions();
 
+        $path     = $permissions->getPath();
         $baseRoot = new FileRoot(
-            $preferences->getRootPath(),
-            $preferences->getRootUrl(),
-            $preferences->getRootVolumeName()
+            $path,
+            $permissions->getURL(),
+            $permissions->getVolumeAlias()
         );
+
+        if (is_writable(stripslashes($path) . DIRECTORY_SEPARATOR . '.tmbPath')) {
+            $baseRoot->setOption('tmbPath', '.tmb');
+        }
 
         $baseRoot->setUploadAllow($mime->getTypes());
         $baseRoot->setAccessControl([$accessControlProvider, 'control']);
@@ -101,13 +109,15 @@ final class FileManagerController
 
             $roots[] = $mediaRoot;
 
-            $trashRoot = new FileRoot(FM_TRASH_DIR_PATH, FM_TRASH_TMB_DIR_URL, 'trash', 'Trash');
-            $trashRoot->setOption('id', 1);
-            $trashRoot->setUploadAllow($mime->getTypes());
-            $trashRoot->setAccessControl([$accessControlProvider, 'control']);
-            $trashRoot->setAcceptedName([$accessControlProvider, 'validateName']);
+            if ($preferences->isTrashAllowed()) {
+                $trashRoot = new FileRoot(FM_TRASH_DIR_PATH, FM_TRASH_TMB_DIR_URL, 'trash', 'Trash');
+                $trashRoot->setOption('id', 1);
+                $trashRoot->setUploadAllow($mime->getTypes());
+                $trashRoot->setAccessControl([$accessControlProvider, 'control']);
+                $trashRoot->setAcceptedName([$accessControlProvider, 'validateName']);
 
-            $roots[] = $trashRoot;
+                $roots[] = $trashRoot;
+            }
         }
 
         return $roots;

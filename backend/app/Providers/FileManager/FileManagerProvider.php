@@ -4,6 +4,7 @@ namespace BitApps\FM\Providers\FileManager;
 
 \defined('ABSPATH') or exit();
 
+use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\Options as FinderOptions;
 use elFinder;
 use elFinderConnector;
@@ -24,6 +25,7 @@ class FileManagerProvider
 
     public function getFinder()
     {
-        return new elFinderConnector(new elFinder($this->_finderOptions->getOptions()));
+        $finder = new elFinder($this->_finderOptions->getOptions());
+        return new elFinderConnector($finder);
     }
 }

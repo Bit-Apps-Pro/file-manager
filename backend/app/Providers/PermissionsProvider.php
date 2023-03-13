@@ -4,6 +4,9 @@ namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
 use BitApps\FM\Core\Utils\Capabilities;
+use BitApps\FM\Exception\PreCommandException;
+use BitApps\FM\Plugin;
+use elFinder;
 use WP_User;
 
 \defined('ABSPATH') or exit();
@@ -22,6 +25,13 @@ class PermissionsProvider
      */
     public $currentUser;
 
+    /**
+     * Dashboard preferences
+     *
+     * @var PreferenceProvider
+     */
+    private $_prefernces;
+
     public function __construct()
     {
         global $wp_roles;
@@ -30,8 +40,9 @@ class PermissionsProvider
             $this->defaultPermissions()
         );
 
-        $this->roles = array_keys($wp_roles->roles);
-        $this->users = get_users(['fields' => ['ID', 'user_login', 'display_name']]);
+        $this->_prefernces = Plugin::instance()->preferences();
+        $this->roles       = array_keys($wp_roles->roles);
+        $this->users       = get_users(['fields' => ['ID', 'user_login', 'display_name']]);
     }
 
     public function allRoles()
@@ -80,6 +91,42 @@ class PermissionsProvider
         ];
 
         return $permissions;
+    }
+
+    public function getPath()
+    {
+        if (is_admin() && $this->isDisabledForAdmin()) {
+            return $this->_prefernces->getRootPath();
+        }
+
+        $path = '';
+
+        if (!is_user_logged_in()) {
+            $path = $this->getGuestPermissions()['path'];
+        } elseif ($this->isCurrentUserHasPermission()) {
+            $path = $this->permissionsForCurrentUser()['path'];
+        } else {
+            $path = $this->permissionsForCurrentRole()['path'];
+        }
+        if (empty($path) || !file_exists($path)) {
+            throw new PreCommandException(__('please check root folder for file manager, from file manager settings', 'file-manager'));
+        }
+
+        return $path;
+    }
+
+    public function getURL()
+    {
+        if (is_admin() && $this->isDisabledForAdmin()) {
+            return $this->_prefernces->getRootUrl();
+        }
+
+        return home_url() . "/" . str_replace([ABSPATH, '\\'], ['', '/'], $this->getPath());
+    }
+
+    public function getVolumeAlias()
+    {
+        return $this->_prefernces->getRootVolumeName();
     }
 
     public function getDefaultPublicRootPath()
@@ -205,10 +252,10 @@ class PermissionsProvider
             ? $this->permissions['file_size'] : 2;
     }
 
-    public function isEnabledForAdmin()
+    public function isDisabledForAdmin()
     {
         return isset($this->permissions['do_not_use_for_admin'])
-            && $this->permissions['do_not_use_for_admin'] !== 'do_not_use_for_admin';
+            && $this->permissions['do_not_use_for_admin'] === 'do_not_use_for_admin';
     }
 
     public function getFolderOption()
@@ -282,10 +329,10 @@ class PermissionsProvider
 
     public function currentUserCanRun($command)
     {
-        if (is_admin() && !$this->isEnabledForAdmin()) {
+        if (is_admin() && $this->isDisabledForAdmin()) {
             return true;
         }
-error_log('current_afteradmin');
+
         $permission = false;
         if (
             \in_array($command, $this->permissionsForCurrentUser()['commands'])
@@ -305,7 +352,7 @@ error_log('current_afteradmin');
 
     public function getDisabledCommand()
     {
-        if (is_admin() && !$this->isEnabledForAdmin()) {
+        if (is_admin() && $this->isDisabledForAdmin()) {
             return [];
         }
 
