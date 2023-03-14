@@ -12,11 +12,11 @@ use elFinderVolumeLocalFileSystem;
 
 class Logger
 {
-    private $logger;
+    private $_logger;
 
     public function __construct()
     {
-        $this->logger = new LogService();
+        $this->_logger = new LogService();
     }
 
     /**
@@ -55,7 +55,7 @@ class Logger
             $commandDetails = $this->processFileHash($command, $target, $volume);
         }
 
-        $this->logger->save($command, $commandDetails);
+        $this->_logger->save($command, $commandDetails);
     }
 
     /**

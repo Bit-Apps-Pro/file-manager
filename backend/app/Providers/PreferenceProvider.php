@@ -6,7 +6,7 @@ use BitApps\FM\Config;
 use BitApps\FM\Core\Utils\Capabilities;
 use BitApps\FM\Plugin;
 
-\defined('ABSPATH') or exit();
+\defined('ABSPATH') || exit();
 class PreferenceProvider
 {
     public $preferences;
@@ -43,7 +43,7 @@ class PreferenceProvider
      * */
     public function saveOptions()
     {
-        Config::updateOption('preferences', $this->preferences, true);
+        return Config::updateOption('preferences', $this->preferences, true);
     }
 
     /**

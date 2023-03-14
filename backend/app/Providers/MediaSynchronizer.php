@@ -18,21 +18,19 @@ class MediaSynchronizer
     // Triggers when a file is uploaded and initiates the uploading process for single or batch files.
     public function onFileUpload($cmd, &$result, $args, $elfinder, $volume)
     {
-        $images = [];
-        $I      = 0;
+        $targetPath = $volume->getPath($args['target']);
 
-        $upload_target_path = $volume->getPath($args['target']);
-
-        if (strpos($upload_target_path, $this->wp_upload_directory) !== false) {
+        if (strpos($targetPath, $this->wp_upload_directory) !== false) {
             $images = [];
-            error_log(print_r($args, true));
-            error_log(print_r($args['FILES'], true));
-            for ($I = 0; $I < \count($args['FILES']['upload']['name']); $I++) {
+            for ($file = 0; $file < \count($args['FILES']['upload']['name']); $file++) {
                 $images[] = [
-                    'name' => $args['FILES']['upload']['name'][$I],
-                    'type' => wp_check_filetype($args['FILES']['upload']['name'][$I], null),
-                    'path' => trailingslashit($upload_target_path) . $args['FILES']['upload']['name'][$I],
-                    'url'  => $this->abs_path_to_url(trailingslashit($upload_target_path) . $args['FILES']['upload']['name'][$I]),
+                    'name' => $args['FILES']['upload']['name'][$file],
+                    'type' => wp_check_filetype($args['FILES']['upload']['name'][$file], null),
+                    'path' => trailingslashit($targetPath) . $args['FILES']['upload']['name'][$file],
+                    'url'  => $this->abs_path_to_url(
+                        trailingslashit($targetPath)
+                         . $args['FILES']['upload']['name'][$file]
+                    ),
                 ];
             }
 
@@ -47,9 +45,9 @@ class MediaSynchronizer
                 'post_mime_type' => $image['type']['type'],
                 'post_title'     => sanitize_file_name($image['name']),
             ];
-            $attachment_id = wp_insert_attachment($attachment, $image['path']);
-            $attach_data   = wp_generate_attachment_metadata($attachment_id, $image['path']);
-            wp_update_attachment_metadata($attachment_id, $attach_data);
+            $attachmentId  = wp_insert_attachment($attachment, $image['path']);
+            $attachData    = wp_generate_attachment_metadata($attachmentId, $image['path']);
+            wp_update_attachment_metadata($attachmentId, $attachData);
         }
     }
 

@@ -7,7 +7,7 @@ use BitApps\FM\Core\Database\Operator as DBOperator;
 use BitApps\FM\Core\Database\Schema;
 use BitApps\FM\Core\Utils\Capabilities;
 
-\defined('ABSPATH') or exit();
+\defined('ABSPATH') || exit();
 
 class VersionMigrationProvider
 {
@@ -46,6 +46,7 @@ class VersionMigrationProvider
         if ($this->_oldVersion >= 600) {
             return;
         }
+
         Schema::drop('log');
         delete_option('fm_current_version');
         delete_option('fm_log');
@@ -63,7 +64,6 @@ class VersionMigrationProvider
                 $previousSettings['file_manager_settings'],
                 true
             );
-            error_log('in delete file-manager option');
             delete_option('file-manager');
         }
     }
@@ -74,7 +74,7 @@ class VersionMigrationProvider
         if ($previousReview) {
             Config::addOption(
                 'notify_review',
-                unserialize($previousReview),
+                maybe_unserialize($previousReview),
                 true
             );
             delete_option('fm-review-data');

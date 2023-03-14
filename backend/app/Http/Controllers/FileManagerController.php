@@ -3,6 +3,8 @@
 namespace BitApps\FM\Http\Controllers;
 
 use BitApps\FM\Config;
+use BitApps\FM\Core\Http\Request\Request;
+use BitApps\FM\Core\Http\Response;
 use BitApps\FM\Core\Utils\Capabilities;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\FileManagerProvider;
@@ -12,6 +14,19 @@ use Exception;
 
 final class FileManagerController
 {
+    public function changeLang(Request $request)
+    {
+        if ($request->has('theme') && Capabilities::filter(Config::VAR_PREFIX . 'user_can_change_theme')) {
+            $prefs = Plugin::instance()->preferences();
+            $prefs->setTheme(sanitize_text_field($request->theme));
+            if ($prefs->saveOptions()) {
+                return Response::message(__('Theme updated successfully', 'file-manger'));
+            }
+        }
+
+        return Response::message(__('Failed to update theme', 'file-manger'));
+    }
+
     /**
      * File Manager connector function
      *
@@ -23,8 +38,10 @@ final class FileManagerController
             $finderProvider = new FileManagerProvider($this->getFinderOptions());
             $finderProvider->getFinder()->run();
         } catch (Exception $th) {
+            // phpcs:ignore
             echo wp_json_encode(['error' => $th->getMessage()]);
         }
+
         wp_die();
     }
 

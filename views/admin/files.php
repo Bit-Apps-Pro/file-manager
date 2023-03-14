@@ -44,7 +44,8 @@ wp_enqueue_script('bfm-elfinder-lang', $preferences->getLangUrl(), ['bfm-elfinde
   PLUGINS_URL = '<?php echo esc_js(plugins_url()); ?>';
 
   jQuery(document).ready(function() {
-    jQuery('#file-manager').elfinder({
+
+    const finder = jQuery('#file-manager').elfinder({
       url: ajaxurl,
       themes: fm.themes,
       theme: fm.theme,
@@ -57,7 +58,7 @@ wp_enqueue_script('bfm-elfinder-lang', $preferences->getLangUrl(), ['bfm-elfinde
       },
       customData: {
         action: 'bit_fm_connector',
-        bfm_nonce: fm.nonce
+        nonce: fm.nonce
       },
       lang: '<?php echo esc_js($preferences->getLangCode()); ?>',
       requestType: 'post',
@@ -74,6 +75,27 @@ wp_enqueue_script('bfm-elfinder-lang', $preferences->getLangUrl(), ['bfm-elfinde
       fileModeStyle: "both",
       resizable: true
     });
+    
+    $('#file-manager').on('change',"select.elfinder-tabstop",function (e) {
+      if (e.currentTarget[0]
+       && e.currentTarget[0].className
+      && e.currentTarget[0].className.indexOf('elfinder-theme-option') !== -1
+      ) {
+        jQuery.ajax(
+          ajaxurl,
+          {
+          method: 'POST',
+          data: {
+            action: 'bit_fm_lang',
+            nonce: fm.nonce,
+            theme: e.currentTarget.value
+          }
+        }
+        ).done(()=>location.reload())
+      }
+      console.log('select.elfinder-tabstop', e.currentTarget.value)
+    });
+
   });
 </script>
 

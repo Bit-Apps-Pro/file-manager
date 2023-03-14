@@ -126,7 +126,7 @@ final class Response
      */
     public static function getCode()
     {
-        if (!isset(self::$_code)) {
+        if (!isset(self::$_code) && isset(self::$_status)) {
             return strtoupper(self::$_status);
         }
 

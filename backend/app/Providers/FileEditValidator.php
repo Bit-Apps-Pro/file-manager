@@ -26,8 +26,6 @@ class FileEditValidator
                 return $th->getError();
             }
         }
-
-        return true;
     }
 
     public function checkSyntax($content)
@@ -45,14 +43,18 @@ class FileEditValidator
 
             $errorMessages = [];
             foreach ($output as $result) {
-                if (strpos($result, 'No syntax errors detected') !== false) {
-                    continue;
-                } elseif ($result == '') {
+                if (
+                    strpos($result, 'No syntax errors detected') !== false
+                || $result == ''
+                ) {
                     continue;
                 }
 
                 if (strpos($result, 'Errors parsing') !== false) {
-                    $error = __('Failed to parse', 'file-manager');
+                    $error = wp_sprintf(
+                        __('Errors parsing the file [ %s ] as php script', 'file-manager'),
+                        str_replace('temp', '', $tempFilePath)
+                    );
                 } else {
                     $errorMessages[] = $result;
                 }
@@ -64,9 +66,11 @@ class FileEditValidator
                 $error = !\is_string($errorMessages[0]) ? json_encode($errorMessages[0]) : $errorMessages[0];
             }
         }
+
         if (\defined('BFM_DISABLE_SYNTAX_CHECK') && BFM_DISABLE_SYNTAX_CHECK) {
-            return true;
+            return;
         }
+
         if (!\is_null($error)) {
             throw new PreCommandException($error);
         }
