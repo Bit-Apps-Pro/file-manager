@@ -5,7 +5,7 @@ namespace BitApps\FM\Providers;
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
 
-\defined('ABSPATH') or exit();
+\defined('ABSPATH') || exit();
 
 class AccessControlProvider
 {

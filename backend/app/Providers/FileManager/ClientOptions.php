@@ -10,68 +10,82 @@ class ClientOptions
      *
      * @var string
      */
-    private $_url;
+    private $_url = '';
+
+    /**
+     * Finder themes
+     *
+     * @var array
+     */
+    private $_themes;
+
+    /**
+     * Finder selected theme
+     *
+     * @var array
+     */
+    private $_theme;
 
     /**
      * The interface lang to use
      *
      * @var string
      */
-    private $_lang;
+    private $_lang = 'en';
 
     /**
      * Data to append to all requests and to upload files
      *
-     * @var string
+     * @var array
      */
-    private $_customData;
+    private $_customData = [];
 
     /**
      * Additional css class for file manager node
      *
      * @var string
      */
-    private $_cssClass;
+    private $_cssClass = '';
 
     /**
      * Auto load required CSS
      *
-     * @var string
+     * @var bool
      */
-    private $_cssAutoLoad;
+    private $_cssAutoLoad = true;
 
     /**
      * Remember last opened dir to open it after reload or in next session
      *
-     * @var string
+     * @var bool
      */
-    private $_rememberLastDir;
+    private $_rememberLastDir = true;
 
     /**
-     * Clear historys(elFinder) on reload(not browser) function
+     * Clear history's(elFinder) on reload(not browser) function
      *
-     * @var string
+     * @var bool
      */
-    private $_reloadClearHistory;
+    private $_reloadClearHistory = false;
 
     /**
      * Use browser native history with supported browsers
      *
-     * @var string
+     * @var bool
      */
-    private $_useBrowserHistory;
+    private $_useBrowserHistory = true;
 
     /**
      * Display only certain files based on their mime type
      *
      * @var string
      */
-    private $_onlyMimes;
+    private $_onlyMimes = [];
 
     /**
      * Used to validate file names
      *
-     * @var string
+     * @var string|bool
      */
     private $_validName;
 
@@ -80,108 +94,130 @@ class ClientOptions
      *
      * @var string
      */
-    private $_startPathHash;
+    private $_startPathHash = '';
 
     /**
      * Default view mode
      *
-     * @var string
+     * @var string icons | list
      */
-    private $_defaultView;
+    private $_defaultView = 'icons';
 
     /**
-     * Default sort type
+     * Default sort
+     * 'name' - sort by name
      *
-     * @var string
+     * @var string name | kind |size | date
      */
-    private $_sortType;
+    private $_sortType = 'nameDirsFirst';
 
     /**
      * Default sort order
      *
-     * @var string
+     * @var string asc | desc
      */
-    private $_sortOrder;
+    private $_sortOrder = 'asc';
 
     /**
      * Display folders first?
      *
-     * @var string
+     * @var bool
      */
-    private $_sortStickFolders;
+    private $_sortStickFolders = true;
 
     /**
-     * The width of the elFinder main interface
+     * The width of the elFinder main interface.
+     * Can be the string 'auto' or any number measurement (in pixels).
      *
-     * @var string
+     * @var string|int
      */
-    private $_width;
+    private $_width = 'auto';
 
     /**
      * The height of the elFinder main interface (in pixels)
+     * number or string (ex. '100%') Default value: 400
      *
-     * @var string
+     * @var string|int
      */
-    private $_height;
+    private $_height = 400;
 
     /**
      * Format dates using client
+     * If set to false - backend date format will be used.
      *
-     * @var string
+     * @var bool
      */
-    private $_clientFormatDate;
+    private $_clientFormatDate = true;
 
     /**
-     * Show datetime in UTC timezone
+     * Show datetime in UTC timezone.
+     * Requires clientFormatDate set to true.
      *
-     * @var string
+     * @var bool
      */
-    private $_UTCDate;
+    private $_UTCDate = false;
 
     /**
      * File modification datetime format
+     * Set format here to overwrite it. Format is set in PHP date manner
      *
      * @var string
      */
-    private $_dateFormat;
+    private $_dateFormat = '';
 
     /**
      * File modification datetime format for last two days (today, yesterday)
+     * Same syntax as for dateFormat. Use $1 for "Today" and "Yesterday" placeholder.
+     *
+     * Example: '$1 H:m:i' will return Today 21:59:34
      *
      * @var string
      */
-    private $_fancyDateFormat;
+    private $_fancyDateFormat = '';
 
     /**
      * Style of file mode at cwd-list, info dialog
+     * 'string' (ex. rwxr-xr-x) or 'octal' (ex. 755) or 'both' (ex. rwxr-xr-x (755))
      *
      * @var string
      */
-    private $_fileModeStyle;
+    private $_fileModeStyle = 'both';
 
     /**
      * Active commands list
+     * '*' means all of the commands that have been load.
+     *  available commands:
+     *  [
+     * 'archive', 'back', 'chmod', 'colwidth', 'copy', 'cut', 'download', 'duplicate', 'edit', 'extract',
+     * 'forward', 'fullscreen', 'getfile', 'help', 'home', 'info', 'mkdir', 'mkfile', 'netmount', 'netunmount',
+     * 'open', 'opendir', 'paste', 'places', 'quicklook', 'reload', 'rename', 'resize', 'restore', 'rm',
+     * 'search', 'sort', 'up', 'upload', 'view', 'zipdl'
+     * ]
      *
-     * @var string
+     * @see https://github.com/Studio-42/elFinder/wiki/Client-configuration-options-2.1#commands
+     *
+     * @var array
      */
-    private $_commands;
+    private $_commands = ['*'];
 
     /**
      * Commands options used to interact with external callbacks, editors, plugins
      *
-     * @var string
+     * @see https://github.com/Studio-42/elFinder/wiki/Client-configuration-options-2.1#commandsoptions
+     *
+     * @var array
      */
     private $_commandsOptions;
 
     /**
-     * Callback function for "getfile" command
+     * Callback function for "getfile" command (js function)
      *
      * @var string
      */
     private $_getFileCallback;
 
     /**
-     * Event listeners to bind on elFinder init
+     * Event listeners to bind on elFinder init (js function)
      *
      * @var string
      */
@@ -189,10 +225,11 @@ class ClientOptions
 
     /**
      * UI plugins to load
+     * ['toolbar', 'places', 'tree', 'path', 'stat']
      *
-     * @var string
+     * @var array
      */
-    private $_ui;
+    private $_ui = ['toolbar', 'places', 'tree', 'path', 'stat'];
 
     /**
      * Specifies the configuration for the elFinder UI
@@ -204,28 +241,46 @@ class ClientOptions
     /**
      * The configuration for the right-click context menu
      *
-     * @var string
+     * Example:
+     * {
+     * // navbar folder menu
+     * navbar : ['open', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', '|', 'info'],
+     *
+     *  // current directory menu
+     * cwd    : ['reload', 'back', '|', 'upload', 'mkdir', 'mkfile', 'paste', '|', 'info'],
+     *
+     * // current directory file menu
+     * files  : [
+     *      'getfile', '|','open', 'quicklook', '|', 'download', '|', 'copy', 'cut', 'paste', 'duplicate', '|',
+     *      'rm', '|', 'edit', 'rename', 'resize', '|', 'archive', 'extract', '|', 'info'
+     *      ]
+     * }
+     *
+     * @see https://github.com/Studio-42/elFinder/wiki/Client-configuration-options-2.1#contextmenu
+     *
+     * @var array
      */
     private $_contextmenu;
 
     /**
      * Whether or not the elFinder interface will be resizable
      *
-     * @var string
+     * @var bool
      */
-    private $_resizable;
+    private $_resizable = true;
 
     /**
-     * Timeout for open notification dialogs
+     * Timeout for open notification dialogs in millisecond
      *
-     * @var string
+     * @var int
      */
-    private $_notifyDelay;
+    private $_notifyDelay = 800;
 
     /**
      * Position and width of notification dialogs
+     * {position: {top : '12px', right : '12px'}, width : 280}
      *
-     * @var string
+     * @var array
      */
     private $_notifyDialog;
 
@@ -234,98 +289,98 @@ class ClientOptions
      *
      * @var string
      */
-    private $_dragUploadAllow;
+    private $_dragUploadAllow = 'auto';
 
     /**
      * Allow shortcuts
      *
-     * @var string
+     * @var bool
      */
-    private $_allowShortcuts;
+    private $_allowShortcuts = true;
 
     /**
      * Amount of thumbnails to create per one request
      *
-     * @var string
+     * @var int
      */
-    private $_loadTmbs;
+    private $_loadTmbs = 5;
 
     /**
      * Lazy load
      *
-     * @var string
+     * @var int
      */
-    private $_showFiles;
+    private $_showFiles = 30;
 
     /**
-     * Lazy load
+     * Lazy load.  Distance in px to cwd bottom edge to start displaying files.
      *
-     * @var string
+     * @var int
      */
-    private $_showThreshold;
+    private $_showThreshold = 50;
 
     /**
      * The AJAX request type
      *
-     * @var string
+     * @var string post | get
      */
-    private $_requestType;
+    private $_requestType = 'post';
 
     /**
      * Separate URL to upload file to
      *
      * @var string
      */
-    private $_urlUpload;
+    private $_urlUpload = '';
 
     /**
      * Timeout for upload using iframe
      *
-     * @var string
+     * @var int
      */
-    private $_iframeTimeout;
+    private $_iframeTimeout = 0;
 
     /**
      * Sync content by refreshing cwd every N seconds
      *
-     * @var string
+     * @var int
      */
-    private $_sync;
+    private $_sync = 0;
 
     /**
      * Cookie option for browsers that does not support localStorage
      *
-     * @var string
+     * @var array
      */
     private $_cookie;
 
     /**
      * Passing custom headers during Ajax calls
      *
-     * @var string
+     * @var array
      */
     private $_customHeaders;
 
     /**
      * Any custom xhrFields to send across every ajax request, useful for CORS (Cross-origin resource sharing) support
      *
-     * @var string
+     * @var array
      */
     private $_xhrFields;
 
     /**
      * Debug config
      *
-     * @var string
+     * @var bool|array
      */
-    private $_debug;
+    private $_debug = ['error', 'warning', 'event-destroy'];
 
     /**
-     * Increase chunk size.
+     * Increase chunk size.(bytes)
      *
-     * @var string
+     * @var int
      */
-    private $_uploadMaxChunkSize;
+    private $_uploadMaxChunkSize = 10485760;
 
     /**
      * Directory path to rm.wav file
@@ -339,17 +394,59 @@ class ClientOptions
      *
      * @param mixed $debug
      */
-    public function __construct($debug)
+    public function __construct($debug = null)
     {
-        $this->_debug = $debug;
+        if (!\is_null($debug)) {
+            $this->_debug = $debug;
+        }
+    }
+
+    public function setOption($name, $value)
+    {
+        if (property_exists($this, "_{$name}")) {
+            $this->{"_{$name}"} = $value;
+        }
+
+        return $this;
+    }
+
+    public function getOption($name)
+    {
+        if (property_exists($this, "_{$name}")) {
+            return $this->{"_{$name}"};
+        }
     }
 
     public function getOptions()
     {
         $options = [];
 
-        if (isset($this->_debug)) {
-            $options['locale'] = $this->_debug;
+        $optionsToAdd = [
+            'url',
+            'themes',
+            'theme',
+            'cssAutoLoad',
+            'contextmenu',
+            'customData',
+            'lang',
+            'requestType',
+            'width',
+            'height',
+            'commandsOptions',
+            'rememberLastDir',
+            'reloadClearHistory',
+            'defaultView',
+            'ui',
+            'sortOrder',
+            'sortStickFolders',
+            'dragUploadAllow',
+            'fileModeStyle',
+            'resizable',
+        ];
+        foreach ($optionsToAdd as $option) {
+            if (isset($this->{"_{$option}"})) {
+                $options[$option] = $this->getOption($option);
+            }
         }
 
         return $options;
