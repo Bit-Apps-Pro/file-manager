@@ -9,4 +9,4 @@ if (!\defined('ABSPATH')) {
 }
 
 Route::middleware('nonce')->match(['get', 'post'], 'connector', [FileManagerController::class, 'connector']);
-Route::middleware('nonce')->post('lang', [FileManagerController::class, 'changeLang']);
+Route::middleware('nonce')->post('theme', [FileManagerController::class, 'changeTheme']);

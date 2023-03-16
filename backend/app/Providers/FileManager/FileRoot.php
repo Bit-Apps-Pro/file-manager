@@ -156,9 +156,7 @@ class FileRoot
      * @var string
      */
     private $_dispInlineRegex
-        = '^(?:(?:video|audio)|image/(?!.+\+xml)
-        |application/(?:ogg|x-mpegURL|dash\+xml)
-        |(?:text/plain|application/pdf)$)';
+        = '^(?:(?:video|audio)|image/(?!.+\+xml)|application/(?:ogg|x-mpegURL|dash\+xml)|(?:text/plain|application/pdf)$)';
 
     /**
      * Image manipulations library

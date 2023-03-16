@@ -3,12 +3,11 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Http\Services\LogService;
-use BitApps\FM\Model\Log;
 use elFinder;
 use elFinderVolumeDriver;
 use elFinderVolumeLocalFileSystem;
 
-\defined('ABSPATH') or exit();
+\defined('ABSPATH') || exit();
 
 class Logger
 {

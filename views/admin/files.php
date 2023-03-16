@@ -70,7 +70,7 @@ wp_enqueue_script('bfm-elfinder-lang', $preferences->getLangUrl(), ['bfm-elfinde
           {
           method: 'POST',
           data: {
-            action: 'bit_fm_lang',
+            action: 'bit_fm_theme',
             nonce: fm.nonce,
             theme: e.currentTarget.value
           }

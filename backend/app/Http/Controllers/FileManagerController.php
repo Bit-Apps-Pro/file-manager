@@ -14,7 +14,7 @@ use Exception;
 
 final class FileManagerController
 {
-    public function changeLang(Request $request)
+    public function changeTheme(Request $request)
     {
         if ($request->has('theme') && Capabilities::filter(Config::VAR_PREFIX . 'user_can_change_theme')) {
             $prefs = Plugin::instance()->preferences();
