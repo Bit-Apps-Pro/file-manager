@@ -229,6 +229,12 @@ final class Plugin
     {
         $version = Config::VERSION;
 
+        wp_register_script(
+            'bfm-finder-loader',
+            BFM_ROOT_URL . 'assets/js/finder-loader.js',
+            ['jquery'],
+            $version
+        );
         $this->registerFinderAssets(); // Loads all the assets necessary for elFinder
 
         wp_register_style('bfm-tippy-css', BFM_ROOT_URL . 'libs/js/tippy-v0.2.8/tippy.css', $version);

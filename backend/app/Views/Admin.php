@@ -86,6 +86,21 @@ class Admin
         ];
     }
 
+    public function enqueueAssets()
+    {
+        $preferences = Plugin::instance()->preferences();
+
+        wp_enqueue_style('bfm-jquery-ui-css');
+        if (\in_array($preferences->getTheme(), ['default', 'bootstrap'])) {
+            wp_enqueue_style('bfm-elfinder-theme-css');
+        }
+        
+        wp_enqueue_script('bfm-elfinder-script');
+        wp_enqueue_script('bfm-elfinder-editor-script');
+        wp_enqueue_script('bfm-elfinder-lang', $preferences->getLangUrl(), ['bfm-elfinder-script']);
+        wp_enqueue_script('bfm-finder-loader');
+    }
+
     public function homePage()
     {
         return view('admin.index');
@@ -106,6 +121,7 @@ class Admin
         $options->setOption('reloadClearHistory', $preferences->getClearHistoryOnReload());
         $options->setOption('defaultView', $preferences->getViewType());
         $options->setOption('ui', $preferences->getUiOptions());
+        // $options->setOption('resizable', true);
         $options->setOption(
             'contextmenu',
             [

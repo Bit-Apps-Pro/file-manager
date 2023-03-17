@@ -5,6 +5,7 @@
 namespace BitApps\FM\Views;
 
 use BitApps\FM\Core\Shortcode\Shortcode as SWrapper;
+use BitApps\FM\Plugin;
 
 /**
  * The admin Layout and page handler class.
@@ -33,7 +34,12 @@ class Shortcode
     {
         wp_enqueue_style('bfm-jquery-ui-css');
         wp_enqueue_style('bfm-elfinder-css');
-        wp_enqueue_style('bfm-elfinder-theme-css');
+        if (\in_array(
+            Plugin::instance()->preferences(),
+            ['default', 'bootstrap']
+        )) {
+            wp_enqueue_style('bfm-elfinder-theme-css');
+        }
         wp_enqueue_style('fm-front-style');
         wp_enqueue_script('bfm-elfinder-script');
         wp_enqueue_script('bfm-elfinder-editor-script');
