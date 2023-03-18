@@ -7,7 +7,7 @@ use BitApps\FM\Model\Log;
 use BitApps\FM\Plugin;
 use DateTime;
 
-\defined('ABSPATH') or exit();
+\defined('ABSPATH') || exit();
 
 class LogService
 {

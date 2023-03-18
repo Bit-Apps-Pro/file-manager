@@ -6,6 +6,7 @@ namespace BitApps\FM;
 
 use BitApps\FM\Core\Database\Connection;
 use BitApps\FM\Core\Hooks\Hooks;
+use BitApps\FM\Core\Http\Request\Request;
 use BitApps\FM\Core\Http\RequestType;
 use BitApps\FM\Http\Middleware\NonceCheckerMiddleware;
 use BitApps\FM\Providers\AccessControlProvider;
@@ -19,6 +20,7 @@ use BitApps\FM\Providers\PreferenceProvider;
 use BitApps\FM\Providers\ReviewProvider;
 use BitApps\FM\Providers\VersionMigrationProvider;
 use BitApps\FM\Views\Admin;
+use BitApps\FM\Views\Shortcode;
 use FileManagerPermission;
 
 final class Plugin
@@ -80,6 +82,10 @@ final class Plugin
         if (RequestType::is('admin')) {
             $this->_container['review_notifier'] = new ReviewProvider();
             new Admin();
+        }
+
+        if (RequestType::is('frontend')) {
+            new Shortcode();
         }
 
         global $FMP;

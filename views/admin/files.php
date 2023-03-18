@@ -1,10 +1,4 @@
 <?php
-
-/**
- * Security check. No one can access without Wordpress itself
- *
- * */
-
 use BitApps\FM\Plugin;
 
 \defined('ABSPATH') || exit();
@@ -18,10 +12,6 @@ if (\in_array($preferences->getTheme(), ['default', 'bootstrap'])) {
 wp_enqueue_script('bfm-elfinder-script');
 wp_enqueue_script('bfm-elfinder-editor-script');
 
-// Testing
-// $fm_php_syntax_checker = new FMPHPSyntaxChecker();
-
-// Loading lanugage file
 wp_enqueue_script('bfm-elfinder-lang', $preferences->getLangUrl(), ['bfm-elfinder-script']);
 wp_enqueue_script('bfm-finder-loader');
 

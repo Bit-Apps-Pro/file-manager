@@ -108,7 +108,6 @@ final class FileManagerController
         $baseRoot->setAccessControl([$accessControlProvider, 'control']);
         $baseRoot->setAcceptedName([$accessControlProvider, 'validateName']);
         $baseRoot->setDisabled($permissions->getDisabledCommand());
-        $baseRoot->setTrashHash($preferences->isTrashAllowed() ? 't1_Lw' : '');
         $baseRoot->setWinHashFix(DIRECTORY_SEPARATOR !== '/');
 
         if (Capabilities::filter(Config::VAR_PREFIX . 'user_can_manage_options')) {
@@ -120,6 +119,8 @@ final class FileManagerController
         $roots[] = $baseRoot;
 
         if ($permissions->currentUserRole() === 'administrator') {
+            $baseRoot->setTrashHash($preferences->isTrashAllowed() ? 't1_Lw' : '');
+
             $mediaRoot = new FileRoot(FM_MEDIA_BASE_DIR_PATH, FM_MEDIA_BASE_DIR_URL, 'Media');
             $mediaRoot->setUploadAllow($mime->getTypes());
             $mediaRoot->setAccessControl([$accessControlProvider, 'control']);

@@ -68,11 +68,12 @@ class Admin
 
     public function removeAdminNotices()
     {
+        // phpcs:disable
         global $plugin_page;
         if (empty($plugin_page) || strpos($plugin_page, Config::SLUG) === false) {
             return;
         }
-
+        // phpcs:enable
         remove_all_actions('admin_notices');
         remove_all_actions('all_admin_notices');
 
@@ -82,7 +83,8 @@ class Admin
     public function filterConfigVariable($config)
     {
         return (array) $config + [
-            'options' => $this->finderOptions(),
+            'action'  => Config::withPrefix('connector'),
+            'options' => Plugin::instance()->preferences()->finderOptions(),
         ];
     }
 
@@ -94,7 +96,7 @@ class Admin
         if (\in_array($preferences->getTheme(), ['default', 'bootstrap'])) {
             wp_enqueue_style('bfm-elfinder-theme-css');
         }
-        
+
         wp_enqueue_script('bfm-elfinder-script');
         wp_enqueue_script('bfm-elfinder-editor-script');
         wp_enqueue_script('bfm-elfinder-lang', $preferences->getLangUrl(), ['bfm-elfinder-script']);
@@ -104,51 +106,6 @@ class Admin
     public function homePage()
     {
         return view('admin.index');
-    }
-
-    public function finderOptions()
-    {
-        $preferences = Plugin::instance()->preferences();
-        $options     = new ClientOptions();
-        $options->setOption('url', admin_url('admin-ajax.php'));
-        $options->setOption('themes', $preferences->themes());
-        $options->setOption('theme', $preferences->getTheme());
-        $options->setOption('lang', $preferences->getLangCode());
-        $options->setOption('width', $preferences->getWidth());
-        $options->setOption('height', $preferences->getHeight());
-        $options->setOption('commandsOptions', $this->finderCommandsOptions($preferences));
-        $options->setOption('rememberLastDir', $preferences->getRememberLastDir());
-        $options->setOption('reloadClearHistory', $preferences->getClearHistoryOnReload());
-        $options->setOption('defaultView', $preferences->getViewType());
-        $options->setOption('ui', $preferences->getUiOptions());
-        // $options->setOption('resizable', true);
-        $options->setOption(
-            'contextmenu',
-            [
-                'commands' => ['*'],
-                // phpcs:ignore
-                'files'    => [ 'getfile', '|', 'emailto', 'open', 'opennew', 'download', 'opendir', 'quicklook', 'email', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', 'empty', 'hide', '|', 'rename', 'edit', 'resize', '|', 'archive', 'extract', '|', 'selectall', 'selectinvert', '|', 'places', 'info', 'chmod', 'netunmount']
-            ]
-        );
-
-        return $options->getOptions();
-    }
-
-    public function finderCommandsOptions($preferences)
-    {
-        $commandOptions                                 = [];
-        $commandOptions['info']                         = [];
-        $commandOptions['info']['hideItems']            = ['md5', 'sha256'];
-        $commandOptions['download']['maxRequests']      = 10;
-        $commandOptions['download']['minFilesZipdl']    = 2; // need to check
-        $commandOptions['quicklook']['googleDocsMimes'] = ['application/pdf', 'image/tiff', 'application/vnd.ms-office', 'application/msword', 'application/vnd.ms-word', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
-
-        if ($preferences->getUrlPathView() == 'hide') {
-            $commandOptions['info']['hideItems'][] = 'link';
-            $commandOptions['info']['hideItems'][] = 'path';
-        }
-
-        return $commandOptions;
     }
 
     public function settingsPage()

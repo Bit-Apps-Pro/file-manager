@@ -1,13 +1,13 @@
 jQuery(document).ready(function() {
     var $ = jQuery
     const finder = jQuery('#file-manager').elfinder({
-      url: ajaxurl,
+      url: fm.ajax_url,
       themes: fm.options.themes,
       theme: fm.options.theme,
       cssAutoLoad: fm.options.cssAutoLoad,
       contextmenu: fm.options.contextmenu,
       customData: {
-        action: 'bit_fm_connector',
+        action: fm.action,
         nonce: fm.nonce
       },
       lang: fm.options.lang,

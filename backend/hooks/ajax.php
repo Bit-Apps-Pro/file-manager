@@ -8,5 +8,7 @@ if (!\defined('ABSPATH')) {
     exit;
 }
 
-Route::middleware('nonce')->match(['get', 'post'], 'connector', [FileManagerController::class, 'connector']);
+Route::middleware('nonce')->post('connector', [FileManagerController::class, 'connector']);
+Route::middleware('nonce')->noAuth()->post('connector_front', [FileManagerController::class, 'connector']);
+// Route::middleware('nonce')->match(['get', 'post'], 'connector', [FileManagerController::class, 'connector']);
 Route::middleware('nonce')->post('theme', [FileManagerController::class, 'changeTheme']);

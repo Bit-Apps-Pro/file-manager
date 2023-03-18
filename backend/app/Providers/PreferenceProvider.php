@@ -5,6 +5,7 @@ namespace BitApps\FM\Providers;
 use BitApps\FM\Config;
 use BitApps\FM\Core\Utils\Capabilities;
 use BitApps\FM\Plugin;
+use BitApps\FM\Providers\FileManager\ClientOptions;
 
 \defined('ABSPATH') || exit();
 class PreferenceProvider
@@ -462,7 +463,7 @@ class PreferenceProvider
     public function getRootVolumeName()
     {
         return isset($this->preferences['fm_root_folder_name'])
-        ? $this->preferences['fm_root_folder_name'] : basename(ABSPATH);
+        ? $this->preferences['fm_root_folder_name'] : '';
     }
 
     public function setWidth($width)
@@ -563,5 +564,49 @@ class PreferenceProvider
     {
         return isset($this->preferences['fm_display_ui_options'])
          ? $this->preferences['fm_display_ui_options'] : ['toolbar', 'places', 'tree', 'path', 'stat'];
+    }
+
+    public function finderOptions()
+    {
+        $options     = new ClientOptions();
+        $options->setOption('url', admin_url('admin-ajax.php'));
+        $options->setOption('themes', $this->themes());
+        $options->setOption('theme', $this->getTheme());
+        $options->setOption('lang', $this->getLangCode());
+        $options->setOption('width', $this->getWidth());
+        $options->setOption('height', $this->getHeight());
+        $options->setOption('commandsOptions', $this->finderCommandsOptions());
+        $options->setOption('rememberLastDir', $this->getRememberLastDir());
+        $options->setOption('reloadClearHistory', $this->getClearHistoryOnReload());
+        $options->setOption('defaultView', $this->getViewType());
+        $options->setOption('ui', $this->getUiOptions());
+        // $options->setOption('resizable', true);
+        $options->setOption(
+            'contextmenu',
+            [
+                'commands' => ['*'],
+                // phpcs:ignore
+                'files'    => [ 'getfile', '|', 'emailto', 'open', 'opennew', 'download', 'opendir', 'quicklook', 'email', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', 'empty', 'hide', '|', 'rename', 'edit', 'resize', '|', 'archive', 'extract', '|', 'selectall', 'selectinvert', '|', 'places', 'info', 'chmod', 'netunmount']
+            ]
+        );
+
+        return $options->getOptions();
+    }
+
+    public function finderCommandsOptions()
+    {
+        $commandOptions                                 = [];
+        $commandOptions['info']                         = [];
+        $commandOptions['info']['hideItems']            = ['md5', 'sha256'];
+        $commandOptions['download']['maxRequests']      = 10;
+        $commandOptions['download']['minFilesZipdl']    = 2; // need to check
+        $commandOptions['quicklook']['googleDocsMimes'] = ['application/pdf', 'image/tiff', 'application/vnd.ms-office', 'application/msword', 'application/vnd.ms-word', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+
+        if ($this->getUrlPathView() == 'hide') {
+            $commandOptions['info']['hideItems'][] = 'link';
+            $commandOptions['info']['hideItems'][] = 'path';
+        }
+
+        return $commandOptions;
     }
 }

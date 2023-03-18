@@ -30,7 +30,7 @@ class PermissionsProvider
      *
      * @var PreferenceProvider
      */
-    private $_prefernces;
+    private $_preferences;
 
     public function __construct()
     {
@@ -40,7 +40,7 @@ class PermissionsProvider
             $this->defaultPermissions()
         );
 
-        $this->_prefernces = Plugin::instance()->preferences();
+        $this->_preferences = Plugin::instance()->preferences();
         $this->roles       = array_keys($wp_roles->roles);
         $this->users       = get_users(['fields' => ['ID', 'user_login', 'display_name']]);
     }
@@ -95,8 +95,8 @@ class PermissionsProvider
 
     public function getPath()
     {
-        if (is_admin() && $this->isDisabledForAdmin()) {
-            return $this->_prefernces->getRootPath();
+        if (is_user_logged_in() && is_admin() && $this->isDisabledForAdmin()) {
+            return $this->_preferences->getRootPath();
         }
 
         $path = '';
@@ -108,6 +108,7 @@ class PermissionsProvider
         } else {
             $path = $this->permissionsForCurrentRole()['path'];
         }
+
         if (empty($path) || !file_exists($path)) {
             throw new PreCommandException(__('please check root folder for file manager, from file manager settings', 'file-manager'));
         }
@@ -118,7 +119,7 @@ class PermissionsProvider
     public function getURL()
     {
         if (is_admin() && $this->isDisabledForAdmin()) {
-            return $this->_prefernces->getRootUrl();
+            return $this->_preferences->getRootUrl();
         }
 
         return home_url() . "/" . str_replace([ABSPATH, '\\'], ['', '/'], $this->getPath());
@@ -126,7 +127,7 @@ class PermissionsProvider
 
     public function getVolumeAlias()
     {
-        return $this->_prefernces->getRootVolumeName();
+        return $this->_preferences->getRootVolumeName();
     }
 
     public function getDefaultPublicRootPath()
