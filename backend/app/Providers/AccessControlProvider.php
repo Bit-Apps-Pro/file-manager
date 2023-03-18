@@ -63,6 +63,11 @@ class AccessControlProvider
 
     public function checkPermission($command, ...$args)
     {
+
+        if (\in_array($command, ['open'])) {
+            return;
+        }
+
         $error              = '';
         $permissionProvider = Plugin::instance()->permissions();
         $cmd                = $command;
@@ -71,11 +76,10 @@ class AccessControlProvider
         } elseif ($command === 'put') {
             $cmd = 'edit';
         }
-
         if (!$permissionProvider->currentUserCanRun($cmd)) {
             $error = wp_sprintf(
                 __(
-                    'You are not authorized to run this command : %s. on file manager',
+                    'You are not authorized to run this command [ %s ] on file manager',
                     'file-manager'
                 ),
                 $cmd

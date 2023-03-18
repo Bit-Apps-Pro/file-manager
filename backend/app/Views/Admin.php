@@ -10,8 +10,6 @@ use function BitApps\FM\Functions\view;
 
 use BitApps\FM\Plugin;
 
-use BitApps\FM\Providers\FileManager\ClientOptions;
-
 /**
  * The admin Layout and page handler class.
  */

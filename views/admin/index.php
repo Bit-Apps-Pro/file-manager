@@ -4,6 +4,8 @@
  * The main admin view file that will show the actual library file manager
  * */
 
+use function BitApps\FM\Functions\view;
+
 use BitApps\FM\Views\Review;
 
 // Security check
@@ -18,19 +20,15 @@ $review = new Review();
 $review->render();
 ?>
 <div class='fm-container'>
-
     <div class='col-main'>
         <div class='gb-fm-row'>
-
-            <?php require 'files.php'; ?>
-
+            <?php view('finder'); ?>
         </div>
-
     </div>
 
     <?php
      if (!\defined('BFM_CLIENT_COMPLAIN')) {
-         include_once 'sidebar.php';
+         view('admin.sidebar');
      }
 ?>
 

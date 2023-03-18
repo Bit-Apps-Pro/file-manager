@@ -432,6 +432,7 @@ class ClientOptions
             'requestType',
             'width',
             'height',
+            'commands',
             'commandsOptions',
             'rememberLastDir',
             'reloadClearHistory',

@@ -118,7 +118,7 @@ class PermissionsProvider
 
     public function getURL()
     {
-        if (is_admin() && $this->isDisabledForAdmin()) {
+        if (is_user_logged_in() && is_admin() && $this->isDisabledForAdmin()) {
             return $this->_preferences->getRootUrl();
         }
 
@@ -280,7 +280,7 @@ class PermissionsProvider
 
     public function currentUserRole()
     {
-        if (!$this->currentUser() instanceof WP_User) {
+        if (!is_user_logged_in() || !$this->currentUser() instanceof WP_User) {
             return false;
         }
 
@@ -330,7 +330,7 @@ class PermissionsProvider
 
     public function currentUserCanRun($command)
     {
-        if (is_admin() && $this->isDisabledForAdmin()) {
+        if (is_user_logged_in() && is_admin() && $this->isDisabledForAdmin()) {
             return true;
         }
 
@@ -351,13 +351,11 @@ class PermissionsProvider
         return Capabilities::filter($cap) || $permission;
     }
 
-    public function getDisabledCommand()
+    public function getEnabledCommand()
     {
-        if (is_admin() && $this->isDisabledForAdmin()) {
-            return [];
+        if (is_user_logged_in() && is_admin() && $this->isDisabledForAdmin()) {
+            return ['*'];
         }
-
-        $enabledCommands = [];
 
         if (!is_user_logged_in()) {
             $enabledCommands = $this->getGuestPermissions()['commands'];
@@ -366,6 +364,16 @@ class PermissionsProvider
         } else {
             $enabledCommands = $this->permissionsForCurrentRole()['commands'];
         }
+        
+        return $enabledCommands;
+    }
+    public function getDisabledCommand()
+    {
+        if (is_user_logged_in() && is_admin() && $this->isDisabledForAdmin()) {
+            return [];
+        }
+
+        $enabledCommands = $this->getEnabledCommand();
 
         $disabledCommand = [];
         foreach ($this->allCommands() as $command) {

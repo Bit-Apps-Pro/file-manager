@@ -19,6 +19,11 @@ class PreferenceProvider
         $this->preferences = Config::getOption('preferences', $this->defaultPrefs());
     }
 
+    public function permissions()
+    {
+        return Plugin::instance()->permissions();
+    }
+
     public function defaultPrefs()
     {
         return [
@@ -396,7 +401,7 @@ class PreferenceProvider
     public function getRootPath()
     {
         $defaultPath = Capabilities::check('manage_options')
-         ? ABSPATH : Plugin::instance()->permissions()->getDefaultPublicRootPath();
+         ? ABSPATH : $this->permissions()->getDefaultPublicRootPath();
 
         return isset($this->preferences['root_folder_path'])
         ? $this->preferences['root_folder_path'] : $defaultPath;
@@ -449,7 +454,7 @@ class PreferenceProvider
     public function getRootUrl()
     {
         $defaultUrl = Capabilities::check('manage_options')
-         ? Config::get('SITE_URL') : Plugin::instance()->permissions()->getDefaultPublicRootURL();
+         ? Config::get('SITE_URL') : $this->permissions()->getDefaultPublicRootURL();
 
         return isset($this->preferences['root_folder_url'])
         ? $this->preferences['root_folder_url'] : $defaultUrl;
@@ -575,6 +580,7 @@ class PreferenceProvider
         $options->setOption('lang', $this->getLangCode());
         $options->setOption('width', $this->getWidth());
         $options->setOption('height', $this->getHeight());
+        $options->setOption('commands', $this->permissions()->getEnabledCommand());
         $options->setOption('commandsOptions', $this->finderCommandsOptions());
         $options->setOption('rememberLastDir', $this->getRememberLastDir());
         $options->setOption('reloadClearHistory', $this->getClearHistoryOnReload());
@@ -583,14 +589,33 @@ class PreferenceProvider
         // $options->setOption('resizable', true);
         $options->setOption(
             'contextmenu',
-            [
-                'commands' => ['*'],
-                // phpcs:ignore
-                'files'    => [ 'getfile', '|', 'emailto', 'open', 'opennew', 'download', 'opendir', 'quicklook', 'email', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', 'empty', 'hide', '|', 'rename', 'edit', 'resize', '|', 'archive', 'extract', '|', 'selectall', 'selectinvert', '|', 'places', 'info', 'chmod', 'netunmount']
-            ]
+            $this->finderContextMenu()
         );
 
         return $options->getOptions();
+    }
+
+    public function finderContextMenu()
+    {
+        $contextMenu = [
+            // 'commands' => ['*'],
+            // phpcs:ignore
+            'files'    => [ 'getfile', '|', 'emailto', 'open', 'opennew', 'download', 'opendir', 'quicklook', 'email', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', 'empty', 'hide', '|', 'rename', 'edit', 'resize', '|', 'archive', 'extract', '|', 'selectall', 'selectinvert', '|', 'places', 'info', 'chmod', 'netunmount']
+        ];
+        if (!is_user_logged_in()) {
+            $contextMenu = [
+                'navbar' => [],
+                'cwd'    => ['reload', 'back', 'sort'],
+                'files'    => [],
+            ];
+            if (count($this->permissions()->getEnabledCommand())) {
+                
+                $contextMenu['files']  = ['download'];
+            }
+        }
+        error_log(print_r($contextMenu, true));
+
+        return $contextMenu;
     }
 
     public function finderCommandsOptions()

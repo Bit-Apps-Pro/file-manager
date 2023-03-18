@@ -40,26 +40,7 @@ class Shortcode
     public function shortCodeView()
     {
         ob_start();
-        view('admin.files');
+        view('finder');
         return ob_get_clean();
-    }
-
-    public function enqueueAssets()
-    {
-        wp_enqueue_style('bfm-jquery-ui-css');
-        wp_enqueue_style('bfm-elfinder-css');
-        if (\in_array(
-            Plugin::instance()->preferences(),
-            ['default', 'bootstrap']
-        )) {
-            wp_enqueue_style('bfm-elfinder-theme-css');
-        }
-        wp_enqueue_style('fm-front-style');
-        wp_enqueue_script('bfm-elfinder-script');
-        wp_enqueue_script('bfm-elfinder-editor-script');
-        wp_enqueue_script('fm-front-script');
-        if (isset($lang_file_url)) {
-            wp_enqueue_script('bfm-elfinder-lang', $lang_file_url, ['bfm-elfinder-script']);
-        }
     }
 }
