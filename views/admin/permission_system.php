@@ -51,10 +51,10 @@ $fileTypes = ['text', 'image', 'application', 'video', 'audio'];
                     <td>Paste the shortcode anywhere you want to see the file manager.</td>
                     <td class='file-manager-shortcode-table-shortcode'>[file_manager]</td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td>Copy and paste this php function anywhere in you template to show file manager.</td>
                     <td class='file-manager-shortcode-table-shortcode'>file_manager_permission_system_frontend()</td>
-                </tr>
+                </tr> -->
             </table>
         </div>
 
