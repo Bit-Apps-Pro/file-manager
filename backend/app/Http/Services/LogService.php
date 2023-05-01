@@ -11,9 +11,11 @@ use DateTime;
 
 class LogService
 {
-    public function all()
+    public function all($skip = 0, $take = 20)
     {
-        return Log::all();
+        $data = Log::skip($skip)->take($take)->get();
+        $count = Log::count();
+        return compact('count', 'data');
     }
 
    public function save($command, $details)

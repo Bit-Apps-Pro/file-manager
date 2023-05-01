@@ -613,7 +613,7 @@ class PreferenceProvider
                 $contextMenu['files']  = ['download'];
             }
         }
-        error_log(print_r($contextMenu, true));
+        // error_log(print_r($contextMenu, true));
 
         return $contextMenu;
     }

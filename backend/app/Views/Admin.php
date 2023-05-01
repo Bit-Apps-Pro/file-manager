@@ -111,6 +111,11 @@ class Admin
         return view('admin.settings');
     }
 
+    public function logsPage()
+    {
+        return view('admin.logs');
+    }
+
     public function systemInfoPage()
     {
         return view('admin.utility');
@@ -192,6 +197,15 @@ class Admin
                 'callback'   => [$this, 'homePage'],
                 'icon'       => BFM_ROOT_URL . 'assets/img/icon-24x24.png',
                 'position'   => '2',
+            ],
+            'Logs'           => [
+                'parent'     => Config::SLUG,
+                'type'       => 'submenu',
+                'name'       => 'Logs',
+                'title'      => __('Logs | Bit File Manager', 'file-manager'),
+                'capability' => Hooks::applyFilter('fm_capabilities', 'manage_options'),
+                'slug'       => Config::SLUG . '-logs',
+                'callback'   => [$this, 'logsPage'],
             ],
             'Settings'           => [
                 'parent'     => Config::SLUG,

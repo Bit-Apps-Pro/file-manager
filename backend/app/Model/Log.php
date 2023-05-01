@@ -16,6 +16,8 @@ class Log extends Model
 {
     public $timestamps = false;
 
+    public $casts = ['details' => 'object'];
+
     protected $fillable = [
         'user_id',
         'command',

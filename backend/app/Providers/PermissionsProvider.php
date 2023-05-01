@@ -6,7 +6,6 @@ use BitApps\FM\Config;
 use BitApps\FM\Core\Utils\Capabilities;
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
-use elFinder;
 use WP_User;
 
 \defined('ABSPATH') or exit();
@@ -41,8 +40,8 @@ class PermissionsProvider
         );
 
         $this->_preferences = Plugin::instance()->preferences();
-        $this->roles       = array_keys($wp_roles->roles);
-        $this->users       = get_users(['fields' => ['ID', 'user_login', 'display_name']]);
+        $this->roles        = array_keys($wp_roles->roles);
+        $this->users        = $this->mappedUsers();
     }
 
     public function allRoles()
@@ -58,6 +57,18 @@ class PermissionsProvider
     public function allUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Get user display name by id
+     *
+     * @param mixed $id
+     *
+     * @return string
+     */
+    public function getUserDisplayName($id)
+    {
+        return isset($this->users[$id]) ? $this->users[$id]->display_name : 'guest';
     }
 
     public function allCommands()
@@ -122,7 +133,7 @@ class PermissionsProvider
             return $this->_preferences->getRootUrl();
         }
 
-        return home_url() . "/" . str_replace([ABSPATH, '\\'], ['', '/'], $this->getPath());
+        return home_url() . '/' . str_replace([ABSPATH, '\\'], ['', '/'], $this->getPath());
     }
 
     public function getVolumeAlias()
@@ -364,9 +375,10 @@ class PermissionsProvider
         } else {
             $enabledCommands = $this->permissionsForCurrentRole()['commands'];
         }
-        
+
         return $enabledCommands;
     }
+
     public function getDisabledCommand()
     {
         if (is_user_logged_in() && is_admin() && $this->isDisabledForAdmin()) {
@@ -383,5 +395,22 @@ class PermissionsProvider
         }
 
         return $disabledCommand;
+    }
+
+    /**
+     * Returns all available users. Array Index will be user ID
+     *
+     * @return array<int, WP_User>
+     */
+    private function mappedUsers()
+    {
+        $users          = get_users(['fields' => ['ID', 'user_login', 'display_name']]);
+        $processedUsers = [];
+
+        foreach ($users as $user) {
+            $processedUsers[$user->ID] = $user;
+        }
+
+        return $processedUsers;
     }
 }

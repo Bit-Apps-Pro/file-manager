@@ -49,7 +49,7 @@ $fileTypes = ['text', 'image', 'application', 'video', 'audio'];
 
                 <tr>
                     <td>Paste the shortcode anywhere you want to see the file manager.</td>
-                    <td class='file-manager-shortcode-table-shortcode'>[file_manager]</td>
+                    <td class='file-manager-shortcode-table-shortcode'>[file-manager]</td>
                 </tr>
                 <!-- <tr>
                     <td>Copy and paste this php function anywhere in you template to show file manager.</td>
