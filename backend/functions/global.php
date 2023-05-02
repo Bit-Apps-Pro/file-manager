@@ -32,6 +32,7 @@ function bfmActivate()
 
 function bfmUninstall()
 {
+    include_once BFM_BASEDIR . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
     $installerProvider = new InstallerProvider();
     $installerProvider->register();
     do_action(Config::withPrefix('uninstall'));
