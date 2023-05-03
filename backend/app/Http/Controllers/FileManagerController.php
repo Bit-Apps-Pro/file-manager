@@ -76,11 +76,12 @@ final class FileManagerController
 
             // 'zipdl.pre file.pre rename.pre put.pre upload.pre',
 
-        $finderOptions->setBind('zipdl.pre', [Plugin::instance()->logger(), 'log']);
-        $finderOptions->setBind('file.pre', [Plugin::instance()->logger(), 'log']);
-        $finderOptions->setBind('rename.pre', [Plugin::instance()->logger(), 'log']);
-        $finderOptions->setBind('put.pre', [Plugin::instance()->logger(), 'log']);
-        $finderOptions->setBind('upload.pre', [Plugin::instance()->logger(), 'log']);
+        $finderOptions->setBind('zipdl.pre file.pre rename.pre put.pre upload.pre', [Plugin::instance()->logger(), 'log']);
+        // $finderOptions->setBind('zipdl.pre', [Plugin::instance()->logger(), 'log']);
+        // $finderOptions->setBind('file.pre', [Plugin::instance()->logger(), 'log']);
+        // $finderOptions->setBind('rename.pre', [Plugin::instance()->logger(), 'log']);
+        // $finderOptions->setBind('put.pre', [Plugin::instance()->logger(), 'log']);
+        // $finderOptions->setBind('upload.pre', [Plugin::instance()->logger(), 'log']);
 
         foreach ($this->getFileRoots() as $root) {
             $finderOptions->setRoot($root);

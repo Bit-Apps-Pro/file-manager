@@ -67,7 +67,7 @@ class AccessControlProvider
         if (\in_array($command, ['open'])) {
             return;
         }
-
+error_log('In access');
         $error              = '';
         $permissionProvider = Plugin::instance()->permissions();
         $cmd                = $command;
@@ -76,6 +76,7 @@ class AccessControlProvider
         } elseif ($command === 'put') {
             $cmd = 'edit';
         }
+
         if (!$permissionProvider->currentUserCanRun($cmd)) {
             $error = wp_sprintf(
                 __(

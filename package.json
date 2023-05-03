@@ -15,7 +15,7 @@
     "build:zip": "node tools/zip_build.js",
     "build:theme": "./tools/copy_themes.js",
     "build:prod": "npm run build:elfinder && npm run sass:build  && npm run build:theme && npm run build:copy && npm run build:zip",
-    "production": "composer i --no-dev && npm run build:prod"
+    "production": "composer i --no-dev && npm run sass:build"
   },
   "dependencies": {
     "clean-css-cli": "^5.5.2",

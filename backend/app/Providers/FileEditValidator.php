@@ -71,7 +71,7 @@ class FileEditValidator
             return;
         }
 
-        if (!\is_null($error)) {
+        if (!empty($error)) {
             throw new PreCommandException($error);
         }
     }

@@ -61,7 +61,6 @@ Just install the plugin by following the standard WordPress plugin install proce
 + **File Size:** Control the maximum file size that can be uploaded.
 + **Maximum Operations:** Support 13+ types of file operation control.
 + **Operation Control:** Control 13+ operations for specific user and user roles.
-+ **Ban Roles/Users:** Ban Users and Roles.
 
 **[Github](https://github.com/Bit-Apps-Pro/file-manager/)**
 
@@ -183,6 +182,14 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 
 
 == Changelog ==
+
+= 6.0 (0 May, 2023) =
+* Feat: Shortcode support
+* Feat: Separate folder for specific user
+* Feat: Separate folder by user role
+* Feat: Folder access for Guest 
+* Feat: Maximum file upload size 
+* Feat: Access logs  
 
 = 5.2.7 (29 August, 2022) =
 * Plugin ownership changed from Aftabul Islam to Bit Apps
