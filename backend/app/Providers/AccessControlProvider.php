@@ -67,7 +67,7 @@ class AccessControlProvider
         if (\in_array($command, ['open'])) {
             return;
         }
-error_log('In access');
+
         $error              = '';
         $permissionProvider = Plugin::instance()->permissions();
         $cmd                = $command;

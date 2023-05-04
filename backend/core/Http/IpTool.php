@@ -60,7 +60,7 @@ trait IpTool
         } elseif (getenv('HTTP_FORWARDED')) {
             $ip = getenv('HTTP_FORWARDED');
         } else {
-            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
         }
 
         return $ip;
@@ -71,9 +71,14 @@ trait IpTool
      */
     private static function checkDevice()
     {
-        return isset(
-            $_SERVER['HTTP_USER_AGENT']
-        ) ? self::getBrowserName($_SERVER['HTTP_USER_AGENT']) . '|' . self::getOS($_SERVER['HTTP_USER_AGENT']) : '';
+        $userAgent = '';
+
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
+            $rawUserAgent = $_SERVER['HTTP_USER_AGENT'];
+            $userAgent = self::getBrowserName($rawUserAgent) . '|' . self::getOS($rawUserAgent);
+        }
+
+        return $userAgent;
     }
 
     /**

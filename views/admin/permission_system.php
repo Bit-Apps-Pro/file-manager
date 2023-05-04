@@ -21,6 +21,7 @@ if (!empty($_POST)) {
     // var_dump($_POST); die;
     check_ajax_referer('bfm_permissions_nonce', 'bfm_permissions_nonce');
     Config::updateOption('permissions', $_POST, 'yes');
+    Plugin::instance()->permissions()->refresh();
 }
 
 $permissionSettings = Plugin::instance()->permissions();

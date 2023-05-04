@@ -23,6 +23,11 @@ class Admin
         Hooks::addAction('admin_menu', [$this, 'sideBarMenuItem']);
         Hooks::addAction('admin_notices', [$this, 'adminNotice']);
         Hooks::addFilter(Config::withPrefix('localized_script'), [$this, 'filterConfigVariable']);
+       /*
+       * // For testing --
+       * Hooks::addFilter('can_access_fm_home', [$this, 'filterCapabilityForHomeMenu']);
+       */
+
     }
 
     /**
@@ -181,7 +186,7 @@ class Admin
                 'type'       => 'menu',
                 'title'      => __('Dashboard | Bit File Manager', 'file-manager'),
                 'name'       => __('Bit File Manager', 'file-manager'),
-                'capability' => Hooks::applyFilter('fm_capabilities', 'manage_options'),
+                'capability' => Hooks::applyFilter('can_access_fm_home', 'manage_options'),//fm_capabilities
                 'slug'       => Config::SLUG,
                 'callback'   => [$this, 'homePage'],
                 'icon'       => BFM_ROOT_URL . 'assets/img/icon-24x24.png',
@@ -192,7 +197,7 @@ class Admin
                 'type'       => 'submenu',
                 'title'      => __('Dashboard | Bit File Manager', 'file-manager'),
                 'name'       => __('Home', 'file-manager'),
-                'capability' => Hooks::applyFilter('fm_capabilities', 'manage_options'),
+                'capability' => Hooks::applyFilter('can_access_fm_home', 'manage_options'),
                 'slug'       => Config::SLUG,
                 'callback'   => [$this, 'homePage'],
                 'icon'       => BFM_ROOT_URL . 'assets/img/icon-24x24.png',
@@ -203,7 +208,7 @@ class Admin
                 'type'       => 'submenu',
                 'name'       => 'Logs',
                 'title'      => __('Logs | Bit File Manager', 'file-manager'),
-                'capability' => Hooks::applyFilter('fm_capabilities', 'manage_options'),
+                'capability' => Hooks::applyFilter('can_access_fm_logs', 'manage_options'),
                 'slug'       => Config::SLUG . '-logs',
                 'callback'   => [$this, 'logsPage'],
             ],
@@ -241,5 +246,16 @@ class Admin
                 'callback'   => [$this, 'systemInfoPage'],
             ],
         ];
+    }
+
+    public function filterCapabilityForHomeMenu()
+    {
+        if (Plugin::instance()->permissions()->isCurrentUserHasPermission()
+        || Plugin::instance()->permissions()->isCurrentRoleHasPermission()
+        ) {
+            return Plugin::instance()->permissions()->currentUserRole();
+        }
+
+        return false;
     }
 }

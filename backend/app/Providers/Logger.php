@@ -31,7 +31,6 @@ class Logger
      */
     public function log($command, $target, $finder, $volume)
     {
-        error_log('In logger');
         if (
             isset($target['targets'], $target['targets'][3])
             && $target['targets'][3] === 'application/zip'

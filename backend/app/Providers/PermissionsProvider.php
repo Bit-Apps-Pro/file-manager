@@ -3,6 +3,7 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
+use BitApps\FM\Core\Http\RequestType;
 use BitApps\FM\Core\Utils\Capabilities;
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
@@ -42,6 +43,14 @@ class PermissionsProvider
         $this->_preferences = Plugin::instance()->preferences();
         $this->roles        = array_keys($wp_roles->roles);
         $this->users        = $this->mappedUsers();
+    }
+
+    public function refresh()
+    {
+        $this->permissions    = Config::getOption(
+            'permissions',
+            $this->defaultPermissions()
+        );
     }
 
     public function allRoles()
@@ -104,9 +113,20 @@ class PermissionsProvider
         return $permissions;
     }
 
+    private function isRequestForAdminArea()
+    {
+        $action = '';
+
+        if (isset($_REQUEST['action'])) {
+            $action = sanitize_key($_REQUEST['action']);
+        }
+
+        return is_user_logged_in() && $action === 'bit_fm_connector';
+    }
+
     public function getPath()
     {
-        if (is_user_logged_in() && is_admin() && $this->isDisabledForAdmin()) {
+        if ($this->isRequestForAdminArea() && $this->isDisabledForAdmin()) {
             return $this->_preferences->getRootPath();
         }
 
@@ -121,7 +141,9 @@ class PermissionsProvider
         }
 
         if (empty($path) || !file_exists($path)) {
-            throw new PreCommandException(__('please check root folder for file manager, from file manager settings', 'file-manager'));
+            throw new PreCommandException(
+                __('please check root folder for file manager, from file manager settings', 'file-manager')
+            );
         }
 
         return $path;
@@ -129,7 +151,7 @@ class PermissionsProvider
 
     public function getURL()
     {
-        if (is_user_logged_in() && is_admin() && $this->isDisabledForAdmin()) {
+        if ($this->isRequestForAdminArea() && $this->isDisabledForAdmin()) {
             return $this->_preferences->getRootUrl();
         }
 
@@ -254,8 +276,9 @@ class PermissionsProvider
 
     public function getEnabledFileType()
     {
-        return isset($this->permissions['file_type'])
-            ? $this->permissions['file_type'] : [];
+        error_log(print_r($this->permissions['fileType'], true));
+        return isset($this->permissions['fileType'])
+            ? $this->permissions['fileType'] : [];
     }
 
     public function getMaximumUploadSize()
@@ -341,7 +364,7 @@ class PermissionsProvider
 
     public function currentUserCanRun($command)
     {
-        if (is_user_logged_in() && is_admin() && $this->isDisabledForAdmin()) {
+        if (Capabilities::check('administrator') && $this->isDisabledForAdmin()) {
             return true;
         }
 
@@ -364,7 +387,7 @@ class PermissionsProvider
 
     public function getEnabledCommand()
     {
-        if (is_user_logged_in() && is_admin() && $this->isDisabledForAdmin()) {
+        if ($this->isRequestForAdminArea() && $this->isDisabledForAdmin()) {
             return ['*'];
         }
 
@@ -381,7 +404,7 @@ class PermissionsProvider
 
     public function getDisabledCommand()
     {
-        if (is_user_logged_in() && is_admin() && $this->isDisabledForAdmin()) {
+        if ($this->isRequestForAdminArea() && $this->isDisabledForAdmin()) {
             return [];
         }
 
