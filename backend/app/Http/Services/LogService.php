@@ -13,8 +13,15 @@ class LogService
 {
     public function all($skip = 0, $take = 20)
     {
-        $data = Log::skip($skip)->take($take)->get();
-        $count = Log::count();
+        $data = [];
+        $count = 0;
+        try {
+            $data = Log::skip($skip)->take($take)->get();
+            $count = Log::count();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
         return compact('count', 'data');
     }
 
@@ -41,6 +48,7 @@ class LogService
        if ($logRetention > 200) {
            $logRetention = 200;
        }
+
        $currentDate = new DateTime();
 
        $dateToDelete = date_sub($currentDate, date_interval_create_from_date_string($logRetention . ' days'));

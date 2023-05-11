@@ -334,7 +334,7 @@ foreach ($preferenceProvider->availableLanguages() as $code => $name) {
                     </tr>
                     <tr>
                         <td>
-                            <h4><label for='fm-clear-history-on-reload'><?php _e('Clrear History On Reload', 'file-manager'); ?></label></h4>
+                            <h4><label for='fm-clear-history-on-reload'><?php _e('Clear History On Reload', 'file-manager'); ?></label></h4>
                         </td>
                         <td>
                             <input
@@ -357,7 +357,7 @@ foreach ($preferenceProvider->availableLanguages() as $code => $name) {
                         <td>
                             <label for='fm-root-folder-name-id'></label>
                             <select id="fm_display_ui_options" name="fm_display_ui_options[]" multiple>
-                                <option disabled>Select Defualt View Type</option>
+                                <option disabled>Select Default View Type</option>
 <?php
 $uioptions = ['toolbar', 'places', 'tree', 'path', 'stat'];
 foreach ($uioptions as $place) { ?>

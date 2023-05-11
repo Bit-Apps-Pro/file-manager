@@ -77,21 +77,21 @@ $fileTypes = ['text', 'image', 'application', 'video', 'audio'];
                 </br>
                 </br>
                 <label for="file_size_id">Maximum File Size</label>
-                <input type='number' name="file_size" id='file_size_id' value="<?php echo $permissionSettings->getMaximumUploadSize(); ?>" />
+                <input type='number' name="file_size" id='file_size_id' value="<?php esc_html_e($permissionSettings->getMaximumUploadSize()); ?>" />
                 <small>MB(mega byte).</small><small> 0 for unlimited size</small>
 
                 </br>
                 </br>
                 <h3>Root Folder</h3>
                 <label for="root_folder_id">Root Folder Path</label>
-                <input style="width:500px;" type='text' placeholder='<?php echo $permissionSettings->getDefaultPublicRootPath(); ?>' name="root_folder" id='root_folder_id' value="<?php echo $permissionSettings->getPublicRootPath(); ?>" />
-                <small>default is <b><?php echo $permissionSettings->getDefaultPublicRootPath(); ?></b></small>
+                <input style="width:500px;" type='text' placeholder='<?php esc_html_e($permissionSettings->getDefaultPublicRootPath()); ?>' name="root_folder" id='root_folder_id' value="<?php esc_html_e($permissionSettings->getPublicRootPath()); ?>" />
+                <small>default is <b><?php esc_html_e($permissionSettings->getDefaultPublicRootPath()); ?></b></small>
 
                 </br>
                 </br>
                 <label for="root_folder_url_id">Root Folder URL</label>
-                <input style="width:500px;" type='text' placeholder='<?php echo $permissionSettings->getDefaultPublicRootURL(); ?>' name="root_folder_url" id='root_folder_url_id' value="<?php echo $permissionSettings->getPublicRootURL(); ?>" />
-                <small>default is <b><?php echo $permissionSettings->getDefaultPublicRootURL(); ?></b></small>
+                <input style="width:500px;" type='text' placeholder='<?php esc_html_e($permissionSettings->getDefaultPublicRootURL()); ?>' name="root_folder_url" id='root_folder_url_id' value="<?php esc_html_e($permissionSettings->getPublicRootURL()); ?>" />
+                <small>default is <b><?php esc_html_e($permissionSettings->getDefaultPublicRootURL()); ?></b></small>
 
                 <br />
                 <br />
@@ -129,17 +129,17 @@ $fileTypes = ['text', 'image', 'application', 'video', 'audio'];
                     <?php foreach ($permissionSettings->allRoles() as $role) { ?>
                         <tr>
 
-                            <td><?php echo $role; ?></td>
+                            <td><?php esc_html_e($role); ?></td>
 
                             <?php
                             $settingsForRole = $permissionSettings->getByRole($role);
                         foreach ($operations as $operation) {
                             ?>
                                 <td>
-                                    <input type='checkbox' name='by_role[<?php echo $role; ?>][commands][]' id='<?php echo $role . '_' . $operation; ?>' class='<?php echo $operation; ?>' value='<?php echo $operation; ?>' <?php echo \in_array($operation, $settingsForRole['commands']) ? 'checked' : ''; ?> />
+                                    <input type='checkbox' name='by_role[<?php esc_html_e($role); ?>][commands][]' id='<?php esc_html_e($role) . '_' . esc_html_e($operation); ?>' class='<?php esc_html_e($operation); ?>' value='<?php esc_html_e($operation); ?>' <?php echo \in_array($operation, $settingsForRole['commands']) ? 'checked' : ''; ?> />
                             <?php } ?>
                             <td>
-                                <input type='text' name='by_role[<?php echo $role; ?>][path]' value='<?php echo $settingsForRole['path']; ?>' />
+                                <input type='text' name='by_role[<?php esc_html_e($role); ?>][path]' value='<?php esc_html_e($settingsForRole['path']); ?>' />
 
                             </td>
 
@@ -156,7 +156,7 @@ $fileTypes = ['text', 'image', 'application', 'video', 'audio'];
                         <td><input type='checkbox' name='guest[commands][]' value='download' <?php echo \in_array('download', $permissionSettings->getGuestPermissions()['commands']) ? 'checked' : '' ?>> <i class="fa fa-question-circle tippy" aria-hidden="true" title='Hello Help'></i> </td>
 
                         <th>Guests File Path</th>
-                        <td><input type='text' name='guest[path]' value='<?php echo $permissionSettings->getGuestPermissions()['path']; ?>'></td>
+                        <td><input type='text' name='guest[path]' value='<?php esc_html_e($permissionSettings->getGuestPermissions()['path']); ?>'></td>
                     </tr>
                 </table>
 
@@ -173,7 +173,7 @@ $fileTypes = ['text', 'image', 'application', 'video', 'audio'];
 
                         <?php foreach ($operations as $operation) { ?>
 
-                            <th><?php echo $operation; ?></th>
+                            <th><?php esc_html_e($operation); ?></th>
 
                         <?php } ?>
 
@@ -186,17 +186,17 @@ $fileTypes = ['text', 'image', 'application', 'video', 'audio'];
                         ?>
                         <tr>
 
-                            <td><?php echo $user->display_name; ?></td>
+                            <td><?php esc_html_e($user->display_name); ?></td>
                             <td>&nbsp;&nbsp;</td>
 
                             <?php foreach ($operations as $operation) { ?>
                                 <td>
-                                    <input type='checkbox' name='by_user[<?php echo $userID; ?>][commands][]' value="<?php echo $operation; ?>" <?php echo \in_array($operation, $settingsForRole['commands']) ? 'checked' : ''; ?> />
+                                    <input type='checkbox' name='by_user[<?php esc_html_e($userID); ?>][commands][]' value="<?php esc_html_e($operation); ?>" <?php echo \in_array($operation, $settingsForRole['commands']) ? 'checked' : ''; ?> />
                                 </td>
                             <?php } ?>
                             <td>
 
-                                <input type='text' name='by_user[<?php echo $userID; ?>][path]' value='<?php echo $settingsForRole['path']; ?>' />
+                                <input type='text' name='by_user[<?php esc_html_e($userID); ?>][path]' value='<?php esc_html_e($settingsForRole['path']); ?>' />
 
                             </td>
 
