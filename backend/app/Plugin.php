@@ -233,7 +233,7 @@ final class Plugin
         wp_register_script(
             'bfm-finder-loader',
             BFM_ROOT_URL . 'assets/js/finder-loader.js',
-            ['jquery'],
+            ['bfm-elfinder-script', 'jquery'],
             $version
         );
         $this->registerFinderAssets(); // Loads all the assets necessary for elFinder
