@@ -14,7 +14,7 @@
     "build:copy": "node tools/build_copy.js",
     "build:zip": "node tools/zip_build.js",
     "build:theme": "./tools/copy_themes.js",
-    "build:prod": "pnpm i && npm run build:elfinder && npm run sass:build  && npm run build:theme && npm run build:copy && npm run build:zip",
+    "build:prod": "composer i --no-dev && pnpm i && npm run build:elfinder && npm run sass:build  && npm run build:theme && npm run build:copy && npm run build:zip",
     "i18n:php": "[ ! -d \"languages/\" ] && mkdir languages/;wp i18n make-pot ./backend languages/file-manager.pot --include=*.php --skip-js --slug=file-manager --headers='{\"Last-Translator\":\"\",\"Language-Team\":\"support@bitapps.pro\",\"PO-Revision-Date\":\"\",\"Report-Msgid-Bugs-To\":\"\"}'",
     "production": "composer i --no-dev && pnpm i && npm run i18n:php && npm run sass:build"
   },
