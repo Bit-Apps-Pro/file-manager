@@ -1,6 +1,6 @@
 {
   "name": "file-manager",
-  "version": "5.0.2",
+  "version": "6.0",
   "description": "Manage your file the way you like. You can upload, delete, copy, move, rename, compress, extract files. You don't need to worry about ftp. It is really simple and easy to use.",
   "author": "Bit Apps",
   "license": "GPL-3.0-or-later",
@@ -15,7 +15,8 @@
     "build:zip": "node tools/zip_build.js",
     "build:theme": "./tools/copy_themes.js",
     "build:prod": "npm run build:elfinder && npm run sass:build  && npm run build:theme && npm run build:copy && npm run build:zip",
-    "production": "composer i --no-dev && npm run sass:build"
+    "i18n:php": "[ ! -d \"languages/\" ] && mkdir languages/;wp i18n make-pot ./backend languages/file-manager.pot --include=*.php --skip-js --slug=file-manager --headers='{\"Last-Translator\":\"\",\"Language-Team\":\"support@bitapps.pro\",\"PO-Revision-Date\":\"\",\"Report-Msgid-Bugs-To\":\"\"}'",
+    "production": "composer i --no-dev && pnpm i && npm run i18n:php && npm run sass:build"
   },
   "dependencies": {
     "clean-css-cli": "^5.5.2",
