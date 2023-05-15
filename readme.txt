@@ -189,7 +189,11 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 * Feat: Separate folder by user role
 * Feat: Folder access for Guest 
 * Feat: Maximum file upload size 
-* Feat: Access logs  
+* Feat: Access logs
+* refactor: Refactored backend code base.
+* Fix: Parts file editor hidden on full screen.
+* Fix: PHP object serialization/deserialization on user inputted data.
+Also fixes some minor issues and optimized code.
 
 = 5.2.7 (29 August, 2022) =
 * Plugin ownership changed from Aftabul Islam to Bit Apps
