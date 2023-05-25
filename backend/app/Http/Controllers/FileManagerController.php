@@ -106,6 +106,7 @@ final class FileManagerController
 
         if ($permissions->currentUserRole() !== 'administrator') {
             $mimes = $permissions->getEnabledFileType();
+            $baseRoot->setUploadMaxSize($permissions->getMaximumUploadSize());
         }
 
         if (is_writable(stripslashes($path) . DIRECTORY_SEPARATOR . '.tmbPath')) {
