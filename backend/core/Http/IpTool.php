@@ -74,7 +74,7 @@ trait IpTool
         $userAgent = '';
 
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
-            $rawUserAgent = $_SERVER['HTTP_USER_AGENT'];
+            $rawUserAgent = sanitize_text_field($_SERVER['HTTP_USER_AGENT']);
             $userAgent = self::getBrowserName($rawUserAgent) . '|' . self::getOS($rawUserAgent);
         }
 

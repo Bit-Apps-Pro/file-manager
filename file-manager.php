@@ -5,7 +5,7 @@
  * Plugin URI: https://bitapps.pro/
  * Author:     Bit Apps
  * Author URI:  https://bitapps.pro
- * Version: 6.0
+ * Version: 6.1
  * PHP version: 5.6
  * Text domain: file-manager
  * License: GPLv2

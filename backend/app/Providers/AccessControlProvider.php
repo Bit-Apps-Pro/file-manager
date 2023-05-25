@@ -77,7 +77,9 @@ class AccessControlProvider
             $cmd = 'edit';
         }
 
-        if (!$permissionProvider->currentUserCanRun($cmd)) {
+        if (
+            $this->isNotRequiredCommandForAllPermission($cmd, $permissionProvider)
+             && !$permissionProvider->currentUserCanRun($cmd)) {
             $error = wp_sprintf(
                 __(
                     'You are not authorized to run this command [ %s ] on file manager',
@@ -94,5 +96,40 @@ class AccessControlProvider
                 return $th->getError();
             }
         }
+    }
+
+    /**
+     * If a user has permission for any task to perform then they have
+     * to be allowed to perform common commands.
+     * Lets say, A user has permission to upload file then they will not be
+     * able to upload if ls command is not allowed.
+     * Checks if the command is required for all commands to perform.
+     * Common commands are:
+     * - ls
+     * - tree
+     * - search
+     * - info
+     * - size
+     *
+     * @param string $cmd
+     * @param PermissionsProvider $permissionProvider
+     *
+     * @return boolean
+     */
+    public function isNotRequiredCommandForAllPermission($cmd, $permissionProvider)
+    {
+        $isNotRequired = true;
+
+        if (
+            in_array($cmd, ["ls", "tree", "info", "size"])
+            && (
+                $permissionProvider->isCurrentRoleHasPermission()
+                || $permissionProvider->isCurrentUserHasPermission()
+            )
+        ) {
+            $isNotRequired = false;
+        }
+
+        return $isNotRequired;
     }
 }

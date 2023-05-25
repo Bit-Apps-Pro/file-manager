@@ -276,7 +276,6 @@ class PermissionsProvider
 
     public function getEnabledFileType()
     {
-        error_log(print_r($this->permissions['fileType'], true));
         return isset($this->permissions['fileType'])
             ? $this->permissions['fileType'] : [];
     }

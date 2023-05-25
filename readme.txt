@@ -4,7 +4,7 @@ Tags: file manager, wp file manager, FTP, elfinder, file Browser, manage files, 
 Requires at least: 4.0
 Tested up to: 6.2
 Requires PHP: 5.6
-Stable tag: 6.0
+Stable tag: 6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -123,11 +123,11 @@ We try to make our plugin compatible with as many plugin/theme as possible. If y
 = Requirements =
 
 + At least Firefox 12, Internet Explorer 9, Safari 6, Opera 12 or Chrome/Chromium 19
-+ PHP 5.2+ PHP 5.6+ (recommended)
++ PHP 5.6+ (recommended)
  + Minimum 5.2
  + Recommended 5.6+
- + Upto 7.2
- + Supports 7.3 on production environment
+ + Up to 8.2.6
+ + Supports 8.2.6 on production environment
  + DISALLOW_FILE_EDIT must be false to edit files from Bit File Manager.
 
 = Installation process =
@@ -151,7 +151,7 @@ You can upload any size of file. Bit file manager plugin uploads files in chunks
 
 = Can I preview .psd and document files? =
 
-Yes, documents like PSD, DOCX can be previewd via file manager preview.
+Yes, documents like PSD, DOCX can be previewed via file manager preview.
 
 = Can I change file permission like cPanel? =
 
@@ -177,13 +177,16 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 
 == Upgrade Notice ==
 
-= 5.2.7 =
+= 6.1 =
 + No special requirements.
 
 
 == Changelog ==
 
-= 6.0 (0 May, 2023) =
+= 6.1 (25 May, 2023) =
+* Fix: File upload issue for non administrator if they have permission for upload.
+
+= 6.0 (14 May, 2023) =
 * Feat: Shortcode support
 * Feat: Separate folder for specific user
 * Feat: Separate folder by user role
@@ -211,13 +214,13 @@ Also fixes some minor issues and optimized code.
 * Full screen design issue fixed.
 * Trash folder feature added.
 * Plugin debug is synchronized with WP_DEBUG
-* Setttings configuration issue fixed
-* Codemirror issue fixed
+* Settings configuration issue fixed
+* Code mirror issue fixed
 * Code quality improvement
 * Other minor bug fixes
 
 = 5.2.4 (10 April, 2022) =
-* Tested compatability for WordPress 5.9.3
+* Tested compatibility for WordPress 5.9.3
 * Unicode character support for file/folder
 * Media folder sync, you can upload to media folder, and it will be available on media library
 * File Preview issue fixed [.docx, .psd etc]
@@ -230,17 +233,17 @@ Also fixes some minor issues and optimized code.
 * Emailing a file on right click menu added.
 
 = 5.2.3 (28 March, 2022) =
-* Tested compatability for WordPress 5.9.2
+* Tested compatibility for WordPress 5.9.2
 * Updated to elFinder 2.1.61
 * Security issue fixed
 * Minor issue fixed.
 
 = 5.2.2 (08 November 2021) =
-* Tested compatability for WordPress 5.8.2
+* Tested compatibility for WordPress 5.8.2
 * Name & Branding changed
 
 = 5.2.1 (08 November 2021) =
-* Tested compatability for WordPress 5.8.1
+* Tested compatibility for WordPress 5.8.1
 * Some minor fixes
 
 = 5.1.9 (28 October 2019) =
@@ -281,7 +284,7 @@ Also fixes some minor issues and optimized code.
 
 = 5.1.0 (21 February 2019) =
 * Updated to elFinder 2.1.46
-* Code Editor added for easy editing [Ace, Codemirror, TinyMCE & others].
+* Code Editor added for easy editing [Ace, Code mirror, TinyMCE & others].
 * Supported file format extended.
 * Minor issue fixed
 * Unlimited file size upload added(regardless your php.ini settings)
