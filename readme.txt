@@ -4,7 +4,7 @@ Tags: file manager, wp file manager, FTP, elfinder, file Browser, manage files, 
 Requires at least: 4.0
 Tested up to: 6.2
 Requires PHP: 5.6
-Stable tag: 6.1
+Stable tag: 6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,11 +177,15 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 
 == Upgrade Notice ==
 
-= 6.1 =
+= 6.2 =
 + No special requirements.
 
 
 == Changelog ==
+
+= 6.2 (25 May, 2023) =
+* Fix: Allowed Mime type.
+* Fix: Maximum allowed file size.
 
 = 6.1 (25 May, 2023) =
 * Fix: File upload issue for non administrator if they have permission for upload.
