@@ -92,7 +92,7 @@ final class FileManagerController
 
     public function getFileRoots()
     {
-        $mime                  = Plugin::instance()->mimes();
+        $mimes                 = Plugin::instance()->mimes()->getTypes();
         $preferences           = Plugin::instance()->preferences();
         $accessControlProvider = Plugin::instance()->accessControl();
         $permissions           = Plugin::instance()->permissions();
@@ -104,11 +104,15 @@ final class FileManagerController
             $permissions->getVolumeAlias()
         );
 
+        if ($permissions->currentUserRole() !== 'administrator') {
+            $mimes = $permissions->getEnabledFileType();
+        }
+
         if (is_writable(stripslashes($path) . DIRECTORY_SEPARATOR . '.tmbPath')) {
             $baseRoot->setOption('tmbPath', '.tmb');
         }
 
-        $baseRoot->setUploadAllow($mime->getTypes());
+        $baseRoot->setUploadAllow($mimes);
         $baseRoot->setAccessControl([$accessControlProvider, 'control']);
         $baseRoot->setAcceptedName([$accessControlProvider, 'validateName']);
         $baseRoot->setDisabled($permissions->getDisabledCommand());
@@ -126,7 +130,7 @@ final class FileManagerController
             $baseRoot->setTrashHash($preferences->isTrashAllowed() ? 't1_Lw' : '');
 
             $mediaRoot = new FileRoot(FM_MEDIA_BASE_DIR_PATH, FM_MEDIA_BASE_DIR_URL, 'Media');
-            $mediaRoot->setUploadAllow($mime->getTypes());
+            $mediaRoot->setUploadAllow($mimes);
             $mediaRoot->setAccessControl([$accessControlProvider, 'control']);
 
             $roots[] = $mediaRoot;
@@ -134,7 +138,7 @@ final class FileManagerController
             if ($preferences->isTrashAllowed()) {
                 $trashRoot = new FileRoot(FM_TRASH_DIR_PATH, FM_TRASH_TMB_DIR_URL, 'trash', 'Trash');
                 $trashRoot->setOption('id', 1);
-                $trashRoot->setUploadAllow($mime->getTypes());
+                $trashRoot->setUploadAllow($mimes);
                 $trashRoot->setAccessControl([$accessControlProvider, 'control']);
                 $trashRoot->setAcceptedName([$accessControlProvider, 'validateName']);
 
