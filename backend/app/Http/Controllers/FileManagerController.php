@@ -106,7 +106,10 @@ final class FileManagerController
 
         if ($permissions->currentUserRole() !== 'administrator') {
             $mimes = $permissions->getEnabledFileType();
-            $baseRoot->setUploadMaxSize($permissions->getMaximumUploadSize());
+            $maxUploadSize = $permissions->getMaximumUploadSize();
+            $baseRoot->setUploadMaxSize($maxUploadSize == 0 ? 0 : $maxUploadSize. "M");
+            $denyUploadType = array_diff(Plugin::instance()->mimes()->getTypes(), $mimes);
+            $baseRoot->setOption('uploadDeny', $denyUploadType);
         }
 
         if (is_writable(stripslashes($path) . DIRECTORY_SEPARATOR . '.tmbPath')) {
