@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Bit File Manager
  * Plugin URI: https://bitapps.pro/
- * Author:     Bit Apps
+ * Author:     File Manager by Bit Form Team
  * Author URI:  https://bitapps.pro
  * Version: 6.2
  * PHP version: 5.6
