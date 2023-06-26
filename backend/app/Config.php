@@ -21,9 +21,9 @@ class Config
 
     const DB_PREFIX = 'fm_';
 
-    const VERSION = '6.2';
+    const VERSION = '6.2.1';
 
-    const VERSION_ID = 620;
+    const VERSION_ID = 621;
 
     const DB_VERSION = '1.0';
 
