@@ -30,7 +30,7 @@ final class Shortcode
             return \call_user_func_array([$this->getInstance(), $method], $parameters);
         }
 
-        throw new RuntimeException('Undefined method [' . $method . '] called on ' . __CLASS__ . ' class.');
+        throw new RuntimeException('Undefined method [' . esc_html($method) . '] called on ' . __CLASS__ . ' class.');
     }
 
     public static function __callStatic($method, $parameters)

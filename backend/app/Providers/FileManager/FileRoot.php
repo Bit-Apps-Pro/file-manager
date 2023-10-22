@@ -814,7 +814,7 @@ class FileRoot
             return $this->{"_{$name}"} = $value;
         }
 
-        throw new Exception("Property [{$name}] not Exists in " . __CLASS__);
+        throw new Exception("Property [" . esc_html($name) ."] not Exists in " . __CLASS__);
     }
 
     public function getOption($name)

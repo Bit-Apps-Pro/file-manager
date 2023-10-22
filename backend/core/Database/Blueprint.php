@@ -126,7 +126,7 @@ class Blueprint
             return $this->addColumn($columnName, $formattedMethodName, ...$parameters);
         }
 
-        throw new RuntimeException("Undefined method [  {$method}  ] called on Blueprint");
+        throw new RuntimeException("Undefined method [ " . esc_html($method)  ." ] called on Blueprint");
     }
 
     public function build()
@@ -166,7 +166,7 @@ class Blueprint
         $hasError = Connection::prop('last_error');
         Connection::restoreErrorState();
         if ($hasError) {
-            throw new RuntimeException($hasError);
+            throw new RuntimeException(esc_html($hasError));
         }
 
         return true;

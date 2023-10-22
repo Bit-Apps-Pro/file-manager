@@ -64,7 +64,7 @@ final class RouteBase
             return $route;
         }
 
-        throw new RuntimeException('Undefined method [' . $method . '] called on ' . __CLASS__ . ' class.');
+        throw new RuntimeException('Undefined method [' . esc_html($method) . '] called on ' . __CLASS__ . ' class.');
     }
 
     public static function __callStatic($method, $parameters)

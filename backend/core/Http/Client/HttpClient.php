@@ -57,7 +57,7 @@ final class HttpClient
             return $this->request($url, $type, $data, $headers, $options);
         }
 
-        throw new BadMethodCallException($method . ' Method not found in ' . __CLASS__);
+        throw new BadMethodCallException(esc_html($method) . ' Method not found in ' . __CLASS__);
     }
 
     public function setBaseUri($uri)

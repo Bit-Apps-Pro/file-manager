@@ -142,7 +142,7 @@ class PermissionsProvider
 
         if (empty($path) || !file_exists($path)) {
             throw new PreCommandException(
-                __('please check root folder for file manager, from file manager settings', 'file-manager')
+                esc_html__('please check root folder for file manager, from file manager settings', 'file-manager')
             );
         }
 

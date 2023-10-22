@@ -69,7 +69,7 @@ final class Connection
             return \call_user_func_array([$instance, $name], $arguments);
         }
 
-        throw new Exception("Method {$name} not found");
+        throw new Exception("Method " . esc_html($name) ."not found");
     }
 
     public static function suppressError()

@@ -173,7 +173,7 @@ abstract class Model implements ArrayAccess, JsonSerializable
             return \call_user_func_array([$this->getQueryBuilder(), $method], $parameters);
         }
 
-        throw new RuntimeException('Undefined method [' . $method . '] called on Model class.');
+        throw new RuntimeException('Undefined method [' . esc_html($method) . '] called on Model class.');
     }
 
     public static function __callStatic($method, $parameters)

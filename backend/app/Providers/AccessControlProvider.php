@@ -81,6 +81,7 @@ class AccessControlProvider
             $this->isNotRequiredCommandForAllPermission($cmd, $permissionProvider)
              && !$permissionProvider->currentUserCanRun($cmd)) {
             $error = wp_sprintf(
+                // translators: 1: elFInder Command
                 __(
                     'You are not authorized to run this command [ %s ] on file manager',
                     'file-manager'

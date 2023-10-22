@@ -52,6 +52,7 @@ class FileEditValidator
 
                 if (strpos($result, 'Errors parsing') !== false) {
                     $error = wp_sprintf(
+                        // translators: 1: Temporary file path
                         __('Errors parsing the file [ %s ] as php script', 'file-manager'),
                         str_replace('temp', '', $tempFilePath)
                     );
@@ -72,7 +73,7 @@ class FileEditValidator
         }
 
         if (!empty($error)) {
-            throw new PreCommandException($error);
+            throw new PreCommandException(esc_html($error));
         }
     }
 
@@ -88,7 +89,7 @@ class FileEditValidator
         }
 
         if (!empty($error)) {
-            throw new PreCommandException($error);
+            throw new PreCommandException(esc_html($error));
         }
     }
 }

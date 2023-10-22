@@ -67,7 +67,7 @@ class Request implements ArrayAccess, JsonSerializable
             return \call_user_func_array([$this->_rest, $method], $parameters);
         }
 
-        throw new RuntimeException('Undefined method [' . (string) $method . '] called on ' . __CLASS__ . 'class.');
+        throw new RuntimeException('Undefined method [' . esc_html($method) . '] called on ' . __CLASS__ . 'class.');
     }
 
     public static function __callStatic($method, $parameters)
