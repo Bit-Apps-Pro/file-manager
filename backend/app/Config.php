@@ -21,13 +21,13 @@ class Config
 
     const DB_PREFIX = 'fm_';
 
-    const VERSION = '6.2';
+    const VERSION = '6.3';
 
-    const VERSION_ID = 620;
+    const VERSION_ID = 630;
 
     const DB_VERSION = '1.0';
 
-    const REQUIRED_PHP_VERSION = '5.6.4';
+    const REQUIRED_PHP_VERSION = '7.4';
 
     const REQUIRED_WP_VERSION = '5.0';
 

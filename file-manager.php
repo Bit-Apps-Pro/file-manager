@@ -3,10 +3,10 @@
 /**
  * Plugin Name: Bit File Manager
  * Plugin URI: https://bitapps.pro/
- * Author:     Bit Apps
+ * Author:     File Manager by Bit Form Team
  * Author URI:  https://bitapps.pro
- * Version: 6.2
- * PHP version: 5.6
+ * Version: 6.3
+ * PHP version: 7.4
  * Text domain: file-manager
  * License: GPLv2
  * Description: File Manager let you manage your file the way you like.
