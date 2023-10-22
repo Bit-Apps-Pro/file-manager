@@ -29,7 +29,7 @@ class LogService
    {
        $log             = new Log();
 
-       $log->created_at = date(QueryBuilder::TIME_FORMAT);
+       $log->created_at = gmdate(QueryBuilder::TIME_FORMAT);
        $log->user_id    = Plugin::instance()->permissions()->currentUserID();
        $log->command    = $command;
        $log->details    = $details;

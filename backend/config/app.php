@@ -80,7 +80,7 @@ if (!\defined('FM_TRASH_DIR_PATH')) {
             <div class="notice notice-error is-dismissible">
                 <p>
                     <?php
-                                    _e(
+                                    esc_html_e(
                                         '<h1>File Manager</h1>
                         <b>Your uploads folder is not writable. Please make
                         <code style="color: red;">wp-content/uploads</code>

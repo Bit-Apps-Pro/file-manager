@@ -142,12 +142,12 @@ class Admin
         if (\defined('DISALLOW_FILE_EDIT') && DISALLOW_FILE_EDIT) {
             ?>
             <div class='update-nag fm-error notice notice-success is-dismissible'>
-                <b>DISALLOW_FILE_EDIT</b> <?php _e('is set to', 'file-manager'); ?>
+                <b>DISALLOW_FILE_EDIT</b> <?php esc_html_e('is set to', 'file-manager'); ?>
                 <b>TRUE</b>.
-                <?php _e('You will not be able to edit files with', 'file-manager'); ?>
+                <?php esc_html_e('You will not be able to edit files with', 'file-manager'); ?>
                  <a href='admin.php?page=file-manager-settings'>Bit File Manager</a>.
-                <?php _e('Please set', 'file-manager'); ?>
-                <b>DISALLOW_FILE_EDIT</b> <?php _e('to', 'file-manager'); ?>
+                <?php esc_html_e('Please set', 'file-manager'); ?>
+                <b>DISALLOW_FILE_EDIT</b> <?php esc_html_e('to', 'file-manager'); ?>
                 <b>FALSE</b>
             </div>
             <style>

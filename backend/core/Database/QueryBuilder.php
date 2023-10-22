@@ -1190,7 +1190,7 @@ class QueryBuilder
         foreach ($attributes as $row) {
             ksort($row);
             if ($createdAt) {
-                $row['created_at'] = date(self::TIME_FORMAT);
+                $row['created_at'] = gmdate(self::TIME_FORMAT);
             }
 
             $rowValues = array_values($row);
@@ -1326,11 +1326,11 @@ class QueryBuilder
 
         if (property_exists($this->_model, 'timestamps') && $this->_model->timestamps) {
             if (!$isUpdate) {
-                $this->_model->setAttribute('created_at', date(self::TIME_FORMAT));
+                $this->_model->setAttribute('created_at', gmdate(self::TIME_FORMAT));
                 $columnsToPrepare[] = 'created_at';
             }
 
-            $this->_model->setAttribute('updated_at', date(self::TIME_FORMAT));
+            $this->_model->setAttribute('updated_at', gmdate(self::TIME_FORMAT));
             $columnsToPrepare[] = 'updated_at';
         }
 
@@ -1428,7 +1428,7 @@ class QueryBuilder
     private function prepareDelete()
     {
         if (property_exists($this->_model, 'soft_deletes') && $this->_model->soft_deletes) {
-            return $this->update(['deleted_at' => date(self::TIME_FORMAT)])->prepareUpdate();
+            return $this->update(['deleted_at' => gmdate(self::TIME_FORMAT)])->prepareUpdate();
         }
 
         $sql = 'DELETE FROM ' . $this->table;

@@ -5,13 +5,36 @@ use BitApps\FM\Plugin;
 if (!\defined('ABSPATH')) {
     exit();
 }
+require_once 'header.php';
+?>
+<div class='fm-container'>
 
+    <div class='col-main'>
+
+        <div class='gb-fm-row fmp-settings'>
+
+            <h2><?php esc_html_e('Settings', 'file-manager'); ?></h2>
+<?php
 // Settings processing
 $preferenceProvider = Plugin::instance()->preferences();
 
 if (isset($_POST) && !empty($_POST)) {
-    if (!wp_verify_nonce($_POST['file-manager-settings-security-token'], 'file-manager-settings-security-token') || !current_user_can('manage_options')) {
+    if (
+        !wp_verify_nonce(
+            sanitize_text_field($_POST['file-manager-settings-security-token']),
+            'file-manager-settings-security-token'
+        )
+         || !current_user_can('install_plugins')
+         ) {
         wp_die();
+    }
+
+    $rootPath = isset($_POST['root_folder_path'])
+    ? sanitize_text_field($_POST['root_folder_path']) : '';
+    $rootPath = Plugin::instance()->preferences()->realpath($rootPath);
+
+    if (strpos($rootPath, ABSPATH) === false) {
+        wp_die('root directory path must be within WordPress root directory');
     }
 
     $_POST['show_url_path'] = sanitize_text_field($_POST['show_url_path']);
@@ -20,8 +43,7 @@ if (isset($_POST) && !empty($_POST)) {
     }
 
     $preferenceProvider->setRootPath(
-        isset($_POST['root_folder_path'])
-         ? sanitize_text_field($_POST['root_folder_path']) : ''
+        
     );
 
     $preferenceProvider->setRootUrl(
@@ -82,24 +104,15 @@ $themes = [
 $selectedTheme = $preferenceProvider->getTheme();
 
 ?>
-<?php require_once 'header.php'; ?>
-<div class='fm-container'>
-
-    <div class='col-main'>
-
-        <div class='gb-fm-row fmp-settings'>
-
-            <h2><?php _e('Settings', 'file-manager'); ?></h2>
-
             <form action='' method='post' class='fmp-settings-form'>
-                <input type='hidden' name='file-manager-settings-security-token' value='<?php echo wp_create_nonce('file-manager-settings-security-token'); ?>'>
+                <input type='hidden' name='file-manager-settings-security-token' value='<?php echo esc_attr(wp_create_nonce('file-manager-settings-security-token')); ?>'>
                 <table>
                     <tr>
                         <td rowspan="2">
-                            <h4><?php _e('URL and Path', 'file-manager'); ?></h4>
+                            <h4><?php esc_html_e('URL and Path', 'file-manager'); ?></h4>
                         </td>
                         <td>
-                            <label for='show_url_path_id'> <?php _e('Show', 'file-manager'); ?> </label>
+                            <label for='show_url_path_id'> <?php esc_html_e('Show', 'file-manager'); ?> </label>
                             <input type='radio' name='show_url_path' id='show_url_path_id' value='show' <?php if ($preferenceProvider->getUrlPathView() == 'show') {
                                 echo 'checked';
                             }
@@ -115,7 +128,7 @@ $selectedTheme = $preferenceProvider->getTheme();
                     <tr>
 
                         <td>
-                            <label for='root_folder_path_id'> <?php _e('Root Folder Path', 'file-manager'); ?> </label>
+                            <label for='root_folder_path_id'> <?php esc_html_e('Root Folder Path', 'file-manager'); ?> </label>
                             <input type='text' name='root_folder_path' onkeyup="pathVlidation()" id='root_folder_path_id' value='<?php echo esc_attr($preferenceProvider->getRootPath());?>' /></br>
                             <span id="fm_path_err"></span>
                             <script>
@@ -135,9 +148,9 @@ $selectedTheme = $preferenceProvider->getTheme();
                                 }
                             </script>
                             <br>
-                            <small><?php _e('Default Path:', 'file-manager'); ?> <b><?php echo ABSPATH; ?></b></small>
+                            <small><?php esc_html_e('Default Path:', 'file-manager'); ?> <b><?php echo esc_html(ABSPATH); ?></b></small>
                             <br><br>
-                            <label for='root_folder_url_id'> <?php _e('Root Folder URL', 'file-manager'); ?> </label>
+                            <label for='root_folder_url_id'> <?php esc_html_e('Root Folder URL', 'file-manager'); ?> </label>
                             &nbsp;
                             <input type='text' name='root_folder_url' onkeyup="validURL()" id='root_folder_url_id' 
                             value='<?php echo esc_attr($preferenceProvider->getRootUrl());?>' 
@@ -145,7 +158,7 @@ $selectedTheme = $preferenceProvider->getTheme();
                             <br />
                             <span id="url_error"></span>
                             <br>
-                            <small><?php _e('Default URL:', 'file-manager'); ?> <b><?php echo site_url(); ?></b></small>
+                            <small><?php esc_html_e('Default URL:', 'file-manager'); ?> <b><?php echo esc_html(site_url()); ?></b></small>
                             <script>
                                 function validURL() {
                                     string = document.getElementById('root_folder_url_id').value;
@@ -167,19 +180,19 @@ $selectedTheme = $preferenceProvider->getTheme();
                     </tr>
                     <!-- <tr>
                             <td></td>
-                            <td><small><?php _e('Default Path:', 'file-manager'); ?> <b><?php echo ABSPATH; ?></b></small></td>
+                            <td><small><?php esc_html_e('Default Path:', 'file-manager'); ?> <b><?php echo esc_html(ABSPATH); ?></b></small></td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td><small><?php _e('Default URL:', 'file-manager'); ?> <b><?php echo site_url(); ?></b></small></td>
+                            <td><small><?php esc_html_e('Default URL:', 'file-manager'); ?> <b><?php echo esc_html(site_url()); ?></b></small></td>
                         </tr> -->
                     <tr>
                         <td></td>
-                        <td style="text-align: center;"><small><?php _e("Root folder path and URL must be correct, otherwise it won't work.", 'file-manager'); ?></small></td>
+                        <td style="text-align: center;"><small><?php esc_html_e("Root folder path and URL must be correct, otherwise it won't work.", 'file-manager'); ?></small></td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><?php _e('Select Language', 'file-manager'); ?></h4>
+                            <h4><?php esc_html_e('Select Language', 'file-manager'); ?></h4>
                         </td>
                         <td>
                           <select name='language'>
@@ -194,43 +207,43 @@ foreach ($preferenceProvider->availableLanguages() as $code => $name) {
                     </tr>
                     <tr>
                         <td>
-                            <h4><?php _e('Select Theme', 'file-manager'); ?></h4>
+                            <h4><?php esc_html_e('Select Theme', 'file-manager'); ?></h4>
                         </td>
                         <td>
                             <select name='theme'>
                                 <?php foreach ($themes as $themeID => $theme) { ?>
                                     <option 
-                                    <?php selected($themeID, $selectedTheme); ?> value='<?php echo $themeID; ?>'><?php echo esc_html($theme); ?></option>
+                                    <?php selected($themeID, $selectedTheme); ?> value='<?php echo esc_attr($themeID); ?>'><?php echo esc_html($theme); ?></option>
                                 <?php } ?>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><?php _e('Size', 'file-manager'); ?></h4>
+                            <h4><?php esc_html_e('Size', 'file-manager'); ?></h4>
                         </td>
                         <td>
-                            <label for='fm-width-id'><?php _e('Width', 'file-manager'); ?></label>
+                            <label for='fm-width-id'><?php esc_html_e('Width', 'file-manager'); ?></label>
                             &nbsp;&nbsp;&nbsp;
                             <input
                                 id='fm-width-id'
                                 type='text'
                                 name='width'
-                                value='<?php echo $preferenceProvider->getWidth();?>'
+                                value='<?php echo esc_attr($preferenceProvider->getWidth());?>'
                             >
                             <br />
-                            <label for='fm-height-id'><?php _e('Height', 'file-manager'); ?></label>
+                            <label for='fm-height-id'><?php esc_html_e('Height', 'file-manager'); ?></label>
                             &nbsp;&nbsp;
                             <input
                             id='fm-height-id'
                             type='text'
                             name='height'
-                            value='<?php echo $preferenceProvider->getHeight()?>'>
+                            value='<?php echo esc_attr($preferenceProvider->getHeight())?>'>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><label for='fm-width-id'><?php _e('Show Hidden Files', 'file-manager'); ?></label></h4>
+                            <h4><label for='fm-width-id'><?php esc_html_e('Show Hidden Files', 'file-manager'); ?></label></h4>
                         </td>
                         <td>
                             <input 
@@ -243,12 +256,12 @@ foreach ($preferenceProvider->availableLanguages() as $code => $name) {
                            }?>
                              value="fm-show-hidden-files"
                             >
-                            <small><?php _e('When checked hidden files and folders will be shown to the users.', 'file-manager'); ?></small>
+                            <small><?php esc_html_e('When checked hidden files and folders will be shown to the users.', 'file-manager'); ?></small>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><label for='fm-width-id'><?php _e('Allow Create/Upload Hidden Files/Folders', 'file-manager'); ?></label></h4>
+                            <h4><label for='fm-width-id'><?php esc_html_e('Allow Create/Upload Hidden Files/Folders', 'file-manager'); ?></label></h4>
                         </td>
                         <td>
                             <input
@@ -261,12 +274,12 @@ foreach ($preferenceProvider->availableLanguages() as $code => $name) {
 ?>
                             value="fm-create-hidden-files-folders"
                             >
-                            <small><?php _e('When checked hidden files and folders will be create by the users.', 'file-manager'); ?></small>
+                            <small><?php esc_html_e('When checked hidden files and folders will be create by the users.', 'file-manager'); ?></small>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><label for='fm-width-id'><?php _e('Allow Trash', 'file-manager'); ?></label></h4>
+                            <h4><label for='fm-width-id'><?php esc_html_e('Allow Trash', 'file-manager'); ?></label></h4>
                         </td>
                         <td>
                             <input
@@ -278,14 +291,14 @@ foreach ($preferenceProvider->availableLanguages() as $code => $name) {
                                  echo 'checked';
                              }
 ?> value="fm-create-trash-files-folders">
-                            <small><?php _e('When checked deleted files and folder will save here.', 'file-manager'); ?></small>
+                            <small><?php esc_html_e('When checked deleted files and folder will save here.', 'file-manager'); ?></small>
                             <br />
-                            <small><?php _e('Default Path:', 'file-manager'); ?> <b><?php echo FM_TRASH_DIR_PATH; ?></b></small>
+                            <small><?php esc_html_e('Default Path:', 'file-manager'); ?> <b><?php echo esc_html(FM_TRASH_DIR_PATH); ?></b></small>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><?php _e('Root Folder Name', 'file-manager'); ?></h4>
+                            <h4><?php esc_html_e('Root Folder Name', 'file-manager'); ?></h4>
                         </td>
                         <td>
                             <label for='fm-root-folder-name-id'></label>
@@ -293,13 +306,13 @@ foreach ($preferenceProvider->availableLanguages() as $code => $name) {
                                 id='fm-root-folder-name-id'
                                 type='text'
                                 name='fm_root_folder_name'
-                                value='<?php echo $preferenceProvider->getRootVolumeName();?>'
+                                value='<?php echo esc_attr($preferenceProvider->getRootVolumeName());?>'
                             >
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><?php _e('Default View Type', 'file-manager'); ?></h4>
+                            <h4><?php esc_html_e('Default View Type', 'file-manager'); ?></h4>
                         </td>
                         <td>
                             <?php
@@ -315,7 +328,7 @@ foreach ($preferenceProvider->availableLanguages() as $code => $name) {
                     </tr>
                     <tr>
                         <td>
-                            <h4><label for='fm-remember-last-dir'><?php _e('Remember Last Directory', 'file-manager'); ?></label></h4>
+                            <h4><label for='fm-remember-last-dir'><?php esc_html_e('Remember Last Directory', 'file-manager'); ?></label></h4>
                         </td>
                         <td>
                             <input
@@ -329,12 +342,12 @@ foreach ($preferenceProvider->availableLanguages() as $code => $name) {
 ?> 
                                 value="fm-remember-last-dir"
                             >
-                            <small><?php _e('Remeber last opened dir to open it after reload.', 'file-manager'); ?></small>
+                            <small><?php esc_html_e('Remeber last opened dir to open it after reload.', 'file-manager'); ?></small>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><label for='fm-clear-history-on-reload'><?php _e('Clear History On Reload', 'file-manager'); ?></label></h4>
+                            <h4><label for='fm-clear-history-on-reload'><?php esc_html_e('Clear History On Reload', 'file-manager'); ?></label></h4>
                         </td>
                         <td>
                             <input
@@ -347,12 +360,12 @@ foreach ($preferenceProvider->availableLanguages() as $code => $name) {
                             }
 ?>
                             value="fm-clear-history-on-reload">
-                            <small><?php _e('Clear historys(elFinder) on reload(not browser).', 'file-manager'); ?></small>
+                            <small><?php esc_html_e('Clear historys(elFinder) on reload(not browser).', 'file-manager'); ?></small>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4><?php _e('Default View Type', 'file-manager'); ?></h4>
+                            <h4><?php esc_html_e('Default View Type', 'file-manager'); ?></h4>
                         </td>
                         <td>
                             <label for='fm-root-folder-name-id'></label>
@@ -363,7 +376,7 @@ $uioptions = ['toolbar', 'places', 'tree', 'path', 'stat'];
 foreach ($uioptions as $place) { ?>
                                     <option <?php if (\in_array($place, $preferenceProvider->getUiOptions())) {
                                         echo 'selected';
-                                    } ?> value='<?php echo $place; ?>'><?php echo $place; ?></option>
+                                    } ?> value='<?php echo esc_attr($place); ?>'><?php echo esc_html($place); ?></option>
 
                                 <?php } ?>
                             </select>
@@ -372,7 +385,7 @@ foreach ($uioptions as $place) { ?>
                     <tr>
                         <td></td>
                         <td>
-                            <input type='submit' value='<?php _e('Save', 'file-manager'); ?>' />
+                            <input type='submit' value='<?php esc_html_e('Save', 'file-manager'); ?>' />
                         </td>
                     </tr>
                 </table>

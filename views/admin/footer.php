@@ -14,17 +14,17 @@ if (!\defined('ABSPATH')) {
     <ul>
         <li>
             <a href='https://wordpress.org/plugins/file-manager/changelog/'>
-                <?php _e('Changelog', 'file-manager'); ?>
+                <?php esc_html_e('Changelog', 'file-manager'); ?>
             </a>
         </li>
         <li>
             <a href='<?php echo esc_url(Config::SUPPORT_URL); ?>'>
-                <?php _e('Contacts', 'file-manager'); ?>
+                <?php esc_html_e('Contacts', 'file-manager'); ?>
             </a>
         </li>
         <li>
             <a href='<?php echo esc_url(Config::REVIEW_URL); ?>'>
-                <?php _e('Review', 'file-manager'); ?>
+                <?php esc_html_e('Review', 'file-manager'); ?>
             </a>
         </li>
         <li>

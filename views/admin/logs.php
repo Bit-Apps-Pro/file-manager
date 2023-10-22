@@ -94,10 +94,13 @@ tbody tr:last-child {
         <tbody>
           <?php foreach ($allLogs as $log) { ?>
             <tr>
-            <td><?php echo Plugin::instance()->permissions()->getUserDisplayName($log->user_id);?></td>
+            <td><?php echo esc_html(Plugin::instance()->permissions()->getUserDisplayName($log->user_id));?></td>
             <td><?php echo esc_html($log->command);?></td>
             <td>
-             Driver: <?php echo isset($log->details->driver) ? str_replace('elFinderVolume','',esc_html($log->details->driver)) : '';?><br/>
+             Driver: <?php
+              echo isset($log->details->driver) ? esc_html(str_replace('elFinderVolume', '', $log->details->driver)) : '';
+             ?>
+             <br/>
              <?php if (isset($log->details->files)) { ?>
               Files:<br/>
               <?php foreach ($log->details->files as $index => $file) { ?>

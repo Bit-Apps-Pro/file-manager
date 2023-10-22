@@ -415,9 +415,11 @@ class PreferenceProvider
 
         // whether $path is unix or not
         $unipath = \strlen($path) == 0 || $path[0] != '/';
+        $prefixed = false;
         // attempts to detect if path is relative in which case, add cwd
         if (strpos($path, ':') === false && $unipath) {
-            $path = getcwd() . DIRECTORY_SEPARATOR . $path;
+            $path = ABSPATH . $path;
+            $prefixed = true;
         }
 
         // resolve path parts (single dot, double dot and double delimiters)
@@ -436,14 +438,18 @@ class PreferenceProvider
             }
         }
 
-        $path = implode(DIRECTORY_SEPARATOR, $absolutes);
+        $realpath = implode(DIRECTORY_SEPARATOR, $absolutes);
+        if ($prefixed) {
+            $realpath = DIRECTORY_SEPARATOR . $realpath;
+        }
+
         // resolve any symlinks
-        if (file_exists($path) && linkinfo($path) > 0) {
-            $path = readlink($path);
+        if (file_exists($realpath) && is_link($realpath)) {
+            $realpath = readlink($realpath);
         }
 
         // put initial separator that could have been lost
-        return !$unipath ? '/' . $path : $path;
+        return $unipath ? $realpath : '/' . $realpath;
     }
 
     public function setRootUrl($url)

@@ -31,36 +31,36 @@ wp_enqueue_style('bfm-admin-style');
                     </td>
                 </tr>
                 <tr>
-                    <td><?php _e("PHP version", 'file-manager'); ?></td>
-                    <td><?php echo phpversion(); ?></td>
+                    <td><?php esc_html_e("PHP version", 'file-manager'); ?></td>
+                    <td><?php echo esc_html(phpversion()); ?></td>
                 </tr>
                 <tr>
-                    <td><?php _e("PHP ini file", 'file-manager'); ?></td>
-                    <td><?php echo php_ini_loaded_file(); ?></td>
-                </tr>
-
-                <tr>
-                    <td><?php _e("Maximum file upload size", 'file-manager'); ?></td>
-                    <td><?php echo ini_get('upload_max_filesize'); ?></td>
+                    <td><?php esc_html_e("PHP ini file", 'file-manager'); ?></td>
+                    <td><?php echo esc_html(php_ini_loaded_file()); ?></td>
                 </tr>
 
                 <tr>
-                    <td><?php _e("Post maximum file upload size", 'file-manager'); ?></td>
-                    <td><?php echo ini_get('post_max_size'); ?></td>
+                    <td><?php esc_html_e("Maximum file upload size", 'file-manager'); ?></td>
+                    <td><?php echo esc_html(ini_get('upload_max_filesize')); ?></td>
                 </tr>
 
                 <tr>
-                    <td><?php _e("Memory Limit", 'file-manager'); ?></td>
-                    <td><?php echo ini_get('memory_limit'); ?></td>
+                    <td><?php esc_html_e("Post maximum file upload size", 'file-manager'); ?></td>
+                    <td><?php echo esc_html(ini_get('post_max_size')); ?></td>
                 </tr>
 
                 <tr>
-                    <td><?php _e("Timeout", 'file-manager'); ?></td>
-                    <td><?php echo ini_get('max_execution_time'); ?></td>
+                    <td><?php esc_html_e("Memory Limit", 'file-manager'); ?></td>
+                    <td><?php echo esc_html(ini_get('memory_limit')); ?></td>
                 </tr>
 
                 <tr>
-                    <td><?php _e("Browser and OS", 'file-manager'); ?></td>
+                    <td><?php esc_html_e("Timeout", 'file-manager'); ?></td>
+                    <td><?php echo esc_html(ini_get('maxesc_html_execution_time')); ?></td>
+                </tr>
+
+                <tr>
+                    <td><?php esc_html_e("Browser and OS", 'file-manager'); ?></td>
                     <td><?php echo esc_html($_SERVER['HTTP_USER_AGENT']); ?></td>
                 </tr>
 

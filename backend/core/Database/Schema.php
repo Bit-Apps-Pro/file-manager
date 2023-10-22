@@ -13,7 +13,7 @@ class Schema
     public static function __callStatic($method, $parameters)
     {
         if (!method_exists(Blueprint::class, $method)) {
-            throw new RuntimeException('Undefined method [' . $method . '] called on Schema class.');
+            throw new RuntimeException('Undefined method [' . esc_html($method) . '] called on Schema class.');
         }
 
         if (\is_null($parameters)) {
