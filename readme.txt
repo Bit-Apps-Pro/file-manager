@@ -1,11 +1,13 @@
 === File Manager – 100% Free & Open Source File Manager Plugin for WordPress | Bit File Manager ===
 
+=== File Manager – 100% Free & Open Source File Manager Plugin for WordPress | Bit File Manager ===
+
 Contributors: bitpressadmin, aihimel
 Tags: file manager, code editor, wp file manager, FTP, elfinder, file Browser, manage files, upload, delete, rename, copy, move, online file browser, remote file manager, drag and drop, folder upload
-Requires at least: 4.0
-Tested up to: 6.2.2
-Requires PHP: 5.6
-Stable tag: 6.2.1
+Requires at least: 5.0
+Tested up to: 6.4
+Requires PHP: 7.4
+Stable tag: 6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -263,15 +265,17 @@ loudspeaker **Join our community [Bit Apps](https://www.facebook.com/groups/bita
 = Requirements =
 
 - At least Firefox 12, Internet Explorer 9, Safari 6, Opera 12 or Chrome/Chromium 19
-- PHP 5.6+ (recommended)
-- Minimum 5.2
-- Recommended 5.6+
-- Up to 8.2.6
-- Supports 8.2.6 on production environment
+- PHP 7.4+ (recommended)
+- Minimum 5.6
+- Up to 8.2.11
+- Supports 8.2.11 on production environment
 - DISALLOW_FILE_EDIT must be false to edit files from Bit File Manager.
 
 = Installation process =
 
+- Upload and install the plugin.
+- Go to admin dashboard
+- Click on Bit File Manager side menu
 - Upload and install the plugin.
 - Go to admin dashboard
 - Click on Bit File Manager side menu
@@ -317,6 +321,7 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 = 6.2 =
 
 - No special requirements.
+- No special requirements.
 
 == Changelog ==
 
@@ -325,7 +330,12 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 - Fix: Allowed Mime type.
 - Fix: Maximum allowed file size.
 
+- Fix: Allowed Mime type.
+- Fix: Maximum allowed file size.
+
 = 6.1 (25 May, 2023) =
+
+- Fix: File upload issue for non administrator if they have permission for upload.
 
 - Fix: File upload issue for non administrator if they have permission for upload.
 
@@ -342,7 +352,20 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 - Fix: PHP object serialization/deserialization on user inputted data.
   Also fixes some minor issues and optimized code.
 
+- Feat: Shortcode support
+- Feat: Separate folder for specific user
+- Feat: Separate folder by user role
+- Feat: Folder access for Guest
+- Feat: Maximum file upload size
+- Feat: Access logs
+- refactor: Refactored backend code base.
+- Fix: Parts file editor hidden on full screen.
+- Fix: PHP object serialization/deserialization on user inputted data.
+  Also fixes some minor issues and optimized code.
+
 = 5.2.7 (29 August, 2022) =
+
+- Plugin ownership changed from Aftabul Islam to Bit Apps
 
 - Plugin ownership changed from Aftabul Islam to Bit Apps
 
@@ -354,7 +377,23 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 - New screenshot added
 - Minor bug fixes
 
+- File permission change added
+- Logo updated
+- FAQ updated
+- New screenshot added
+- Minor bug fixes
+
 = 5.2.5 (14 April, 2022) =
+
+- File preview design issue fixed.
+- Code editor design issue fixed.
+- Full screen design issue fixed.
+- Trash folder feature added.
+- Plugin debug is synchronized with WP_DEBUG
+- Settings configuration issue fixed
+- Code mirror issue fixed
+- Code quality improvement
+- Other minor bug fixes
 
 - File preview design issue fixed.
 - Code editor design issue fixed.
@@ -380,7 +419,24 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 - System information moved to a different page
 - Emailing a file on right click menu added.
 
+- Tested compatibility for WordPress 5.9.3
+- Unicode character support for file/folder
+- Media folder sync, you can upload to media folder, and it will be available on media library
+- File Preview issue fixed [.docx, .psd etc]
+- Code editor issue fixed
+- Syntax checking for PHP file [You can't save file with syntax error]
+- .htaccess file operation added [Now you can edit/upload/delete .htaccess files]
+- Hidden file/folder operation added [Now you can edit/upload/delete any hidden file/folder]
+- Root folder name settings added
+- System information moved to a different page
+- Emailing a file on right click menu added.
+
 = 5.2.3 (28 March, 2022) =
+
+- Tested compatibility for WordPress 5.9.2
+- Updated to elFinder 2.1.61
+- Security issue fixed
+- Minor issue fixed.
 
 - Tested compatibility for WordPress 5.9.2
 - Updated to elFinder 2.1.61
@@ -392,7 +448,13 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 - Tested compatibility for WordPress 5.8.2
 - Name & Branding changed
 
+- Tested compatibility for WordPress 5.8.2
+- Name & Branding changed
+
 = 5.2.1 (08 November 2021) =
+
+- Tested compatibility for WordPress 5.8.1
+- Some minor fixes
 
 - Tested compatibility for WordPress 5.8.1
 - Some minor fixes
@@ -402,7 +464,12 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 - Updated to elFinder 2.1.50
 - Security fix
 
+- Updated to elFinder 2.1.50
+- Security fix
+
 = 5.1.8 (20 October 2019) =
+
+- Minor but fixed
 
 - Minor but fixed
 
@@ -410,11 +477,17 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 
 - Uploaded file to appropriate directory will automatically synchronized to media library. (since 5.1.7)
 
+- Uploaded file to appropriate directory will automatically synchronized to media library. (since 5.1.7)
+
 = 5.1.6 (07 July 2019) =
 
 - Bit File Manager security issue fixed
 
+- Bit File Manager security issue fixed
+
 = 5.1.5 (16 May 2019) =
+
+- elFinder updated to 2.1.49 (security update) (since 5.1.5)
 
 - elFinder updated to 2.1.49 (security update) (since 5.1.5)
 
@@ -423,11 +496,22 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 - Translation Ready
 - MIME file Support extended
 
+- Translation Ready
+- MIME file Support extended
+
 = 5.1.3 (27 February 2019) =
 
 - elFinder updated to v2.1.48
 
+- elFinder updated to v2.1.48
+
 = 5.1.2 (23 February 2019) =
+
+- Share file via email.
+- Root folder path & url added.(You can decide from where your Bit File Manager should start).
+- Syntax checker added. (You don't have to worry about breaking your website while editing any more.)
+- PDF preview added
+- PSD preview added
 
 - Share file via email.
 - Root folder path & url added.(You can decide from where your Bit File Manager should start).
@@ -442,7 +526,18 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 - WYSIWYG Editor added.
 - Chunked file upload added. Upload large file regardless your php.ini settings.
 
+- Minor Bug fixed.
+- Code & Image editor added.
+- WYSIWYG Editor added.
+- Chunked file upload added. Upload large file regardless your php.ini settings.
+
 = 5.1.0 (21 February 2019) =
+
+- Updated to elFinder 2.1.46
+- Code Editor added for easy editing [Ace, Code mirror, TinyMCE & others].
+- Supported file format extended.
+- Minor issue fixed
+- Unlimited file size upload added(regardless your php.ini settings)
 
 - Updated to elFinder 2.1.46
 - Code Editor added for easy editing [Ace, Code mirror, TinyMCE & others].
@@ -454,11 +549,19 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 
 - Support for PHP < 5.3 added
 
+- Support for PHP < 5.3 added
+
 = 5.0.3 (10 October 2018) =
 
 - Minor bug fixed
 
+- Minor bug fixed
+
 = 5.0.2 (16 February 2018) =
+
+- Security issue fixed
+- Version migration added
+- Activity log
 
 - Security issue fixed
 - Version migration added
@@ -471,7 +574,16 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 - Undefined index warning fixed [Notice: Undefined index in debug mode](https://wordpress.org/support/topic/notice-undefined-index-in-debug-mode/)
 - Control Hide width of Bit File Manager window.
 
+- DISALLOW_FILE_EDIT reporting added [disallow_file_edit has to be false](https://wordpress.org/support/topic/disallow_file_edit-has-to-be-false/)
+- PHP 7 double underscore(\_\_) warning fixed [PHP issues](https://wordpress.org/support/topic/php-issues-11/)
+- Undefined index warning fixed [Notice: Undefined index in debug mode](https://wordpress.org/support/topic/notice-undefined-index-in-debug-mode/)
+- Control Hide width of Bit File Manager window.
+
 = 4.1.6 (10 Jun, 2017) =
+
+- Empty Downloaded file fixed
+- Non-ASCII character support for file/folder name
+- Tested on WordPress 4.8
 
 - Empty Downloaded file fixed
 - Non-ASCII character support for file/folder name
@@ -482,7 +594,12 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 - Language option added
 - Design issue fixed
 
+- Language option added
+- Design issue fixed
+
 = 4.1.3 (19 February 2017) =
+
+- Lower version of PHP error fixed
 
 - Lower version of PHP error fixed
 
@@ -490,11 +607,19 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 
 - Extra slash issue solved
 
+- Extra slash issue solved
+
 = 4.1.1 (14 December 2016) =
 
 - Minor UI changes
 
+- Minor UI changes
+
 = 4.1.0 =
+
+- UI changed
+- Server configuration panel added
+- fm_options hook added
 
 - UI changed
 - Server configuration panel added
@@ -505,7 +630,12 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 - OS independent file path structure
 - Logging system added
 
+- OS independent file path structure
+- Logging system added
+
 = 3.0.0 =
+
+- Bug fixed and Interface updated.
 
 - Bug fixed and Interface updated.
 
@@ -526,7 +656,13 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 - Page speed optimized
 - Security Updated
 
+- Page speed optimized
+- Security Updated
+
 = 2.2.0 =
+
+- Extra slash problem on file edit has been checked.
+- Security update.
 
 - Extra slash problem on file edit has been checked.
 - Security update.
@@ -535,10 +671,16 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 
 - Activation error fixed with PHP 5.2
 
+- Activation error fixed with PHP 5.2
+
 = 2.0 =
 
 - Internal structure updated.
 
+- Internal structure updated.
+
 = 1.0 =
+
+- Initial release of the plugin.
 
 - Initial release of the plugin.
