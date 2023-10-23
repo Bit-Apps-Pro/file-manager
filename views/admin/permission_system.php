@@ -44,7 +44,6 @@ if (!empty($_POST)) {
             }
     }
 
-    error_log(print_r($_POST, true));
     Config::updateOption('permissions', $_POST, 'yes');
     Plugin::instance()->permissions()->refresh();
 }

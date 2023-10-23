@@ -5,12 +5,14 @@ namespace BitApps\FM;
 // Main class for the plugin.
 
 use BitApps\FM\Core\Database\Connection;
+use BitApps\FM\Core\Database\Operator;
 use BitApps\FM\Core\Hooks\Hooks;
 use BitApps\FM\Core\Http\RequestType;
 use BitApps\FM\Http\Middleware\NonceCheckerMiddleware;
 use BitApps\FM\Providers\AccessControlProvider;
 use BitApps\FM\Providers\FileEditValidator;
 use BitApps\FM\Providers\HookProvider;
+use BitApps\FM\Providers\InstallerProvider;
 use BitApps\FM\Providers\Logger;
 use BitApps\FM\Providers\MediaSynchronizer;
 use BitApps\FM\Providers\MimeProvider;
@@ -224,9 +226,9 @@ final class Plugin
     /**
      * Load the asset libraries.
      *
-     * @param string $currentScreen $top_level_page variable for current page
+     * @param string $currentScreen top_level_page variable for current page
      */
-    public function registerAssets()
+    public function registerAssets($currentScreen = '')
     {
         $version = Config::VERSION;
 
@@ -256,7 +258,11 @@ final class Plugin
         );
 
         // Including admin-style.css
-        wp_register_style('bfm-admin-style', BFM_ROOT_URL . 'assets/css/style.min.css');
+        if (strpos($currentScreen, 'bit-file-manager') !== false) {
+            wp_enqueue_style('bfm-admin-style', BFM_ROOT_URL . 'assets/css/style.min.css');
+        } else {
+            wp_register_style('bfm-admin-style', BFM_ROOT_URL . 'assets/css/style.min.css');
+        }
 
         // Including admin-script.js
         wp_register_script('bfm-admin-script', BFM_ROOT_URL . 'assets/js/admin-script.js', ['jquery']);
@@ -357,6 +363,10 @@ final class Plugin
         }
 
         static::$_instance = new static();
+        if (version_compare(Config::getOption('version'), Config::VERSION_ID, '<')) {
+            Connection::setPluginDBPrefix(Config::DB_PREFIX);
+            Operator::migrate(InstallerProvider::migration());
+        }
 
         return true;
     }
