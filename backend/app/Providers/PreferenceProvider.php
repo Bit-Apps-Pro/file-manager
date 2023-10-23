@@ -615,11 +615,9 @@ class PreferenceProvider
                 'files'    => [],
             ];
             if (count($this->permissions()->getEnabledCommand())) {
-                
                 $contextMenu['files']  = ['download'];
             }
         }
-        // error_log(print_r($contextMenu, true));
 
         return $contextMenu;
     }

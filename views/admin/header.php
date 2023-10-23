@@ -12,9 +12,10 @@ if (!\defined('ABSPATH')) {
 }
 // wp_enqueue_style('bfm-font-awsome-css');
 wp_enqueue_style('bfm-tippy-css');
-// wp_enqueue_style('bfm-admin-style');
-wp_enqueue_script('bfm-admin-script');
-wp_enqueue_style('bfm-admin-style');
+if (!wp_style_is('bfm-admin-style')) {
+    wp_enqueue_style('bfm-admin-style');
+}
+
 wp_enqueue_script('bfm-admin-script');
 ?>
 <div class='fm-header'>

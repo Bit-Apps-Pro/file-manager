@@ -51,16 +51,19 @@ function validatePath($path, $for = '')
 
     if(!is_null($error))
     {
-        view('header.php'); ?>
+        view('admin.header'); ?>
 
 <div class='fm-container'>
     <div class='col-main col-main-permission-system'>
         <div class='gb-fm-row'>
             <?php echo esc_html($error)?>
         </div>
-    </div><?php view('sidebar.php'); ?>
+        <div class='gb-fm-row'>
+            <a style="background: #0073aa;padding: 12px;color: white;border-radius: 22px;text-decoration: none;" href="<?php echo esc_attr($_SERVER['REQUEST_URI'])?>">Go Back</a>
+        </div>
+    </div><?php view('admin.sidebar'); ?>
 </div>
-<?php view('footer.php'); ?>
+<?php view('admin.footer'); ?>
 <?php
 wp_die();
     }

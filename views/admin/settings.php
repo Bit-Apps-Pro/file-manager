@@ -2,19 +2,12 @@
 
 use BitApps\FM\Plugin;
 
+use function BitApps\FM\Functions\validatePath;
+
 if (!\defined('ABSPATH')) {
     exit();
 }
-require_once 'header.php';
-?>
-<div class='fm-container'>
 
-    <div class='col-main'>
-
-        <div class='gb-fm-row fmp-settings'>
-
-            <h2><?php esc_html_e('Settings', 'file-manager'); ?></h2>
-<?php
 // Settings processing
 $preferenceProvider = Plugin::instance()->preferences();
 
@@ -31,11 +24,8 @@ if (isset($_POST) && !empty($_POST)) {
 
     $rootPath = isset($_POST['root_folder_path'])
     ? sanitize_text_field($_POST['root_folder_path']) : '';
-    $rootPath = Plugin::instance()->preferences()->realpath($rootPath);
+    $rootPath = validatePath($rootPath);
 
-    if (strpos($rootPath, ABSPATH) === false) {
-        wp_die('root directory path must be within WordPress root directory');
-    }
 
     $_POST['show_url_path'] = sanitize_text_field($_POST['show_url_path']);
     if (isset($_POST['show_url_path']) && ($_POST['show_url_path'] == 'show' || $_POST['show_url_path'] == 'hide')) {
@@ -43,7 +33,7 @@ if (isset($_POST) && !empty($_POST)) {
     }
 
     $preferenceProvider->setRootPath(
-        
+        $rootPath
     );
 
     $preferenceProvider->setRootUrl(
@@ -104,6 +94,15 @@ $themes = [
 $selectedTheme = $preferenceProvider->getTheme();
 
 ?>
+<?php require_once 'header.php'; ?>
+<div class='fm-container'>
+
+    <div class='col-main'>
+
+        <div class='gb-fm-row fmp-settings'>
+
+            <h2><?php _e('Settings', 'file-manager'); ?></h2>
+
             <form action='' method='post' class='fmp-settings-form'>
                 <input type='hidden' name='file-manager-settings-security-token' value='<?php echo esc_attr(wp_create_nonce('file-manager-settings-security-token')); ?>'>
                 <table>
