@@ -37,35 +37,34 @@ function validatePath($path, $for = '')
         return;
     }
 
-    $realPath = Plugin::instance()->preferences()->realPath($path);
+    $realPath = trailingslashit(Plugin::instance()->preferences()->realPath($path));
 
-    $realPath = strpos($realPath, ABSPATH) === false && file_exists(ABSPATH . $realPath) ? ABSPATH . $realPath : $realPath;
     $error = null;
+
     if (strpos($realPath, ABSPATH) === false) {
-        $error = 'Directory path must be within WordPress root directory. '. $for .' path: ' .  $realPath;
+        $error = 'Directory path must be within WordPress root directory. ' . $for . ' path: ' .  $realPath;
     }
 
     if (!is_readable($realPath)) {
-        $error = 'Directory is not readable or not exits. '. $for .' path: ' .  $realPath;
+        $error = 'Directory is not readable or not exits. ' . $for . ' path: ' .  $realPath;
     }
 
-    if(!is_null($error))
-    {
+    if (!is_null($error)) {
         view('admin.header'); ?>
 
-<div class='fm-container'>
-    <div class='col-main col-main-permission-system'>
-        <div class='gb-fm-row'>
-            <?php echo esc_html($error)?>
+        <div class='fm-container'>
+            <div class='col-main col-main-permission-system'>
+                <div class='gb-fm-row'>
+                    <?php echo esc_html($error) ?>
+                </div>
+                <div class='gb-fm-row'>
+                    <a style="background: #0073aa;padding: 12px;color: white;border-radius: 22px;text-decoration: none;" href="<?php echo esc_attr($_SERVER['REQUEST_URI']) ?>">Go Back</a>
+                </div>
+            </div><?php view('admin.sidebar'); ?>
         </div>
-        <div class='gb-fm-row'>
-            <a style="background: #0073aa;padding: 12px;color: white;border-radius: 22px;text-decoration: none;" href="<?php echo esc_attr($_SERVER['REQUEST_URI'])?>">Go Back</a>
-        </div>
-    </div><?php view('admin.sidebar'); ?>
-</div>
-<?php view('admin.footer'); ?>
+        <?php view('admin.footer'); ?>
 <?php
-wp_die();
+        wp_die();
     }
     return $realPath;
 }
