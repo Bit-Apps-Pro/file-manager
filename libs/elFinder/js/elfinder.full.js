@@ -1,6 +1,6 @@
 /*!
  * elFinder - file manager for web
- * Version 2.1.62 (2023-10-23)
+ * Version 2.1.62 (2023-10-24)
  * http://elfinder.org
  * 
  * Copyright 2009-2023, Studio 42
@@ -4865,7 +4865,6 @@ var elFinder = function(elm, opts, bootCallback) {
 
 		// bind window onmessage for CORS
 		$(window).on('message.' + namespace, function(e){
-			res.data
 			var res = e.originalEvent || null,
 				obj, data;
 			if (res && (self.convAbsUrl(self.options.url).indexOf(res.origin) === 0 || self.convAbsUrl(self.uploadURL).indexOf(res.origin) === 0)) {
