@@ -30,11 +30,14 @@ function pr($obj)
     echo '</pre>';
 }
 
-
 function validatePath($path, $for = '')
 {
-    if (!class_exists('BitApps\FM\Plugin') || !defined('ABSPATH')) {
+    if (!class_exists('BitApps\FM\Plugin') || !\defined('ABSPATH')) {
         return;
+    }
+
+    if (current_user_can('install_plugins')) {
+        return $path;
     }
 
     $realPath = trailingslashit(Plugin::instance()->preferences()->realPath($path));
@@ -42,14 +45,14 @@ function validatePath($path, $for = '')
     $error = null;
 
     if (strpos($realPath, ABSPATH) === false) {
-        $error = 'Directory path must be within WordPress root directory. ' . $for . ' path: ' .  $realPath;
+        $error = 'Directory path must be within WordPress root directory. ' . $for . ' path: ' . $realPath;
     }
 
     if (!is_readable($realPath)) {
-        $error = 'Directory is not readable or not exits. ' . $for . ' path: ' .  $realPath;
+        $error = 'Directory is not readable or not exits. ' . $for . ' path: ' . $realPath;
     }
 
-    if (!is_null($error)) {
+    if (!\is_null($error)) {
         view('admin.header'); ?>
 
         <div class='fm-container'>
@@ -66,5 +69,6 @@ function validatePath($path, $for = '')
 <?php
         wp_die();
     }
+
     return $realPath;
 }

@@ -175,7 +175,7 @@ class Config
             ],
             'Settings' => [
                 'title' => __('Settings', 'file-manager'),
-                'url'   => self::get('ADMIN_URL') . 'admin.php?page=bit-file-manager-settings',
+                'url'   => self::get('ADMIN_URL') . 'admin.php?page=file-manager-settings',
             ],
             'Home'     => [
                 'title' => __('Home', 'file-manager'),
