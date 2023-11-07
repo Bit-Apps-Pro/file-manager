@@ -265,8 +265,8 @@ loudspeaker **Join our community [Bit Apps](https://www.facebook.com/groups/bita
 - At least Firefox 12, Internet Explorer 9, Safari 6, Opera 12 or Chrome/Chromium 19
 - PHP 7.4+ (recommended)
 - Minimum 5.6
-- Up to 8.2.11
-- Supports 8.2.11 on production environment
+- Up to 8.2.12
+- Supports 8.2.12 on production environment
 - DISALLOW_FILE_EDIT must be false to edit files from Bit File Manager.
 
 = Installation process =
@@ -313,11 +313,16 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 
 == Upgrade Notice ==
 
-= 6.2 =
+= 6.3 =
 
 - No special requirements.
 
 == Changelog ==
+
+= 6.3 (7 Nov, 2023) =
+- Fix: Admin+ Arbitrary OS File/Folder Access + Path Traversal.
+- Fix: Non stop folder sync requests due to conflict with browser extension
+- Compatibility: Tested compatibility with WordPress 6.4
 
 = 6.2 (25 May, 2023) =
 
