@@ -79,8 +79,7 @@ input[type=radio] {
 }
 
 .fm-container .col-sidebar {
-  width: 25%;
-  padding: 3%;
+  width: 30%;
   background: white;
   min-height: 200px;
   float: right;
@@ -453,8 +452,7 @@ input[type=radio] {
     width: 100%;
   }
   .fm-container .col-sidebar {
-    width: 90%;
-    padding: 7%;
+    width: 97%;
   }
   .fm-container .gb-fm-row {
     height: fit-content;
