@@ -152,36 +152,10 @@ $assetUrl = esc_html(BFM_ASSET_URL);
 </style>
 <div class='col-sidebar'>
 <div class="f f-col deal-container">
-        <div class="row f banner">
-            <div class="column">
-                <div class="f f-col hero">
-                    <div class="txt-block f f-col">
-                        <span class="txt txt-1">Forge Business Brilliance</span>
-                        <span class="txt txt-2">with Affordable </span>
-                        <span class="txt txt-3">Software Mastery</span>
-                    </div>
-                    <div style="padding-left: 21px; padding-bottom: 12px; z-index: 100;">
-                        <a href="https://bitapps.pro/black-friday-deals-2023" class="grab-it" target="_blank">Grab it Now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="column f f-col logo-section">
-                    <div class="logo">
-                        <img src="<?php echo $assetUrl;?>img/logo/assist.svg" width="9px"/>
-                        <span class="logo-txt">Bit Assist</span>
-                    </div>
-                    <div class="logo">
-                        <img src="<?php echo $assetUrl;?>img/logo/form.svg" width="9px"/>
-                        <span class="logo-txt">Bit Form</span>
-                    </div>
-                    <div class="logo">
-                        <img src="<?php echo $assetUrl;?>img/logo/integration.svg" width="9px"/>
-                        <span class="logo-txt">Bit Integration</span>
-                    </div>
-            </div>
-            <div class="column">
-                        <img src="<?php echo $assetUrl;?>img/deal.png" class="deal-img"/>
-            </div>
+        <div class="row f">
+            <a href="https://bitapps.pro/black-friday-deals-2023/?utm=file-manager">
+                <img src="<?php echo $assetUrl;?>img/banner.png" class="deal-img"/>
+            </a>
         </div>
         <div class="f f-col" style="padding: 5px;">
             <div class="f pd">
