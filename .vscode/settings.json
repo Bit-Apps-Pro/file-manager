@@ -10,7 +10,7 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "stylelint.validate": ["css", "scss", "postcss"],
   "files.eol": "\n",

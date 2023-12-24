@@ -3,9 +3,9 @@
 Contributors: bitpressadmin, aihimel
 Tags: file manager, code editor, wp file manager, FTP, elfinder, file Browser, manage files, upload, delete, rename, copy, move, online file browser, remote file manager, drag and drop, folder upload
 Requires at least: 5.0
-Tested up to: 6.4.1
+Tested up to: 6.4.2
 Requires PHP: 7.4
-Stable tag: 6.3.2
+Stable tag: 6.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -318,6 +318,10 @@ Yes, file/folder permission can be changed like cPanel and other hosting managem
 - No special requirements.
 
 == Changelog ==
+
+= 6.4 (24 Dec, 2023) =
+- elFinder updated.
+- Removed sidebar.
 
 = 6.3 (7 Nov, 2023) =
 - Fix: Admin+ Arbitrary OS File/Folder Access + Path Traversal.

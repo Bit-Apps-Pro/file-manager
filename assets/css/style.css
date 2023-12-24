@@ -7,7 +7,7 @@ input[type=radio] {
 }
 
 .fm-header {
-  padding-left: 25px;
+  padding: 15px;
   width: 94%;
 }
 
@@ -28,7 +28,7 @@ input[type=radio] {
 }
 
 .fm-header .fm-logo {
-  width: 50px;
+  width: auto;
   height: auto;
   position: relative;
   top: 15px;
@@ -73,7 +73,7 @@ input[type=radio] {
 }
 
 .fm-container .col-main {
-  width: 69%;
+  width: 100%;
   min-height: 200px;
   float: left;
 }
@@ -404,6 +404,7 @@ input[type=radio] {
   font-size: 1.2em;
   border: 1px dashed #0d5ed9;
   border-radius: 10px;
+  flex: 1;
 }
 
 .review-block .message {
@@ -442,6 +443,12 @@ input[type=radio] {
   font-weight: 400;
   border: 0px;
   font-size: 1em;
+}
+
+.fm-promo-feedback {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
 }
 
 @media (max-width: 480px) {

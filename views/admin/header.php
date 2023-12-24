@@ -19,7 +19,9 @@ if (!wp_style_is('bfm-admin-style')) {
 wp_enqueue_script('bfm-admin-script');
 ?>
 <div class='fm-header'>
-    <h1><img class='fm-logo' width="50px" src='<?php echo esc_url(BFM_ROOT_URL) . 'assets/img/icon-256x256.png'; ?>'><?php esc_html_e('Bit File Manager', 'file-manager'); ?></h1>
+    <h1>
+        <img class='fm-logo' src='<?php echo esc_url(BFM_ROOT_URL) . 'assets/img/logo.svg'; ?>'>
+    </h1>
 
     <ul class='top-right-menu'>
         <li><a href='<?php echo esc_url(Config::SUPPORT_URL); ?>'><?php esc_html_e('Need help?', 'file-manager'); ?></a></li>

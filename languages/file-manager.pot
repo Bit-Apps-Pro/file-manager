@@ -7,9 +7,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-05-14T07:17:52+00:00\n"
+"POT-Creation-Date: 2023-12-23T11:36:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: file-manager\n"
 
 #: app/Config.php:173
@@ -29,19 +29,21 @@ msgstr ""
 msgid "Token expired. please reload the page"
 msgstr ""
 
-#: app/Providers/AccessControlProvider.php:82
+#. translators: 1: elFInder Command
+#: app/Providers/AccessControlProvider.php:85
 msgid "You are not authorized to run this command [ %s ] on file manager"
 msgstr ""
 
-#: app/Providers/FileEditValidator.php:55
+#. translators: 1: Temporary file path
+#: app/Providers/FileEditValidator.php:56
 msgid "Errors parsing the file [ %s ] as php script"
 msgstr ""
 
-#: app/Providers/FileEditValidator.php:83
+#: app/Providers/FileEditValidator.php:84
 msgid "File edit is disabled. To allow edit, please set DISALLOW_FILE_EDIT to false in wp-config file"
 msgstr ""
 
-#: app/Providers/FileEditValidator.php:87
+#: app/Providers/FileEditValidator.php:88
 msgid "Not Authorized to edit file"
 msgstr ""
 
