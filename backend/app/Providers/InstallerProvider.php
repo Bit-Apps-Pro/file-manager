@@ -3,8 +3,8 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Core\Database\Connection;
-use BitApps\FM\Core\Installer;
+use BitApps\WPDatabase\Connection;
+use BitApps\WPKit\Installer;
 
 class InstallerProvider
 {
@@ -14,7 +14,7 @@ class InstallerProvider
 
     public function __construct()
     {
-        Connection::setPluginDBPrefix(Config::DB_PREFIX);
+        Connection::setPluginPrefix(Config::DB_PREFIX);
         $this->_activateHook   = Config::withPrefix('activate');
         self::$_uninstallHook  = Config::withPrefix('uninstall');
     }

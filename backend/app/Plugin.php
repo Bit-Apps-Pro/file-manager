@@ -4,11 +4,12 @@ namespace BitApps\FM;
 
 // Main class for the plugin.
 
-use BitApps\FM\Core\Database\Connection;
-use BitApps\FM\Core\Database\Operator;
-use BitApps\FM\Core\Hooks\Hooks;
-use BitApps\FM\Core\Http\RequestType;
+use BitApps\WPDatabase\Connection;
+use BitApps\WPKit\Database\Operator;
+use BitApps\WPKit\Hooks\Hooks;
+use BitApps\WPKit\Http\RequestType;
 use BitApps\FM\Http\Middleware\NonceCheckerMiddleware;
+use BitApps\FM\Model\Log;
 use BitApps\FM\Providers\AccessControlProvider;
 use BitApps\FM\Providers\FileEditValidator;
 use BitApps\FM\Providers\HookProvider;
@@ -81,7 +82,7 @@ final class Plugin
      */
     public function registerProviders()
     {
-        Connection::setPluginDBPrefix(Config::DB_PREFIX);
+        Connection::setPluginPrefix(Config::DB_PREFIX);
         if (RequestType::is('admin')) {
             $this->_container['review_notifier'] = new ReviewProvider();
             new Admin();
@@ -103,6 +104,7 @@ final class Plugin
 
         $migrationProvider = new VersionMigrationProvider();
         $migrationProvider->migrate();
+        
     }
 
     /**
@@ -391,7 +393,7 @@ final class Plugin
 
         static::$_instance = new static();
         if (version_compare(Config::getOption('version'), Config::VERSION_ID, '<')) {
-            Connection::setPluginDBPrefix(Config::DB_PREFIX);
+            Connection::setPluginPrefix(Config::DB_PREFIX);
             Operator::migrate(InstallerProvider::migration());
         }
 

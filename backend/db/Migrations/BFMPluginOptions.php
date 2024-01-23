@@ -1,8 +1,8 @@
 <?php
 
 use BitApps\FM\Config;
-use BitApps\FM\Core\Database\Connection as DB;
-use BitApps\FM\Core\Database\Migration;
+use BitApps\WPKit\Database\Connection as DB;
+use BitApps\WPKit\Database\Migration;
 
 if (!\defined('ABSPATH')) {
     exit;

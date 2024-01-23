@@ -3,8 +3,8 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Core\Http\RequestType;
-use BitApps\FM\Core\Utils\Capabilities;
+use BitApps\WPKit\Http\RequestType;
+use BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
 use WP_User;
