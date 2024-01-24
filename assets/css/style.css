@@ -7,7 +7,7 @@ input[type=radio] {
 }
 
 .fm-header {
-  padding-left: 25px;
+  padding: 15px;
   width: 94%;
 }
 
@@ -28,7 +28,7 @@ input[type=radio] {
 }
 
 .fm-header .fm-logo {
-  width: 50px;
+  width: auto;
   height: auto;
   position: relative;
   top: 15px;
@@ -73,14 +73,13 @@ input[type=radio] {
 }
 
 .fm-container .col-main {
-  width: 69%;
+  width: 100%;
   min-height: 200px;
   float: left;
 }
 
 .fm-container .col-sidebar {
-  width: 25%;
-  padding: 3%;
+  width: 30%;
   background: white;
   min-height: 200px;
   float: right;
@@ -405,6 +404,7 @@ input[type=radio] {
   font-size: 1.2em;
   border: 1px dashed #0d5ed9;
   border-radius: 10px;
+  flex: 1;
 }
 
 .review-block .message {
@@ -445,6 +445,12 @@ input[type=radio] {
   font-size: 1em;
 }
 
+.fm-promo-feedback {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
 @media (max-width: 480px) {
   .fm-container {
     width: 98vw;
@@ -453,8 +459,7 @@ input[type=radio] {
     width: 100%;
   }
   .fm-container .col-sidebar {
-    width: 90%;
-    padding: 7%;
+    width: 97%;
   }
   .fm-container .gb-fm-row {
     height: fit-content;

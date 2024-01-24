@@ -23,6 +23,8 @@ use BitApps\FM\Providers\VersionMigrationProvider;
 use BitApps\FM\Views\Admin;
 use BitApps\FM\Views\Shortcode;
 
+use function BitApps\FM\Functions\view;
+
 final class Plugin
 {
     /**
@@ -44,6 +46,7 @@ final class Plugin
         Hooks::addAction('init', [$this, 'registerProviders']);
         Hooks::addAction('admin_enqueue_scripts', [$this, 'registerAssets']);
         Hooks::addFilter('plugin_action_links_' . Config::get('BASENAME'), [$this, 'actionLinks']);
+        Hooks::addAction('wp_dashboard_setup', [$this, 'addNoticeToDashBoard']);
         $this->setPhpIniVars();
         $this->uploadFolder();
     }
@@ -339,6 +342,30 @@ final class Plugin
         }
 
         return $links;
+    }
+
+    public function addNoticeToDashBoard()
+    {
+        wp_add_dashboard_widget(
+            'bitapps_notice',
+            'Bit Apps',
+            function () {
+                view('admin.widget');
+            },
+            null,
+            null,
+            'normal',
+            'high'
+        );
+
+        global $wp_meta_boxes;
+
+            $metaBox = $wp_meta_boxes['dashboard']['normal']['high'];
+            $notice = [
+                'bitapps_notice' => $metaBox['bitapps_notice'],
+            ];
+
+            $wp_meta_boxes['dashboard']['normal']['high'] = array_merge($notice, $metaBox);
     }
 
     /**

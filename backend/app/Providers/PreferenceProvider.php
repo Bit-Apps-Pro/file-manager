@@ -95,7 +95,7 @@ class PreferenceProvider
      */
     public function getTheme()
     {
-        $theme = 'default';
+        $theme = 'material-default';
         if (isset($this->preferences['theme'])) {
             $theme = $this->preferences['theme'];
         }
