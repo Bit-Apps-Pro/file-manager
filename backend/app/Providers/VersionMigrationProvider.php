@@ -3,9 +3,9 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Core\Database\Operator as DBOperator;
-use BitApps\FM\Core\Database\Schema;
-use BitApps\FM\Core\Utils\Capabilities;
+use BitApps\WPKit\Database\Operator as DBOperator;
+use BitApps\WPKit\Database\Schema;
+use BitApps\WPKit\Utils\Capabilities;
 
 \defined('ABSPATH') || exit();
 

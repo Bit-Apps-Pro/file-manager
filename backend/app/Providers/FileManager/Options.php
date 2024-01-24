@@ -2,7 +2,7 @@
 
 namespace BitApps\FM\Providers\FileManager;
 
-use BitApps\FM\Core\Hooks\Hooks;
+use BitApps\WPKit\Hooks\Hooks;
 
 \defined('ABSPATH') || exit();
 class Options
@@ -152,6 +152,7 @@ class Options
     public function __construct($debug = false)
     {
         $this->_debug = $debug;
+
     }
 
     /**

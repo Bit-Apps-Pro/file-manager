@@ -3,8 +3,8 @@
 namespace BitApps\FM\Views;
 
 use BitApps\FM\Config;
-use BitApps\FM\Core\Hooks\Hooks;
-use BitApps\FM\Core\Utils\Capabilities;
+use BitApps\WPKit\Hooks\Hooks;
+use BitApps\WPKit\Utils\Capabilities;
 
 use function BitApps\FM\Functions\view;
 

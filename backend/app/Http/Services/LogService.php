@@ -2,7 +2,7 @@
 
 namespace BitApps\FM\Http\Services;
 
-use BitApps\FM\Core\Database\QueryBuilder;
+use BitApps\WPKit\Database\QueryBuilder;
 use BitApps\FM\Model\Log;
 use BitApps\FM\Plugin;
 use DateTime;

@@ -3,28 +3,29 @@
 namespace BitApps\FM\Http\Controllers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Core\Http\Request\Request;
-use BitApps\FM\Core\Http\Response;
-use BitApps\FM\Core\Utils\Capabilities;
+use BitApps\FM\Http\Requests\FileManagerRequest;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\FileManagerProvider;
 use BitApps\FM\Providers\FileManager\FileRoot;
 use BitApps\FM\Providers\FileManager\Options;
+use BitApps\WPKit\Http\Response;
+use BitApps\WPKit\Utils\Capabilities;
 use Exception;
 
 final class FileManagerController
 {
-    public function changeTheme(Request $request)
+    // Request Data {"action":"bit_fm_theme","nonce":"db9a06c6de","theme":"material-default"}
+    public function changeThemes(FileManagerRequest $request)
     {
-        if ($request->has('theme') && Capabilities::filter(Config::VAR_PREFIX . 'user_can_change_theme')) {
+        $reqData = $request->validated();
+
+        if (\in_array('theme',$reqData) && Capabilities::filter(Config::VAR_PREFIX . 'user_can_change_theme')) {
             $prefs = Plugin::instance()->preferences();
-            $prefs->setTheme(sanitize_text_field($request->theme));
+            $prefs->setTheme(sanitize_text_field($reqData->theme));
             if ($prefs->saveOptions()) {
                 return Response::message(__('Theme updated successfully', 'file-manger'));
             }
         }
-
-        return Response::message(__('Failed to update theme', 'file-manger'));
     }
 
     /**
@@ -47,7 +48,7 @@ final class FileManagerController
 
     public function getFinderOptions()
     {
-        $finderOptions = new Options(is_user_logged_in() && defined('WP_DEBUG') && WP_DEBUG);
+        $finderOptions = new Options(is_user_logged_in() && \defined('WP_DEBUG') && WP_DEBUG);
 
         $finderOptions->setBind(
             'put.pre',
@@ -74,7 +75,7 @@ final class FileManagerController
             [Plugin::instance()->mediaSyncs(), 'onFileUpload']
         );
 
-            // 'zipdl.pre file.pre rename.pre put.pre upload.pre',
+        // 'zipdl.pre file.pre rename.pre put.pre upload.pre',
 
         $finderOptions->setBind(
             'zipdl.pre file.pre rename.pre put.pre upload.pre',
@@ -103,9 +104,9 @@ final class FileManagerController
         );
 
         if ($permissions->currentUserRole() !== 'administrator') {
-            $mimes = $permissions->getEnabledFileType();
+            $mimes         = $permissions->getEnabledFileType();
             $maxUploadSize = $permissions->getMaximumUploadSize();
-            $baseRoot->setUploadMaxSize($maxUploadSize == 0 ? 0 : $maxUploadSize. "M");
+            $baseRoot->setUploadMaxSize($maxUploadSize == 0 ? 0 : $maxUploadSize . 'M');
             $denyUploadType = array_diff(Plugin::instance()->mimes()->getTypes(), $mimes);
             $baseRoot->setOption('uploadDeny', $denyUploadType);
         }

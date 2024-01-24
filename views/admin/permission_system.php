@@ -3,7 +3,7 @@
 // Security Check
 
 use BitApps\FM\Config;
-use BitApps\FM\Core\Utils\Capabilities;
+use BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Plugin;
 
 use function BitApps\FM\Functions\validatePath;
