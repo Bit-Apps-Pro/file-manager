@@ -1,6 +1,6 @@
 <?php
 
-use BitApps\WPKit\Http\Router\Route;
+use BitApps\FM\Dependencies\BitApps\WPKit\Http\Router\Route;
 use BitApps\FM\Http\Controllers\FileManagerController;
 
 if (!\defined('ABSPATH')) {

@@ -1,0 +1,175 @@
+import EditIcon from '@icons/EditIcon'
+import SettingIcon from '@icons/SettingIcon'
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+
+import Input from './Input'
+
+<Meta title="Component/Input" component={Input} />
+
+# Input
+
+Use input for the main actions on a page or form.
+
+## Size
+
+<Canvas withToolbar>
+  <Story
+    name="Size"
+    argTypes={{
+      leadingIcon: { table: { disable: true }, control: { disable: true } },
+      trailingIcon: { table: { disable: true }, control: { disable: true } },
+      variant: { table: { disable: true }, control: { disable: true } },
+      isLoading: { table: { disable: true }, control: { disable: true } },
+      isInvalid: { table: { disable: true }, control: { disable: true } },
+      invalidMessage: { table: { disable: true }, control: { disable: true } },
+      helperText: { table: { disable: true }, control: { disable: true } },
+      onBlur: { table: { disable: true }, control: { disable: true } },
+      type: { table: { disable: true }, control: { disable: true } }
+    }}
+  >
+    <div className="m-3">
+      <Input size="large" placeholder="large" />
+    </div>
+    <div className="m-3">
+      <Input placeholder="middle" />
+    </div>
+    <div className="m-3">
+      <Input size="small" placeholder="small" />
+    </div>
+  </Story>
+</Canvas>
+<ArgsTable story="Size" />
+
+## IsLoading
+
+**`isLoading`**
+
+<Canvas withToolbar>
+  <Story 
+    name="IsLoading" 
+    argTypes={{
+      leadingIcon: { table: { disable: true, }, control:{ disable: true }},
+      trailingIcon: { table: { disable: true, }, control:{ disable: true }},
+      size: { table: { disable: true, }, control:{ disable: true }},
+      variant: { table: { disable: true, }, control:{ disable: true }},
+      isInvalid: { table: { disable: true, }, control:{ disable: true }},
+      invalidMessage: { table: { disable: true, }, control:{ disable: true }},
+      helperText: { table: { disable: true, }, control:{ disable: true }},
+      onBlur: { table: { disable: true, }, control:{ disable: true }},
+      type: { table: { disable: true, }, control:{ disable: true }},
+
+    }}
+
+>
+
+        <Input isLoading placeholder="isLoading" />
+
+  </Story>
+</Canvas>
+<ArgsTable story="IsLoading" />
+
+## Invalid
+
+<Canvas withToolbar>
+  <Story 
+    name="Invalid" 
+    argTypes={{
+      leadingIcon: { table: { disable: true, }, control:{ disable: true }},
+      trailingIcon: { table: { disable: true, }, control:{ disable: true }},
+      size: { table: { disable: true, }, control:{ disable: true }},
+      variant: { table: { disable: true, }, control:{ disable: true }},
+      isLoading: { table: { disable: true, }, control:{ disable: true }},
+      helperText: { table: { disable: true, }, control:{ disable: true }},
+      onBlur: { table: { disable: true, }, control:{ disable: true }},
+      type: { table: { disable: true, }, control:{ disable: true }},
+
+    }}
+
+>
+
+        <Input isInvalid invalidMessage="input field required" />
+
+  </Story>
+</Canvas>
+<ArgsTable story="Invalid" />
+
+## HelperText
+
+<Canvas withToolbar>
+  <Story 
+    name="HelperText" 
+    argTypes={{
+      leadingIcon: { table: { disable: true, }, control:{ disable: true }},
+      trailingIcon: { table: { disable: true, }, control:{ disable: true }},
+      size: { table: { disable: true, }, control:{ disable: true }},
+      variant: { table: { disable: true, }, control:{ disable: true }},
+      isLoading: { table: { disable: true, }, control:{ disable: true }},
+      isInvalid: { table: { disable: true, }, control:{ disable: true }},
+      invalidMessage: { table: { disable: true, }, control:{ disable: true }},
+      onBlur: { table: { disable: true, }, control:{ disable: true }},
+      type: { table: { disable: true, }, control:{ disable: true }},
+
+    }}
+
+>
+
+        <Input helperText="input your ID"/>
+
+  </Story>
+</Canvas>
+<ArgsTable story="HelperText" />
+
+## OnBlur
+
+<Canvas withToolbar>
+  <Story 
+    name="OnBlur" 
+    argTypes={{
+      leadingIcon: { table: { disable: true, }, control:{ disable: true }},
+      trailingIcon: { table: { disable: true, }, control:{ disable: true }},
+      size: { table: { disable: true, }, control:{ disable: true }},
+      variant: { table: { disable: true, }, control:{ disable: true }},
+      isLoading: { table: { disable: true, }, control:{ disable: true }},
+      isInvalid: { table: { disable: true, }, control:{ disable: true }},
+      invalidMessage: { table: { disable: true, }, control:{ disable: true }},
+      helperText: { table: { disable: true, }, control:{ disable: true }},
+      type: { table: { disable: true, }, control:{ disable: true }},
+
+    }}
+
+>
+
+        <Input onBlur={()=>{alert("Hello Bitcode")}} placeholder="onBlur"  />
+
+  </Story>
+</Canvas>
+<ArgsTable story="OnBlur" />
+
+## Type
+
+<Canvas withToolbar>
+  <Story 
+    name="Type" 
+    argTypes={{
+      leadingIcon: { table: { disable: true, }, control:{ disable: true }},
+      trailingIcon: { table: { disable: true, }, control:{ disable: true }},
+      size: { table: { disable: true, }, control:{ disable: true }},
+      variant: { table: { disable: true, }, control:{ disable: true }},
+      isLoading: { table: { disable: true, }, control:{ disable: true }},
+      helperText: { table: { disable: true, }, control:{ disable: true }},
+      onBlur: { table: { disable: true, }, control:{ disable: true }},
+      isInvalid: { table: { disable: true, }, control:{ disable: true }},
+      invalidMessage: { table: { disable: true, }, control:{ disable: true }},
+
+    }}
+
+>
+
+        <div className='m-3'><Input placeholder='text'/></div>
+        <div className='m-3'><Input type='email' placeholder='email' /></div>
+        <div className='m-3'><Input type='password' placeholder='password' /></div>
+        <div className='m-3'><Input type='number' placeholder='number' /></div>
+
+  </Story>
+</Canvas>
+<ArgsTable story="Type" />

@@ -1,8 +1,8 @@
 <?php
 
-use BitApps\WPDatabase\Blueprint;
-use BitApps\WPDatabase\Schema;
-use BitApps\WPKit\Migration\Migration;
+use BitApps\FM\Dependencies\BitApps\WPDatabase\Blueprint;
+use BitApps\FM\Dependencies\BitApps\WPDatabase\Schema;
+use BitApps\FM\Dependencies\BitApps\WPKit\Migration\Migration;
 
 if (! \defined('ABSPATH')) {
     exit;

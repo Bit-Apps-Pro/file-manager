@@ -1,0 +1,16 @@
+.contextMenu {
+  composes: pos-fixed from global;
+  z-index: 9999;
+}
+
+.contextMenuItem {
+  composes: py-1 px-2 pointer flx ai-cen from global;
+  column-gap: 5px;
+  border: none;
+  width: 100%;
+  background-color: transparent;
+  border-radius: calc(var(--border-rad) - 5px);
+  font-family: var(--font-family);
+  color: var(--txt);
+  text-align: left;
+}

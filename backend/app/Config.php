@@ -57,6 +57,9 @@ class Config
                 return plugin_basename(trim(self::get('MAIN_FILE')));
 
             case 'BASEDIR':
+                return plugin_dir_path(self::get('MAIN_FILE'));
+
+            case 'BACKEND_DIR':
                 return plugin_dir_path(self::get('MAIN_FILE')) . 'backend';
 
             case 'SITE_URL':
@@ -157,7 +160,7 @@ class Config
 
     public static function isDev()
     {
-        return \defined('BITAPPS_DEV') && BITAPPS_DEV;
+        return is_readable(Config::get('BASEDIR') . '/port');
     }
 
     /**

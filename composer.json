@@ -6,7 +6,10 @@
     "psr-4": {
       "BitApps\\FM\\": "./backend/app",
       "BitApps\\FM\\Tools\\ComposerScripts\\": "./tools/composer-scripts/"
-    }
+    },
+    "classmap": [
+      "./dependencies"
+    ]
   },
   "scripts": {
     "lint": "./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php",

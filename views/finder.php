@@ -1,4 +1,6 @@
 <?php
+
+use BitApps\FM\Config;
 use BitApps\FM\Plugin;
 
 \defined('ABSPATH') || exit();
@@ -15,9 +17,23 @@ wp_enqueue_script('bfm-elfinder-editor-script');
 wp_enqueue_script('bfm-elfinder-lang', $preferences->getLangUrl(), ['bfm-elfinder-script']);
 wp_enqueue_script('bfm-finder-loader');
 
+if (is_readable(Config::get('BASEDIR') . '/port')) {
+    $port   = file_get_contents(Config::get('BASEDIR') . '/port');
+    $devUrl = 'http://localhost:' . $port;
+    wp_enqueue_script(
+        Config::SLUG . '-vite-client-helper-MODULE',
+        $devUrl . '/config/devHotModule.js',
+        [],
+        null
+    );
+    wp_enqueue_script(Config::SLUG . '-vite-client-MODULE', $devUrl . '/@vite/client', [], null);
+    wp_enqueue_script(Config::SLUG . '-index-MODULE', $devUrl . '/main.tsx', [], null);
+}
+
 ?>
 
 <div id='file-manager'>
+<div id='bit-fm-root'>
 
 </div>
 

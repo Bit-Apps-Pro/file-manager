@@ -3,8 +3,8 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\WPDatabase\Connection;
-use BitApps\WPKit\Installer;
+use BitApps\FM\Dependencies\BitApps\WPDatabase\Connection;
+use BitApps\FM\Dependencies\BitApps\WPKit\Installer;
 
 class InstallerProvider
 {
@@ -51,7 +51,7 @@ class InstallerProvider
         ];
 
         return [
-            'path'       => Config::get('BASEDIR')
+            'path'       => Config::get('BACKEND_DIR')
                 . DIRECTORY_SEPARATOR
                 . 'db'
                 . DIRECTORY_SEPARATOR
@@ -69,7 +69,7 @@ class InstallerProvider
         ];
 
         return [
-            'path'       => Config::get('BASEDIR')
+            'path'       => Config::get('BACKEND_DIR')
                 . DIRECTORY_SEPARATOR
                 . 'db'
                 . DIRECTORY_SEPARATOR

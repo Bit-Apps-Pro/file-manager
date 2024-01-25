@@ -3,8 +3,8 @@
 namespace BitApps\FM\Http\Controllers;
 
 use BitApps\FM\Config;
-use BitApps\WPKit\Http\Request\Request;
-use BitApps\WPKit\Http\Response;
+use BitApps\FM\Dependencies\BitApps\WPKit\Http\Request\Request;
+use BitApps\FM\Dependencies\BitApps\WPKit\Http\Response;
 use BitApps\FM\Http\Services\LogService;
 
 final class LogController

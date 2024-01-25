@@ -1,0 +1,146 @@
+.btn {
+  composes: flx ai-cen fw-med jc-cen from global;
+  cursor: pointer;
+  font-family: var(--font-family);
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    outline-offset 0.2s;
+}
+
+.btn:active {
+  transform: scale(0.9);
+  outline-offset: 0 !important;
+}
+
+.default.solid {
+  background-color: var(--bg-5);
+  color: var(--txt);
+  border: 2px solid var(--bg-10);
+}
+
+.default.solid:hover,
+.default.solid:active {
+  background-color: var(--bg-10);
+}
+
+.default.outline {
+  text-shadow: 0 1px 0.5px rgba(0, 0, 0, 30%);
+  background-color: var(--bg);
+  color: var(--txt);
+  border: 2px solid var(--bg-10);
+}
+
+.default.outline:hover {
+  background-color: var(--bg-5);
+}
+
+.default.ghost {
+  background-color: var(--bg);
+  color: var(--txt);
+  border: none;
+}
+
+.default.ghost:hover {
+  background-color: var(--bg-5);
+}
+
+.default.solid:focus-visible,
+.default.outline:focus-visible,
+.default.ghost:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+.primary.solid {
+  text-shadow: 0 1px 1.5px rgb(112, 1, 69);
+  background-color: hsl(var(--primary-h-s), var(--primary-l));
+  color: var(--txt-light);
+  border: 2px solid hsl(var(--primary-h-s), calc(var(--primary-l) - 15%));
+}
+
+.primary.solid:hover {
+  background-color: hsl(var(--primary-h-s), calc(var(--primary-l) - 8%));
+  border: 2px solid hsl(var(--primary-h-s), calc(var(--primary-l) - 25%));
+}
+
+.primary.solid:active {
+  background-color: hsl(var(--primary-h-s), calc(var(--primary-l) - 14%));
+  border: 2px solid hsl(var(--primary-h-s), calc(var(--primary-l) - 30%));
+}
+
+.primary.outline {
+  background-color: var(--bg);
+  color: hsl(var(--primary-h-s), var(--primary-l));
+  border: 2px solid hsl(var(--primary-h-s), var(--primary-l));
+}
+
+.primary.outline:hover {
+  background-color: hsl(var(--primary-h-s), var(--primary-l), 20%);
+}
+
+.primary.ghost {
+  color: hsl(var(--primary-h-s), var(--primary-l));
+  background-color: var(--bg);
+  border: none;
+}
+
+.primary.ghost:hover {
+  background-color: hsl(var(--primary-h-s), var(--primary-l), 20%);
+}
+
+.primary.solid:focus-visible,
+.primary.outline:focus-visible,
+.primary.ghost:focus-visible {
+  outline: 2px solid hsl(var(--primary-h-s), calc(var(--primary-l)));
+  outline-offset: 2px;
+}
+
+.xs {
+  height: 24px;
+  width: 24px;
+  padding: 3px;
+  border-radius: 0.3125rem;
+}
+
+.sm {
+  height: 32px;
+  width: 32px;
+  padding: 5px;
+  border-radius: 0.625rem;
+}
+
+.md {
+  height: 40px;
+  width: 40px;
+  padding: 7px;
+  border-radius: calc(var(--border-rad) - 1px);
+}
+
+.lg {
+  height: 44px;
+  width: 44px;
+  padding: 10px;
+  border-radius: var(--border-rad);
+}
+
+.round {
+  border-radius: 100px;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+[color-scheme='dark'] .primary.solid {
+  border: 2px solid hsl(var(--primary-h-s), calc(var(--primary-l) + 10%));
+}
+
+[color-scheme='dark'] .primary.solid:hover {
+  border: 2px solid hsl(var(--primary-h-s), calc(var(--primary-l) + 5%));
+}
+
+[color-scheme='dark'] .primary.solid:active {
+  border: 2px solid hsl(var(--primary-h-s), calc(var(--primary-l) - 5%));
+}

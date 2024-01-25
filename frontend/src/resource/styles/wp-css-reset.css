@@ -1,0 +1,141 @@
+/* stylelint-disable */
+.media-toolbar .button-primary {
+  background: var(--accent-color) !important;
+  color: white !important;
+  border-radius: 20px !important;
+}
+
+.wp-core-ui .button-primary:disabled,
+.wp-core-ui .button-primary[disabled] {
+  background: rgb(190, 190, 190) !important;
+  color: white !important;
+}
+
+#adminmenuback,
+#adminmenuwrap,
+#adminmenu,
+#adminmenu .wp-has-submenu {
+  transition: width 0.3s ease-in-out;
+}
+
+#wpcontent {
+  background: #f5f8ff;
+  padding-left: 0;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+#wpbody-content {
+  position: sticky;
+  overflow: hidden;
+  height: calc(100vh - 32px);
+  top: 32px;
+  padding-bottom: 0;
+}
+
+#wpbody {
+  /* z-index: 99999; */
+}
+
+#wpfooter {
+  display: none;
+}
+
+.media-modal-backdrop {
+  background: #25283b !important;
+}
+
+.media-menu-item.active {
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.attachment-filters {
+  border-radius: 8px !important;
+}
+
+.media-modal-content .attachments-browser .search {
+  border-radius: 8px !important;
+}
+
+.wp-core-ui .attachment-preview {
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+
+.media-toolbar .button-primary:hover {
+  color: white !important;
+}
+
+.media-sidebar {
+  background: #f3f4ff;
+}
+
+.media-modal-content {
+  background: white;
+  border-radius: 20px !important;
+}
+
+.thumbnail {
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+button.check {
+  background: var(--accent-color) !important;
+}
+
+.media-modal * {
+  font-family: Montserrat, sans-serif !important;
+}
+
+.media-modal a {
+  color: var(--accent-color) !important;
+}
+
+.media-modal button {
+  box-shadow: none !important;
+}
+
+.media-modal button:hover {
+  color: var(--accent-color) !important;
+}
+
+.media-modal button:focus {
+  box-shadow: none !important;
+}
+
+.media-modal input,
+.media-modal textarea,
+.media-modal select {
+  height: auto !important;
+  border-radius: 8px !important;
+  border-color: lightgray !important;
+}
+
+.media-modal input:hover,
+.media-modal textarea:hover,
+.media-modal select:hover {
+  border-color: gray !important;
+}
+
+.media-modal input:focus,
+.media-modal textarea:focus,
+.media-modal select:focus {
+  border-color: var(--accent-color) !important;
+  box-shadow:
+    0 0 0 0 var(--accent-color),
+    0 0 0 4px rgba(0, 131, 243, 10%) !important;
+}
+
+input[type='checkbox']:disabled:checked::before,
+input[type='checkbox'].disabled:checked::before {
+  opacity: 0 !important;
+}
+
+input[type='search']:focus {
+  box-shadow: initial;
+}
+
+.wp-core-ui .attachment.details,
+.attachment:focus {
+  box-shadow: 0 0 0 2px var(--accent-color) !important;
+}

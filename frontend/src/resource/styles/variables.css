@@ -1,0 +1,130 @@
+/* All css variables are defined here */
+
+:root {
+  --accent-color: hsl(290deg, 100%, 9%);
+  --accent-light: hsl(330deg, 100%, 50%);
+  --blue: hsl(204deg, 100%, 50%);
+  --green: hsl(122deg, 39%, 49%);
+  --green-h-s: 122deg, 39%;
+  --green-l: 49%;
+  --red: hsl(4deg, 79%, 54%);
+  --red-h-s: 4deg, 79%;
+  --red-l: 54%;
+  --primary-h-s: 340deg, 100%;
+  --primary-l: 57%;
+  --danger-txt: hsl(4deg, 90%, 58%);
+  --danger-bg: hsl(4deg, 90%, 95%);
+  --danger-bg-5: hsl(4deg, 90%, 90%);
+  --bg: hsl(0deg, 0%, 100%);
+  --bg-5: hsl(0deg, 0%, 95%);
+  --bg-10: hsl(0deg, 0%, 90%);
+  --bg-15: hsl(0deg, 0%, 85%);
+  --bg-20: hsl(0deg, 0%, 80%);
+  --bg-25: hsl(0deg, 0%, 75%);
+  --bg-30: hsl(0deg, 0%, 70%);
+  --bg-35: hsl(0deg, 0%, 65%);
+  --bg-40: hsl(0deg, 0%, 60%);
+  --bg-45: hsl(0deg, 0%, 55%);
+  --bg-50: hsl(0deg, 0%, 50%);
+  --bg-55: hsl(0deg, 0%, 45%);
+  --bg-60: hsl(0deg, 0%, 40%);
+  --bg-65: hsl(0deg, 0%, 35%);
+  --bg-70: hsl(0deg, 0%, 30%);
+  --bg-75: hsl(0deg, 0%, 25%);
+  --bg-80: hsl(0deg, 0%, 20%);
+  --bg-85: hsl(0deg, 0%, 15%);
+  --bg-90: hsl(0deg, 0%, 10%);
+  --bg-95: hsl(0deg, 0%, 5%);
+  --bg-100: hsl(0deg, 0%, 0%);
+  --slate-50: #fcfcfd;
+  --slate-100: #f9fafb;
+  --slate-200: #f3f4f6;
+  --slate-300: #f1f2f4;
+  --slate-400: #ebecef;
+  --slate-500: #e5e7eb;
+  --slate-600: #b1b7c3;
+  --slate-700: #7d879b;
+  --slate-800: #505868;
+  --slate-900: #282c34;
+  --fbuilder-bg: #f9fbff;
+  --txt-light: hsl(0deg, 0%, 100%);
+  --txt: hsl(0deg, 0%, 0%);
+  --txt-3: hsl(0deg, 0%, 30%);
+  --txt-5: hsl(0deg, 0%, 50%);
+  --txt-1: hsl(0deg, 0%, 100%);
+  --border-10: hsl(0deg, 0%, 88%);
+  --border-20: hsl(0deg, 0%, 88%);
+  --border-40: hsl(274deg, 13%, 57%);
+  --font-family: 'Outfit', sans-serif !important;
+  --border-rad: 0.8125rem;
+
+  /* Transistions */
+
+  /* --tran-2: 200ms;
+  --tran-3: 300ms;
+  --tran-4: 400ms; */
+
+  /* Fonts */
+
+  /* --font-weight-extralight: 100;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600; */
+
+  /* Shadows */
+  --focus-shadow: 0 0 0 2px var(--accent-color);
+  --focus-shadow-danger: 0 0 0 2px var(--danger-txt);
+  --shadow-1: 0 4px 6px 0 hsla(200deg, 15%, 85%, 100%);
+  --shadow-10: 0 2px 5px 0 hsl(0deg, 0%, 65%);
+  --shadow-20: 0 4px 12px 0 hsl(0deg, 0%, 70%);
+  --shadow-30: 0 5px 20px 0 hsl(0deg, 0%, 90%);
+  --shadow-menu: 0 3px 5px 0 rgba(0, 0, 0, 10%), 0 5px 8px 0 rgba(0, 0, 0, 10%),
+    0 8px 12px 0 rgba(0, 0, 0, 10%);
+}
+
+:root [color-scheme='dark'] {
+  /* --accent-color: hsl(347deg, 88%, 54%); */
+
+  /* --accent-color: hsl(339, 67%, 62%); */
+  --accent-color: hsl(325deg, 55%, 67%);
+  --danger-bg: hsla(4deg, 90%, 16%, 13%);
+  --danger-bg-5: hsl(4deg, 90%, 30%, 13%);
+  --bg: hsl(274deg, 13%, 17%);
+  --bg-5: hsl(274deg, 13%, 22%);
+  --bg-10: hsl(274deg, 13%, 27%);
+  --bg-15: hsl(274deg, 13%, 32%);
+  --bg-20: hsl(274deg, 13%, 37%);
+  --bg-25: hsl(274deg, 13%, 42%);
+  --bg-30: hsl(274deg, 13%, 47%);
+  --bg-35: hsl(274deg, 13%, 52%);
+  --bg-40: hsl(274deg, 13%, 57%);
+  --bg-45: hsl(274deg, 13%, 62%);
+  --bg-50: hsl(274deg, 13%, 67%);
+  --bg-55: hsl(274deg, 13%, 72%);
+  --bg-60: hsl(274deg, 13%, 77%);
+  --bg-65: hsl(274deg, 13%, 82%);
+  --bg-70: hsl(274deg, 13%, 87%);
+  --bg-75: hsl(274deg, 13%, 92%);
+  --bg-80: hsl(274deg, 13%, 97%);
+  --bg-85: hsl(274deg, 13%, 100%);
+  --bg-90: hsl(274deg, 13%, 100%);
+  --bg-95: hsl(274deg, 13%, 100%);
+  --bg-100: hsl(274deg, 13%, 100%);
+  --fbuilder-bg: hsl(270deg, 13%, 18%);
+  --border-20: hsl(274deg, 17%, 24%);
+  --border-30: hsl(274deg, 13%, 47%);
+  --border-40: hsl(274deg, 13%, 57%);
+
+  /* Shadows */
+
+  --shadow-1: 0 4px 6px 0 hsl(274deg, 13%, 10%);
+  --txt: rgb(234, 224, 240);
+  --txt-3: rgb(181, 151, 204);
+  --txt-5: hsl(273deg, 13%, 50%);
+  --txt-1: hsl(273deg, 13%, 17%);
+  --shadow-10: 0 2px 5px 0 rgb(0, 0, 0);
+  --shadow-20: 0 4px 12px 0 rgba(0, 0, 0, 12%);
+  --shadow-30: 0 5px 20px 0 rgba(0, 0, 0, 50%);
+  --shadow-menu: 0 3px 5px 0 rgba(0, 0, 0, 20%), 0 5px 8px 0 rgba(0, 0, 0, 20%),
+    0 8px 12px 0 rgba(0, 0, 0, 20%);
+}

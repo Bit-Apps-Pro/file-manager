@@ -3,7 +3,7 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\WPKit\Utils\Capabilities;
+use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\ClientOptions;
 

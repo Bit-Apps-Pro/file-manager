@@ -1,0 +1,68 @@
+.tagsSection {
+  composes: mt-2 mb-4 flx flx-wrap gap-1 from global;
+}
+
+.tagList {
+  max-height: 210px;
+  overflow-y: auto;
+}
+
+.tagList > li {
+  margin-bottom: 2px !important;
+  padding: 0 !important;
+}
+
+.tagItem {
+  composes: flx ai-cen jc-sb pos-rel from global;
+  width: 140px;
+}
+
+.tagItem:hover {
+  opacity: 1;
+}
+
+.tagItemActionBtn {
+  opacity: 0;
+}
+
+.tagItem:hover .tagItemActionBtn {
+  opacity: 1;
+}
+
+.pinTag {
+  opacity: 1;
+}
+
+.tagItemAction {
+  composes: pos-abs from global;
+  right: 2px;
+}
+
+.tagItemTitle {
+  text-overflow: ellipsis;
+  max-width: 135px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.tagItem:hover .tagItemTitle {
+  max-width: 95px;
+}
+
+.tagList::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  transition: 0.3s all ease;
+}
+
+.tagList::-webkit-scrollbar {
+  width: 3px;
+  opacity: 0;
+}
+
+.tagList:hover::-webkit-scrollbar-thumb {
+  background-color: var(--bg-15);
+}
+
+.tagList:hover::-webkit-scrollbar-track {
+  background: var(--bg-5);
+}

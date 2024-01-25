@@ -1,0 +1,8 @@
+.layoutWrp {
+  composes: flx from global;
+  height: calc(100% - 15px);
+  margin: 3px 10px 7px 0;
+  border-radius: 0.8125rem;
+  overflow: hidden;
+  border: 2px solid var(--border-20);
+}

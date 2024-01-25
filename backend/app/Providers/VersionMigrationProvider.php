@@ -3,9 +3,9 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\WPKit\Database\Operator as DBOperator;
-use BitApps\WPKit\Database\Schema;
-use BitApps\WPKit\Utils\Capabilities;
+use BitApps\FM\Dependencies\BitApps\WPDatabase\Schema;
+use BitApps\FM\Dependencies\BitApps\WPKit\Migration\MigrationHelper;
+use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
 
 \defined('ABSPATH') || exit();
 
@@ -32,7 +32,7 @@ class VersionMigrationProvider
         }
 
         if (version_compare(Config::getOption('db_version', '0.0'), Config::DB_VERSION, '<')) {
-            DBOperator::migrate(InstallerProvider::migration());
+            MigrationHelper::migrate(InstallerProvider::migration());
         }
     }
 

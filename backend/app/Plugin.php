@@ -4,10 +4,10 @@ namespace BitApps\FM;
 
 // Main class for the plugin.
 
-use BitApps\WPDatabase\Connection;
-use BitApps\WPKit\Database\Operator;
-use BitApps\WPKit\Hooks\Hooks;
-use BitApps\WPKit\Http\RequestType;
+use BitApps\FM\Dependencies\BitApps\WPDatabase\Connection;
+use BitApps\FM\Dependencies\BitApps\WPKit\Hooks\Hooks;
+use BitApps\FM\Dependencies\BitApps\WPKit\Http\RequestType;
+use BitApps\FM\Dependencies\BitApps\WPKit\Migration\MigrationHelper;
 use BitApps\FM\Http\Middleware\NonceCheckerMiddleware;
 use BitApps\FM\Model\Log;
 use BitApps\FM\Providers\AccessControlProvider;
@@ -394,7 +394,7 @@ final class Plugin
         static::$_instance = new static();
         if (version_compare(Config::getOption('version'), Config::VERSION_ID, '<')) {
             Connection::setPluginPrefix(Config::DB_PREFIX);
-            Operator::migrate(InstallerProvider::migration());
+            MigrationHelper::migrate(InstallerProvider::migration());
         }
 
         return true;

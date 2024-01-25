@@ -2,7 +2,7 @@
 
 namespace BitApps\FM\Http\Requests;
 
-use BitApps\WPKit\Http\Request\Request;
+use BitApps\FM\Dependencies\BitApps\WPKit\Http\Request\Request;
 
 class FileManagerRequest extends Request
 {
@@ -10,7 +10,7 @@ class FileManagerRequest extends Request
     {
         return [
             'action' => ['required','string'],
-            'theme'  => ['required','string']
+            'theme'  => ['required','string'],
         ];
     }
 }

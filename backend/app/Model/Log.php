@@ -2,9 +2,7 @@
 
 namespace BitApps\FM\Model;
 
-use BitApps\WPDatabase\Model;
-
-// use BitApps\WPKit\Database\Model
+use BitApps\FM\Dependencies\BitApps\WPDatabase\Model;
 
 /**
  * Model for log

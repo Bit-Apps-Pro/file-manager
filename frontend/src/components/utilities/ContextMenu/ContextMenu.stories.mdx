@@ -1,0 +1,29 @@
+import { ArgsTable, Meta, Source, Story } from '@storybook/addon-docs'
+
+import ContextMenu from './ContextMenu'
+import ContextMenuStory from './ContextMenuStory'
+
+<Meta title="Component/ContextMenu" component={ContextMenu} />
+
+# ContextMenu
+
+---
+
+<Story
+  name="contextMenu"
+>
+  <ContextMenuStory />
+</Story>
+<Source
+  language='html'
+  dark
+  type='code'
+  code='<ContextMenu clientY={100} clientX={100} closeContextMenu={function}>
+
+          <> you menu list </>
+
+        </ContextMenu>'
+
+/>
+
+<ArgsTable story="contextMenu" />

@@ -1,0 +1,75 @@
+.modalWrapper {
+  position: fixed;
+  display: flex;
+  inset: 0;
+  background-color: hsl(274deg, 13%, 17%, 70%);
+  z-index: 9999;
+}
+
+.modalDialog {
+  composes: pos-rel from global;
+  max-width: 450px;
+  margin: auto;
+  background-color: var(--bg-5);
+  border-radius: 25px;
+  width: calc(100% - 60px);
+  padding: 45px 25px 25px;
+}
+
+.modalTitle {
+  composes: mt-0 mb-2 ta-cen from global;
+  color: var(--txt);
+  font-size: 20px;
+  font-family: var(--font-family);
+}
+
+.modalSubtitle {
+  composes: mt-0 ta-cen from global;
+  margin-bottom: 30px;
+  color: var(--bg-60);
+  font-family: var(--font-family);
+}
+
+/* .clossBtn{
+  composes: pos-abs pointer from global;
+  right: 22px;
+  top: 22px;
+  background: none;
+  border: none;
+  color: var(--bg-30);
+  transition: color 0.4s ease;
+}
+.clossBtn:hover{
+  color: var(--bg-100)
+} */
+
+.clossBtn {
+  composes: pos-abs pointer flx jc-cen ai-cen from global;
+  right: 15px;
+  top: 15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: none;
+  border: none;
+  color: var(--bg-30);
+  transition: color 0.2s ease;
+  outline: none;
+}
+
+.clossBtn:focus-within {
+  box-shadow: 0 0 0 2px var(--accent-color);
+}
+
+[color-scheme='dark'] .clossBtn {
+  color: var(--bg-60);
+}
+
+.clossBtn:hover {
+  background-color: var(--bg-10);
+  color: var(--bg-100);
+}
+
+[color-scheme='dark'] .clossBtn:hover {
+  background: var(--bg-30);
+}

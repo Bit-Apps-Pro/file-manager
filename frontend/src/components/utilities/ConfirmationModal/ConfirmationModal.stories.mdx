@@ -1,0 +1,31 @@
+import { ArgsTable, Meta, Source, Story } from '@storybook/addon-docs'
+
+import ConfirmationModal from './ConfirmationModal'
+import ConfirmationModalStory from './ConfirmationModalStory.tsx'
+
+<Meta title="Component/ConfirmationModal" component={ConfirmationModal} />
+
+export const Template = args => <ConfirmationModal {...args} />
+
+# ConfirmationModal
+
+---
+
+<Story
+  name="confirmModal"
+  args={{
+    layoutId: 'confirmModalId',
+    open: false,
+    closeModal: () => {},
+    confirmDelete: () => {}
+  }}
+>
+  <ConfirmationModalStory />
+</Story>
+<Source
+  language="html"
+  dark
+  format={false}
+  code='<ConfirmationModal open={true} layoutId="layoutId"  closeModal={function} confirmDelete={function}/>'
+/>
+<ArgsTable story="confirmModal" />

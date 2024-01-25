@@ -8,8 +8,8 @@ use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\FileManagerProvider;
 use BitApps\FM\Providers\FileManager\FileRoot;
 use BitApps\FM\Providers\FileManager\Options;
-use BitApps\WPKit\Http\Response;
-use BitApps\WPKit\Utils\Capabilities;
+use BitApps\FM\Dependencies\BitApps\WPKit\Http\Response;
+use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
 use Exception;
 
 final class FileManagerController
@@ -19,7 +19,7 @@ final class FileManagerController
     {
         $reqData = $request->validated();
 
-        if (\in_array('theme',$reqData) && Capabilities::filter(Config::VAR_PREFIX . 'user_can_change_theme')) {
+        if (\in_array('theme', $reqData) && Capabilities::filter(Config::VAR_PREFIX . 'user_can_change_theme')) {
             $prefs = Plugin::instance()->preferences();
             $prefs->setTheme(sanitize_text_field($reqData->theme));
             if ($prefs->saveOptions()) {
