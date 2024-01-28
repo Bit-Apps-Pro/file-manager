@@ -1,5 +1,4 @@
 import config from '@config/config'
-import { type EndpointType } from '@features/Connection/ConnectionType'
 
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-undef */
@@ -38,7 +37,7 @@ export default async function request<T>(
   const { AJAX_URL, NONCE, ROUTE_PREFIX } = config
   const uri = new URL(AJAX_URL)
   uri.searchParams.append('action', `${ROUTE_PREFIX}${action}`)
-  uri.searchParams.append('_ajax_nonce', NONCE)
+  uri.searchParams.append('nonce', NONCE)
 
   // append query params in url
   if (queryParam !== null) {
@@ -59,8 +58,4 @@ export default async function request<T>(
   }
 
   return (await fetch(uri, options).then(res => res.json())) as Response<T>
-}
-
-export function proxyRequest<T>(data: EndpointType): Promise<Response<T>> {
-  return request<T>('proxy/route', data)
 }

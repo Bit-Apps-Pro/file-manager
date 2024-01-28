@@ -3,29 +3,31 @@
 namespace BitApps\FM\Http\Controllers;
 
 use BitApps\FM\Config;
+use BitApps\FM\Dependencies\BitApps\WPKit\Http\Response;
+use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Http\Requests\FileManagerRequest;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\FileManagerProvider;
 use BitApps\FM\Providers\FileManager\FileRoot;
 use BitApps\FM\Providers\FileManager\Options;
-use BitApps\FM\Dependencies\BitApps\WPKit\Http\Response;
-use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
 use Exception;
 
 final class FileManagerController
 {
-    // Request Data {"action":"bit_fm_theme","nonce":"db9a06c6de","theme":"material-default"}
     public function changeThemes(FileManagerRequest $request)
     {
         $reqData = $request->validated();
-
-        if (\in_array('theme', $reqData) && Capabilities::filter(Config::VAR_PREFIX . 'user_can_change_theme')) {
+        if (isset($reqData['theme'])
+        && Capabilities::filter(Config::VAR_PREFIX . 'user_can_change_theme')
+        ) {
             $prefs = Plugin::instance()->preferences();
-            $prefs->setTheme(sanitize_text_field($reqData->theme));
+            $prefs->setTheme(sanitize_text_field($reqData['theme']));
             if ($prefs->saveOptions()) {
-                return Response::message(__('Theme updated successfully', 'file-manger'));
+                return Response::success([])->message(__('Theme updated successfully', 'file-manger'));
             }
         }
+
+        return Response::error([])->message(__('Failed to update theme', 'file-manger'));
     }
 
     /**

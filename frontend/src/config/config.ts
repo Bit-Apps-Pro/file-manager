@@ -15,10 +15,6 @@ const config = {
   PRODUCT_NAME: 'Bit File Manager',
   PLUGIN_SLUG: getServerVariable('pluginSlug'),
   AJAX_URL: getServerVariable('ajaxURL', 'http://.local/wp-admin/admin-ajax.php'),
-  API_URL: getServerVariable('apiURL', {
-    base: 'http://bitflow.test/wp-json/bit-flow/v1',
-    separator: '?'
-  }),
   ROOT_URL: getServerVariable('rootURL', 'http://.local'),
   NONCE: getServerVariable('nonce', ''),
   ROUTE_PREFIX: getServerVariable('routePrefix', 'bit_fm_')

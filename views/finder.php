@@ -15,28 +15,29 @@ wp_enqueue_script('bfm-elfinder-script');
 wp_enqueue_script('bfm-elfinder-editor-script');
 
 wp_enqueue_script('bfm-elfinder-lang', $preferences->getLangUrl(), ['bfm-elfinder-script']);
-wp_enqueue_script('bfm-finder-loader');
+// wp_enqueue_script('bfm-finder-loader');
 
-if (is_readable(Config::get('BASEDIR') . '/port')) {
+if (Config::isDev()) {
     $port   = file_get_contents(Config::get('BASEDIR') . '/port');
     $devUrl = 'http://localhost:' . $port;
     wp_enqueue_script(
-        Config::SLUG . '-vite-client-helper-MODULE',
+        Config::SLUG . '-MODULE-vite-client-helper',
         $devUrl . '/config/devHotModule.js',
         [],
         null
     );
-    wp_enqueue_script(Config::SLUG . '-vite-client-MODULE', $devUrl . '/@vite/client', [], null);
-    wp_enqueue_script(Config::SLUG . '-index-MODULE', $devUrl . '/main.tsx', [], null);
+    wp_enqueue_script(Config::SLUG . '-MODULE-vite-client', $devUrl . '/@vite/client', [], null);
+    wp_enqueue_script(Config::SLUG . '-MODULE-index', $devUrl . '/main.tsx', [], null);
 }
 
 ?>
 
-<div id='file-manager'>
+<!-- <div id='file-manager'>
+
+</div> -->
+
 <div id='bit-fm-root'>
-
 </div>
-
 <?php
 if ($preferences->getUrlPathView() == 'hide') {
     ?>

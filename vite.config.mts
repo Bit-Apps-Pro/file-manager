@@ -7,6 +7,7 @@ import { AddressInfo } from 'node:net'
 import detectPort from 'detect-port'
 import csso from 'postcss-csso'
 import { Alias, Plugin, defineConfig, normalizePath } from 'vite'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 import * as tsconfig from './tsconfig.json'
 
@@ -61,7 +62,15 @@ export default defineConfig(({ mode }) => {
       //     }
       //   }
       // }
-      setDevServerConfig()
+      setDevServerConfig(),
+      viteStaticCopy({
+        targets: [
+          {
+            src: normalizePath(path.resolve(__dirname, 'frontend/finder-loader.js')),
+            dest: 'js'
+          }
+        ]
+      })
     ],
     css: {
       postcss: {

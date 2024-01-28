@@ -8,8 +8,10 @@ use BitApps\FM\Dependencies\BitApps\WPDatabase\Connection;
 use BitApps\FM\Dependencies\BitApps\WPKit\Hooks\Hooks;
 use BitApps\FM\Dependencies\BitApps\WPKit\Http\RequestType;
 use BitApps\FM\Dependencies\BitApps\WPKit\Migration\MigrationHelper;
+
+use function BitApps\FM\Functions\view;
+
 use BitApps\FM\Http\Middleware\NonceCheckerMiddleware;
-use BitApps\FM\Model\Log;
 use BitApps\FM\Providers\AccessControlProvider;
 use BitApps\FM\Providers\FileEditValidator;
 use BitApps\FM\Providers\HookProvider;
@@ -22,9 +24,8 @@ use BitApps\FM\Providers\PreferenceProvider;
 use BitApps\FM\Providers\ReviewProvider;
 use BitApps\FM\Providers\VersionMigrationProvider;
 use BitApps\FM\Views\Admin;
-use BitApps\FM\Views\Shortcode;
 
-use function BitApps\FM\Functions\view;
+use BitApps\FM\Views\Shortcode;
 
 final class Plugin
 {
@@ -104,7 +105,6 @@ final class Plugin
 
         $migrationProvider = new VersionMigrationProvider();
         $migrationProvider->migrate();
-        
     }
 
     /**
@@ -319,12 +319,18 @@ final class Plugin
         return apply_filters(
             Config::withPrefix('localized_script'),
             [
-                'ajax_url'   => admin_url('admin-ajax.php'),
-                'nonce'      => wp_create_nonce('bfm_nonce'),
-                'plugin_dir' => BFM_ROOT_DIR,
-                'plugin_url' => BFM_ROOT_URL,
-                'js_url'     => BFM_FINDER_URL . 'js/',
-                'elfinder'   => BFM_FINDER_URL,
+                'nonce'        => wp_create_nonce('bfm_nonce'),
+                'rootURL'      => Config::get('ROOT_URI'),
+                'assetsURL'    => Config::get('ASSET_URI'),
+                'baseURL'      => Config::get('ADMIN_URL') . 'admin.php?page=' . Config::SLUG . '#',
+                'pluginSlug'   => Config::SLUG,
+                'ajaxURL'      => admin_url('admin-ajax.php'),
+                'routePrefix'  => Config::VAR_PREFIX,
+                'plugin_dir'   => BFM_ROOT_DIR,
+                'plugin_url'   => BFM_ROOT_URL,
+                'js_url'       => BFM_FINDER_URL . 'js/',
+                'elfinder'     => BFM_FINDER_URL,
+                'translations' => [],
             ]
         );
     }
@@ -362,12 +368,12 @@ final class Plugin
 
         global $wp_meta_boxes;
 
-            $metaBox = $wp_meta_boxes['dashboard']['normal']['high'];
-            $notice = [
-                'bitapps_notice' => $metaBox['bitapps_notice'],
-            ];
+        $metaBox = $wp_meta_boxes['dashboard']['normal']['high'];
+        $notice  = [
+            'bitapps_notice' => $metaBox['bitapps_notice'],
+        ];
 
-            $wp_meta_boxes['dashboard']['normal']['high'] = array_merge($notice, $metaBox);
+        $wp_meta_boxes['dashboard']['normal']['high'] = array_merge($notice, $metaBox);
     }
 
     /**

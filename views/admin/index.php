@@ -22,9 +22,9 @@ require_once 'header.php';
 $review = new Review();
 $review->render();
 ?>
-<a href="https://bitapps.pro">
+<!-- <a href="https://bitapps.pro">
     <img src="<?php echo esc_html(BFM_ASSET_URL);?>img/banner.png" width="800px" height="125px"/>
-</a>
+</a> -->
 </div>
 <div class='fm-container'>
     <div class='col-main'>
