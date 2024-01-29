@@ -65,7 +65,7 @@ export default function Support() {
       <div className="mb-5">
         <Space size="middle">
           <LogoIcn size={56} />
-          <LogoText h={25} />
+          <LogoText h={50} />
         </Space>
       </div>
 

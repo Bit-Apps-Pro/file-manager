@@ -47,6 +47,7 @@ export default function AppRoutes() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Root />} />
+            <Route path='/elf_l1_Lw/' element={<Root />} />
             <Route path="/support" element={<Support />} /> 
             <Route path="*" element={<Error404 />} />
           </Route>

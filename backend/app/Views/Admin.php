@@ -123,6 +123,13 @@ class Admin
         wp_enqueue_script('bfm-finder-loader');
     }
 
+    public function dashboard()
+    {
+        $this->enqueueAssets();
+        // phpcs:ignore
+        echo "<div id='bit-fm-root'></div>";
+    }
+
     public function homePage()
     {
         return view('admin.index');
@@ -235,7 +242,7 @@ class Admin
                 'name'       => __('Bit File Manager', 'file-manager'),
                 'capability' => Hooks::applyFilter('can_access_fm_home', 'manage_options'),// fm_capabilities
                 'slug'       => Config::SLUG,
-                'callback'   => [$this, 'homePage'],
+                'callback'   => [$this, 'dashboard'],
                 'icon'       => 'data:image/svg+xml;base64,' . base64_encode('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 30"><g fill="#606060"><path d="M13.54 24.53a7.39 7.39 0 0 1-3.34-9.42Zm5.64.54a7.46 7.46 0 0 1-2.18.32 7.16 7.16 0 0 1-2.28-.39L17 19Z"/><path d="M20.53 14c0 .78 2.28 1.87 1 5.37l-1 2.73L18 14.63h1v-.72h-4.54v.72h1l1.15 3.26-1.49 4.25-2.66-7.51h1v-.72h-2.61a7.4 7.4 0 0 1 11.22-1.28H22A1.42 1.42 0 0 0 20.53 14Zm3.86 4a7.4 7.4 0 0 1-3.92 6.53L23 17.41a7.4 7.4 0 0 0 .25-.7l.11-.32a5.41 5.41 0 0 0 .09-2 7.38 7.38 0 0 1 .94 3.61Z"/><path d="M32.82.76H18.64a1 1 0 0 0-.83.46l-1.6 2.5-2.32 3.9a1 1 0 0 1-.89.48H1.19a1 1 0 0 0-1 1v15c0 2.86 1.82 5.17 4 5.17h25.52c2.23 0 4-2.32 4-5.18l.06-22.32a1 1 0 0 0-.95-1.01ZM17 26.21A8.21 8.21 0 1 1 25.21 18 8.22 8.22 0 0 1 17 26.21Z"/><path d="M20.53 14c0 .78 2.28 1.87 1 5.37l-1 2.73L18 14.63h1v-.72h-4.54v.72h1l1.15 3.26-1.49 4.25-2.66-7.51h1v-.72h-2.61a7.4 7.4 0 0 1 11.22-1.28H22A1.42 1.42 0 0 0 20.53 14Zm-6.99 10.53a7.39 7.39 0 0 1-3.34-9.42ZM24.39 18a7.4 7.4 0 0 1-3.92 6.53L23 17.41a7.4 7.4 0 0 0 .25-.7l.11-.32a5.41 5.41 0 0 0 .09-2 7.38 7.38 0 0 1 .94 3.61Z"/><path d="M19.18 25.07a7.46 7.46 0 0 1-2.18.32 7.16 7.16 0 0 1-2.28-.39L17 19Z"/><path d="M23.24 11.76a8.83 8.83 0 1 0-12.48 12.49 8.83 8.83 0 1 0 12.48-12.49ZM17 26.21A8.21 8.21 0 1 1 25.21 18 8.22 8.22 0 0 1 17 26.21Z"/></g></svg>'),
                 'position'   => '2',
             ],
@@ -245,8 +252,7 @@ class Admin
                 'title'      => __('Dashboard | Bit File Manager', 'file-manager'),
                 'name'       => __('Home', 'file-manager'),
                 'capability' => Hooks::applyFilter('can_access_fm_home', 'manage_options'),
-                'slug'       => Config::SLUG,
-                'callback'   => [$this, 'homePage'],
+                'slug'       => Config::SLUG . '#elf_l1_Lw/',
                 'position'   => '2',
             ],
             'Logs'           => [
@@ -255,8 +261,7 @@ class Admin
                 'name'       => 'Logs',
                 'title'      => __('Logs | Bit File Manager', 'file-manager'),
                 'capability' => Hooks::applyFilter('can_access_fm_logs', 'install_plugins'),
-                'slug'       => Config::SLUG . '-logs',
-                'callback'   => [$this, 'logsPage'],
+                'slug'       => Config::SLUG . '#/logs',
             ],
             'Settings'           => [
                 'parent'     => Config::SLUG,
@@ -264,8 +269,7 @@ class Admin
                 'name'       => 'Settings',
                 'title'      => __('Settings | Bit File Manager', 'file-manager'),
                 'capability' => Hooks::applyFilter('can_change_fm_settings', 'install_plugins'),
-                'slug'       => Config::SLUG . '-settings',
-                'callback'   => [$this, 'settingsPage'],
+                'slug'       => Config::SLUG . '#/settings',
             ],
             'Permissions'        => [
                 'parent'     => Config::SLUG,
@@ -276,13 +280,64 @@ class Admin
                     'file-manager'
                 ),
                 'capability' => Hooks::applyFilter('can_change_fm_permissions', 'install_plugins'),
-                'slug'       => Config::SLUG . '-permissions',
-                'callback'   => [$this, 'permissionsPage'],
+                'slug'       => Config::SLUG . '#/permissions',
+            ],
+            'Support' => [
+                'parent'     => Config::SLUG,
+                'type'       => 'submenu',
+                'name'       => 'Support',
+                'title'      => __(
+                    'Support | Bit File Manager',
+                    'file-manager'
+                ),
+                'capability' => Hooks::applyFilter('can_access_fm_home', 'manage_options'),
+                'slug'       => Config::SLUG . '#/support',
             ],
             'System Information' => [
                 'parent'     => Config::SLUG,
                 'type'       => 'submenu',
                 'name'       => 'System Information',
+                'title'      => __(
+                    'System Information | Bit File Manager',
+                    'file-manager'
+                ),
+                'capability' => Hooks::applyFilter('can_view_fm_sys_info', 'install_plugins'),
+                'slug'       => Config::SLUG . '#/system-info',
+            ],
+            'Old-Logs'               => [
+                'parent'     => Config::SLUG,
+                'type'       => 'submenu',
+                'name'       => 'Logs Old',
+                'title'      => __('Logs | Bit File Manager', 'file-manager'),
+                'capability' => Hooks::applyFilter('can_access_fm_logs', 'install_plugins'),
+                'slug'       => Config::SLUG . '-logs',
+                'callback'   => [$this, 'logsPage'],
+            ],
+            'Old-Settings'           => [
+                'parent'     => Config::SLUG,
+                'type'       => 'submenu',
+                'name'       => 'Settings Old',
+                'title'      => __('Settings | Bit File Manager', 'file-manager'),
+                'capability' => Hooks::applyFilter('can_change_fm_settings', 'install_plugins'),
+                'slug'       => Config::SLUG . '-settings',
+                'callback'   => [$this, 'settingsPage'],
+            ],
+            'Old-Permissions'        => [
+                'parent'     => Config::SLUG,
+                'type'       => 'submenu',
+                'name'       => 'Permissions Old',
+                'title'      => __(
+                    'Permissions - Sets permission for specific user or by user role | Bit File Manager',
+                    'file-manager'
+                ),
+                'capability' => Hooks::applyFilter('can_change_fm_permissions', 'install_plugins'),
+                'slug'       => Config::SLUG . '-permissions',
+                'callback'   => [$this, 'permissionsPage'],
+            ],
+            'Old-System Information' => [
+                'parent'     => Config::SLUG,
+                'type'       => 'submenu',
+                'name'       => 'System Information Old',
                 'title'      => __(
                     'System Information | Bit File Manager',
                     'file-manager'
