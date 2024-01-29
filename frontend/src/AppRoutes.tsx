@@ -14,6 +14,10 @@ import { useAtom, useAtomValue } from 'jotai'
 
 const Support = loadable(() => import('@pages/Support'), { fallback: <div>Loading...</div> })
 const Error404 = loadable(() => import('@pages/Error404'), { fallback: <div>Loading...</div> })
+const Logs = loadable(() => import('@pages/Logs'), { fallback: <div>Loading...</div> })
+const Settings = loadable(() => import('@pages/Settings'), { fallback: <div>Loading...</div> })
+const Permissions = loadable(() => import('@pages/Permissions'), { fallback: <div>Loading...</div> })
+const SystemInformation = loadable(() => import('@pages/SystemInformation'), { fallback: <div>Loading...</div> })
 
 const { defaultAlgorithm, darkAlgorithm } = theme
 
@@ -48,7 +52,11 @@ export default function AppRoutes() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Root />} />
             <Route path='/elf_l1_Lw/' element={<Root />} />
-            <Route path="/support" element={<Support />} /> 
+            <Route path="/support" element={<Support />} />
+            <Route path="/logs" element={<Logs />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/permissions" element={<Permissions />} />
+            <Route path="/system-info" element={<SystemInformation />} />
             <Route path="*" element={<Error404 />} />
           </Route>
         </Routes>

@@ -19,6 +19,11 @@ class PreferenceProvider
         $this->preferences = Config::getOption('preferences', $this->defaultPrefs());
     }
 
+    public function all()
+    {
+        return $this->preferences;
+    }
+
     public function permissions()
     {
         return Plugin::instance()->permissions();
