@@ -1,0 +1,6 @@
+.logo {
+  composes: flx ai-cen col-gap-1 from global;
+  color: white;
+  height: 42px;
+  min-height: 42px;
+}

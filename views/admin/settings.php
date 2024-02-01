@@ -1,8 +1,8 @@
 <?php
 
-use BitApps\FM\Plugin;
-
 use function BitApps\FM\Functions\validatePath;
+
+use BitApps\FM\Plugin;
 
 if (!\defined('ABSPATH')) {
     exit();
@@ -18,14 +18,13 @@ if (isset($_POST) && !empty($_POST)) {
             'file-manager-settings-security-token'
         )
          || !current_user_can('install_plugins')
-         ) {
+    ) {
         wp_die();
     }
 
     $rootPath = isset($_POST['root_folder_path'])
     ? sanitize_text_field($_POST['root_folder_path']) : '';
     $rootPath = validatePath($rootPath);
-
 
     $_POST['show_url_path'] = sanitize_text_field($_POST['show_url_path']);
     if (isset($_POST['show_url_path']) && ($_POST['show_url_path'] == 'show' || $_POST['show_url_path'] == 'hide')) {
@@ -396,7 +395,7 @@ foreach ($uioptions as $place) { ?>
 
     </div>
 
-    <?php require_once 'sidebar.php'; ?>
+    <!-- side -->
 
 </div>
 

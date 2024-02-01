@@ -4,9 +4,10 @@
 
 use BitApps\FM\Config;
 use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
-use BitApps\FM\Plugin;
 
 use function BitApps\FM\Functions\validatePath;
+
+use BitApps\FM\Plugin;
 
 \defined('ABSPATH') || exit();
 
@@ -22,26 +23,26 @@ if (!empty($_POST)) {
 
     check_ajax_referer('bfm_permissions_nonce', 'bfm_permissions_nonce');
     $_POST['root_folder'] = validatePath(sanitize_text_field($_POST['root_folder']));
-    if (is_array($_POST['by_role'])) {
+    if (\is_array($_POST['by_role'])) {
         foreach ($_POST['by_role'] as $role => $prefs) {
             if (isset($prefs['path'])) {
-                $_POST['by_role'][$role]['path'] = validatePath(sanitize_text_field($_POST['by_role'][$role]['path']), 'For '. $role .' role.');
+                $_POST['by_role'][$role]['path'] = validatePath(sanitize_text_field($_POST['by_role'][$role]['path']), 'For ' . $role . ' role.');
             }
         }
     }
 
-    if (is_array($_POST['by_user'])) {
+    if (\is_array($_POST['by_user'])) {
         foreach ($_POST['by_user'] as $user => $prefs) {
             if (isset($prefs['path'])) {
-                $_POST['by_user'][$user]['path'] = validatePath(sanitize_text_field($_POST['by_user'][$user]['path']), 'For user ID: '. $user);
+                $_POST['by_user'][$user]['path'] = validatePath(sanitize_text_field($_POST['by_user'][$user]['path']), 'For user ID: ' . $user);
             }
         }
     }
 
-    if (is_array($_POST['guest'])) {
-            if (isset($_POST['guest']['path'])) {
-                $_POST['guest']['path'] = validatePath(sanitize_text_field($_POST['guest']['path']), 'For guests.');
-            }
+    if (\is_array($_POST['guest'])) {
+        if (isset($_POST['guest']['path'])) {
+            $_POST['guest']['path'] = validatePath(sanitize_text_field($_POST['guest']['path']), 'For guests.');
+        }
     }
 
     Config::updateOption('permissions', $_POST, 'yes');
@@ -235,7 +236,7 @@ $fileTypes = ['text', 'image', 'application', 'video', 'audio'];
             </form>
         </div>
     </div>
-    <?php require_once 'sidebar.php'; ?>
+    <!-- side -->
 </div>
 
 <?php require_once 'footer.php'; ?>

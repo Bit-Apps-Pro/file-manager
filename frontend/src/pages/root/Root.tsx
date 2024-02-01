@@ -17,11 +17,6 @@ export default function Root() {
   }, [])
 
   return (
-    <>
-    <div className="p-6">
-     Hi From, {config.PRODUCT_NAME}
-    </div>
      <div id='file-manager' ref={finderRef}/>
-    </>
   )
 }
