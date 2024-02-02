@@ -25,27 +25,28 @@
     "pre-commit": "lefthook run pre-commit"
   },
   "dependencies": {
-    "@loadable/component": "^5.15.3",
     "@ant-design/cssinjs": "^1.17.2",
     "@ant-design/icons": "^5.2.6",
     "@emotion/react": "^11.11.1",
+    "@loadable/component": "^5.15.3",
     "@tanstack/react-query": "^4.35.3",
     "@tanstack/react-query-devtools": "^4.35.3",
     "antd": "^5.11.1",
     "framer-motion": "^10.16.4",
+    "jotai": "^2.5.1",
+    "lucide-react": "^0.292.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.18.0",
-    "lucide-react": "^0.292.0",
-    "jotai": "^2.5.1"
+    "react-router-dom": "^6.18.0"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.11.0",
     "@rollup/plugin-commonjs": "^25.0.7",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/css-modules": "^1.0.5",
+    "@types/loadable__component": "^5.13.7",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
-    "@types/loadable__component": "^5.13.7",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
     "@vitejs/plugin-react": "^4.1.1",

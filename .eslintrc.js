@@ -45,7 +45,6 @@ module.exports = {
     'airbnb-typescript',
     'plugin:import/typescript',
     'plugin:json/recommended',
-    'plugin:storybook/recommended',
     'plugin:cypress/recommended',
     'prettier'
   ],

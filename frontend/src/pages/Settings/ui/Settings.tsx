@@ -1,194 +1,87 @@
 import { useState } from 'react'
 
-import config from '@config/config'
-import LogoIcn from '@icons/LogoIcn'
-import LogoText from '@icons/LogoText'
-import LucideIcn from '@icons/LucideIcn'
-import { Avatar, Card, Checkbox, Col, Flex, Row, Skeleton, Space, Typography, theme } from 'antd'
+import { __ } from '@common/helpers/i18nwrap'
+import { Form, Input, Select, Switch, Typography } from 'antd'
 
-const { Meta } = Card
-
-const supportInfo = {
-  supportEmail: 'support@bitapps.pro',
-  supportLink: 'https://bitapps.pro/contact',
-  bitAppsLogo: 'https://bitapps.pro/wp-content/uploads/2023/03/bit-apps.svg',
-  pluginsList: [
-    {
-      name: 'Bit Form',
-      icon: 'https://ps.w.org/bit-form/assets/icon-128x128.gif?rev=2947008',
-      description: 'A drag and drop form builder that allows you to create complex form in a minute.',
-      doc: 'https://bitapps.pro/docs/bit-form',
-      url: 'https://wordpress.org/plugin/bit-form'
-    },
-    {
-      name: 'Bit Integrations',
-      icon: 'https://ps.w.org/bit-integrations/assets/icon-128x128.gif?rev=2974059',
-      description:
-        'Best Automation Plugin for WordPress. Automate 200+ (highest in WordPress) Individual Platforms.',
-      doc: 'https://bitapps.pro/docs/bit-integrations',
-      url: 'https://wordpress.org/plugin/bit-integrations'
-    },
-    {
-      name: 'Bit Assist',
-      icon: 'https://ps.w.org/bit-assist/assets/icon-128x128.gif?rev=3008729',
-      description: 'Communicate with your customers using different messaging apps.',
-      doc: 'https://bitapps.pro/docs/bit-assist',
-      url: 'https://wordpress.org/plugin/bit-assist'
-    },
-    {
-      name: 'Bit Social',
-      icon: 'https://s.w.org/plugins/geopattern-icon/bit-social.svg',
-      description:
-        'The easiest WordPress plugin for automatic social media posting which allows you to automatically share your WordPress posts on social media platforms..',
-      doc: 'https://bitapps.pro/docs/bit-social',
-      url: 'https://wordpress.org/plugin/bit-social'
-    },
-    {
-      name: 'Bit Flow',
-      icon: '',
-      description: 'Communicate with your customers using different messaging apps.',
-      doc: 'https://bitapps.pro/docs/bit-flow',
-      url: 'https://wordpress.org/plugin/bit-flow'
-    }
-  ]
-}
-
-const { Title, Paragraph, Link, Text } = Typography
+const { Title } = Typography
 
 export default function Settings() {
-  const [loading] = useState(false)
-
-  const { token } = theme.useToken()
+  const themes: Array<{
+    key: string
+    title: string
+  }> = []
 
   return (
     <div className="p-6">
-      <div className="mb-5">
-        <Space size="middle">
-          <LogoIcn size={56} />
-          <LogoText h={50} />
-        </Space>
-      </div>
-      Settings
-      <Row>
-        <Col md={13} sm={24}>
-          <div className="mb-5">
-            <Paragraph style={{ color: token.colorTextSecondary }}>
-              The first web browser with a graphical user interface, Mosaic, was released in 1993.
-              Accessible to non-technical people, it played a prominent role in the rapid growth of the
-              nascent World Wide Web.[11] The lead developers of Mosaic then founded the Netscape
-              corporation, which released a more polished browser, Netscape Navigator, in 1994. This
-              quickly became the most-used.
-            </Paragraph>
-          </div>
-
-          <div className="mb-5">
-            <Title level={5}>Docs</Title>
-            <Paragraph style={{ color: token.colorTextSecondary }}>
-              Explore our extensive documentation. From beginners to developers - everyone will get an
-              answer{' '}
-              <Link
-                href={supportInfo.pluginsList.find(item => item.name === config.PRODUCT_NAME)?.doc}
-                strong
-                underline
-              >
-                here <LucideIcn name="MoveUpRight" size={12} style={{ transform: 'translateY(-4px)' }} />
-              </Link>
-            </Paragraph>
-          </div>
-
-          <div className="mb-5">
-            <Title level={5}>Support</Title>
-            <Paragraph style={{ color: token.colorTextSecondary }}>
-              In Bit Apps, we provide all kind product support for any types of customer, it dose not
-              matter FREE or PRO user. We actively provide support through Email and Live Chat.
-            </Paragraph>
-
-            <Space direction="vertical">
-              <Text>
-                <Flex gap={10}>
-                  <LucideIcn name="Mail" size={18} />
-                  <Link
-                    href={`mailto:${supportInfo.supportEmail}`}
-                    strong
-                    underline
-                    style={{ color: token.colorText }}
-                  >
-                    {supportInfo.supportEmail}
-                  </Link>
-                </Flex>
-              </Text>
-
-              <Text>
-                <Flex gap={10}>
-                  <LucideIcn name="MessageCircle" size={18} />
-                  <Link href={supportInfo.supportLink} strong>
-                    Chat here{' '}
-                    <LucideIcn name="MoveUpRight" size={12} style={{ transform: 'translateY(-4px)' }} />
-                  </Link>
-                </Flex>
-              </Text>
-            </Space>
-          </div>
-
-          <div className="mb-5">
-            <Title level={5}>Improvement</Title>
-            <Checkbox style={{ color: token.colorTextSecondary }}>
-              Allow to collect javascript errors to improve application.
-            </Checkbox>
-          </div>
-        </Col>
-
-        <Col md={{ span: 9, offset: 2 }} sm={{ span: 24 }}>
-          <div className="mb-5">
-            <Title level={5}>More Plugins by Bit Apps</Title>
-
-            {supportInfo.pluginsList
-              .filter(item => item.name !== config.PRODUCT_NAME)
-              .map((plugin, index) => (
-                <Card
-                  key={`${index * 2}`}
-                  style={{ marginTop: 16, borderColor: token.colorBorder }}
-                  bodyStyle={{ padding: '16px 20px', color: 'red !important' }}
-                >
-                  <Skeleton loading={loading} avatar active>
-                    <Meta
-                      avatar={
-                        <Link
-                          target="_blank"
-                          href={plugin.url}
-                          css={{ '&:focus': { boxShadow: 'none' } }}
-                        >
-                          <Avatar style={{ height: 70, width: 70 }} shape="square" src={plugin.icon} />
-                        </Link>
-                      }
-                      title={
-                        <Link
-                          target="_blank"
-                          href={plugin.url}
-                          style={{ color: token.colorTextSecondary, fontSize: '1rem' }}
-                          css={{
-                            '&:focus': { boxShadow: 'none' },
-                            '&:hover': { textDecoration: 'underline !important' }
-                          }}
-                        >
-                          {plugin.name}{' '}
-                          <LucideIcn
-                            name="MoveUpRight"
-                            size={12}
-                            style={{ transform: 'translateY(-4px)' }}
-                          />
-                        </Link>
-                      }
-                      description={
-                        <Text style={{ color: token.colorTextSecondary }}>{plugin.description}</Text>
-                      }
-                    />
-                  </Skeleton>
-                </Card>
-              ))}
-          </div>
-        </Col>
-      </Row>
+      <Form style={{ maxWidth: 600 }}>
+        <Title level={5}>{__('URL and Path')}</Title>
+        <Form.Item label="Show Url" valuePropName="show_url_path">
+          <Switch />
+        </Form.Item>
+        <Form.Item label="Root Path" valuePropName="root_folder_path">
+          <Input />
+          <Title level={5}>{__('Default Path:')}</Title>
+        </Form.Item>
+        <Form.Item label="Root URL" valuePropName="root_folder_url">
+          <Input />
+          <Title level={5}>{__('Default URL:')}</Title>
+        </Form.Item>
+        <Title level={5}>
+          {__("Root folder path and URL must be correct, otherwise it won't work.")}
+        </Title>
+        <Form.Item label={__('Select Theme')}>
+          <Select>
+            {themes.map(fmTheme => (
+              <Select.Option value={fmTheme.key}>{fmTheme.title}</Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+        <Title level={5}>{__('Size')}</Title>
+        <Form.Item label="Width" valuePropName="width">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Height" valuePropName="height">
+          <Input />
+        </Form.Item>
+        <Form.Item label={__('Show Hidden Files')} valuePropName="show_hidden_files">
+          <Switch />
+        </Form.Item>
+        <Form.Item
+          label={__('Allow Create/Upload Hidden Files/Folders')}
+          valuePropName="fm-create-hidden-files-folders"
+        >
+          <Switch />
+        </Form.Item>
+        <Form.Item label={__('Allow Trash')} valuePropName="fm-create-trash-files-folders">
+          <Switch />
+        </Form.Item>
+        <Form.Item label={__('Root Folder Name')} valuePropName="fm_root_folder_name">
+          <Input />
+        </Form.Item>
+        <Form.Item label={__('Default View Type')}>
+          <Select mode="multiple">
+            <Select.Option value="icons">Icons</Select.Option>
+            <Select.Option value="list">List</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item label={__('Remember Last Directory')} valuePropName="fm-remember-last-dir">
+          <Switch />
+          {__('Remeber last opened dir to open it after reload.')}
+        </Form.Item>
+        <Form.Item label={__('Clear History On Reload')} valuePropName="fm-clear-history-on-reload">
+          <Switch />
+          {__('Clear historys(elFinder) on reload(not browser)')}
+        </Form.Item>
+        <Form.Item label={__('Default View Type')}>
+          <Select mode="multiple">
+            <Select.Option value="toolbar">Toolbar</Select.Option>
+            <Select.Option value="places">Places</Select.Option>
+            <Select.Option value="tree">Tree</Select.Option>
+            <Select.Option value="path">Path</Select.Option>
+            <Select.Option value="stat">Stat</Select.Option>
+          </Select>
+        </Form.Item>
+      </Form>
     </div>
   )
 }

@@ -27,7 +27,7 @@
 #wpbody-content {
   position: sticky;
   overflow: hidden;
-  height: calc(100vh - 32px);
+  /* height: calc(100vh - 32px); */
   top: 32px;
   padding-bottom: 0;
 }
