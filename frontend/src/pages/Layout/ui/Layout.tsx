@@ -18,19 +18,17 @@ export default function Layout() {
 
   return (
     <ThemeProvider theme={antConfig}>
-      <AntLayout>
-        <TopNavigation/>
-        <AntLayout
-          hasSider
-          // eslint-disable-next-line react/no-unknown-property
-          color-scheme={isDarkTheme ? 'dark' : 'light'}
-          style={{
-            backgroundColor: antConfig.token.colorBgContainer,
-            borderRadius: antConfig.token.borderRadius,
-            border: `1px solid ${antConfig.token.controlOutline}`
-          }}
-          className={`${cls.layoutWrp} ${isDarkTheme ? 'dark' : 'light'}`}
-        >
+      <AntLayout
+        color-scheme={isDarkTheme ? 'dark' : 'light'}
+        style={{
+          backgroundColor: antConfig.token.colorBgContainer,
+          borderRadius: antConfig.token.borderRadius,
+          border: `1px solid ${antConfig.token.controlOutline}`
+        }}
+        className={`${cls.layoutWrp} ${isDarkTheme ? 'dark' : 'light'}`}
+      >
+        <TopNavigation />
+        <AntLayout hasSider>
           <Global styles={globalCssInJs(antConfig)} />
           {/* <Sidebar /> */}
           <div className="w-100 o-auto">
