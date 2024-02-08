@@ -13,16 +13,16 @@ class LogService
 {
     public function all($skip = 0, $take = 20)
     {
-        $data = [];
+        $logs = [];
         $count = 0;
         try {
-            $data = Log::skip($skip)->take($take)->get();
+            $logs = Log::skip($skip)->take($take)->get();
             $count = Log::count();
         } catch (\Throwable $th) {
             //throw $th;
         }
 
-        return compact('count', 'data');
+        return compact('count', 'logs');
     }
 
    public function save($command, $details)

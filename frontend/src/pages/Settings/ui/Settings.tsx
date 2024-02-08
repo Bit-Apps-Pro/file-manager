@@ -1,15 +1,20 @@
-import { useState } from 'react'
-
 import { __ } from '@common/helpers/i18nwrap'
+import useFetchSettings from '@pages/Settings/data/useFetchSettings'
+import SpinnerLoader from '@utilities/SpinnerLoader'
 import { Form, Input, Select, Switch, Typography } from 'antd'
 
-const { Title } = Typography
+const { Title, Text } = Typography
 
 export default function Settings() {
-  const themes: Array<{
-    key: string
-    title: string
-  }> = []
+  const { isLoading, isFetching, settings, themes, languages, defaults } = useFetchSettings()
+
+  if (isLoading || isFetching) {
+    return (
+      <div className="p-6">
+        <SpinnerLoader size={20} />
+      </div>
+    )
+  }
 
   return (
     <div className="p-6">
@@ -20,19 +25,35 @@ export default function Settings() {
         </Form.Item>
         <Form.Item label="Root Path" valuePropName="root_folder_path">
           <Input />
-          <Title level={5}>{__('Default Path:')}</Title>
+          <Title level={5}>
+            {__('Default Path:')} {defaults?.path}
+          </Title>
         </Form.Item>
         <Form.Item label="Root URL" valuePropName="root_folder_url">
           <Input />
-          <Title level={5}>{__('Default URL:')}</Title>
+          <Title level={5}>
+            {__('Default URL: ')}
+            <Text type="secondary">{defaults?.url}</Text>
+          </Title>
         </Form.Item>
         <Title level={5}>
           {__("Root folder path and URL must be correct, otherwise it won't work.")}
         </Title>
+        <Form.Item label={__('Select Language')}>
+          <Select>
+            {languages?.map(language => (
+              <Select.Option value={language.code} key={language.code}>
+                {language.name}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
         <Form.Item label={__('Select Theme')}>
           <Select>
-            {themes.map(fmTheme => (
-              <Select.Option value={fmTheme.key}>{fmTheme.title}</Select.Option>
+            {themes?.map(fmTheme => (
+              <Select.Option value={fmTheme.key} key={fmTheme.key}>
+                {fmTheme.title}
+              </Select.Option>
             ))}
           </Select>
         </Form.Item>

@@ -1,46 +1,30 @@
-import type React from 'react'
+import { useParams } from 'react-router-dom'
 
+import { type LogType } from '@pages/Logs/data/useFetchLogs'
+import useFetchLogs from '@pages/Logs/data/useFetchLogs'
 import { Table } from 'antd'
 import { type TableColumnsType } from 'antd'
 
-interface DataType {
-  key: React.Key
-  user: string
-  command: string
-  details: number
-  created: string
-  description: string
-}
-
-const columns: TableColumnsType<DataType> = [
+const columns: TableColumnsType<LogType> = [
   Table.SELECTION_COLUMN,
-  { title: 'User', dataIndex: 'user', key: 'user' },
-  Table.EXPAND_COLUMN,
+  { title: 'Id', dataIndex: 'id', key: 'id' },
+  { title: 'User', dataIndex: 'user_id', key: 'user' },
   { title: 'Command', dataIndex: 'command', key: 'command' },
   { title: 'Details', dataIndex: 'details', key: 'details' },
-  { title: 'Created', dataIndex: 'created', key: 'created' }
-]
-
-const data: DataType[] = [
-  {
-    key: 1,
-    user: 'John Brown',
-    command: 'John Brown',
-    details: 32,
-    created: 'New York No. 1 Lake Park',
-    description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.'
-  }
+  { title: 'Created', dataIndex: 'created_at', key: 'created_at' }
 ]
 
 export default function Logs() {
+  const { page } = useParams()
+  const pageNo = Number(page) || 1
+  const limit = 14
+
+  const { isLoading, isLogsFetching, logs, total } = useFetchLogs({
+    pageNo,
+    limit
+  })
+
   return (
-    <Table
-      columns={columns}
-      rowSelection={{}}
-      expandable={{
-        expandedRowRender: record => <p style={{ margin: 0 }}>{record.description}</p>
-      }}
-      dataSource={data}
-    />
+    <Table columns={columns} rowSelection={{}} dataSource={logs} loading={isLoading || isLogsFetching} />
   )
 }

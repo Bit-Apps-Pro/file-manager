@@ -20,6 +20,13 @@ interface DefaultResponse {
   updated_at: string
 }
 
+interface RequestOptionsType {
+  action: string
+  data?: Record<string, unknown> | FormData | null | any // eslint-disable-line @typescript-eslint/no-explicit-any
+  queryParam?: QueryParam | null
+  method?: MethodType
+}
+
 export type ApiResponseType = Record<string, string | number>
 
 export interface Response<T> {
@@ -28,12 +35,12 @@ export interface Response<T> {
   code: 'SUCCESS' | 'ERROR'
 }
 
-export default async function request<T>(
-  action: string,
-  data?: Record<string, unknown> | FormData | null | undefined | any, // eslint-disable-line @typescript-eslint/no-explicit-any
-  queryParam?: QueryParam | null | undefined,
-  method: MethodType = 'POST'
-): Promise<Response<T>> {
+export default async function request<T>({
+  action,
+  data,
+  queryParam,
+  method = 'POST'
+}: RequestOptionsType): Promise<Response<T>> {
   const { AJAX_URL, NONCE, ROUTE_PREFIX } = config
   const uri = new URL(AJAX_URL)
   uri.searchParams.append('action', `${ROUTE_PREFIX}${action}`)

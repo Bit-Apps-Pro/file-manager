@@ -18,7 +18,17 @@ final class SettingsController
 
     public function get()
     {
-        return Response::success($this->preferenceProvider->all());
+        return Response::success(
+            [
+                'settings'  => $this->preferenceProvider->all(),
+                'defaults'  => [
+                    'path' => esc_html(ABSPATH),
+                    'url'  => esc_html(site_url()),
+                ],
+                'themes'    => $this->preferenceProvider->getThemes(),
+                'languages' => $this->preferenceProvider->getLanguages(),
+            ]
+        );
     }
 
     public function update(Request $request)

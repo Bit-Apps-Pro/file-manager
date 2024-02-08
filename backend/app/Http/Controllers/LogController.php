@@ -20,9 +20,10 @@ final class LogController
         }
     }
 
-    public function all()
+    public function all(Request $request)
     {
-        return Response::success($this->logger->all() || []);
+        error_log($request->device());
+        return Response::success($this->logger->all());
     }
 
     public function delete(Request $request)
@@ -30,6 +31,7 @@ final class LogController
         if (!$request->has('id')) {
             return Response::error(['id' => 'log id is required'])->message('failed to delete log');
         }
+
         $id = $request->id;
         if (!\is_array($id)) {
             return Response::error(['id' => 'array of log id is required'])->message('failed to delete log');
