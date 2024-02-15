@@ -21,16 +21,16 @@ export default function Settings() {
       <Form style={{ maxWidth: 600 }}>
         <Title level={5}>{__('URL and Path')}</Title>
         <Form.Item label="Show Url" valuePropName="show_url_path">
-          <Switch />
+          <Switch checked={Boolean(settings?.show_url_path)} />
         </Form.Item>
         <Form.Item label="Root Path" valuePropName="root_folder_path">
-          <Input />
+          <Input value={settings?.root_folder_path ?? defaults?.path} />
           <Title level={5}>
             {__('Default Path:')} {defaults?.path}
           </Title>
         </Form.Item>
         <Form.Item label="Root URL" valuePropName="root_folder_url">
-          <Input />
+          <Input value={settings?.root_folder_url ?? defaults?.url} />
           <Title level={5}>
             {__('Default URL: ')}
             <Text type="secondary">{defaults?.url}</Text>
@@ -40,7 +40,7 @@ export default function Settings() {
           {__("Root folder path and URL must be correct, otherwise it won't work.")}
         </Title>
         <Form.Item label={__('Select Language')}>
-          <Select>
+          <Select value={settings?.language}>
             {languages?.map(language => (
               <Select.Option value={language.code} key={language.code}>
                 {language.name}
@@ -49,7 +49,7 @@ export default function Settings() {
           </Select>
         </Form.Item>
         <Form.Item label={__('Select Theme')}>
-          <Select>
+          <Select value={settings?.theme}>
             {themes?.map(fmTheme => (
               <Select.Option value={fmTheme.key} key={fmTheme.key}>
                 {fmTheme.title}
@@ -59,19 +59,19 @@ export default function Settings() {
         </Form.Item>
         <Title level={5}>{__('Size')}</Title>
         <Form.Item label="Width" valuePropName="width">
-          <Input />
+          <Input value={settings?.size.width} />
         </Form.Item>
         <Form.Item label="Height" valuePropName="height">
-          <Input />
+          <Input value={settings?.size.height} />
         </Form.Item>
         <Form.Item label={__('Show Hidden Files')} valuePropName="show_hidden_files">
-          <Switch />
+          <Switch checked={Boolean(settings?.show_hidden_files)} />
         </Form.Item>
         <Form.Item
           label={__('Allow Create/Upload Hidden Files/Folders')}
           valuePropName="fm-create-hidden-files-folders"
         >
-          <Switch />
+          <Switch checked={Boolean(settings?.create_hidden_files_folders)} />
         </Form.Item>
         <Form.Item label={__('Allow Trash')} valuePropName="fm-create-trash-files-folders">
           <Switch />
@@ -80,21 +80,21 @@ export default function Settings() {
           <Input />
         </Form.Item>
         <Form.Item label={__('Default View Type')}>
-          <Select mode="multiple">
+          <Select mode="multiple" value={settings?.display_ui_options}>
             <Select.Option value="icons">Icons</Select.Option>
             <Select.Option value="list">List</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label={__('Remember Last Directory')} valuePropName="fm-remember-last-dir">
-          <Switch />
+          <Switch checked={Boolean(settings?.remember_last_dir)} />
           {__('Remeber last opened dir to open it after reload.')}
         </Form.Item>
         <Form.Item label={__('Clear History On Reload')} valuePropName="fm-clear-history-on-reload">
-          <Switch />
+          <Switch checked={Boolean(settings?.clear_history_on_reload)} />
           {__('Clear historys(elFinder) on reload(not browser)')}
         </Form.Item>
         <Form.Item label={__('Default View Type')}>
-          <Select mode="multiple">
+          <Select mode="multiple" value={settings?.default_view_type}>
             <Select.Option value="toolbar">Toolbar</Select.Option>
             <Select.Option value="places">Places</Select.Option>
             <Select.Option value="tree">Tree</Select.Option>

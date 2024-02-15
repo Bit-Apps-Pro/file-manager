@@ -10,7 +10,7 @@ import { lightThemeComponentToken, lightThemeToken } from '@config/themes/theme.
 import loadable from '@loadable/component'
 import Layout from '@pages/Layout'
 import Root from '@pages/root/Root'
-import { ConfigProvider, theme } from 'antd'
+import { ConfigProvider, notification, theme } from 'antd'
 import { useAtom, useAtomValue } from 'jotai'
 
 const Support = loadable(() => import('@pages/Support'), { fallback: <div>Loading...</div> })
@@ -44,6 +44,9 @@ export default function AppRoutes() {
     }
   }, [navigateUrl])
 
+  const [, contextHolder] = notification.useNotification()
+  notification.config({ placement: 'bottomRight', maxCount: 3 })
+
   return (
     <ConfigProvider
       theme={{
@@ -53,6 +56,7 @@ export default function AppRoutes() {
       }}
     >
       <StyleProvider hashPriority="high">
+        {contextHolder}
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Root />} />
