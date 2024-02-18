@@ -17,7 +17,7 @@ export interface SettingsType {
   root_folder_path: string
   root_folder_url: string
   theme: string
-  fm_root_folder_name: string
+  root_folder_name: string
   show_hidden_files: boolean
   create_hidden_files_folders: boolean
   remember_last_dir: boolean

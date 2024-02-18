@@ -19,6 +19,7 @@ class PreferenceProvider
     public function __construct()
     {
         $this->preferences = Config::getOption('preferences', $this->defaultPrefs());
+        $this->fallback();
     }
 
     public function all()
@@ -56,19 +57,6 @@ class PreferenceProvider
      * */
     public function saveOptions()
     {
-        // TODO: Need to remove
-
-        unset(
-            $this->preferences['fm_root_folder_name'],
-            $this->preferences['fm-show-hidden-files'],
-            $this->preferences['fm-create-hidden-files-folders'],
-            $this->preferences['fm-create-trash-files-folders'],
-            $this->preferences['fm_default_view_type'],
-            $this->preferences['fm-remember-last-dir'],
-            $this->preferences['fm-clear-history-on-reload'],
-            $this->preferences['fm_display_ui_options']
-        );
-
         return Config::updateOption('preferences', $this->preferences, true);
     }
 
@@ -542,7 +530,7 @@ class PreferenceProvider
 
     public function getWidth()
     {
-        return isset($this->preferences['size']['width'])
+        return isset($this->preferences['size']['width']) && $this->preferences['size']['width']
         ? $this->preferences['size']['width'] : 'auto';
     }
 
@@ -696,5 +684,29 @@ class PreferenceProvider
         }
 
         return $commandOptions;
+    }
+
+    private function fallback()
+    {
+        // TODO: Need to remove
+        $fallbackSettings = [
+            'fm_root_folder_name'            => 'root_folder_name',
+            'fm-show-hidden-files'           => 'show_hidden_files',
+            'fm-create-hidden-files-folders' => 'create_hidden_files_folders',
+            'fm-create-trash-files-folders'  => 'create_trash_files_folders',
+            'fm_default_view_type'           => 'default_view_type',
+            'fm-remember-last-dir'           => 'remember_last_dir',
+            'fm-clear-history-on-reload'     => 'clear_history_on_reload',
+            'fm_display_ui_options'          => 'display_ui_options',
+        ];
+
+        foreach ($fallbackSettings as $key => $newKey) {
+            if (\array_key_exists($key, $this->preferences)) {
+                $this->preferences[$newKey] = $this->preferences[$key];
+                unset($this->preferences[$key]);
+            }
+        }
+
+        $this->preferences['size']['width'] = $this->getWidth();
     }
 }

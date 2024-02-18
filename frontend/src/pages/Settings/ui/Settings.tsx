@@ -1,108 +1,122 @@
+import { useEffect } from 'react'
+
 import { __ } from '@common/helpers/i18nwrap'
 import useFetchSettings from '@pages/Settings/data/useFetchSettings'
-import SpinnerLoader from '@utilities/SpinnerLoader'
-import { Form, Input, Select, Switch, Typography } from 'antd'
-
-const { Title, Text } = Typography
+import { Card, Form, Input, Select, Space, Switch } from 'antd'
+import { useForm } from 'antd/es/form/Form'
 
 export default function Settings() {
-  const { isLoading, isFetching, settings, themes, languages, defaults } = useFetchSettings()
+  const { settings, themes, languages, defaults } = useFetchSettings()
+  const [form] = useForm()
 
-  if (isLoading || isFetching) {
-    return (
-      <div className="p-6">
-        <SpinnerLoader size={20} />
-      </div>
-    )
-  }
+  useEffect(() => {
+    console.log({ settings })
+    form.setFieldsValue(settings)
+  }, [settings, form])
 
   return (
-    <div className="p-6">
-      <Form style={{ maxWidth: 600 }}>
-        <Title level={5}>{__('URL and Path')}</Title>
-        <Form.Item label="Show Url" valuePropName="show_url_path">
-          <Switch checked={Boolean(settings?.show_url_path)} />
-        </Form.Item>
-        <Form.Item label="Root Path" valuePropName="root_folder_path">
-          <Input value={settings?.root_folder_path ?? defaults?.path} />
-          <Title level={5}>
-            {__('Default Path:')} {defaults?.path}
-          </Title>
-        </Form.Item>
-        <Form.Item label="Root URL" valuePropName="root_folder_url">
-          <Input value={settings?.root_folder_url ?? defaults?.url} />
-          <Title level={5}>
-            {__('Default URL: ')}
-            <Text type="secondary">{defaults?.url}</Text>
-          </Title>
-        </Form.Item>
-        <Title level={5}>
-          {__("Root folder path and URL must be correct, otherwise it won't work.")}
-        </Title>
-        <Form.Item label={__('Select Language')}>
-          <Select value={settings?.language}>
-            {languages?.map(language => (
-              <Select.Option value={language.code} key={language.code}>
-                {language.name}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <Form.Item label={__('Select Theme')}>
-          <Select value={settings?.theme}>
-            {themes?.map(fmTheme => (
-              <Select.Option value={fmTheme.key} key={fmTheme.key}>
-                {fmTheme.title}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <Title level={5}>{__('Size')}</Title>
-        <Form.Item label="Width" valuePropName="width">
-          <Input value={settings?.size.width} />
-        </Form.Item>
-        <Form.Item label="Height" valuePropName="height">
-          <Input value={settings?.size.height} />
-        </Form.Item>
-        <Form.Item label={__('Show Hidden Files')} valuePropName="show_hidden_files">
-          <Switch checked={Boolean(settings?.show_hidden_files)} />
-        </Form.Item>
-        <Form.Item
-          label={__('Allow Create/Upload Hidden Files/Folders')}
-          valuePropName="fm-create-hidden-files-folders"
-        >
-          <Switch checked={Boolean(settings?.create_hidden_files_folders)} />
-        </Form.Item>
-        <Form.Item label={__('Allow Trash')} valuePropName="fm-create-trash-files-folders">
-          <Switch />
-        </Form.Item>
-        <Form.Item label={__('Root Folder Name')} valuePropName="fm_root_folder_name">
-          <Input />
-        </Form.Item>
-        <Form.Item label={__('Default View Type')}>
-          <Select mode="multiple" value={settings?.display_ui_options}>
-            <Select.Option value="icons">Icons</Select.Option>
-            <Select.Option value="list">List</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item label={__('Remember Last Directory')} valuePropName="fm-remember-last-dir">
-          <Switch checked={Boolean(settings?.remember_last_dir)} />
-          {__('Remeber last opened dir to open it after reload.')}
-        </Form.Item>
-        <Form.Item label={__('Clear History On Reload')} valuePropName="fm-clear-history-on-reload">
-          <Switch checked={Boolean(settings?.clear_history_on_reload)} />
-          {__('Clear historys(elFinder) on reload(not browser)')}
-        </Form.Item>
-        <Form.Item label={__('Default View Type')}>
-          <Select mode="multiple" value={settings?.default_view_type}>
-            <Select.Option value="toolbar">Toolbar</Select.Option>
-            <Select.Option value="places">Places</Select.Option>
-            <Select.Option value="tree">Tree</Select.Option>
-            <Select.Option value="path">Path</Select.Option>
-            <Select.Option value="stat">Stat</Select.Option>
-          </Select>
-        </Form.Item>
-      </Form>
-    </div>
+    <Form form={form} initialValues={defaults}>
+      <Space direction="vertical" size="middle" style={{ display: 'flex' }} className="p-6">
+        <Card title={__('URL and Path')}>
+          <Form.Item label="Show Url" name="show_url_path">
+            <Switch />
+          </Form.Item>
+          <Form.Item
+            label="Root Path"
+            name="root_folder_path"
+            tooltip={`${__('Root folder path must be correct. Default: ')}${defaults?.path}`}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Root URL"
+            name="root_folder_url"
+            tooltip={`${__('Root folder URL must be correct. Default: ')}${defaults?.url}`}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item label={__('Root Folder Name')} name="root_folder_name">
+            <Input />
+          </Form.Item>
+        </Card>
+        <Card title={__('File Manager Settings')}>
+          <Form.Item label={__('Select Language')}>
+            <Select value={settings?.language}>
+              {languages?.map(language => (
+                <Select.Option value={language.code} key={language.code}>
+                  {language.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item label={__('Select Theme')} name="theme">
+            <Select>
+              {themes?.map(fmTheme => (
+                <Select.Option value={fmTheme.key} key={fmTheme.key}>
+                  {fmTheme.title}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Card title={__('Size')}>
+            <Form.Item
+              label="Width"
+              name={['size', 'width']}
+              tooltip="File Manager window width (in px)"
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Height"
+              name={['size', 'height']}
+              tooltip="File Manager window height (in px)"
+            >
+              <Input />
+            </Form.Item>
+          </Card>
+          <Form.Item label={__('Show Hidden Files')} name="show_hidden_files">
+            <Switch />
+          </Form.Item>
+          <Form.Item
+            label={__('Allow Create/Upload Hidden Files/Folders')}
+            name="create_hidden_files_folders"
+          >
+            <Switch />
+          </Form.Item>
+          <Form.Item label={__('Allow Trash')} name="create_trash_files_folders">
+            <Switch />
+          </Form.Item>
+          <Form.Item label={__('Display UI options')} name="display_ui_options">
+            <Select mode="multiple">
+              <Select.Option value="toolbar">Toolbar</Select.Option>
+              <Select.Option value="places">Places</Select.Option>
+              <Select.Option value="tree">Tree</Select.Option>
+              <Select.Option value="path">Path</Select.Option>
+              <Select.Option value="stat">Stat</Select.Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label={__('Remember Last Directory')}
+            name="remember_last_dir"
+            tooltip={__('Remember last opened dir to open it after reload.')}
+          >
+            <Switch />
+          </Form.Item>
+          <Form.Item
+            label={__('Clear History On Reload')}
+            name="clear_history_on_reload"
+            tooltip={__("Clear history's(elFinder) on reload(not browser)")}
+          >
+            <Switch />
+          </Form.Item>
+          <Form.Item label={__('Default View Type')} name="default_view_type">
+            <Select>
+              <Select.Option value="icons">Icons</Select.Option>
+              <Select.Option value="list">List</Select.Option>
+            </Select>
+          </Form.Item>
+        </Card>
+      </Space>
+    </Form>
   )
 }

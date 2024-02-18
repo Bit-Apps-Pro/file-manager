@@ -18,5 +18,6 @@ Route::group(
         Route::post('logs/all', [LogController::class, 'all']);
 
         Route::get('settings/get', [SettingsController::class, 'get']);
+        Route::post('settings/update', [SettingsController::class, 'update']);
     }
 )->middleware('nonce');
