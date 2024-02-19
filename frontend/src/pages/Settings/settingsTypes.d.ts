@@ -31,10 +31,7 @@ export type FinderWindowSize = {
   unit?: 'px'
 }
 
-export type DefaultOptionType = {
-  path: string
-  url: string
-}
+export type DefaultOptionType = Partial<SettingsType>
 
 interface FetchSettingsType {
   settings: SettingsType

@@ -49,6 +49,8 @@ class PreferenceProvider
                 'path',
                 'stat',
             ],
+            'root_folder_path'   => ABSPATH,
+            'root_folder_url'    => Config::get('SITE_URL'),
         ];
     }
 

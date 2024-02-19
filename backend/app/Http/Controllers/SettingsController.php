@@ -21,10 +21,7 @@ final class SettingsController
         return Response::success(
             [
                 'settings'  => $this->preferenceProvider->all(),
-                'defaults'  => [
-                    'path' => esc_html(ABSPATH),
-                    'url'  => esc_html(site_url()),
-                ],
+                'defaults'  => $this->preferenceProvider->defaultPrefs(),
                 'themes'    => $this->preferenceProvider->getThemes(),
                 'languages' => $this->preferenceProvider->getLanguages(),
             ]

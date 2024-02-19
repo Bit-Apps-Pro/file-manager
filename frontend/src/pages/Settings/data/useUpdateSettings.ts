@@ -8,7 +8,7 @@ export default function useUpdateSettings() {
   )
 
   return {
-    updatedSettings: (updatedSettings: SettingsType) => mutateAsync(updatedSettings),
+    updateSettings: (updatedSettings: SettingsType) => mutateAsync(updatedSettings),
     isSettingsUpdating: isLoading
   }
 }
