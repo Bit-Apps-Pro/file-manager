@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 
 export default function useUpdateSettings() {
   const { mutateAsync, isLoading } = useMutation(async (settingsToUpdate: SettingsType) =>
-    request({ action: 'settings/update', data: settingsToUpdate })
+    request<SettingsType>({ action: 'settings/update', data: settingsToUpdate })
   )
 
   return {

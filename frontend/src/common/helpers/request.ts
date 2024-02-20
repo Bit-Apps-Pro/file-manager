@@ -33,6 +33,7 @@ export interface Response<T> {
   status: 'success' | 'error'
   data: T extends DefaultResponse ? T : T & DefaultResponse
   code: 'SUCCESS' | 'ERROR'
+  message: string | undefined
 }
 
 export default async function request<T>({

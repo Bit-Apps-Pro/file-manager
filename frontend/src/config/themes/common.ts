@@ -7,7 +7,10 @@ const commonThemeToken: Partial<AliasToken> = {
   fontFamily,
   borderRadius: 10,
   borderRadiusSM: 8,
-  borderRadiusXS: 4
+  borderRadiusXS: 4,
+  colorPrimary: '#2bbdff',
+  colorSuccess: '#00ff7d',
+  colorWarning: '#ffc041'
 }
 
 export default commonThemeToken

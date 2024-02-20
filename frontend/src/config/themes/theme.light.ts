@@ -1,4 +1,3 @@
-import { ComponentStyleConfig } from 'antd/es/config-provider/context'
 import { type OverrideToken } from 'antd/es/theme/interface'
 import { type AliasToken } from 'antd/es/theme/internal'
 
@@ -6,10 +5,6 @@ import commonThemeToken from './common'
 
 export const lightThemeToken: Partial<AliasToken> = {
   ...commonThemeToken,
-  // colorPrimary: '#ff0374',
-  colorPrimary: '#ff246d',
-  colorSuccess: '#00ff7d',
-  colorWarning: '#ffc041',
   colorBgContainer: '#fff',
   controlOutline: '#48484823',
   boxShadowSecondary:

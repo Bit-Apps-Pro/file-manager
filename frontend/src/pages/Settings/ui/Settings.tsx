@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { __ } from '@common/helpers/i18nwrap'
 import useFetchSettings from '@pages/Settings/data/useFetchSettings'
 import useUpdateSettings from '@pages/Settings/data/useUpdateSettings'
-import { Card, Form, Input, Select, Space, Switch } from 'antd'
+import { Button, Card, Form, Input, Select, Space, Switch, notification } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 
 export default function Settings() {
@@ -17,33 +17,64 @@ export default function Settings() {
 
   const handleValueChanges = changedValues => {
     const changedField = changedValues ? Object.keys(changedValues)[0] : null
-    console.log('first', Object.keys(changedValues), { changedValues, changedField })
-    if (changedField) {
+    if (changedField && form.getFieldError(changedField).length) {
       const fieldData = {
         name: changedField,
-        validating: true
+        errors: []
       }
-      console.log('changedField', form.isFieldValidating(changedField))
-      if (!form.isFieldValidating(changedField)) {
-        form.setFields([fieldData])
-        console.log('Not validating')
-        updateSettings(changedValues).then(response => console.log(response))
-      }
+      form.setFields([fieldData])
     }
   }
 
+  const handleSubmit = changedValues => {
+    // form.setFields([
+    //   {
+    //     name: 'root_folder_url',
+    //     errors: ['Is not a valid url']
+    //   }
+    // ])
+    updateSettings(changedValues).then(response => {
+      if (response.code === 'SUCCESS') {
+        notification.success({ message: response.message })
+      } else {
+        notification.error({ message: response.message })
+      }
+    })
+  }
+
   return (
-    <Form form={form} initialValues={defaults} colon={false} onValuesChange={handleValueChanges}>
+    <Form
+      form={form}
+      initialValues={defaults}
+      colon={false}
+      onFinish={handleSubmit}
+      onValuesChange={handleValueChanges}
+      disabled={isSettingsUpdating}
+    >
       <Space direction="vertical" size="middle" style={{ display: 'flex' }} className="p-6">
+        <Space style={{ display: 'flex', justifyContent: 'right' }}>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={isSettingsUpdating}>
+              Update
+            </Button>
+          </Form.Item>
+        </Space>
         <Card title={__('URL and Path')}>
-          <Form.Item label="Show Url" name="show_url_path" hasFeedback>
+          <Form.Item label="Show Url" name="show_url_path">
             <Switch />
           </Form.Item>
           <Form.Item
             label="Root Path"
             name="root_folder_path"
             tooltip={`${__('Root folder path must be correct. Default: ')}${defaults?.root_folder_path}`}
-            hasFeedback
+            rules={[
+              { required: true, message: __('Root folder is required') },
+              {
+                // eslint-disable-next-line no-useless-escape
+                pattern: new RegExp(`^${defaults?.root_folder_path}?(?:\/[^\/]+)*\/?$`),
+                message: __('Folder Path Must be within WOrdPress root directory')
+              }
+            ]}
           >
             <Input />
           </Form.Item>
@@ -51,10 +82,26 @@ export default function Settings() {
             label="Root URL"
             name="root_folder_url"
             tooltip={`${__('Root folder URL must be correct. Default: ')}${defaults?.root_folder_url}`}
+            rules={[
+              {
+                // eslint-disable-next-line no-useless-escape
+                pattern: new RegExp(`^${defaults?.root_folder_url}(?:\/[^\/]+)*\/?`),
+                message: __('The root URL must be within this site')
+              }
+            ]}
           >
             <Input />
           </Form.Item>
-          <Form.Item label={__('Root Folder Name')} name="root_folder_name">
+          <Form.Item
+            label={__('Root Folder Name')}
+            name="root_folder_name"
+            rules={[
+              {
+                pattern: /^[a-z A-Z 0-9 -]*$/,
+                message: __('The root drive can contain letters, numbers and -')
+              }
+            ]}
+          >
             <Input />
           </Form.Item>
         </Card>
@@ -82,6 +129,12 @@ export default function Settings() {
               label="Width"
               name={['size', 'width']}
               tooltip="File Manager window width (in px)"
+              rules={[
+                {
+                  pattern: /^(auto|[0-9]+)$/,
+                  message: __('Width can be integer or auto')
+                }
+              ]}
             >
               <Input />
             </Form.Item>
@@ -89,6 +142,12 @@ export default function Settings() {
               label="Height"
               name={['size', 'height']}
               tooltip="File Manager window height (in px)"
+              rules={[
+                {
+                  pattern: /^(auto|[0-9]+)$/,
+                  message: __('Height can be integer or auto')
+                }
+              ]}
             >
               <Input />
             </Form.Item>
@@ -135,6 +194,13 @@ export default function Settings() {
             </Select>
           </Form.Item>
         </Card>
+        <Space style={{ display: 'flex', justifyContent: 'center' }}>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={isSettingsUpdating}>
+              Update
+            </Button>
+          </Form.Item>
+        </Space>
       </Space>
     </Form>
   )

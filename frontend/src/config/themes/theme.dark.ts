@@ -11,10 +11,6 @@ export const darkThemeToken: Partial<AliasToken> = {
   // colorBgBase: '#040304',
   // colorTextBase: '#fce3ff',
   // colorTextBase: '#fef1ff',
-  // colorPrimary: '#ff0374',
-  colorPrimary: '#ff246d',
-  colorSuccess: '#00ff7d',
-  colorWarning: '#ffc041'
   // colorBgElevated: 'rgb(28, 21, 28)',
   // colorBgContainer: '#151015',
   // colorBgContainer: '#221E20',
