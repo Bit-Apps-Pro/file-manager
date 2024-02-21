@@ -2,8 +2,8 @@
 
 namespace BitApps\FM\Http\Controllers;
 
-use BitApps\FM\Dependencies\BitApps\WPKit\Http\Request\Request;
 use BitApps\FM\Dependencies\BitApps\WPKit\Http\Response;
+use BitApps\FM\Http\Requests\SettingsUpdateRequest;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\PreferenceProvider;
 
@@ -28,7 +28,7 @@ final class SettingsController
         );
     }
 
-    public function update(Request $request)
+    public function update(SettingsUpdateRequest $request)
     {
         if (true) {
             return Response::success([])->message('Settings updated successfully');

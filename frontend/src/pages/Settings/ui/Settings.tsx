@@ -27,17 +27,18 @@ export default function Settings() {
   }
 
   const handleSubmit = changedValues => {
-    // form.setFields([
-    //   {
-    //     name: 'root_folder_url',
-    //     errors: ['Is not a valid url']
-    //   }
-    // ])
     updateSettings(changedValues).then(response => {
       if (response.code === 'SUCCESS') {
         notification.success({ message: response.message })
       } else {
-        notification.error({ message: response.message })
+        const fieldErrors = []
+        Object.keys(response.data).forEach(field => {
+          fieldErrors.push({
+            name: field.split('.'),
+            errors: response.data[field]
+          })
+        })
+        form.setFields(fieldErrors)
       }
     })
   }
@@ -60,9 +61,6 @@ export default function Settings() {
           </Form.Item>
         </Space>
         <Card title={__('URL and Path')}>
-          <Form.Item label="Show Url" name="show_url_path">
-            <Switch />
-          </Form.Item>
           <Form.Item
             label="Root Path"
             name="root_folder_path"
@@ -192,6 +190,13 @@ export default function Settings() {
               <Select.Option value="icons">Icons</Select.Option>
               <Select.Option value="list">List</Select.Option>
             </Select>
+          </Form.Item>
+          <Form.Item
+            label="Show Link and Path"
+            name="show_url_path"
+            tooltip={__('If this is enabled then, Link and path will be shown in file, folder info.')}
+          >
+            <Switch />
           </Form.Item>
         </Card>
         <Space style={{ display: 'flex', justifyContent: 'center' }}>

@@ -39,7 +39,7 @@ if (Config::isDev()) {
 <div id='bit-fm-root'>
 </div>
 <?php
-if ($preferences->getUrlPathView() == 'hide') {
+if ($preferences->isLinkPathVisibleInInfo() == 'hide') {
     ?>
   <style>
     .elfinder-info-tb>tbody:nth-child(1)>tr:nth-child(2),

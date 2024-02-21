@@ -28,7 +28,7 @@ if (isset($_POST) && !empty($_POST)) {
 
     $_POST['show_url_path'] = sanitize_text_field($_POST['show_url_path']);
     if (isset($_POST['show_url_path']) && ($_POST['show_url_path'] == 'show' || $_POST['show_url_path'] == 'hide')) {
-        $preferenceProvider->setUrlPathView($_POST['show_url_path']);
+        $preferenceProvider->setLinkPathVisibility($_POST['show_url_path']);
     }
 
     $preferenceProvider->setRootPath(
@@ -111,13 +111,13 @@ $selectedTheme = $preferenceProvider->getTheme();
                         </td>
                         <td>
                             <label for='show_url_path_id'> <?php esc_html_e('Show', 'file-manager'); ?> </label>
-                            <input type='radio' name='show_url_path' id='show_url_path_id' value='show' <?php if ($preferenceProvider->getUrlPathView() == 'show') {
+                            <input type='radio' name='show_url_path' id='show_url_path_id' value='show' <?php if ($preferenceProvider->isLinkPathVisibleInInfo() == 'show') {
                                 echo 'checked';
                             }
 ?> />
 
                             <label for='hide_url_path_id'> Hide </label>
-                            <input type='radio' name='show_url_path' id='hide_url_path_id' value='hide' <?php if ($preferenceProvider->getUrlPathView() == 'hide') {
+                            <input type='radio' name='show_url_path' id='hide_url_path_id' value='hide' <?php if ($preferenceProvider->isLinkPathVisibleInInfo() == 'hide') {
                                 echo 'checked';
                             }
 ?> />

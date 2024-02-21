@@ -153,7 +153,7 @@ class PreferenceProvider
      *
      * @param string $view
      */
-    public function setUrlPathView($view)
+    public function setLinkPathVisibility($view)
     {
         $this->preferences['show_url_path'] = $view;
     }
@@ -163,14 +163,14 @@ class PreferenceProvider
      *
      * @return string
      */
-    public function getUrlPathView()
+    public function isLinkPathVisibleInInfo()
     {
-        $view = 'show';
+        $view = true;
         if (isset($this->preferences['show_url_path'])) {
             $view = $this->preferences['show_url_path'];
         }
 
-        return $view;
+        return esc_attr($view);
     }
 
     public function getDefaultLangCode()
@@ -181,7 +181,7 @@ class PreferenceProvider
             $code = get_locale();
         }
 
-        return $code;
+        return esc_attr($code);
     }
 
     public function availableLanguages()
@@ -418,7 +418,7 @@ class PreferenceProvider
         return
         isset($this->preferences['language'])
          && isset($this->availableLanguages()[(string) $this->preferences['language']])
-        ? $this->preferences['language']
+        ? esc_attr($this->preferences['language'])
         : $this->getDefaultLangCode();
     }
 
@@ -430,7 +430,7 @@ class PreferenceProvider
             $langUrl = BFM_FINDER_URL . 'js/i18n/elfinder.en.js';
         }
 
-        return $langUrl;
+        return esc_attr($langUrl);
     }
 
     public function setLang($lang)
@@ -452,7 +452,7 @@ class PreferenceProvider
          ? ABSPATH : $this->permissions()->getDefaultPublicRootPath();
 
         return isset($this->preferences['root_folder_path'])
-        ? $this->preferences['root_folder_path'] : $defaultPath;
+        ? esc_attr($this->preferences['root_folder_path']) : $defaultPath;
     }
 
     public function realPath($path)
@@ -522,7 +522,7 @@ class PreferenceProvider
     public function getRootVolumeName()
     {
         return isset($this->preferences['root_folder_name'])
-        ? $this->preferences['root_folder_name'] : '';
+        ? esc_attr($this->preferences['root_folder_name']) : '';
     }
 
     public function setWidth($width)
@@ -533,7 +533,7 @@ class PreferenceProvider
     public function getWidth()
     {
         return isset($this->preferences['size']['width']) && $this->preferences['size']['width']
-        ? $this->preferences['size']['width'] : 'auto';
+        ? esc_attr($this->preferences['size']['width']) : 'auto';
     }
 
     public function setHeight($height)
@@ -544,7 +544,7 @@ class PreferenceProvider
     public function getHeight()
     {
         return isset($this->preferences['size']['height'])
-        ? $this->preferences['size']['height'] : '500';
+        ? esc_attr($this->preferences['size']['height']) : '500';
     }
 
     public function setVisibilityOfHiddenFile($visibility)
@@ -555,7 +555,7 @@ class PreferenceProvider
     public function getVisibilityOfHiddenFile()
     {
         return \array_key_exists('show_hidden_files', $this->preferences)
-         && $this->preferences['show_hidden_files'] ? true : false;
+         && esc_attr($this->preferences['show_hidden_files']) ? true : false;
     }
 
     public function setPermissionForHiddenFolderCreation($permission)
@@ -599,7 +599,7 @@ class PreferenceProvider
     {
         return \array_key_exists('remember_last_dir', $this->preferences)
         && $this->preferences['remember_last_dir']
-         ? $this->preferences['remember_last_dir'] : false;
+         ? esc_attr($this->preferences['remember_last_dir']) : false;
     }
 
     public function setClearHistoryOnReload($clearHistory)
@@ -622,7 +622,12 @@ class PreferenceProvider
     public function getUiOptions()
     {
         return isset($this->preferences['display_ui_options'])
-         ? $this->preferences['display_ui_options'] : ['toolbar', 'places', 'tree', 'path', 'stat'];
+        ? array_map(
+            function ($option) {
+                return esc_attr($option);
+            },
+            $this->preferences['display_ui_options']
+        ) : ['toolbar', 'places', 'tree', 'path', 'stat'];
     }
 
     public function finderOptions()
@@ -680,7 +685,7 @@ class PreferenceProvider
         $commandOptions['download']['minFilesZipdl']    = 2; // need to check
         $commandOptions['quicklook']['googleDocsMimes'] = ['application/pdf', 'image/tiff', 'application/vnd.ms-office', 'application/msword', 'application/vnd.ms-word', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
 
-        if ($this->getUrlPathView() == 'hide') {
+        if (!$this->isLinkPathVisibleInInfo()) {
             $commandOptions['info']['hideItems'][] = 'link';
             $commandOptions['info']['hideItems'][] = 'path';
         }
@@ -710,5 +715,12 @@ class PreferenceProvider
         }
 
         $this->preferences['size']['width'] = $this->getWidth();
+
+        $this->preferences['show_url_path']               = false;
+        $this->preferences['show_hidden_files']           = false;
+        $this->preferences['create_trash_files_folders']  = false;
+        $this->preferences['create_hidden_files_folders'] = false;
+        $this->preferences['remember_last_dir']           = true;
+        $this->preferences['clear_history_on_reload']     = false;
     }
 }
