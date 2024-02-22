@@ -3,8 +3,10 @@ import { useEffect } from 'react'
 import { __ } from '@common/helpers/i18nwrap'
 import useFetchSettings from '@pages/Settings/data/useFetchSettings'
 import useUpdateSettings from '@pages/Settings/data/useUpdateSettings'
+import { type SettingsType } from '@pages/Settings/settingsTypes'
 import { Button, Card, Form, Input, Select, Space, Switch, notification } from 'antd'
 import { useForm } from 'antd/es/form/Form'
+import { type FieldData } from 'rc-field-form/es/interface'
 
 export default function Settings() {
   const { settings, themes, languages, defaults } = useFetchSettings()
@@ -15,7 +17,7 @@ export default function Settings() {
     form.setFieldsValue(settings)
   }, [settings, form])
 
-  const handleValueChanges = changedValues => {
+  const handleValueChanges = (changedValues: NonNullable<unknown>) => {
     const changedField = changedValues ? Object.keys(changedValues)[0] : null
     if (changedField && form.getFieldError(changedField).length) {
       const fieldData = {
@@ -26,16 +28,16 @@ export default function Settings() {
     }
   }
 
-  const handleSubmit = changedValues => {
+  const handleSubmit = (changedValues: SettingsType) => {
     updateSettings(changedValues).then(response => {
       if (response.code === 'SUCCESS') {
         notification.success({ message: response.message })
       } else {
-        const fieldErrors = []
+        const fieldErrors: FieldData[] = []
         Object.keys(response.data).forEach(field => {
           fieldErrors.push({
             name: field.split('.'),
-            errors: response.data[field]
+            errors: response.data[field] as string[]
           })
         })
         form.setFields(fieldErrors)
@@ -52,9 +54,9 @@ export default function Settings() {
       onValuesChange={handleValueChanges}
       disabled={isSettingsUpdating}
     >
-      <Space direction="vertical" size="middle" style={{ display: 'flex' }} className="p-6">
-        <Space style={{ display: 'flex', justifyContent: 'right' }}>
-          <Form.Item>
+      <Space direction="vertical" size="middle" style={{ display: 'flex' }} className="px-2">
+        <Space style={{ display: 'flex', justifyContent: 'right', paddingBlock: '8px' }}>
+          <Form.Item style={{ marginBottom: 0 }}>
             <Button type="primary" htmlType="submit" loading={isSettingsUpdating}>
               Update
             </Button>
@@ -70,7 +72,7 @@ export default function Settings() {
               {
                 // eslint-disable-next-line no-useless-escape
                 pattern: new RegExp(`^${defaults?.root_folder_path}?(?:\/[^\/]+)*\/?$`),
-                message: __('Folder Path Must be within WOrdPress root directory')
+                message: __('Folder Path Must be within WordPress root directory')
               }
             ]}
           >

@@ -31,7 +31,7 @@ export default function Layout() {
         <AntLayout hasSider>
           <Global styles={globalCssInJs(antConfig)} />
           {/* <Sidebar /> */}
-          <div className="w-100 o-auto">
+          <div className="w-100 o-auto" style={{ paddingTop: '65px' }}>
             <Outlet />
           </div>
         </AntLayout>

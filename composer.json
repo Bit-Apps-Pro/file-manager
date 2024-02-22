@@ -60,7 +60,7 @@
       "delete_vendor_files": true,
       "copy_static_files": [],
       "delete_static_files": [],
-      "include_modified_date" : false
+      "include_modified_date": false
     }
   }
 }

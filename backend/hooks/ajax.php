@@ -20,4 +20,4 @@ Route::group(
         Route::get('settings/get', [SettingsController::class, 'get']);
         Route::post('settings/update', [SettingsController::class, 'update']);
     }
-)->middleware('nonce');
+)->middleware('nonce:admin');

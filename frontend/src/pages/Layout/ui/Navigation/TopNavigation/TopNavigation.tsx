@@ -64,7 +64,15 @@ export default function TopNavigation() {
 
   return (
     <Header
-      style={{ display: 'flex', alignItems: 'center', background: colorBgContainer, flexWrap: 'wrap' }}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        background: colorBgContainer,
+        flexWrap: 'wrap',
+        position: 'fixed',
+        width: '95%',
+        zIndex: 1
+      }}
     >
       <div className={cls.logo}>
         <LogoIcn size={30} />

@@ -3,9 +3,16 @@
 namespace BitApps\FM\Http\Requests;
 
 use BitApps\FM\Dependencies\BitApps\WPKit\Http\Request\Request;
+use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
+use BitApps\FM\Http\Rules\ValidPathRule;
 
 class SettingsUpdateRequest extends Request
 {
+    public function authorize()
+    {
+        return Capabilities::filter('can_change_fm_settings', 'install_plugins');
+    }
+
     public function rules()
     {
         return [
@@ -16,11 +23,11 @@ class SettingsUpdateRequest extends Request
             'remember_last_dir'           => ['required','boolean'],
             'clear_history_on_reload'     => ['required','boolean'],
             'root_folder_name'            => ['required','string', 'sanitize:text'],
-            'theme'                       => ['required','string'],
-            'default_view_type'           => ['required','string'],
-            'root_folder_path'            => ['required','string'],
-            'root_folder_url'             => ['required','string'],
-            'size.width'                  => ['required','string'],
+            'theme'                       => ['required','string', 'sanitize:text'],
+            'default_view_type'           => ['required','string', 'sanitize:text'],
+            'root_folder_path'            => ['required','string', 'sanitize:text', ValidPathRule::class],
+            'root_folder_url'             => ['required','string', 'sanitize:text', 'url'],
+            'size.width'                  => ['required','string', 'sanitize:text'],
             'size.height'                 => ['required','sanitize:text'],
             'display_ui_options'          => ['required','string'],
         ];
