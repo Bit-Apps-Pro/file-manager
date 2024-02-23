@@ -167,7 +167,7 @@ class PreferenceProvider
     {
         $view = true;
         if (isset($this->preferences['show_url_path'])) {
-            $view = $this->preferences['show_url_path'];
+            $view = \boolval($this->preferences['show_url_path']);
         }
 
         return esc_attr($view);
@@ -716,11 +716,11 @@ class PreferenceProvider
 
         $this->preferences['size']['width'] = $this->getWidth();
 
-        $this->preferences['show_url_path']               = false;
-        $this->preferences['show_hidden_files']           = false;
-        $this->preferences['create_trash_files_folders']  = false;
-        $this->preferences['create_hidden_files_folders'] = false;
-        $this->preferences['remember_last_dir']           = true;
-        $this->preferences['clear_history_on_reload']     = false;
+        $this->preferences['show_url_path']               = $this->isLinkPathVisibleInInfo();
+        $this->preferences['show_hidden_files']           = $this->getVisibilityOfHiddenFile();
+        $this->preferences['create_trash_files_folders']  = $this->isTrashAllowed();
+        $this->preferences['create_hidden_files_folders'] = $this->isHiddenFolderAllowed();
+        $this->preferences['remember_last_dir']           = $this->getRememberLastDir();
+        $this->preferences['clear_history_on_reload']     = $this->getClearHistoryOnReload();
     }
 }

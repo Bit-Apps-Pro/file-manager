@@ -32,6 +32,13 @@ export default function Settings() {
     updateSettings(changedValues).then(response => {
       if (response.code === 'SUCCESS') {
         notification.success({ message: response.message })
+        const updatedFields = form.getFieldsError().map(field => {
+          if (field.errors) {
+            field.errors = []
+          }
+          return field
+        })
+        form.setFields(updatedFields)
       } else {
         const fieldErrors: FieldData[] = []
         Object.keys(response.data).forEach(field => {
@@ -53,6 +60,7 @@ export default function Settings() {
       onFinish={handleSubmit}
       onValuesChange={handleValueChanges}
       disabled={isSettingsUpdating}
+      scrollToFirstError
     >
       <Space direction="vertical" size="middle" style={{ display: 'flex' }} className="px-2">
         <Space style={{ display: 'flex', justifyContent: 'right', paddingBlock: '8px' }}>
@@ -106,7 +114,7 @@ export default function Settings() {
           </Form.Item>
         </Card>
         <Card title={__('File Manager Settings')}>
-          <Form.Item label={__('Select Language')}>
+          <Form.Item label={__('Select Language')} name="language">
             <Select value={settings?.language}>
               {languages?.map(language => (
                 <Select.Option value={language.code} key={language.code}>
