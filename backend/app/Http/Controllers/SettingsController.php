@@ -34,7 +34,7 @@ final class SettingsController
         $updatedSettings = $request->validated();
 
         $settingsService = Plugin::instance()->preferences();
-        
+
         $settingsService->setLinkPathVisibility($updatedSettings['show_url_path']);
         $settingsService->setVisibilityOfHiddenFile($updatedSettings['show_hidden_files']);
         $settingsService->setPermissionForTrashCreation($updatedSettings['create_trash_files_folders']);

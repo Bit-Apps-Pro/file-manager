@@ -1,11 +1,11 @@
 <?php
 
-namespace BitApps\FM\Http\Requests\Settings;
+namespace BitApps\FM\Http\Requests\Permissions;
 
 use BitApps\FM\Dependencies\BitApps\WPKit\Http\Request\Request;
 use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
 
-class SettingsRequest extends Request
+class PermissionsGetRequest extends Request
 {
     public function authorize()
     {

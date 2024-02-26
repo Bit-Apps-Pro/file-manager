@@ -251,7 +251,7 @@ class Admin
                 'type'       => 'submenu',
                 'title'      => __('Dashboard | Bit File Manager', 'file-manager'),
                 'name'       => __('Home', 'file-manager'),
-                'capability' => Hooks::applyFilter('can_access_fm_home', 'manage_options'),
+                'capability' => Hooks::applyFilter('bitapps_fm_can_access_home', 'manage_options'),
                 'slug'       => Config::SLUG . '#elf_l1_Lw/',
                 'position'   => '2',
             ],
@@ -260,7 +260,7 @@ class Admin
                 'type'       => 'submenu',
                 'name'       => 'Logs',
                 'title'      => __('Logs | Bit File Manager', 'file-manager'),
-                'capability' => Hooks::applyFilter('can_access_fm_logs', 'install_plugins'),
+                'capability' => Hooks::applyFilter('bitapps_fm_can_access_logs', 'install_plugins'),
                 'slug'       => Config::SLUG . '#/logs',
             ],
             'Settings'           => [
@@ -268,7 +268,7 @@ class Admin
                 'type'       => 'submenu',
                 'name'       => 'Settings',
                 'title'      => __('Settings | Bit File Manager', 'file-manager'),
-                'capability' => Hooks::applyFilter('can_change_fm_settings', 'install_plugins'),
+                'capability' => Hooks::applyFilter('bitapps_fm_can_change_settings', 'install_plugins'),
                 'slug'       => Config::SLUG . '#/settings',
             ],
             'Permissions'        => [
@@ -279,7 +279,7 @@ class Admin
                     'Permissions - Sets permission for specific user or by user role | Bit File Manager',
                     'file-manager'
                 ),
-                'capability' => Hooks::applyFilter('can_change_fm_permissions', 'install_plugins'),
+                'capability' => Hooks::applyFilter('bitapps_fm_can_change_permissions', 'install_plugins'),
                 'slug'       => Config::SLUG . '#/permissions',
             ],
             'Support' => [
@@ -290,7 +290,7 @@ class Admin
                     'Support | Bit File Manager',
                     'file-manager'
                 ),
-                'capability' => Hooks::applyFilter('can_access_fm_home', 'manage_options'),
+                'capability' => Hooks::applyFilter('bitapps_fm_can_access_home', 'manage_options'),
                 'slug'       => Config::SLUG . '#/support',
             ],
             'System Information' => [
@@ -301,7 +301,7 @@ class Admin
                     'System Information | Bit File Manager',
                     'file-manager'
                 ),
-                'capability' => Hooks::applyFilter('can_view_fm_sys_info', 'install_plugins'),
+                'capability' => Hooks::applyFilter('bitapps_fm_can_view_sys_info', 'install_plugins'),
                 'slug'       => Config::SLUG . '#/system-info',
             ],
             'Old-Logs'               => [

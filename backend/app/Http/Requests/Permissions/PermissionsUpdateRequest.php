@@ -1,17 +1,17 @@
 <?php
 
-namespace BitApps\FM\Http\Requests\Settings;
+namespace BitApps\FM\Http\Requests\Permissions;
 
 use BitApps\FM\Dependencies\BitApps\WPKit\Http\Request\Request;
 use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Http\Rules\ValidPathRule;
 use BitApps\FM\Http\Rules\ValidUIOptionRule;
 
-class SettingsUpdateRequest extends Request
+class PermissionsUpdateRequest extends Request
 {
     public function authorize()
     {
-        return Capabilities::filter('bitapps_fm_can_change_settings', 'install_plugins');
+        return Capabilities::filter('bitapps_fm_can_change_permissions', 'install_plugins');
     }
 
     public function rules()

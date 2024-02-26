@@ -3,7 +3,6 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Dependencies\BitApps\WPKit\Http\RequestType;
 use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
@@ -35,7 +34,7 @@ class PermissionsProvider
     public function __construct()
     {
         global $wp_roles;
-        $this->permissions    = Config::getOption(
+        $this->permissions = Config::getOption(
             'permissions',
             $this->defaultPermissions()
         );
@@ -101,7 +100,7 @@ class PermissionsProvider
 
     public function defaultPermissions()
     {
-        $permissions['do_not_use_for_admin']     = 'do_not_use_for_admin';
+        $permissions['do_not_use_for_admin']     = true;
         $permissions['file_type']                = ['text', 'image', 'application', 'video', 'audio'];
         $permissions['file_size']                = 2;
         $permissions['folder_options']           = 'common'; // common | role | user
@@ -111,17 +110,6 @@ class PermissionsProvider
         ];
 
         return $permissions;
-    }
-
-    private function isRequestForAdminArea()
-    {
-        $action = '';
-
-        if (isset($_REQUEST['action'])) {
-            $action = sanitize_key($_REQUEST['action']);
-        }
-
-        return is_user_logged_in() && $action === 'bit_fm_connector';
     }
 
     public function getPath()
@@ -141,9 +129,7 @@ class PermissionsProvider
         }
 
         if (empty($path) || !file_exists($path)) {
-            throw new PreCommandException(
-                esc_html__('please check root folder for file manager, from file manager settings', 'file-manager')
-            );
+            throw new PreCommandException(esc_html__('please check root folder for file manager, from file manager settings', 'file-manager'));
         }
 
         return $path;
@@ -417,6 +403,22 @@ class PermissionsProvider
         }
 
         return $disabledCommand;
+    }
+
+    public function updatePermissionSetting($permissions)
+    {
+        Config::updateOption('permissions', $permissions, 'yes');
+    }
+
+    private function isRequestForAdminArea()
+    {
+        $action = '';
+
+        if (isset($_REQUEST['action'])) {
+            $action = sanitize_key($_REQUEST['action']);
+        }
+
+        return is_user_logged_in() && $action === 'bit_fm_connector';
     }
 
     /**

@@ -1,194 +1,121 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
-import config from '@config/config'
-import LogoIcn from '@icons/LogoIcn'
-import LogoText from '@icons/LogoText'
-import LucideIcn from '@icons/LucideIcn'
-import { Avatar, Card, Checkbox, Col, Flex, Row, Skeleton, Space, Typography, theme } from 'antd'
+import { __ } from '@common/helpers/i18nwrap'
+import useFetchPermissionsSettings from '@pages/Permissions/data/useFetchPermissionsSettings'
+import { Button, Card, Checkbox, Form, Input, Radio, Select, Space, Switch, Table } from 'antd'
+import { useForm } from 'antd/es/form/Form'
 
-const { Meta } = Card
+function Permissions() {
+  const { isLoading, permissions, commands, fileTypes, roles, users } = useFetchPermissionsSettings()
+  const [form] = useForm()
+  // Define state for form values
+  const [formValues, setFormValues] = useState({
+    do_not_use_for_admin: false,
+    fileType: [],
+    file_size: '',
+    root_folder: '',
+    root_folder_url: '',
+    folder_options: '',
+    by_role: [],
+    guest: {},
+    by_user: []
+  })
+  const permissionSettings = {
+    allUsers: () => [],
+    allRoles: () => [],
+    getGuestPermissions: () => []
+  }
 
-const supportInfo = {
-  supportEmail: 'support@bitapps.pro',
-  supportLink: 'https://bitapps.pro/contact',
-  bitAppsLogo: 'https://bitapps.pro/wp-content/uploads/2023/03/bit-apps.svg',
-  pluginsList: [
-    {
-      name: 'Bit Form',
-      icon: 'https://ps.w.org/bit-form/assets/icon-128x128.gif?rev=2947008',
-      description: 'A drag and drop form builder that allows you to create complex form in a minute.',
-      doc: 'https://bitapps.pro/docs/bit-form',
-      url: 'https://wordpress.org/plugin/bit-form'
-    },
-    {
-      name: 'Bit Integrations',
-      icon: 'https://ps.w.org/bit-integrations/assets/icon-128x128.gif?rev=2974059',
-      description:
-        'Best Automation Plugin for WordPress. Automate 200+ (highest in WordPress) Individual Platforms.',
-      doc: 'https://bitapps.pro/docs/bit-integrations',
-      url: 'https://wordpress.org/plugin/bit-integrations'
-    },
-    {
-      name: 'Bit Assist',
-      icon: 'https://ps.w.org/bit-assist/assets/icon-128x128.gif?rev=3008729',
-      description: 'Communicate with your customers using different messaging apps.',
-      doc: 'https://bitapps.pro/docs/bit-assist',
-      url: 'https://wordpress.org/plugin/bit-assist'
-    },
-    {
-      name: 'Bit Social',
-      icon: 'https://s.w.org/plugins/geopattern-icon/bit-social.svg',
-      description:
-        'The easiest WordPress plugin for automatic social media posting which allows you to automatically share your WordPress posts on social media platforms..',
-      doc: 'https://bitapps.pro/docs/bit-social',
-      url: 'https://wordpress.org/plugin/bit-social'
-    },
-    {
-      name: 'Bit Flow',
-      icon: '',
-      description: 'Communicate with your customers using different messaging apps.',
-      doc: 'https://bitapps.pro/docs/bit-flow',
-      url: 'https://wordpress.org/plugin/bit-flow'
-    }
-  ]
-}
-
-const { Title, Paragraph, Link, Text } = Typography
-
-export default function Permissions() {
-  const [loading] = useState(false)
-
-  const { token } = theme.useToken()
+  console.log('permissions', permissions)
+  // Handle form submission
+  const handleSubmit = values => {
+    // Handle form submission logic
+    console.log('Form values:', values)
+  }
 
   return (
-    <div className="p-6">
-      <div className="mb-5">
-        <Space size="middle">
-          <LogoIcn size={56} />
-          <LogoText h={50} />
+    <Form
+      form={form}
+      onFinish={handleSubmit}
+      disabled={isLoading}
+      initialValues={permissions}
+      colon={false}
+    >
+      <Space direction="vertical" size="middle" style={{ display: 'flex' }} className="px-2">
+        <Space style={{ display: 'flex', justifyContent: 'right', paddingBlock: '8px' }}>
+          <Form.Item style={{ marginBottom: 0 }}>
+            <Button type="primary" htmlType="submit" loading={false}>
+              Update
+            </Button>
+          </Form.Item>
         </Space>
-      </div>
-      Permissions
-      <Row>
-        <Col md={13} sm={24}>
-          <div className="mb-5">
-            <Paragraph style={{ color: token.colorTextSecondary }}>
-              The first web browser with a graphical user interface, Mosaic, was released in 1993.
-              Accessible to non-technical people, it played a prominent role in the rapid growth of the
-              nascent World Wide Web.[11] The lead developers of Mosaic then founded the Netscape
-              corporation, which released a more polished browser, Netscape Navigator, in 1994. This
-              quickly became the most-used.
-            </Paragraph>
-          </div>
+        <Card>
+          <Form.Item
+            name="do_not_use_for_admin"
+            label={__('Disable this permission inside WordPress dashboard')}
+            tooltip={__(
+              'If enabled, the root folder for the file manager will be determined by this permission setting.'
+            )}
+          >
+            <Switch />
+          </Form.Item>
 
-          <div className="mb-5">
-            <Title level={5}>Docs</Title>
-            <Paragraph style={{ color: token.colorTextSecondary }}>
-              Explore our extensive documentation. From beginners to developers - everyone will get an
-              answer{' '}
-              <Link
-                href={supportInfo.pluginsList.find(item => item.name === config.PRODUCT_NAME)?.doc}
-                strong
-                underline
-              >
-                here <LucideIcn name="MoveUpRight" size={12} style={{ transform: 'translateY(-4px)' }} />
-              </Link>
-            </Paragraph>
-          </div>
-
-          <div className="mb-5">
-            <Title level={5}>Support</Title>
-            <Paragraph style={{ color: token.colorTextSecondary }}>
-              In Bit Apps, we provide all kind product support for any types of customer, it dose not
-              matter FREE or PRO user. We actively provide support through Email and Live Chat.
-            </Paragraph>
-
-            <Space direction="vertical">
-              <Text>
-                <Flex gap={10}>
-                  <LucideIcn name="Mail" size={18} />
-                  <Link
-                    href={`mailto:${supportInfo.supportEmail}`}
-                    strong
-                    underline
-                    style={{ color: token.colorText }}
-                  >
-                    {supportInfo.supportEmail}
-                  </Link>
-                </Flex>
-              </Text>
-
-              <Text>
-                <Flex gap={10}>
-                  <LucideIcn name="MessageCircle" size={18} />
-                  <Link href={supportInfo.supportLink} strong>
-                    Chat here{' '}
-                    <LucideIcn name="MoveUpRight" size={12} style={{ transform: 'translateY(-4px)' }} />
-                  </Link>
-                </Flex>
-              </Text>
-            </Space>
-          </div>
-
-          <div className="mb-5">
-            <Title level={5}>Improvement</Title>
-            <Checkbox style={{ color: token.colorTextSecondary }}>
-              Allow to collect javascript errors to improve application.
-            </Checkbox>
-          </div>
-        </Col>
-
-        <Col md={{ span: 9, offset: 2 }} sm={{ span: 24 }}>
-          <div className="mb-5">
-            <Title level={5}>More Plugins by Bit Apps</Title>
-
-            {supportInfo.pluginsList
-              .filter(item => item.name !== config.PRODUCT_NAME)
-              .map((plugin, index) => (
-                <Card
-                  key={`${index * 2}`}
-                  style={{ marginTop: 16, borderColor: token.colorBorder }}
-                  bodyStyle={{ padding: '16px 20px', color: 'red !important' }}
-                >
-                  <Skeleton loading={loading} avatar active>
-                    <Meta
-                      avatar={
-                        <Link
-                          target="_blank"
-                          href={plugin.url}
-                          css={{ '&:focus': { boxShadow: 'none' } }}
-                        >
-                          <Avatar style={{ height: 70, width: 70 }} shape="square" src={plugin.icon} />
-                        </Link>
-                      }
-                      title={
-                        <Link
-                          target="_blank"
-                          href={plugin.url}
-                          style={{ color: token.colorTextSecondary, fontSize: '1rem' }}
-                          css={{
-                            '&:focus': { boxShadow: 'none' },
-                            '&:hover': { textDecoration: 'underline !important' }
-                          }}
-                        >
-                          {plugin.name}{' '}
-                          <LucideIcn
-                            name="MoveUpRight"
-                            size={12}
-                            style={{ transform: 'translateY(-4px)' }}
-                          />
-                        </Link>
-                      }
-                      description={
-                        <Text style={{ color: token.colorTextSecondary }}>{plugin.description}</Text>
-                      }
-                    />
-                  </Skeleton>
-                </Card>
+          <h3>Allowed MIME types and size</h3>
+          <Form.Item name="fileType">
+            <Select mode="multiple">
+              {fileTypes?.map(fileType => (
+                <Checkbox key={fileType} value={fileType}>
+                  {fileType}
+                </Checkbox>
               ))}
-          </div>
-        </Col>
-      </Row>
-    </div>
+            </Select>
+          </Form.Item>
+
+          <Form.Item name="file_size">
+            <Input type="number" placeholder="Maximum File Size" addonAfter="MB" />
+          </Form.Item>
+
+          <Form.Item name="root_folder">
+            <Input placeholder="Root Folder Path" />
+          </Form.Item>
+
+          <Form.Item name="root_folder_url">
+            <Input placeholder="Root Folder URL" />
+          </Form.Item>
+        </Card>
+
+        <Card>
+          <h3>Folder Options</h3>
+          <Form.Item name="folder_options">
+            <Radio.Group>
+              <Radio value="common">Enable a common folder for everyone</Radio>
+              <Radio value="user">Enable separate folders for each user</Radio>
+              <Radio value="role">Enable folders for each user role</Radio>
+            </Radio.Group>
+          </Form.Item>
+
+          <h3>Roles Permission</h3>
+          <Table dataSource={permissionSettings.allRoles()}>{/* Define columns for the table */}</Table>
+
+          <h3>User Permission</h3>
+          <Table dataSource={permissionSettings.allUsers()}>{/* Define columns for the table */}</Table>
+          <h3>Guest User Settings</h3>
+          <Table dataSource={[permissionSettings.getGuestPermissions()]}>
+            {/* Define columns for the table */}
+          </Table>
+        </Card>
+        <Form.Item>
+          <Space style={{ display: 'flex', justifyContent: 'center' }}>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" loading={false}>
+                Update
+              </Button>
+            </Form.Item>
+          </Space>
+        </Form.Item>
+      </Space>
+    </Form>
   )
 }
+
+export default Permissions
