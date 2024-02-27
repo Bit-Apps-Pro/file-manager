@@ -1,17 +1,19 @@
 import request from '@common/helpers/request'
-import { type SettingsType } from '@pages/Settings/settingsTypes'
+import { type PermissionsSettingsType } from '@pages/Permissions/PermissionsSettingsTypes'
 import { useMutation } from '@tanstack/react-query'
 
-export default function useUpdateSettings() {
-  const { mutateAsync, isLoading } = useMutation(async (settingsToUpdate: SettingsType) =>
-    request<SettingsType & Record<string, unknown>>({
-      action: 'settings/update',
-      data: settingsToUpdate
-    })
+export default function useUpdatePermissionsSettings() {
+  const { mutateAsync, isLoading } = useMutation(
+    async (updatedPermissionsSettings: PermissionsSettingsType) =>
+      request<PermissionsSettingsType & Record<string, unknown>>({
+        action: 'permissions/update',
+        data: updatedPermissionsSettings
+      })
   )
 
   return {
-    updateSettings: (updatedSettings: SettingsType) => mutateAsync(updatedSettings),
-    isSettingsUpdating: isLoading
+    updatePermission: (updatedPermissionsSettings: PermissionsSettingsType) =>
+      mutateAsync(updatedPermissionsSettings),
+    isPermissionUpdating: isLoading
   }
 }

@@ -2,10 +2,9 @@
 
 namespace BitApps\FM\Http\Controllers;
 
-use BitApps\FM\Dependencies\BitApps\WPKit\Http\Client\Http;
-use BitApps\FM\Dependencies\BitApps\WPKit\Http\Request\Request;
 use BitApps\FM\Dependencies\BitApps\WPKit\Http\Response;
 use BitApps\FM\Http\Requests\Permissions\PermissionsGetRequest;
+use BitApps\FM\Http\Requests\Permissions\PermissionsUpdateRequest;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\PermissionsProvider;
 
@@ -24,16 +23,17 @@ final class PermissionsController
             [
                 'permissions' => $this->permissionProvider->permissions,
                 'roles'       => $this->permissionProvider->allRoles(),
-                'users'       => $this->permissionProvider->allUsers(),
+                'users'       => array_values($this->permissionProvider->allUsers()),
                 'commands'    => $this->permissionProvider->allCommands(),
                 'fileTypes'   => ['text', 'image', 'application', 'video', 'audio'],
+                'wpRoot'      => ABSPATH,
             ]
         );
     }
 
-    public function update(Request $request)
+    public function update(PermissionsUpdateRequest $request)
     {
-        if (true) {
+        if ($this->permissionProvider->updatePermissionSetting($request->validated())) {
             return Response::success([])->message('Permission updated successfully');
         }
 

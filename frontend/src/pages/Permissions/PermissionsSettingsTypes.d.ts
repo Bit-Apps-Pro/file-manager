@@ -26,4 +26,5 @@ interface FetchPermissionsSettingsType {
   users: Array<User>
   commands: Array<string>
   fileTypes: Array<string>
+  wpRoot: string
 }
