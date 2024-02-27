@@ -39,6 +39,10 @@ class PermissionsProvider
             $this->defaultPermissions()
         );
 
+        if (\array_key_exists('do_not_use_for_admin', $this->permissions)) {
+            $this->permissions['do_not_use_for_admin'] = \boolval($this->permissions['do_not_use_for_admin']);
+        }
+
         $this->_preferences = Plugin::instance()->preferences();
         $this->roles        = array_keys($wp_roles->roles);
         $this->users        = $this->mappedUsers();
@@ -407,7 +411,7 @@ class PermissionsProvider
 
     public function updatePermissionSetting($permissions)
     {
-        Config::updateOption('permissions', $permissions, 'yes');
+        return Config::updateOption('permissions', $permissions, 'yes');
     }
 
     private function isRequestForAdminArea()

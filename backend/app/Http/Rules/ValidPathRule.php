@@ -3,8 +3,10 @@
  * @license MIT
  *
  * Modified using Strauss.
+ *
  * @see https://github.com/BrianHenryIE/strauss
  */
+
 namespace BitApps\FM\Http\Rules;
 
 use BitApps\FM\Dependencies\BitApps\WPValidator\Rule;
@@ -12,7 +14,6 @@ use BitApps\FM\Plugin;
 
 class ValidPathRule extends Rule
 {
-
     public function validate($value)
     {
         $path = Plugin::instance()->preferences()->realPath($value);

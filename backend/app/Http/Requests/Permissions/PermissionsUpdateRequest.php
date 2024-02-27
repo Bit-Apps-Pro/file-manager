@@ -5,7 +5,6 @@ namespace BitApps\FM\Http\Requests\Permissions;
 use BitApps\FM\Dependencies\BitApps\WPKit\Http\Request\Request;
 use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Http\Rules\ValidPathRule;
-use BitApps\FM\Http\Rules\ValidUIOptionRule;
 
 class PermissionsUpdateRequest extends Request
 {
@@ -17,21 +16,16 @@ class PermissionsUpdateRequest extends Request
     public function rules()
     {
         return [
-            'show_url_path'               => ['sanitize:text', 'nullable','boolean'],
-            'show_hidden_files'           => ['sanitize:text', 'nullable','boolean'],
-            'create_trash_files_folders'  => ['sanitize:text', 'nullable','boolean'],
-            'create_hidden_files_folders' => ['sanitize:text', 'nullable','boolean'],
-            'remember_last_dir'           => ['sanitize:text', 'nullable','boolean'],
-            'clear_history_on_reload'     => ['sanitize:text', 'nullable','boolean'],
-            'root_folder_name'            => ['sanitize:text', 'required','string'],
-            'theme'                       => ['sanitize:text', 'required','string'],
-            'language'                    => ['sanitize:text', 'required','string'],
-            'default_view_type'           => ['sanitize:text', 'required','string'],
-            'root_folder_path'            => ['sanitize:text', 'required','string', ValidPathRule::class],
-            'root_folder_url'             => ['sanitize:text', 'required','string', 'url'],
-            'size.width'                  => ['sanitize:text', 'required','string'],
-            'size.height'                 => ['sanitize:text', 'required'],
-            'display_ui_options'          => ['required','array', ValidUIOptionRule::class],
+            'do_not_use_for_admin' => ['sanitize:text', 'nullable','boolean'],
+            'fileType'             => ['nullable','array'],
+            'file_size'            => ['sanitize:text', 'nullable','Integer'],
+            'root_folder'          => ['sanitize:text', 'nullable', ValidPathRule::class],
+            'root_folder_url'      => ['sanitize:text', 'nullable','string'],
+            'folder_options'       => ['sanitize:text', 'nullable','string'],
+            'by_role'              => ['nullable','array'],
+            'by_user'              => ['nullable','array'],
+            'guest.path'           => ['sanitize:text', 'nullable','string', ValidPathRule::class],
+            'guest.can_download'   => ['sanitize:text', 'nullable','string', 'boolean'],
         ];
     }
 }

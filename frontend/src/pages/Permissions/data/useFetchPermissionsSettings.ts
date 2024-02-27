@@ -8,6 +8,7 @@ export default function useFetchPermissionsSettings() {
     queryFn: async () =>
       request<FetchPermissionsSettingsType>({ action: 'permissions/get', method: 'GET' })
   })
+  console.log('data', data)
   return {
     isLoading,
     isFetching,
@@ -15,6 +16,7 @@ export default function useFetchPermissionsSettings() {
     roles: data?.data.roles,
     users: data?.data.users,
     commands: data?.data.commands,
-    fileTypes: data?.data.fileTypes
+    fileTypes: data?.data.fileTypes,
+    wpRoot: data?.data.wpRoot
   }
 }

@@ -1,48 +1,59 @@
-import React, { useState } from 'react'
+import { useEffect } from 'react'
 
 import { __ } from '@common/helpers/i18nwrap'
+import { type PermissionsSettingsType } from '@pages/Permissions/PermissionsSettingsTypes'
 import useFetchPermissionsSettings from '@pages/Permissions/data/useFetchPermissionsSettings'
-import { Button, Card, Checkbox, Form, Input, Radio, Select, Space, Switch, Table } from 'antd'
+import useUpdatePermissionsSettings from '@pages/Permissions/data/useUpdatePermissionsSettings'
+import { Button, Card, Form, Input, Radio, Select, Space, Switch, notification } from 'antd'
 import { useForm } from 'antd/es/form/Form'
+import { type FieldData } from 'rc-field-form/es/interface'
 
 function Permissions() {
-  const { isLoading, permissions, commands, fileTypes, roles, users } = useFetchPermissionsSettings()
+  const { isLoading, permissions, commands, fileTypes, roles, users, wpRoot } =
+    useFetchPermissionsSettings()
+  const { updatePermission, isPermissionUpdating } = useUpdatePermissionsSettings()
   const [form] = useForm()
-  // Define state for form values
-  const [formValues, setFormValues] = useState({
-    do_not_use_for_admin: false,
-    fileType: [],
-    file_size: '',
-    root_folder: '',
-    root_folder_url: '',
-    folder_options: '',
-    by_role: [],
-    guest: {},
-    by_user: []
-  })
-  const permissionSettings = {
-    allUsers: () => [],
-    allRoles: () => [],
-    getGuestPermissions: () => []
-  }
-  // Handle form submission
-  const handleSubmit = values => {
-    // Handle form submission logic
-    console.log('Form values:', values)
+  useEffect(() => {
+    form.setFieldsValue(permissions)
+  }, [permissions, form])
+
+  const handleSubmit = (changedValues: PermissionsSettingsType) => {
+    updatePermission(changedValues).then(response => {
+      if (response.code === 'SUCCESS') {
+        notification.success({ message: response.message })
+        const updatedFields = form.getFieldsError().map(field => {
+          if (field.errors) {
+            field.errors = []
+          }
+          return field
+        })
+        form.setFields(updatedFields)
+      } else {
+        const fieldErrors: FieldData[] = []
+        Object.keys(response.data).forEach(field => {
+          fieldErrors.push({
+            name: field.split('.'),
+            errors: response.data[field] as string[]
+          })
+        })
+        form.setFields(fieldErrors)
+      }
+    })
   }
 
   return (
     <Form
       form={form}
       onFinish={handleSubmit}
-      disabled={isLoading}
+      disabled={isLoading || isPermissionUpdating}
       initialValues={permissions}
       colon={false}
+      scrollToFirstError
     >
       <Space direction="vertical" size="middle" style={{ display: 'flex' }} className="px-2">
         <Space style={{ display: 'flex', justifyContent: 'right', paddingBlock: '8px' }}>
           <Form.Item style={{ marginBottom: 0 }}>
-            <Button type="primary" htmlType="submit" loading={false}>
+            <Button type="primary" htmlType="submit" loading={isPermissionUpdating}>
               Update
             </Button>
           </Form.Item>
@@ -52,7 +63,7 @@ function Permissions() {
             name="do_not_use_for_admin"
             label={__('Disable this permission inside WordPress dashboard')}
             tooltip={__(
-              'If enabled, the root folder for the file manager will be determined by this permission setting.'
+              'If disabled, the root folder for the file manager will be determined by this permission setting.'
             )}
           >
             <Switch />
@@ -72,7 +83,9 @@ function Permissions() {
           <Form.Item name="file_size">
             <Input type="number" placeholder="Maximum File Size" addonAfter="MB" />
           </Form.Item>
+        </Card>
 
+        <Card title={__('Public folder options')}>
           <Form.Item name="root_folder">
             <Input placeholder="Root Folder Path" />
           </Form.Item>
@@ -80,52 +93,98 @@ function Permissions() {
           <Form.Item name="root_folder_url">
             <Input placeholder="Root Folder URL" />
           </Form.Item>
-        </Card>
-
-        <Card>
-          <h3>Folder Options</h3>
-          <Form.Item name="folder_options">
-            <Radio.Group>
+          <Form.Item name="folder_options" label={__('Folder Options')}>
+            <Radio.Group size="large">
               <Radio value="common">Enable a common folder for everyone</Radio>
               <Radio value="user">Enable separate folders for each user</Radio>
               <Radio value="role">Enable folders for each user role</Radio>
             </Radio.Group>
           </Form.Item>
+        </Card>
 
-          <Card title={__('Permissions By Role')}>
-            <Form.Item>
-              {roles?.map((role: string) => (
-                <Space>
-                  <Card title={role} style={{ margin: '10px' }}>
-                    <Form.Item label="path" name={['by_role', role, 'path']}>
-                      <Input />
-                    </Form.Item>
-                    <Form.Item label="command" name={['by_role', role, 'commands']}>
-                      <Select mode="multiple">
-                        {commands?.map(command => (
-                          <Select.Option key={command} value={command}>
-                            {command}
-                          </Select.Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                  </Card>
-                </Space>
-              ))}
-            </Form.Item>
-          </Card>
+        <Card title={__('Permissions by Roles')}>
+          <Space size={20} wrap>
+            {roles?.map(role => (
+              <Card title={role.toUpperCase()} key={`permissions-for-${role}`}>
+                <Form.Item
+                  name={['by_role', role, 'path']}
+                  label={__('Path')}
+                  rules={[
+                    {
+                      // eslint-disable-next-line no-useless-escape
+                      pattern: new RegExp(`^${wpRoot}?(?:\/[^\/]+)*\/?$`),
+                      message: __('Folder Path Must be within WordPress root directory')
+                    }
+                  ]}
+                >
+                  <Input placeholder="Root Folder Path" />
+                </Form.Item>
+                <Form.Item name={['by_role', role, 'commands']} label={__('Enabled Commands')}>
+                  <Select mode="multiple">
+                    {commands?.map(command => (
+                      <Select.Option key={command} value={command}>
+                        {command}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Card>
+            ))}
+          </Space>
+        </Card>
 
-          <h3>User Permission</h3>
-          <Table dataSource={permissionSettings.allUsers()}>{/* Define columns for the table */}</Table>
-          <h3>Guest User Settings</h3>
-          <Table dataSource={[permissionSettings.getGuestPermissions()]}>
-            {/* Define columns for the table */}
-          </Table>
+        <Card title={__('Permissions by User')}>
+          <Space size={20} wrap>
+            {users?.map(user => (
+              <Card title={user.display_name} key={`permissions-for-${user.ID}`}>
+                <Form.Item
+                  name={['by_user', user.ID, 'path']}
+                  label={__('Path')}
+                  rules={[
+                    {
+                      // eslint-disable-next-line no-useless-escape
+                      pattern: new RegExp(`^${wpRoot}?(?:\/[^\/]+)*\/?$`),
+                      message: __('Folder Path Must be within WordPress root directory')
+                    }
+                  ]}
+                >
+                  <Input placeholder="Root Folder Path" />
+                </Form.Item>
+                <Form.Item name={['by_user', user.ID, 'commands']} label={__('Enabled Commands')}>
+                  <Select mode="multiple">
+                    {commands?.map(command => (
+                      <Select.Option key={command} value={command}>
+                        {command}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Card>
+            ))}
+          </Space>
+        </Card>
+        <Card title={__('Guest User Settings')}>
+          <Form.Item
+            name={['guest', 'path']}
+            label={__('Path')}
+            rules={[
+              {
+                // eslint-disable-next-line no-useless-escape
+                pattern: new RegExp(`^${wpRoot}?(?:\/[^\/]+)*\/?$`),
+                message: __('Folder Path Must be within WordPress root directory')
+              }
+            ]}
+          >
+            <Input placeholder="Root Folder Path" />
+          </Form.Item>
+          <Form.Item name={['guest', 'can_download']} label={__('can download?')}>
+            <Switch />
+          </Form.Item>
         </Card>
         <Form.Item>
           <Space style={{ display: 'flex', justifyContent: 'center' }}>
             <Form.Item>
-              <Button type="primary" htmlType="submit" loading={false}>
+              <Button type="primary" htmlType="submit" loading={isPermissionUpdating}>
                 Update
               </Button>
             </Form.Item>
