@@ -25,8 +25,6 @@ function Permissions() {
     allRoles: () => [],
     getGuestPermissions: () => []
   }
-
-  console.log('permissions', permissions)
   // Handle form submission
   const handleSubmit = values => {
     // Handle form submission logic
@@ -64,9 +62,9 @@ function Permissions() {
           <Form.Item name="fileType">
             <Select mode="multiple">
               {fileTypes?.map(fileType => (
-                <Checkbox key={fileType} value={fileType}>
+                <Select.Option key={fileType} value={fileType}>
                   {fileType}
-                </Checkbox>
+                </Select.Option>
               ))}
             </Select>
           </Form.Item>
@@ -94,8 +92,28 @@ function Permissions() {
             </Radio.Group>
           </Form.Item>
 
-          <h3>Roles Permission</h3>
-          <Table dataSource={permissionSettings.allRoles()}>{/* Define columns for the table */}</Table>
+          <Card title={__('Permissions By Role')}>
+            <Form.Item>
+              {roles?.map((role: string) => (
+                <Space>
+                  <Card title={role} style={{ margin: '10px' }}>
+                    <Form.Item label="path" name={['by_role', role, 'path']}>
+                      <Input />
+                    </Form.Item>
+                    <Form.Item label="command" name={['by_role', role, 'commands']}>
+                      <Select mode="multiple">
+                        {commands?.map(command => (
+                          <Select.Option key={command} value={command}>
+                            {command}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                  </Card>
+                </Space>
+              ))}
+            </Form.Item>
+          </Card>
 
           <h3>User Permission</h3>
           <Table dataSource={permissionSettings.allUsers()}>{/* Define columns for the table */}</Table>
