@@ -2,6 +2,7 @@
 
 namespace BitApps\FM\Http\Services;
 
+use BitApps\FM\Config;
 use BitApps\FM\Dependencies\BitApps\WPDatabase\QueryBuilder;
 use BitApps\FM\Model\Log;
 use BitApps\FM\Plugin;
@@ -16,7 +17,7 @@ class LogService
         $logs = [];
         $count = 0;
         try {
-            $logs = Log::skip($skip)->take($take)->get();
+            $logs = Log::skip($skip)->take($take)->desc()->get();
             $count = Log::count();
         } catch (\Throwable $th) {
             //throw $th;
@@ -53,6 +54,8 @@ class LogService
 
        $dateToDelete = date_sub($currentDate, date_interval_create_from_date_string($logRetention . ' days'));
        $dateToDelete = date_format($dateToDelete, QueryBuilder::TIME_FORMAT);
+
+       Config::updateOption('log_deleted_at', time());
 
        return Log::where('created_at', '<', $dateToDelete)->delete();
    }

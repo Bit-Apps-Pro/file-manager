@@ -279,7 +279,7 @@ class PermissionsProvider
     public function isDisabledForAdmin()
     {
         return isset($this->permissions['do_not_use_for_admin'])
-            && $this->permissions['do_not_use_for_admin'] === 'do_not_use_for_admin';
+            && \boolval($this->permissions['do_not_use_for_admin']);
     }
 
     public function getFolderOption()

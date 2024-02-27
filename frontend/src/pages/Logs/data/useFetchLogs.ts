@@ -42,7 +42,7 @@ export default function useFetchLogs(searchData: SearchType) {
   return {
     isLoading,
     isLogsFetching: isFetching,
-    logs: data?.data.logs,
+    logs: data?.data?.logs ?? [],
     total: data?.data?.count ?? 0
   }
 }

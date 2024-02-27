@@ -3,6 +3,7 @@
 namespace BitApps\FM\Http\Controllers;
 
 use BitApps\FM\Config;
+use BitApps\FM\Dependencies\BitApps\WPDatabase\Connection;
 use BitApps\FM\Dependencies\BitApps\WPKit\Http\Request\Request;
 use BitApps\FM\Dependencies\BitApps\WPKit\Http\Response;
 use BitApps\FM\Http\Services\LogService;
@@ -15,15 +16,19 @@ final class LogController
     {
         $this->logger = new LogService();
         $currentTime  = time();
-        if ((abs(Config::getOption('log_deleted_at', $currentTime) - $currentTime) / DAY_IN_SECONDS) > 30) {
+        $logDeletedAt = Config::getOption('log_deleted_at', $currentTime);
+
+        if ((abs($logDeletedAt - $currentTime) / DAY_IN_SECONDS) > 30) {
             $this->logger->deleteOlder();
         }
     }
 
     public function all(Request $request)
     {
-        error_log($request->device());
-        return Response::success($this->logger->all());
+        $pageNo = \intval($request->pageNo) ?? 1;
+        $limit  = \intval($request->limit)  ?? 14;
+
+        return Response::success($this->logger->all((($pageNo - 1) * $limit), $limit));
     }
 
     public function delete(Request $request)

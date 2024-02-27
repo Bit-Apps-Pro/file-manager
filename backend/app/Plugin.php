@@ -11,6 +11,8 @@ use BitApps\FM\Dependencies\BitApps\WPKit\Migration\MigrationHelper;
 
 use function BitApps\FM\Functions\view;
 
+use BitApps\FM\Http\Middleware\CapCheckerMiddleware;
+
 use BitApps\FM\Http\Middleware\NonceCheckerMiddleware;
 use BitApps\FM\Providers\AccessControlProvider;
 use BitApps\FM\Providers\FileEditValidator;
@@ -57,6 +59,7 @@ final class Plugin
     {
         return [
             'nonce' => NonceCheckerMiddleware::class,
+            'cap'   => CapCheckerMiddleware::class,
         ];
     }
 

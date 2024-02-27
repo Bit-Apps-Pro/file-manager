@@ -89,6 +89,10 @@ class Admin
 
     public function filterConfigVariable($config)
     {
+        if (Capabilities::check('list_users')) {
+            $config['users'] = Plugin::instance()->permissions()->allUsers();
+        }
+
         return (array) $config + [
             'action'  => Config::withPrefix('connector'),
             'options' => Plugin::instance()->preferences()->finderOptions(),

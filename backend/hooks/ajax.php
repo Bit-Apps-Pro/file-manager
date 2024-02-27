@@ -16,7 +16,7 @@ Route::group(
         Route::noAuth()->match(['get', 'post'], 'connector_front', [FileManagerController::class, 'connector']);
         Route::post('theme', [FileManagerController::class, 'changeThemes']);
 
-        Route::post('logs/all', [LogController::class, 'all']);
+        Route::post('logs/all', [LogController::class, 'all'])->middleware('cap:bitapps_fm_can_access_logs');
 
         Route::get('settings/get', [SettingsController::class, 'get']);
         Route::post('settings/update', [SettingsController::class, 'update']);

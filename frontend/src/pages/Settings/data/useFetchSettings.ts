@@ -10,9 +10,9 @@ export default function useFetchSettings() {
   return {
     isLoading,
     isFetching,
-    settings: data?.data.settings,
-    languages: data?.data.languages,
-    themes: data?.data.themes,
-    defaults: data?.data.defaults
+    settings: data?.data?.settings,
+    languages: data?.data?.languages,
+    themes: data?.data?.themes,
+    defaults: data?.data?.defaults
   }
 }

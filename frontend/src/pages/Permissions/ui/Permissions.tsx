@@ -35,6 +35,7 @@ function Permissions() {
             name: field.split('.'),
             errors: response.data[field] as string[]
           })
+          notification.error({ message: response?.message ?? __('Failed to update permission') })
         })
         form.setFields(fieldErrors)
       }

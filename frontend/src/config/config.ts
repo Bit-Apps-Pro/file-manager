@@ -17,7 +17,8 @@ const config = {
   AJAX_URL: getServerVariable('ajaxURL', 'http://.local/wp-admin/admin-ajax.php'),
   ROOT_URL: getServerVariable('rootURL', 'http://.local'),
   NONCE: getServerVariable('nonce', ''),
-  ROUTE_PREFIX: getServerVariable('routePrefix', 'bit_fm_')
+  ROUTE_PREFIX: getServerVariable('routePrefix', 'bit_fm_'),
+  USERS: getServerVariable('users', [])
 }
 
 export default config
