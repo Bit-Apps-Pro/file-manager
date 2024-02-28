@@ -60,13 +60,12 @@ export default function AppRoutes() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Root />} />
-            <Route path="/elf_l1_Lw/" element={<Root />} />
+            <Route path="*" caseSensitive element={<Root />} />
             <Route path="/support" element={<Support />} />
             <Route path="/logs" element={<Logs />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/permissions" element={<Permissions />} />
             <Route path="/system-info" element={<SystemInformation />} />
-            <Route path="*" element={<Error404 />} />
           </Route>
         </Routes>
       </StyleProvider>

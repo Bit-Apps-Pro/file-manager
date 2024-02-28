@@ -1,11 +1,13 @@
 import type React from 'react'
 
+import { StarFilled, StarOutlined } from '@ant-design/icons'
 import { $appConfig } from '@common/globalStates'
 import LogoIcn from '@icons/LogoIcn'
 import LogoText from '@icons/LogoText'
-import { type MenuProps } from 'antd'
+import { Button, type MenuProps, Select } from 'antd'
 import { Divider, Layout, Menu, Typography, theme } from 'antd'
 import { useAtomValue } from 'jotai'
+import { StarIcon } from 'lucide-react'
 
 import cls from './TopNavigation.module.css'
 
@@ -80,12 +82,35 @@ export default function TopNavigation() {
       </div>
       <Divider orientation="left" type="vertical" />
       <Typography.Text>Share Your Product Experience!</Typography.Text>
+      <Button
+        style={{ marginInline: 8 }}
+        className={cls.reviewUs}
+        shape="round"
+        ghost
+        href="https://wordpress.org/support/plugin/file-manager/reviews/#new-post"
+        target="_blank"
+      >
+        Review us
+        <StarFilled style={{ marginLeft: 8 }} />
+      </Button>
       <Menu
         theme={isDarkTheme ? 'dark' : 'light'}
         mode="horizontal"
         items={items}
-        style={{ flex: 1, minWidth: 0, flexWrap: 'wrap', backgroundColor: colorBgContainer }}
+        style={{
+          flex: 1,
+          minWidth: 0,
+          maxWidth: 'max-content',
+          flexWrap: 'wrap',
+          backgroundColor: colorBgContainer
+        }}
       />
+      <Divider orientation="right" type="vertical" />
+      <Select defaultValue={fm?.options?.theme} style={{ width: 'max-content' }}>
+        {Object.keys(fm?.options?.themes).map(theme => (
+          <Select.Option key={theme}>{theme.toUpperCase()}</Select.Option>
+        ))}
+      </Select>
     </Header>
   )
 }
