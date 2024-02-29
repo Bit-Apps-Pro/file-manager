@@ -4,6 +4,9 @@ namespace BitApps\FM\Http\Requests\Permissions;
 
 use BitApps\FM\Dependencies\BitApps\WPKit\Http\Request\Request;
 use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
+use BitApps\FM\Http\Rules\ValidateCommandsRule;
+use BitApps\FM\Http\Rules\ValidateRolesRule;
+use BitApps\FM\Http\Rules\ValidateUsersRule;
 use BitApps\FM\Http\Rules\ValidPathRule;
 
 class PermissionsUpdateRequest extends Request
@@ -22,8 +25,12 @@ class PermissionsUpdateRequest extends Request
             'root_folder'          => ['sanitize:text', 'nullable', ValidPathRule::class],
             'root_folder_url'      => ['sanitize:text', 'nullable','string'],
             'folder_options'       => ['sanitize:text', 'nullable','string'],
-            'by_role'              => ['nullable','array'],
-            'by_user'              => ['nullable','array'],
+            'by_role'              => ['nullable', ValidateRolesRule::class],
+            'by_user'              => ['nullable', ValidateUsersRule::class],
+            'by_user.*.path'       => ['nullable', ValidPathRule::class],
+            'by_user.*.commands'   => ['nullable', ValidateCommandsRule::class],
+            'by_role.*.path'       => ['nullable', ValidPathRule::class],
+            'by_role.*.commands'   => ['nullable', ValidateCommandsRule::class],
             'guest.path'           => ['sanitize:text', 'nullable','string', ValidPathRule::class],
             'guest.can_download'   => ['sanitize:text', 'nullable','string', 'boolean'],
         ];

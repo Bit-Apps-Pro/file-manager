@@ -457,7 +457,7 @@ class PreferenceProvider
 
     public function realPath($path)
     {
-        if (\is_null($path)) {
+        if (\is_null($path) || !\is_string($path)) {
             return $path;
         }
 

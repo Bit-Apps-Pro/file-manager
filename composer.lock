@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5bb7ba33098fd37d85e8c53da9960304",
+    "content-hash": "2f7c5c64eb0d5f6ca88e4517148c5616",
     "packages": [
         {
             "name": "bitapps/wp-database",
-            "version": "dev-main",
+            "version": "1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Bit-Apps-Pro/wp-database.git",
-                "reference": "fb4d0add23de124c422a79d0912ad31b2d01ff11"
+                "reference": "edb25e2a4ee7b237de0efb8087d8bb9382c918d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Bit-Apps-Pro/wp-database/zipball/fb4d0add23de124c422a79d0912ad31b2d01ff11",
-                "reference": "fb4d0add23de124c422a79d0912ad31b2d01ff11",
+                "url": "https://api.github.com/repos/Bit-Apps-Pro/wp-database/zipball/edb25e2a4ee7b237de0efb8087d8bb9382c918d4",
+                "reference": "edb25e2a4ee7b237de0efb8087d8bb9382c918d4",
                 "shasum": ""
             },
             "require": {
@@ -29,7 +29,6 @@
                 "phpcompatibility/phpcompatibility-wp": "*",
                 "sirbrillig/phpcs-variable-analysis": "*"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -61,34 +60,31 @@
                 "issues": "https://github.com/Bit-Apps-Pro/wp-database/issues",
                 "source": "https://github.com/Bit-Apps-Pro/wp-database"
             },
-            "time": "2023-12-23T10:12:13+00:00"
+            "time": "2024-02-29T10:35:35+00:00"
         },
         {
             "name": "bitapps/wp-kit",
-            "version": "dev-main",
+            "version": "1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Bit-Apps-Pro/wp-kit.git",
-                "reference": "d64c790cafaef58d46444e47063edba722f0792b"
+                "reference": "22d7dc210b4028a80393b5794d20497ae3cc31bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Bit-Apps-Pro/wp-kit/zipball/d64c790cafaef58d46444e47063edba722f0792b",
-                "reference": "d64c790cafaef58d46444e47063edba722f0792b",
+                "url": "https://api.github.com/repos/Bit-Apps-Pro/wp-kit/zipball/22d7dc210b4028a80393b5794d20497ae3cc31bb",
+                "reference": "22d7dc210b4028a80393b5794d20497ae3cc31bb",
                 "shasum": ""
             },
             "require": {
-                "bitapps/wp-validator": "dev-mazed-dev"
+                "bitapps/wp-validator": "^1.0"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
                 "friendsofphp/php-cs-fixer": "^3.10",
                 "phpcompatibility/phpcompatibility-wp": "*",
-                "phpunit/phpunit": "^9.3.0",
-                "sirbrillig/phpcs-variable-analysis": "*",
-                "yoast/phpunit-polyfills": "^1.0"
+                "sirbrillig/phpcs-variable-analysis": "*"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -112,22 +108,22 @@
             ],
             "support": {
                 "issues": "https://github.com/Bit-Apps-Pro/wp-kit/issues",
-                "source": "https://github.com/Bit-Apps-Pro/wp-kit/tree/main"
+                "source": "https://github.com/Bit-Apps-Pro/wp-kit/tree/1.1"
             },
-            "time": "2024-02-26T11:31:30+00:00"
+            "time": "2024-02-29T10:10:31+00:00"
         },
         {
             "name": "bitapps/wp-validator",
-            "version": "dev-mazed-dev",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Bit-Apps-Pro/wp-validator.git",
-                "reference": "2f0224857372f077e65443ebb800baa4353af96c"
+                "reference": "415508a219dd518ccfdeb0ff3ff1e65544482ac5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Bit-Apps-Pro/wp-validator/zipball/2f0224857372f077e65443ebb800baa4353af96c",
-                "reference": "2f0224857372f077e65443ebb800baa4353af96c",
+                "url": "https://api.github.com/repos/Bit-Apps-Pro/wp-validator/zipball/415508a219dd518ccfdeb0ff3ff1e65544482ac5",
+                "reference": "415508a219dd518ccfdeb0ff3ff1e65544482ac5",
                 "shasum": ""
             },
             "require": {
@@ -139,6 +135,11 @@
                 "squizlabs/php_codesniffer": "*"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "BitApps\\WPValidator\\": "src/"
@@ -167,7 +168,7 @@
                 "issues": "https://github.com/Bit-Apps-Pro/wp-validator/issues",
                 "source": "https://github.com/Bit-Apps-Pro/wp-validator"
             },
-            "time": "2023-12-26T11:36:32+00:00"
+            "time": "2024-02-29T09:59:08+00:00"
         }
     ],
     "packages-dev": [
@@ -942,16 +943,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.50.0",
+            "version": "v3.51.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "dbea11dcb6d9a1f6c8d51c0e580ab4a8876f524c"
+                "reference": "127fa74f010da99053e3f5b62672615b72dd6efd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/dbea11dcb6d9a1f6c8d51c0e580ab4a8876f524c",
-                "reference": "dbea11dcb6d9a1f6c8d51c0e580ab4a8876f524c",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/127fa74f010da99053e3f5b62672615b72dd6efd",
+                "reference": "127fa74f010da99053e3f5b62672615b72dd6efd",
                 "shasum": ""
             },
             "require": {
@@ -1022,7 +1023,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.50.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.51.0"
             },
             "funding": [
                 {
@@ -1030,7 +1031,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-02-23T23:17:45+00:00"
+            "time": "2024-02-28T19:50:06+00:00"
         },
         {
             "name": "json-mapper/json-mapper",
@@ -2320,16 +2321,16 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v6.4.3",
+            "version": "v6.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "49f8cdee544a621a621cd21b6cda32a38926d310"
+                "reference": "0ef36534694c572ff526d91c7181f3edede176e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/49f8cdee544a621a621cd21b6cda32a38926d310",
-                "reference": "49f8cdee544a621a621cd21b6cda32a38926d310",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/0ef36534694c572ff526d91c7181f3edede176e7",
+                "reference": "0ef36534694c572ff526d91c7181f3edede176e7",
                 "shasum": ""
             },
             "require": {
@@ -2396,7 +2397,7 @@
                 "psr6"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache/tree/v6.4.3"
+                "source": "https://github.com/symfony/cache/tree/v6.4.4"
             },
             "funding": [
                 {
@@ -2412,7 +2413,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-23T14:51:35+00:00"
+            "time": "2024-02-22T20:27:10+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -2492,16 +2493,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v6.4.3",
+            "version": "v6.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "2aaf83b4de5b9d43b93e4aec6f2f8b676f7c567e"
+                "reference": "0d9e4eb5ad413075624378f474c4167ea202de78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/2aaf83b4de5b9d43b93e4aec6f2f8b676f7c567e",
-                "reference": "2aaf83b4de5b9d43b93e4aec6f2f8b676f7c567e",
+                "url": "https://api.github.com/repos/symfony/console/zipball/0d9e4eb5ad413075624378f474c4167ea202de78",
+                "reference": "0d9e4eb5ad413075624378f474c4167ea202de78",
                 "shasum": ""
             },
             "require": {
@@ -2566,7 +2567,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v6.4.3"
+                "source": "https://github.com/symfony/console/tree/v6.4.4"
             },
             "funding": [
                 {
@@ -2582,7 +2583,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-23T14:51:35+00:00"
+            "time": "2024-02-22T20:27:10+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -3553,16 +3554,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v7.0.3",
+            "version": "v7.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "937a195147e0c27b2759ade834169ed006d0bc74"
+                "reference": "0e7727191c3b71ebec6d529fa0e50a01ca5679e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/937a195147e0c27b2759ade834169ed006d0bc74",
-                "reference": "937a195147e0c27b2759ade834169ed006d0bc74",
+                "url": "https://api.github.com/repos/symfony/process/zipball/0e7727191c3b71ebec6d529fa0e50a01ca5679e9",
+                "reference": "0e7727191c3b71ebec6d529fa0e50a01ca5679e9",
                 "shasum": ""
             },
             "require": {
@@ -3594,7 +3595,7 @@
             "description": "Executes commands in sub-processes",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/process/tree/v7.0.3"
+                "source": "https://github.com/symfony/process/tree/v7.0.4"
             },
             "funding": [
                 {
@@ -3610,7 +3611,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-23T15:02:46+00:00"
+            "time": "2024-02-22T20:27:20+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -3758,16 +3759,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v7.0.3",
+            "version": "v7.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "524aac4a280b90a4420d8d6a040718d0586505ac"
+                "reference": "f5832521b998b0bec40bee688ad5de98d4cf111b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/524aac4a280b90a4420d8d6a040718d0586505ac",
-                "reference": "524aac4a280b90a4420d8d6a040718d0586505ac",
+                "url": "https://api.github.com/repos/symfony/string/zipball/f5832521b998b0bec40bee688ad5de98d4cf111b",
+                "reference": "f5832521b998b0bec40bee688ad5de98d4cf111b",
                 "shasum": ""
             },
             "require": {
@@ -3824,7 +3825,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v7.0.3"
+                "source": "https://github.com/symfony/string/tree/v7.0.4"
             },
             "funding": [
                 {
@@ -3840,20 +3841,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-29T15:41:16+00:00"
+            "time": "2024-02-01T13:17:36+00:00"
         },
         {
             "name": "symfony/var-exporter",
-            "version": "v7.0.3",
+            "version": "v7.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-exporter.git",
-                "reference": "1fb79308cb5fc2b44bff6e8af10a5af6812e05b8"
+                "reference": "dfb0acb6803eb714f05d97dd4c5abe6d5fa9fe41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/1fb79308cb5fc2b44bff6e8af10a5af6812e05b8",
-                "reference": "1fb79308cb5fc2b44bff6e8af10a5af6812e05b8",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/dfb0acb6803eb714f05d97dd4c5abe6d5fa9fe41",
+                "reference": "dfb0acb6803eb714f05d97dd4c5abe6d5fa9fe41",
                 "shasum": ""
             },
             "require": {
@@ -3898,7 +3899,7 @@
                 "serialize"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-exporter/tree/v7.0.3"
+                "source": "https://github.com/symfony/var-exporter/tree/v7.0.4"
             },
             "funding": [
                 {
@@ -3914,19 +3915,15 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-23T15:02:46+00:00"
+            "time": "2024-02-26T10:35:24+00:00"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "bitapps/wp-validator": 20,
-        "bitapps/wp-kit": 20,
-        "bitapps/wp-database": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.2.0"
 }

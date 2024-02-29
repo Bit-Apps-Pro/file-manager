@@ -1,13 +1,10 @@
-import type React from 'react'
-
-import { StarFilled, StarOutlined } from '@ant-design/icons'
 import { $appConfig } from '@common/globalStates'
+import AntIconWrapper from '@icons/AntIconWrapper'
 import LogoIcn from '@icons/LogoIcn'
 import LogoText from '@icons/LogoText'
-import { Button, type MenuProps, Select } from 'antd'
+import { Button, type MenuProps, Select, Space } from 'antd'
 import { Divider, Layout, Menu, Typography, theme } from 'antd'
 import { useAtomValue } from 'jotai'
-import { StarIcon } from 'lucide-react'
 
 import cls from './TopNavigation.module.css'
 
@@ -62,7 +59,6 @@ export default function TopNavigation() {
   } = theme.useToken()
 
   const { isDarkTheme } = useAtomValue($appConfig)
-  console.log('isDarkTheme', isDarkTheme)
 
   return (
     <Header
@@ -71,9 +67,11 @@ export default function TopNavigation() {
         alignItems: 'center',
         background: colorBgContainer,
         flexWrap: 'wrap',
-        position: 'fixed',
-        width: '95%',
-        zIndex: 1
+        // position: 'fixed',
+        width: '100%',
+        height: 'auto',
+        zIndex: 1,
+        paddingInline: '10px'
       }}
     >
       <div className={cls.logo}>
@@ -81,36 +79,52 @@ export default function TopNavigation() {
         <LogoText h={35} />
       </div>
       <Divider orientation="left" type="vertical" />
-      <Typography.Text>Share Your Product Experience!</Typography.Text>
-      <Button
-        style={{ marginInline: 8 }}
-        className={cls.reviewUs}
-        shape="round"
-        ghost
-        href="https://wordpress.org/support/plugin/file-manager/reviews/#new-post"
-        target="_blank"
-      >
-        Review us
-        <StarFilled style={{ marginLeft: 8 }} />
-      </Button>
+      <Space style={{ paddingInline: '40px', fontSize: '12px' }}>
+        <Typography.Text>Share Your Product Experience!</Typography.Text>
+        <Button
+          style={{ fontSize: 14, borderRadius: 14 }}
+          className={cls.reviewUs}
+          ghost
+          href="https://wordpress.org/support/plugin/file-manager/reviews/#new-post"
+          target="_blank"
+        >
+          Review us
+          <AntIconWrapper>
+            <span
+              className="dashicons dashicons-star-filled"
+              style={{ display: 'inline', fontSize: '14px' }}
+            />
+          </AntIconWrapper>
+        </Button>
+      </Space>
       <Menu
         theme={isDarkTheme ? 'dark' : 'light'}
         mode="horizontal"
         items={items}
         style={{
           flex: 1,
-          minWidth: 0,
-          maxWidth: 'max-content',
           flexWrap: 'wrap',
           backgroundColor: colorBgContainer
         }}
       />
-      <Divider orientation="right" type="vertical" />
-      <Select defaultValue={fm?.options?.theme} style={{ width: 'max-content' }}>
-        {Object.keys(fm?.options?.themes).map(theme => (
-          <Select.Option key={theme}>{theme.toUpperCase()}</Select.Option>
-        ))}
-      </Select>
+      <Divider
+        orientation="right"
+        type="vertical"
+        style={{ borderInlineStart: '2px solid rgba(5, 5, 5, 0.20)', marginTop: '4px' }}
+      />
+      <Space>
+        Theme:
+        <Select defaultValue={fm?.options?.theme} style={{ width: 'max-content' }} variant="borderless">
+          {Object.keys(fm?.options?.themes).map(theme => (
+            <Select.Option key={theme}>{theme.toUpperCase()}</Select.Option>
+          ))}
+        </Select>
+        <Select defaultValue={fm?.options?.theme} style={{ width: 'max-content' }} variant="borderless">
+          {Object.keys(fm?.options?.themes).map(theme => (
+            <Select.Option key={theme}>{theme.toUpperCase()}</Select.Option>
+          ))}
+        </Select>
+      </Space>
     </Header>
   )
 }

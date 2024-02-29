@@ -44,16 +44,16 @@
     }
   },
   "require": {
-    "bitapps/wp-validator": "dev-mazed-dev",
-    "bitapps/wp-kit": "dev-main",
-    "bitapps/wp-database": "dev-main"
+    "bitapps/wp-validator": "^1.0.4",
+    "bitapps/wp-kit": "^1.1",
+    "bitapps/wp-database": "^1.0"
   },
   "extra": {
     "strauss": {
       "target_directory": "dependencies",
       "namespace_prefix": "BitApps\\FM\\Dependencies\\",
-      "classmap_prefix": "FM_",
-      "constant_prefix": "FM_",
+      "classmap_prefix": "BitApps_FM_",
+      "constant_prefix": "BitApps_FM_",
       "include_author": false,
       "classmap_output": false,
       "delete_vendor_packages": true,
