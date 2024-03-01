@@ -114,9 +114,14 @@ class PreferenceProvider
         foreach ($this->themes() as $key => $config) {
             $themes[] = [
                 'key'   => $key,
-                'title' => ucfirst($key),
+                'title' => ucfirst(str_replace('-', ' ', $key)),
             ];
         }
+
+        $themes[] = [
+            'key'   => 'default',
+            'title' => 'Default',
+        ];
 
         return $themes;
     }

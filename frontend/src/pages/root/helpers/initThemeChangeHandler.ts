@@ -21,8 +21,7 @@ export default function initThemeChangeHandler(finderRef: RefObject<HTMLDivEleme
       target?.className?.indexOf('elfinder-tabstop') !== -1 &&
       target[0]?.className.indexOf('elfinder-theme-option') !== -1
     ) {
-      request('theme', { theme: target.value }).then(response => {
-        console.log('response', response)
+      request({ action: 'theme/update', data: { theme: target.value } }).then(response => {
         if (response.code === 'SUCCESS') {
           location.reload()
         }

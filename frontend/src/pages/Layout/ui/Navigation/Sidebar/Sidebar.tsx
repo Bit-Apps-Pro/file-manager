@@ -18,12 +18,7 @@ import SidebarNavItem from './SidebarNavItem'
 
 const { Sider } = Layout
 
-const navItems = [
-  { label: 'Dashboard', path: '/', icon: <DashboardIcn size={17} /> },
-  { label: 'Flows', path: '/flows', icon: <LucideIcn name="Workflow" size={19} /> },
-  { label: 'Connections', path: '/connections', icon: <LucideIcn name="Link" size={18} /> },
-  { label: 'Webhooks', path: '/webhooks', icon: <LucideIcn name="Globe" size={18} /> }
-]
+const navItems = [{ label: 'Dashboard', path: '/', icon: <DashboardIcn size={17} /> }]
 
 const collapseBtnStyle = () => ({
   position: 'absolute !important' as any, // eslint-disable-line @typescript-eslint/no-explicit-any

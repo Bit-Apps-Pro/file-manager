@@ -3,8 +3,10 @@
 namespace BitApps\FM\Http\Controllers;
 
 use BitApps\FM\Dependencies\BitApps\WPKit\Http\Response;
+use BitApps\FM\Http\Requests\Settings\LangUpdateRequest;
 use BitApps\FM\Http\Requests\Settings\SettingsRequest;
 use BitApps\FM\Http\Requests\Settings\SettingsUpdateRequest;
+use BitApps\FM\Http\Requests\Settings\ThemeUpdateRequest;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\PreferenceProvider;
 
@@ -56,5 +58,34 @@ final class SettingsController
         }
 
         return Response::error([])->message('failed to update settings');
+    }
+
+    public function updateTheme(ThemeUpdateRequest $request)
+    {
+        $reqData = $request->validated();
+        $prefs   = Plugin::instance()->preferences();
+        $prefs->setTheme($reqData['theme']);
+        if ($prefs->saveOptions()) {
+            return Response::success([])->message(__('Theme updated successfully', 'file-manger'));
+        }
+
+        return Response::error([])->message(__('Failed to update theme', 'file-manger'));
+    }
+
+    public function getLanguages()
+    {
+        return Response::success(Plugin::instance()->preferences()->getLanguages())->message(__('Theme updated successfully', 'file-manger'));
+    }
+
+    public function updateLanguage(LangUpdateRequest $request)
+    {
+        $reqData = $request->validated();
+        $prefs   = Plugin::instance()->preferences();
+        $prefs->setLang($reqData['lang']);
+        if ($prefs->saveOptions()) {
+            return Response::success([])->message(__('Language updated successfully', 'file-manger'));
+        }
+
+        return Response::error([])->message(__('Failed to update language', 'file-manger'));
     }
 }

@@ -14,7 +14,11 @@ Route::group(
     function () {
         Route::match(['get', 'post'], 'connector', [FileManagerController::class, 'connector']);
         Route::noAuth()->match(['get', 'post'], 'connector_front', [FileManagerController::class, 'connector']);
-        Route::post('theme', [FileManagerController::class, 'changeThemes']);
+
+        Route::post('theme/update', [SettingsController::class, 'updateTheme']);
+
+        Route::get('language/get', [SettingsController::class, 'getLanguages']);
+        Route::post('language/update', [SettingsController::class, 'updateLanguage']);
 
         Route::post('logs/all', [LogController::class, 'all'])->middleware('cap:bitapps_fm_can_access_logs');
 

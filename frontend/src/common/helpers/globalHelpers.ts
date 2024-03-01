@@ -2,32 +2,6 @@
 /* eslint-disable no-param-reassign */
 export const select = (selector: string): HTMLElement | null => document.querySelector(selector)
 
-// export const hideWpMenu = () => {
-//   select('body').style.overflow = 'hidden'
-//   if (!Object.prototype.hasOwnProperty.call(process.env, 'PUBLIC_URL')) {
-//     select('.wp-toolbar').style.paddingTop = '0'
-//     select('#wpadminbar').style.display = 'none'
-//     select('#adminmenumain').style.display = 'none'
-//     select('#adminmenuback').style.display = 'none'
-//     select('#adminmenuwrap').style.display = 'none'
-//     select('#wpfooter').style.display = 'none'
-//     select('#wpcontent').style.marginLeft = '0'
-//   }
-// }
-
-// export const showWpMenu = () => {
-//   select('body')[0].style.overflow = 'auto'
-//   if (!Object.prototype.hasOwnProperty.call(process.env, 'PUBLIC_URL')) {
-//     select('.wp-toolbar')[0].style.paddingTop = '32px'
-//     select('#wpadminbar').style.display = 'block'
-//     select('#adminmenumain').style.display = 'block'
-//     select('#adminmenuback').style.display = 'block'
-//     select('#adminmenuwrap').style.display = 'block'
-//     select('#wpcontent').style.marginLeft = null
-//     select('#wpfooter').style.display = 'block'
-//   }
-// }
-
 export const assign = (obj: any, keyPath: string, value: any) => {
   const lastKeyIndex = keyPath.length - 1
   // eslint-disable-next-line no-plusplus

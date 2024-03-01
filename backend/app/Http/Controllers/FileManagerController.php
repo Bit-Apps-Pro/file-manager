@@ -3,9 +3,7 @@
 namespace BitApps\FM\Http\Controllers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Dependencies\BitApps\WPKit\Http\Response;
 use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
-use BitApps\FM\Http\Requests\FileManagerRequest;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\FileManagerProvider;
 use BitApps\FM\Providers\FileManager\FileRoot;
@@ -14,22 +12,6 @@ use Exception;
 
 final class FileManagerController
 {
-    public function changeThemes(FileManagerRequest $request)
-    {
-        $reqData = $request->validated();
-        if (isset($reqData['theme'])
-        && Capabilities::filter(Config::VAR_PREFIX . 'user_can_change_theme')
-        ) {
-            $prefs = Plugin::instance()->preferences();
-            $prefs->setTheme(sanitize_text_field($reqData['theme']));
-            if ($prefs->saveOptions()) {
-                return Response::success([])->message(__('Theme updated successfully', 'file-manger'));
-            }
-        }
-
-        return Response::error([])->message(__('Failed to update theme', 'file-manger'));
-    }
-
     /**
      * File Manager connector function
      *
