@@ -20,6 +20,10 @@ body {
   color: var(--accent-color);
 }
 
+.elfinder-ltr .elfinder-path {
+  opacity: 0;
+}
+
 #bit-apps-root {
   background: #242424;
   direction: ltr !important;
