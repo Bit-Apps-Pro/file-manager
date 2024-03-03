@@ -9,7 +9,8 @@ class ValidateThemeRule extends Rule
 {
     public function validate($value)
     {
-        $themes = Plugin::instance()->preferences()->themes();
+        $themes            = Plugin::instance()->preferences()->themes();
+        $themes['default'] = 'default';
 
         return isset($themes[$value]) ? true : false;
     }

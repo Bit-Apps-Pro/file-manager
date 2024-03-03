@@ -1,6 +1,7 @@
 import { $appConfig } from '@common/globalStates'
 import $finder from '@common/globalStates/$finder'
 import { select } from '@common/helpers/globalHelpers'
+import { __ } from '@common/helpers/i18nwrap'
 import config from '@config/config'
 import AntIconWrapper from '@icons/AntIconWrapper'
 import LogoIcn from '@icons/LogoIcn'
@@ -28,19 +29,22 @@ export default function TopNavigation() {
   const { updateLanguage } = useUpdateLang()
   const { updateTheme } = useUpdateTheme()
 
-  console.dir(finder)
-
-  const handleChangeTheme = value => {
+  const handleThemeChange = value => {
     updateTheme(value).then(response => {
       if (response.code === 'SUCCESS') {
         finder?.changeTheme(value).storage('theme', value)
+        if (config.THEME === 'default' || config.THEME.includes('bootstrap')) {
+          window.location.reload()
+        }
+      } else if (response?.message) {
+        notification.error({ message: response.message })
       } else {
-        notification.error(response?.message ?? __('Failed to update theme'))
+        response?.data?.theme?.map(error => notification.error({ message: error }))
       }
     })
   }
 
-  const handleLanguageTheme = value => {
+  const handleLanguageChange = value => {
     updateLanguage(value).then(response => {
       if (response.code === 'SUCCESS') {
         finder?.storage('lang', value)
@@ -67,7 +71,7 @@ export default function TopNavigation() {
     >
       <div className={cls.logo}>
         <LogoIcn size={30} />
-        <LogoText h={35} />
+        <LogoText h={35} dark={isDarkTheme} />
       </div>
       <Space style={{ paddingInline: '40px', fontSize: '12px' }}>
         <Divider orientation="left" type="vertical" />
@@ -106,7 +110,7 @@ export default function TopNavigation() {
           defaultValue={config.THEME}
           style={{ width: 'max-content' }}
           variant="borderless"
-          onChange={handleChangeTheme}
+          onChange={handleThemeChange}
         >
           {config.THEMES.map(finderTheme => (
             <Select.Option key={finderTheme.key}>{finderTheme.title}</Select.Option>
@@ -116,7 +120,7 @@ export default function TopNavigation() {
           defaultValue={config.LANG}
           style={{ width: 'max-content' }}
           variant="borderless"
-          onChange={handleLanguageTheme}
+          onChange={handleLanguageChange}
         >
           {languages?.map(lang => <Select.Option key={lang.code}>{lang.name}</Select.Option>)}
         </Select>

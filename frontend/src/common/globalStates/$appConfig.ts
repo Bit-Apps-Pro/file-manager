@@ -3,7 +3,7 @@ import config from '@config/config'
 import { atomWithStorage } from 'jotai/utils'
 
 const $appConfig = atomWithStorage('bitapps-fm-config', {
-  isDarkTheme: fm?.theme?.includes('material') ?? getColorPreference(),
+  isDarkTheme: config.THEME.includes('material') && getColorPreference(),
   isSidebarCollapsed: false,
   isWpMenuCollapsed: false,
   preferNodeDetailsInDrawer: false

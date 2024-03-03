@@ -93,6 +93,10 @@ class Admin
             $config['users'] = Plugin::instance()->permissions()->allUsers();
         }
 
+        if ($adBanner = Config::adBanner()) {
+            $config['adBanner'] = $adBanner;
+        }
+
         return (array) $config + [
             'action'  => Config::withPrefix('connector'),
             'options' => Plugin::instance()->preferences()->finderOptions(),

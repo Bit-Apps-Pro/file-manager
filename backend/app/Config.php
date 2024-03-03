@@ -4,6 +4,8 @@
 
 namespace BitApps\FM;
 
+use DateTimeImmutable;
+
 if (!\defined('ABSPATH')) {
     exit;
 }
@@ -161,6 +163,23 @@ class Config
     public static function isDev()
     {
         return is_readable(Config::get('BASEDIR') . '/port');
+    }
+
+    public static function adBanner()
+    {
+        $hideAT  = new DateTimeImmutable('2024-01-14');
+        $current = new DateTimeImmutable();
+
+        $diff = date_diff($current, $hideAT);
+
+        if ($diff->invert) {
+            return false;
+        }
+
+        return [
+            'url' => 'https://bitapps.pro',
+            'img' => self::get('ASSET_URI') . '/img/banner.png',
+        ];
     }
 
     /**

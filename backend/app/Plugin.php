@@ -300,7 +300,7 @@ final class Plugin
         // elFinder Scripts depends on jQuery UI core, selectable, draggable, droppable, resizable, dialog and slider.
         wp_register_script(
             'bfm-elfinder-script',
-            BFM_FINDER_URL . 'js/elfinder.min.js',
+            BFM_FINDER_URL . 'js/elfinder.full.js',
             ['jquery', 'jquery-ui-core', 'jquery-ui-selectable', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-resizable', 'jquery-ui-dialog', 'jquery-ui-slider', 'jquery-ui-tabs']
         );
 

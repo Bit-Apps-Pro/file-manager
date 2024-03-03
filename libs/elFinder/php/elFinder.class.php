@@ -32,7 +32,7 @@ class elFinder
      *
      * @var integer
      */
-    protected static $ApiRevision = 62;
+    protected static $ApiRevision = 65;
 
     /**
      * Storages (root dirs)
@@ -2706,7 +2706,6 @@ class elFinder
             curl_setopt($ch, CURLOPT_FILE, $outfp);
         } else {
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
         }
         curl_setopt($ch, CURLOPT_LOW_SPEED_LIMIT, 1);
         curl_setopt($ch, CURLOPT_LOW_SPEED_TIME, $timeout);

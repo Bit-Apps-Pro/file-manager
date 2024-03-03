@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react'
 
-import $finder, { $finderCurrentPath } from '@common/globalStates/$finder'
-import { Breadcrumb, Space } from 'antd'
+import $finder, { $finderCurrentPath, $finderViewType } from '@common/globalStates/$finder'
+import config from '@config/config'
+import LucideIcn from '@icons/LucideIcn'
+import { Breadcrumb, Button, Col, Flex, Image, Row, Space } from 'antd'
 import { useAtom, useSetAtom } from 'jotai'
 
 import configureElFinder from './helpers/configureElFinder'
@@ -9,18 +11,22 @@ import initThemeChangeHandler from './helpers/initThemeChangeHandler'
 
 export default function Root() {
   const finderRef = useRef<HTMLDivElement>(null)
-  const setFinder = useSetAtom($finder)
+  const [elfinder, setFinder] = useAtom($finder)
   const [currentPath, setFinderCurrentPath] = useAtom($finderCurrentPath)
+  const [viewType, setFinderViewType] = useAtom($finderViewType)
 
   const generateFullPath = finder => {
     const parents = finder.parents(finder.cwd().hash)
-    const breadcrumbItems = parents.map(hash => {
+    const breadcrumbItems = parents.map((hash: string) => {
       const fileObj = finder.file(hash)
       const fileName = fileObj.i18n ?? fileObj.name
       return { title: fileName }
     })
-    console.log('finder.cwd()', finder.cwd(), { breadcrumbItems })
     setFinderCurrentPath(breadcrumbItems)
+  }
+
+  const changeViewState = finder => {
+    setFinderViewType(finder?.viewType)
   }
 
   useEffect(() => {
@@ -30,6 +36,10 @@ export default function Root() {
     finder.bind('open searchend parents', () => {
       generateFullPath(finder)
     })
+
+    finder.bind('viewchange', () => {
+      changeViewState(finder)
+    })
     return () => {
       finder?.destroy()
       setFinder(null)
@@ -38,9 +48,60 @@ export default function Root() {
 
   return (
     <>
-      <Space>
-        <Breadcrumb items={currentPath} />
-      </Space>
+      <Flex className="p-1">
+        <Flex
+          style={{
+            flexDirection: 'column',
+            width: `${config.BANNER !== null ? '50%' : '100%'}`,
+            justifyContent: 'center'
+          }}
+        >
+          <Breadcrumb items={currentPath} />
+          <Flex style={{ justifyContent: 'space-between' }}>
+            <Flex style={{ gap: 15 }}>
+              <Button
+                type="primary"
+                icon={<LucideIcn name="UploadIcon" />}
+                onClick={() =>
+                  elfinder?.exec('upload', [], { _userAction: true, _currentType: 'toolbar' })
+                }
+              >
+                Upload
+              </Button>
+              <Button
+                ghost
+                icon={<LucideIcn name="FolderPlusIcon" />}
+                onClick={() =>
+                  elfinder?.exec('mkdir', [], { _userAction: true, _currentType: 'toolbar' })
+                }
+              >
+                Create Folder
+              </Button>
+            </Flex>
+            <Flex style={{ gap: 15 }}>
+              <Button
+                icon={<LucideIcn name="LayoutGridIcon" />}
+                onClick={() =>
+                  elfinder?.exec('view', [], { _userAction: true, _currentType: 'toolbar' })
+                }
+                disabled={viewType === 'icons'}
+              />
+              <Button
+                icon={<LucideIcn name="LayoutList" />}
+                onClick={() =>
+                  elfinder?.exec('view', [], { _userAction: true, _currentType: 'toolbar' })
+                }
+                disabled={viewType === 'list'}
+              />
+            </Flex>
+          </Flex>
+        </Flex>
+        {config.BANNER !== null && (
+          <Space style={{ width: '50%' }}>
+            <Image alt="adBanner" src={config.BANNER.img} />
+          </Space>
+        )}
+      </Flex>
       <div id="file-manager" ref={finderRef} />
     </>
   )

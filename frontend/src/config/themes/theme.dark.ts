@@ -6,7 +6,7 @@ import commonThemeToken from './common'
 export const darkThemeToken: Partial<AliasToken> = {
   ...commonThemeToken,
   colorBgContainer: '#1c1a1e',
-  colorBgBase: '#1c1a1e',
+  colorBgBase: '#1c1a1e'
   // colorBgBase: '#161218',
   // colorBgBase: '#040304',
   // colorTextBase: '#fce3ff',
@@ -26,5 +26,9 @@ export const darkThemeToken: Partial<AliasToken> = {
 export const darkThemeComponentToken: OverrideToken = {
   Menu: {
     darkPopupBg: darkThemeToken.colorBgContainer
+  },
+  Button: {
+    defaultGhostBorderColor: '#ffffff',
+    defaultGhostColor: '#ffffff'
   }
 }
