@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { HashRouter } from 'react-router-dom'
 
 import '@resource/styles/global.css'
+import '@resource/styles/plugin.css'
 import '@resource/styles/utilities.sass'
 import '@resource/styles/variables.css'
 import '@resource/styles/wp-css-reset.css'

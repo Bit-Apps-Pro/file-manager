@@ -55,7 +55,7 @@ echo esc_url($wp_upload_dir['path']);
 
                 <tr>
                     <td><?php esc_html_e('Timeout', 'file-manager'); ?></td>
-                    <td><?php echo esc_html(\ini_get('maxesc_html_execution_time')); ?></td>
+                    <td><?php echo esc_html(\ini_get('max_execution_time')); ?></td>
                 </tr>
 
                 <tr>

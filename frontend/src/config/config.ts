@@ -47,9 +47,11 @@ const config = {
   ROUTE_PREFIX: getServerVariable('routePrefix', 'bit_fm_'),
   USERS: getServerVariable('users', []),
   BANNER: getServerVariable('adBanner', null),
+  SYS_INFO: getServerVariable('sys_info', null),
   THEMES: getThemes(),
   THEME: getOptionVariable('theme', []),
-  LANG: getOptionVariable('lang', 'en')
+  LANG: getOptionVariable('lang', 'en'),
+  ViewType: getOptionVariable('defaultView', 'icons')
 }
 
 export default config

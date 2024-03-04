@@ -1,7 +1,7 @@
 import config from '@config/config'
 
 export default function configureElFinder() {
-  const { AJAX_URL, NONCE } = config
+  const { AJAX_URL, NONCE, LANG, THEME, ViewType } = config
   const finder = jQuery('#file-manager').elfinder({
     url: AJAX_URL,
     customData: {
@@ -29,5 +29,9 @@ export default function configureElFinder() {
   })[0].elfinder
   // .elfinder('instance')
   // console.log('finder', finder)
+
+  finder.storage('lang', LANG)
+  finder.storage('theme', THEME)
+  finder.storage('view', ViewType)
   return finder
 }

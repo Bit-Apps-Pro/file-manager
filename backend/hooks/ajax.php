@@ -24,6 +24,7 @@ Route::group(
 
         Route::get('settings/get', [SettingsController::class, 'get']);
         Route::post('settings/update', [SettingsController::class, 'update']);
+        Route::post('settings/toggle-view', [SettingsController::class, 'toggleView']);
 
         Route::get('permissions/get', [PermissionsController::class, 'get']);
         Route::post('permissions/update', [PermissionsController::class, 'update']);

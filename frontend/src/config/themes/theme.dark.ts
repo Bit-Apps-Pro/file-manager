@@ -6,10 +6,11 @@ import commonThemeToken from './common'
 export const darkThemeToken: Partial<AliasToken> = {
   ...commonThemeToken,
   colorBgContainer: '#1c1a1e',
-  colorBgBase: '#1c1a1e'
+  colorBgBase: '#1c1a1e',
+  colorTextBase: '#ffffff',
+  colorTextQuaternary: '#ffffff'
   // colorBgBase: '#161218',
   // colorBgBase: '#040304',
-  // colorTextBase: '#fce3ff',
   // colorTextBase: '#fef1ff',
   // colorBgElevated: 'rgb(28, 21, 28)',
   // colorBgContainer: '#151015',
@@ -25,10 +26,11 @@ export const darkThemeToken: Partial<AliasToken> = {
 
 export const darkThemeComponentToken: OverrideToken = {
   Menu: {
-    darkPopupBg: darkThemeToken.colorBgContainer
+    darkPopupBg: darkThemeToken.colorBgContainer,
+    darkItemColor: darkThemeToken.colorTextBase
   },
   Button: {
-    defaultGhostBorderColor: '#ffffff',
-    defaultGhostColor: '#ffffff'
+    defaultGhostBorderColor: darkThemeToken.colorTextBase,
+    defaultGhostColor: darkThemeToken.colorTextBase
   }
 }

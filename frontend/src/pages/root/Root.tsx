@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import $finder, { $finderCurrentPath, $finderViewType } from '@common/globalStates/$finder'
 import config from '@config/config'
 import LucideIcn from '@icons/LucideIcn'
+import useUpdateViewType from '@pages/Settings/data/useUpdateViewType'
 import { Breadcrumb, Button, Col, Flex, Image, Row, Space } from 'antd'
 import { useAtom, useSetAtom } from 'jotai'
 
@@ -14,6 +15,8 @@ export default function Root() {
   const [elfinder, setFinder] = useAtom($finder)
   const [currentPath, setFinderCurrentPath] = useAtom($finderCurrentPath)
   const [viewType, setFinderViewType] = useAtom($finderViewType)
+
+  const { toggleViewType } = useUpdateViewType()
 
   const generateFullPath = finder => {
     const parents = finder.parents(finder.cwd().hash)
@@ -27,6 +30,11 @@ export default function Root() {
 
   const changeViewState = finder => {
     setFinderViewType(finder?.viewType)
+  }
+
+  const handleToggleViewType = () => {
+    elfinder?.exec('view', [], { _userAction: true, _currentType: 'toolbar' })
+    toggleViewType(viewType === 'list' ? 'icons' : 'list')
   }
 
   useEffect(() => {
@@ -48,12 +56,13 @@ export default function Root() {
 
   return (
     <>
-      <Flex className="p-1">
+      <Flex>
         <Flex
           style={{
             flexDirection: 'column',
             width: `${config.BANNER !== null ? '50%' : '100%'}`,
-            justifyContent: 'center'
+            justifyContent: 'center',
+            paddingInline: 10
           }}
         >
           <Breadcrumb items={currentPath} />
@@ -81,16 +90,12 @@ export default function Root() {
             <Flex style={{ gap: 15 }}>
               <Button
                 icon={<LucideIcn name="LayoutGridIcon" />}
-                onClick={() =>
-                  elfinder?.exec('view', [], { _userAction: true, _currentType: 'toolbar' })
-                }
+                onClick={handleToggleViewType}
                 disabled={viewType === 'icons'}
               />
               <Button
                 icon={<LucideIcn name="LayoutList" />}
-                onClick={() =>
-                  elfinder?.exec('view', [], { _userAction: true, _currentType: 'toolbar' })
-                }
+                onClick={handleToggleViewType}
                 disabled={viewType === 'list'}
               />
             </Flex>
@@ -98,11 +103,11 @@ export default function Root() {
         </Flex>
         {config.BANNER !== null && (
           <Space style={{ width: '50%' }}>
-            <Image alt="adBanner" src={config.BANNER.img} />
+            <Image alt="adBanner" src={config.BANNER.img} preview={false} />
           </Space>
         )}
       </Flex>
-      <div id="file-manager" ref={finderRef} />
+      <div id="file-manager" ref={finderRef} style={{ height: '100%' }} />
     </>
   )
 }

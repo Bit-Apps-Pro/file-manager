@@ -93,6 +93,10 @@ class Admin
             $config['users'] = Plugin::instance()->permissions()->allUsers();
         }
 
+        if (Capabilities::check('install_plugins')) {
+            $config['sys_info'] = $this->getSystemInfo();
+        }
+
         if ($adBanner = Config::adBanner()) {
             $config['adBanner'] = $adBanner;
         }
@@ -220,6 +224,21 @@ class Admin
         }
 
         return $newTag;
+    }
+
+    private function getSystemInfo()
+    {
+        return [
+            'currentMediaDir'    => esc_url(wp_upload_dir()['path']),
+            'phpVersion'         => esc_html(PHP_VERSION),
+            'iniPath'            => esc_html(php_ini_loaded_file()),
+            'uploadMaxFilesize'  => esc_html(\ini_get('upload_max_filesize')),
+            'postMaxSize'        => esc_html(\ini_get('post_max_size')),
+            'memoryLimit'        => esc_html(\ini_get('memory_limit')),
+            'maxExecutionTime'   => esc_html(\ini_get('max_execution_time')),
+            'ua'                 => esc_html($_SERVER['HTTP_USER_AGENT']),
+            'fileEditNotAllowed' => \defined('DISALLOW_FILE_EDIT') && DISALLOW_FILE_EDIT,
+        ];
     }
 
     /**

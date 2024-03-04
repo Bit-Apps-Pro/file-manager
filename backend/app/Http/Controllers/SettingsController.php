@@ -7,6 +7,7 @@ use BitApps\FM\Http\Requests\Settings\LangUpdateRequest;
 use BitApps\FM\Http\Requests\Settings\SettingsRequest;
 use BitApps\FM\Http\Requests\Settings\SettingsUpdateRequest;
 use BitApps\FM\Http\Requests\Settings\ThemeUpdateRequest;
+use BitApps\FM\Http\Requests\Settings\ToggleViewRequest;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\PreferenceProvider;
 
@@ -58,6 +59,21 @@ final class SettingsController
         }
 
         return Response::error([])->message('failed to update settings');
+    }
+
+    public function toggleView(ToggleViewRequest $request)
+    {
+        $updatedSettings = $request->validated();
+
+        $settingsService = Plugin::instance()->preferences();
+
+        $settingsService->setViewType($updatedSettings['viewType']);
+
+        if ($settingsService->saveOptions()) {
+            return Response::success([])->message('View type updated successfully');
+        }
+
+        return Response::error([])->message('failed to update view type');
     }
 
     public function updateTheme(ThemeUpdateRequest $request)

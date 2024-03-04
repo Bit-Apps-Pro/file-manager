@@ -1,13 +1,11 @@
 import { $appConfig } from '@common/globalStates'
 import $finder from '@common/globalStates/$finder'
-import { select } from '@common/helpers/globalHelpers'
 import { __ } from '@common/helpers/i18nwrap'
 import config from '@config/config'
 import AntIconWrapper from '@icons/AntIconWrapper'
 import LogoIcn from '@icons/LogoIcn'
 import LogoText from '@icons/LogoText'
-import { Button, type MenuProps, Select, Space, message, notification } from 'antd'
-import { Divider, Layout, Menu, Typography, theme } from 'antd'
+import { Button, Divider, Layout, Menu, Select, Space, Typography, notification, theme } from 'antd'
 import { useAtomValue } from 'jotai'
 
 import cls from './TopNavigation.module.css'
@@ -29,11 +27,11 @@ export default function TopNavigation() {
   const { updateLanguage } = useUpdateLang()
   const { updateTheme } = useUpdateTheme()
 
-  const handleThemeChange = value => {
-    updateTheme(value).then(response => {
+  const handleThemeChange = (updatedTheme: string) => {
+    updateTheme(updatedTheme).then(response => {
       if (response.code === 'SUCCESS') {
-        finder?.changeTheme(value).storage('theme', value)
-        if (config.THEME === 'default' || config.THEME.includes('bootstrap')) {
+        finder?.changeTheme(updatedTheme).storage('theme', updatedTheme)
+        if (config.THEME === 'default' || ['bootstrap', 'default'].includes(updatedTheme)) {
           window.location.reload()
         }
       } else if (response?.message) {
@@ -60,9 +58,9 @@ export default function TopNavigation() {
       style={{
         display: 'flex',
         alignItems: 'center',
-        background: colorBgContainer,
+        justifyContent: 'space-around',
+        background: isDarkTheme ? colorBgContainer : '#F1F5FF',
         flexWrap: 'wrap',
-        // position: 'fixed',
         width: '100%',
         height: 'auto',
         zIndex: 1,
@@ -73,8 +71,8 @@ export default function TopNavigation() {
         <LogoIcn size={30} />
         <LogoText h={35} dark={isDarkTheme} />
       </div>
+      <Divider orientation="left" type="vertical" />
       <Space style={{ paddingInline: '40px', fontSize: '12px' }}>
-        <Divider orientation="left" type="vertical" />
         <Typography.Text>Share Your Product Experience!</Typography.Text>
         <Button
           style={{ fontSize: 14, borderRadius: 14 }}
@@ -92,19 +90,20 @@ export default function TopNavigation() {
           </AntIconWrapper>
         </Button>
       </Space>
+      <Divider orientation="right" type="vertical" style={{ marginTop: '4px' }} />
       <Menu
         theme={isDarkTheme ? 'dark' : 'light'}
         mode="horizontal"
+        selectable={false}
         items={items}
         style={{
-          flex: 1,
           flexWrap: 'nowrap',
-          backgroundColor: colorBgContainer,
+          backgroundColor: isDarkTheme ? colorBgContainer : '#F1F5FF',
           justifyContent: 'center'
         }}
       />
+      <Divider orientation="right" type="vertical" style={{ marginTop: '4px' }} />
       <Space>
-        <Divider orientation="right" type="vertical" style={{ marginTop: '4px' }} />
         Theme:
         <Select
           defaultValue={config.THEME}

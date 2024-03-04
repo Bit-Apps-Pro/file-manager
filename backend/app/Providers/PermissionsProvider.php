@@ -132,7 +132,7 @@ class PermissionsProvider
             $path = $this->permissionsForCurrentRole()['path'];
         }
 
-        if (empty($path) || !file_exists($path)) {
+        if (empty($path) || !is_readable($path)) {
             throw new PreCommandException(esc_html__('please check root folder for file manager, from file manager settings', 'file-manager'));
         }
 
