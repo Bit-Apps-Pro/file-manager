@@ -527,7 +527,7 @@ class PreferenceProvider
     public function getRootVolumeName()
     {
         return isset($this->preferences['root_folder_name'])
-        ? esc_attr($this->preferences['root_folder_name']) : '';
+        ? esc_attr($this->preferences['root_folder_name']) : basename($this->getRootPath());
     }
 
     public function setWidth($width)
@@ -674,7 +674,7 @@ class PreferenceProvider
                 'files'  => [],
             ];
             if (\count($this->permissions()->getEnabledCommand())) {
-                $contextMenu['files']  = ['download'];
+                $contextMenu['files'] = ['download'];
             }
         }
 

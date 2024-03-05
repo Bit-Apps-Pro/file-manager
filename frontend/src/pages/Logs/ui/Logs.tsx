@@ -24,13 +24,18 @@ const columns: TableColumnsType<LogType> = [
     render: logDetails => (
       <Space>
         <Row>
-          <Col>Driver</Col>
-          <Col>Files</Col>
+          <Col>{logDetails?.driver && `Driver: ${logDetails?.driver}`}</Col>
         </Row>
         <hr />
         <Row>
-          <Col>{logDetails?.driver}</Col>
-          <Col title="Files">{logDetails?.files?.map(file => <ol>{file?.path}</ol>)}</Col>
+          <Col>
+            {logDetails?.files && (
+              <>
+                <span>Files:</span>
+                <li>{logDetails?.files?.map(file => <ol>{file?.path}</ol>)}</li>
+              </>
+            )}
+          </Col>
         </Row>
       </Space>
     )

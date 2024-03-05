@@ -177,7 +177,7 @@ class PermissionsProvider
             : $this->getDefaultPublicRootURL();
     }
 
-    public function getDefaultRootPathByCriteria($criteria, $type)
+    public function getPublicRootPathByCriteria($criteria, $type)
     {
         $defaultPath = $this->getDefaultPublicRootPath();
         $rootPath    = wp_unslash($defaultPath) . DIRECTORY_SEPARATOR . "{$type}_{$criteria}";
@@ -192,14 +192,26 @@ class PermissionsProvider
         return $rootPath;
     }
 
-    public function getDefaultRootPathForUser($userID)
+    public function getPublicRootPathForUser($userID)
     {
-        return $this->getDefaultRootPathByCriteria($userID, 'user');
+        return $this->getPublicRootPathByCriteria($userID, 'user');
     }
 
-    public function getDefaultRootPathForRole($role)
+    public function getPublicRootPathForRole($role)
     {
-        return $this->getDefaultRootPathByCriteria($role, 'role');
+        return $this->getPublicRootPathByCriteria($role, 'role');
+    }
+
+    public function getPathByFolderOption()
+    {
+        switch ($this->getFolderOption()) {
+            case 'role':
+                return $this->getPublicRootPathForRole($this->currentUserRole());
+            case 'user':
+                return $this->getPublicRootPathForRole($this->currentUserRole());
+            default:
+                return $this->getPublicRootPath();
+        }
     }
 
     public function getByRole($role)
@@ -214,17 +226,9 @@ class PermissionsProvider
 
     public function getPermissions($type, $name)
     {
-        if ($this->isCommonFolderEnabled()) {
-            $defaultPath = $this->getDefaultPublicRootPath();
-        } elseif ($type === 'by_user') {
-            $defaultPath = $this->getDefaultRootPathForUser($name);
-        } else {
-            $defaultPath = $this->getDefaultRootPathForRole($name);
-        }
-
         $settings = [
             'commands' => [],
-            'path'     => $defaultPath,
+            'path'     => '',
         ];
 
         if (

@@ -523,6 +523,14 @@ class FileRoot
     }
 
     /**
+     * Is this folder readable
+     */
+    public function isReadable()
+    {
+        return is_readable($this->_path);
+    }
+
+    /**
      * Set alias for the root
      *
      * @param string $alias
@@ -814,7 +822,7 @@ class FileRoot
             return $this->{"_{$name}"} = $value;
         }
 
-        throw new Exception("Property [" . esc_html($name) ."] not Exists in " . __CLASS__);
+        throw new Exception('Property [' . esc_html($name) . '] not Exists in ' . __CLASS__);
     }
 
     public function getOption($name)

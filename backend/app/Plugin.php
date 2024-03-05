@@ -88,7 +88,7 @@ final class Plugin
     {
         Connection::setPluginPrefix(Config::DB_PREFIX);
         if (RequestType::is('admin')) {
-            $this->_container['review_notifier'] = new ReviewProvider();
+            // $this->_container['review_notifier'] = new ReviewProvider();
             new Admin();
         }
 
