@@ -92,7 +92,7 @@ final class FileManagerController
     {
         if (!is_user_logged_in()) {
             return $this->guestVolume();
-        } elseif (is_user_logged_in() && RequestType::is('admin')) {
+        } elseif (is_user_logged_in() && RequestType::is('admin') && Plugin::instance()->permissions()->isDisabledForAdmin()) {
             return $this->getDashboardVolumes();
         }
 
@@ -147,22 +147,22 @@ final class FileManagerController
 
         $roots[] = $this->processFileRoot(
             $permissions->getPathByFolderOption(),
-            $permissions->getPublicRootURL(),
-            'Public'
+            'Public',
+            $permissions->getPublicRootURL()
         );
 
         $permissionByRole   = $permissions->getByRole($permissions->currentUserRole());
         $roots[]            = $this->processFileRoot(
             $permissionByRole['path'],
-            $permissions->getPublicRootURL(),
-            $permissions->currentUserRole()
+            $permissions->currentUserRole(),
+            $permissions->getPublicRootURL()
         );
 
         $permissionByUser   = $permissions->getByUser($permissions->currentUserID());
         $roots[]            = $this->processFileRoot(
             $permissionByUser['path'],
-            $permissions->getPublicRootURL(),
-            $permissions->currentUser()->display_name
+            $permissions->currentUser()->display_name,
+            $permissions->getPublicRootURL()
         );
 
         return $roots;

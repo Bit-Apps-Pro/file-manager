@@ -1,7 +1,7 @@
 jQuery(document).ready(function() {
     var $ = jQuery
     const finder = jQuery('#file-manager').elfinder({
-      url: fm.ajax_url,
+      url: fm.ajaxURL,
       themes: fm.options.themes,
       theme: fm.options.theme,
       cssAutoLoad: fm.options.cssAutoLoad,
