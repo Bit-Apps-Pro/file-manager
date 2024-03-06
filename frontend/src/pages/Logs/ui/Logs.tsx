@@ -1,4 +1,3 @@
-import { useId } from 'react'
 import { useParams } from 'react-router-dom'
 
 import config from '@config/config'
@@ -22,7 +21,7 @@ const columns: TableColumnsType<LogType> = [
     title: 'Details',
     dataIndex: 'details',
     key: 'details',
-    render: (details, record, index) => (
+    render: (details, _record, index) => (
       <Space>
         <Row>
           <Col>{details?.driver && `Driver: ${details?.driver}`}</Col>
