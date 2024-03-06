@@ -7,30 +7,62 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-12-23T11:36:37+00:00\n"
+"POT-Creation-Date: 2024-03-07T02:22:25+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: file-manager\n"
 
-#: app/Config.php:173
+#: app/Config.php:195
 msgid "Support"
 msgstr ""
 
-#: app/Config.php:177
+#: app/Config.php:199
 msgid "Settings"
 msgstr ""
 
-#: app/Config.php:181
-#: app/Views/Admin.php:199
+#: app/Config.php:203
+#: app/Views/Admin.php:298
 msgid "Home"
 msgstr ""
 
-#: app/Http/Middleware/NonceCheckerMiddleware.php:18
+#: app/Http/Controllers/FileManagerController.php:86
+msgid "There is no readable volume. Please select an readable folder from settings"
+msgstr ""
+
+#: app/Http/Middleware/CapCheckerMiddleware.php:15
+msgid "You are not authorized to access this endpoint"
+msgstr ""
+
+#: app/Http/Middleware/NonceCheckerMiddleware.php:21
+#: app/Http/Middleware/NonceCheckerMiddleware.php:24
 msgid "Token expired. please reload the page"
 msgstr ""
 
+#: app/Http/Rules/ValidateCommandsRule.php:41
+#: app/Http/Rules/ValidateRolesRule.php:41
+#: app/Http/Rules/ValidateUsersRule.php:36
+#: app/Http/Rules/ValidPathRule.php:24
+msgid "Folder Path Must be within WordPress root directory"
+msgstr ""
+
+#: app/Http/Rules/ValidateLangRule.php:19
+msgid "Language code is not valid"
+msgstr ""
+
+#: app/Http/Rules/ValidateThemeRule.php:20
+msgid "Theme variant is not valid"
+msgstr ""
+
+#: app/Http/Rules/ValidPathRule.php:26
+msgid "Please provide a readable folder path"
+msgstr ""
+
+#: app/Http/Rules/ValidUIOptionRule.php:29
+msgid "UI option must be valid"
+msgstr ""
+
 #. translators: 1: elFInder Command
-#: app/Providers/AccessControlProvider.php:85
+#: app/Providers/AccessControlProvider.php:84
 msgid "You are not authorized to run this command [ %s ] on file manager"
 msgstr ""
 
@@ -47,809 +79,813 @@ msgstr ""
 msgid "Not Authorized to edit file"
 msgstr ""
 
-#: app/Providers/PermissionsProvider.php:145
+#: app/Providers/PermissionsProvider.php:136
 msgid "please check root folder for file manager, from file manager settings"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:158
+#: app/Providers/PreferenceProvider.php:197
 msgid "Default"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:159
+#: app/Providers/PreferenceProvider.php:198
 msgid "Afar"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:160
+#: app/Providers/PreferenceProvider.php:199
 msgid "Abkhazian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:161
+#: app/Providers/PreferenceProvider.php:200
 msgid "Avestan"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:162
+#: app/Providers/PreferenceProvider.php:201
 msgid "Afrikaans"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:163
+#: app/Providers/PreferenceProvider.php:202
 msgid "Akan"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:164
+#: app/Providers/PreferenceProvider.php:203
 msgid "Amharic"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:165
+#: app/Providers/PreferenceProvider.php:204
 msgid "Aragonese"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:166
+#: app/Providers/PreferenceProvider.php:205
 msgid "Arabic"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:167
+#: app/Providers/PreferenceProvider.php:206
 msgid "Assamese"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:168
+#: app/Providers/PreferenceProvider.php:207
 msgid "Avaric"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:169
+#: app/Providers/PreferenceProvider.php:208
 msgid "Aymara"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:170
+#: app/Providers/PreferenceProvider.php:209
 msgid "Azerbaijani"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:171
+#: app/Providers/PreferenceProvider.php:210
 msgid "Bashkir"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:172
+#: app/Providers/PreferenceProvider.php:211
 msgid "Belarusian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:173
+#: app/Providers/PreferenceProvider.php:212
 msgid "Bulgarian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:174
+#: app/Providers/PreferenceProvider.php:213
 msgid "Bihari"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:175
+#: app/Providers/PreferenceProvider.php:214
 msgid "Bislama"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:176
+#: app/Providers/PreferenceProvider.php:215
 msgid "Bambara"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:177
+#: app/Providers/PreferenceProvider.php:216
 msgid "Bengali"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:178
+#: app/Providers/PreferenceProvider.php:217
 msgid "Tibetan"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:179
+#: app/Providers/PreferenceProvider.php:218
 msgid "Breton"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:180
+#: app/Providers/PreferenceProvider.php:219
 msgid "Bosnian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:181
+#: app/Providers/PreferenceProvider.php:220
 msgid "Catalan"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:182
+#: app/Providers/PreferenceProvider.php:221
 msgid "Chechen"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:183
+#: app/Providers/PreferenceProvider.php:222
 msgid "Chamorro"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:184
+#: app/Providers/PreferenceProvider.php:223
 msgid "Corsican"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:185
+#: app/Providers/PreferenceProvider.php:224
 msgid "Cree"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:186
+#: app/Providers/PreferenceProvider.php:225
 msgid "Czech"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:187
+#: app/Providers/PreferenceProvider.php:226
 msgid "Church Slavic"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:188
+#: app/Providers/PreferenceProvider.php:227
 msgid "Chuvash"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:189
+#: app/Providers/PreferenceProvider.php:228
 msgid "Welsh"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:190
+#: app/Providers/PreferenceProvider.php:229
 msgid "Danish"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:191
+#: app/Providers/PreferenceProvider.php:230
 msgid "German"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:192
+#: app/Providers/PreferenceProvider.php:231
 msgid "Divehi"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:193
+#: app/Providers/PreferenceProvider.php:232
 msgid "Dzongkha"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:194
+#: app/Providers/PreferenceProvider.php:233
 msgid "Ewe"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:195
+#: app/Providers/PreferenceProvider.php:234
 msgid "Greek"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:196
+#: app/Providers/PreferenceProvider.php:235
 msgid "English"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:197
+#: app/Providers/PreferenceProvider.php:236
 msgid "Esperanto"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:198
+#: app/Providers/PreferenceProvider.php:237
 msgid "Spanish"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:199
+#: app/Providers/PreferenceProvider.php:238
 msgid "Estonian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:200
+#: app/Providers/PreferenceProvider.php:239
 msgid "Basque"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:201
+#: app/Providers/PreferenceProvider.php:240
 msgid "Persian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:202
+#: app/Providers/PreferenceProvider.php:241
 msgid "Fulah"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:203
+#: app/Providers/PreferenceProvider.php:242
 msgid "Finnish"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:204
+#: app/Providers/PreferenceProvider.php:243
 msgid "Fijian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:205
+#: app/Providers/PreferenceProvider.php:244
 msgid "Faroese"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:206
+#: app/Providers/PreferenceProvider.php:245
 msgid "French"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:207
+#: app/Providers/PreferenceProvider.php:246
 msgid "Française"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:208
+#: app/Providers/PreferenceProvider.php:247
 msgid "Western Frisian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:209
+#: app/Providers/PreferenceProvider.php:248
 msgid "Irish"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:210
+#: app/Providers/PreferenceProvider.php:249
 msgid "Scottish Gaelic"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:211
+#: app/Providers/PreferenceProvider.php:250
 msgid "Galician"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:212
+#: app/Providers/PreferenceProvider.php:251
 msgid "Guarani"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:213
+#: app/Providers/PreferenceProvider.php:252
 msgid "Gujarati"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:214
+#: app/Providers/PreferenceProvider.php:253
 msgid "Manx"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:215
+#: app/Providers/PreferenceProvider.php:254
 msgid "Hausa"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:216
+#: app/Providers/PreferenceProvider.php:255
 msgid "Hebrew"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:217
+#: app/Providers/PreferenceProvider.php:256
 msgid "Hindi"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:218
+#: app/Providers/PreferenceProvider.php:257
 msgid "Hiri Motu"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:219
+#: app/Providers/PreferenceProvider.php:258
 msgid "Croatian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:220
+#: app/Providers/PreferenceProvider.php:259
 msgid "Haitian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:221
+#: app/Providers/PreferenceProvider.php:260
 msgid "Hungarian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:222
+#: app/Providers/PreferenceProvider.php:261
 msgid "Armenian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:223
+#: app/Providers/PreferenceProvider.php:262
 msgid "Herero"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:224
+#: app/Providers/PreferenceProvider.php:263
 msgid "Interlingua (International Auxiliary Language Association)"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:225
+#: app/Providers/PreferenceProvider.php:264
 msgid "Indonesian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:226
+#: app/Providers/PreferenceProvider.php:265
 msgid "Interlingue"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:227
+#: app/Providers/PreferenceProvider.php:266
 msgid "Igbo"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:228
+#: app/Providers/PreferenceProvider.php:267
 msgid "Sichuan Yi"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:229
+#: app/Providers/PreferenceProvider.php:268
 msgid "Inupiaq"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:230
+#: app/Providers/PreferenceProvider.php:269
 msgid "Ido"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:231
+#: app/Providers/PreferenceProvider.php:270
 msgid "Icelandic"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:232
+#: app/Providers/PreferenceProvider.php:271
 msgid "Italian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:233
+#: app/Providers/PreferenceProvider.php:272
 msgid "Inuktitut"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:234
-#: app/Providers/PreferenceProvider.php:235
+#: app/Providers/PreferenceProvider.php:273
+#: app/Providers/PreferenceProvider.php:274
 msgid "Japanese"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:236
+#: app/Providers/PreferenceProvider.php:275
 msgid "Javanese"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:237
+#: app/Providers/PreferenceProvider.php:276
 msgid "Georgian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:238
+#: app/Providers/PreferenceProvider.php:277
 msgid "Kongo"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:239
+#: app/Providers/PreferenceProvider.php:278
 msgid "Kikuyu"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:240
+#: app/Providers/PreferenceProvider.php:279
 msgid "Kwanyama"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:241
+#: app/Providers/PreferenceProvider.php:280
 msgid "Kazakh"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:242
+#: app/Providers/PreferenceProvider.php:281
 msgid "Kalaallisut"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:243
+#: app/Providers/PreferenceProvider.php:282
 msgid "Khmer"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:244
+#: app/Providers/PreferenceProvider.php:283
 msgid "Kannada"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:245
+#: app/Providers/PreferenceProvider.php:284
 msgid "Korean"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:246
+#: app/Providers/PreferenceProvider.php:285
 msgid "Kanuri"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:247
+#: app/Providers/PreferenceProvider.php:286
 msgid "Kashmiri"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:248
+#: app/Providers/PreferenceProvider.php:287
 msgid "Kurdish"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:249
+#: app/Providers/PreferenceProvider.php:288
 msgid "Komi"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:250
+#: app/Providers/PreferenceProvider.php:289
 msgid "Cornish"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:251
+#: app/Providers/PreferenceProvider.php:290
 msgid "Kirghiz"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:252
+#: app/Providers/PreferenceProvider.php:291
 msgid "Latin"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:253
+#: app/Providers/PreferenceProvider.php:292
 msgid "Luxembourgish"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:254
+#: app/Providers/PreferenceProvider.php:293
 msgid "Ganda"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:255
+#: app/Providers/PreferenceProvider.php:294
 msgid "Limburgish"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:256
+#: app/Providers/PreferenceProvider.php:295
 msgid "Lingala"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:257
+#: app/Providers/PreferenceProvider.php:296
 msgid "Lao"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:258
+#: app/Providers/PreferenceProvider.php:297
 msgid "Lithuanian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:259
+#: app/Providers/PreferenceProvider.php:298
 msgid "Luba-Katanga"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:260
+#: app/Providers/PreferenceProvider.php:299
 msgid "Latvian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:261
+#: app/Providers/PreferenceProvider.php:300
 msgid "Malagasy"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:262
+#: app/Providers/PreferenceProvider.php:301
 msgid "Marshallese"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:263
+#: app/Providers/PreferenceProvider.php:302
 msgid "Maori"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:264
+#: app/Providers/PreferenceProvider.php:303
 msgid "Macedonian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:265
+#: app/Providers/PreferenceProvider.php:304
 msgid "Malayalam"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:266
+#: app/Providers/PreferenceProvider.php:305
 msgid "Mongolian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:267
+#: app/Providers/PreferenceProvider.php:306
 msgid "Marathi"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:268
+#: app/Providers/PreferenceProvider.php:307
 msgid "Malay"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:269
+#: app/Providers/PreferenceProvider.php:308
 msgid "Maltese"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:270
+#: app/Providers/PreferenceProvider.php:309
 msgid "Burmese"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:271
+#: app/Providers/PreferenceProvider.php:310
 msgid "Nauru"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:272
+#: app/Providers/PreferenceProvider.php:311
 msgid "Norwegian Bokmal"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:273
+#: app/Providers/PreferenceProvider.php:312
 msgid "North Ndebele"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:274
+#: app/Providers/PreferenceProvider.php:313
 msgid "Nepali"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:275
+#: app/Providers/PreferenceProvider.php:314
 msgid "Ndonga"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:276
+#: app/Providers/PreferenceProvider.php:315
 msgid "Dutch"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:277
+#: app/Providers/PreferenceProvider.php:316
 msgid "Norwegian Nynorsk"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:278
+#: app/Providers/PreferenceProvider.php:317
 msgid "Norwegian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:279
+#: app/Providers/PreferenceProvider.php:318
 msgid "South Ndebele"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:280
+#: app/Providers/PreferenceProvider.php:319
 msgid "Navajo"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:281
+#: app/Providers/PreferenceProvider.php:320
 msgid "Chichewa"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:282
+#: app/Providers/PreferenceProvider.php:321
 msgid "Occitan"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:283
+#: app/Providers/PreferenceProvider.php:322
 msgid "Ojibwa"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:284
+#: app/Providers/PreferenceProvider.php:323
 msgid "Oromo"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:285
+#: app/Providers/PreferenceProvider.php:324
 msgid "Oriya"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:286
+#: app/Providers/PreferenceProvider.php:325
 msgid "Ossetian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:287
+#: app/Providers/PreferenceProvider.php:326
 msgid "Panjabi"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:288
+#: app/Providers/PreferenceProvider.php:327
 msgid "Pali"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:289
+#: app/Providers/PreferenceProvider.php:328
 msgid "Polish"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:290
+#: app/Providers/PreferenceProvider.php:329
 msgid "Pashto"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:291
+#: app/Providers/PreferenceProvider.php:330
 msgid "Portuguese"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:292
+#: app/Providers/PreferenceProvider.php:331
 msgid "Portuguese(Brazil)"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:293
+#: app/Providers/PreferenceProvider.php:332
 msgid "Quechua"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:294
+#: app/Providers/PreferenceProvider.php:333
 msgid "Raeto-Romance"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:295
+#: app/Providers/PreferenceProvider.php:334
 msgid "Kirundi"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:296
+#: app/Providers/PreferenceProvider.php:335
 msgid "Romanian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:297
+#: app/Providers/PreferenceProvider.php:336
 msgid "Russian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:298
+#: app/Providers/PreferenceProvider.php:337
 msgid "Kinyarwanda"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:299
+#: app/Providers/PreferenceProvider.php:338
 msgid "Sanskrit"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:300
+#: app/Providers/PreferenceProvider.php:339
 msgid "Sardinian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:301
+#: app/Providers/PreferenceProvider.php:340
 msgid "Sindhi"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:302
+#: app/Providers/PreferenceProvider.php:341
 msgid "Northern Sami"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:303
+#: app/Providers/PreferenceProvider.php:342
 msgid "Sango"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:304
+#: app/Providers/PreferenceProvider.php:343
 msgid "Sinhala"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:305
+#: app/Providers/PreferenceProvider.php:344
 msgid "Slovak"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:306
+#: app/Providers/PreferenceProvider.php:345
 msgid "Slovenian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:307
+#: app/Providers/PreferenceProvider.php:346
 msgid "Samoan"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:308
+#: app/Providers/PreferenceProvider.php:347
 msgid "Shona"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:309
+#: app/Providers/PreferenceProvider.php:348
 msgid "Somali"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:310
+#: app/Providers/PreferenceProvider.php:349
 msgid "Albanian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:311
+#: app/Providers/PreferenceProvider.php:350
 msgid "Serbian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:312
+#: app/Providers/PreferenceProvider.php:351
 msgid "Swati"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:313
+#: app/Providers/PreferenceProvider.php:352
 msgid "Southern Sotho"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:314
+#: app/Providers/PreferenceProvider.php:353
 msgid "Sundanese"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:315
+#: app/Providers/PreferenceProvider.php:354
 msgid "Swedish"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:316
+#: app/Providers/PreferenceProvider.php:355
 msgid "Swahili"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:317
+#: app/Providers/PreferenceProvider.php:356
 msgid "Tamil"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:318
+#: app/Providers/PreferenceProvider.php:357
 msgid "Telugu"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:319
+#: app/Providers/PreferenceProvider.php:358
 msgid "Tajik"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:320
+#: app/Providers/PreferenceProvider.php:359
 msgid "Thai"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:321
+#: app/Providers/PreferenceProvider.php:360
 msgid "Tigrinya"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:322
+#: app/Providers/PreferenceProvider.php:361
 msgid "Turkmen"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:323
+#: app/Providers/PreferenceProvider.php:362
 msgid "Tagalog"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:324
+#: app/Providers/PreferenceProvider.php:363
 msgid "Tswana"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:325
+#: app/Providers/PreferenceProvider.php:364
 msgid "Tonga"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:326
+#: app/Providers/PreferenceProvider.php:365
 msgid "Turkish"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:327
+#: app/Providers/PreferenceProvider.php:366
 msgid "Tsonga"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:328
+#: app/Providers/PreferenceProvider.php:367
 msgid "Tatar"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:329
+#: app/Providers/PreferenceProvider.php:368
 msgid "Twi"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:330
+#: app/Providers/PreferenceProvider.php:369
 msgid "Tahitian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:331
+#: app/Providers/PreferenceProvider.php:370
 msgid "Uighur"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:332
+#: app/Providers/PreferenceProvider.php:371
 msgid "Uighur(China)"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:333
+#: app/Providers/PreferenceProvider.php:372
 msgid "Ukrainian"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:334
+#: app/Providers/PreferenceProvider.php:373
 msgid "Urdu"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:335
+#: app/Providers/PreferenceProvider.php:374
 msgid "Uzbek"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:336
+#: app/Providers/PreferenceProvider.php:375
 msgid "Venda"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:337
+#: app/Providers/PreferenceProvider.php:376
 msgid "Vietnamese"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:338
+#: app/Providers/PreferenceProvider.php:377
 msgid "Volapuk"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:339
+#: app/Providers/PreferenceProvider.php:378
 msgid "Walloon"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:340
+#: app/Providers/PreferenceProvider.php:379
 msgid "Wolof"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:341
+#: app/Providers/PreferenceProvider.php:380
 msgid "Xhosa"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:342
+#: app/Providers/PreferenceProvider.php:381
 msgid "Yiddish"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:343
+#: app/Providers/PreferenceProvider.php:382
 msgid "Yoruba"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:344
+#: app/Providers/PreferenceProvider.php:383
 msgid "Zhuang"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:345
+#: app/Providers/PreferenceProvider.php:384
 msgid "Chinese"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:346
+#: app/Providers/PreferenceProvider.php:385
 msgid "Chinese(China)"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:347
+#: app/Providers/PreferenceProvider.php:386
 msgid "Chinese(Taiwan)"
 msgstr ""
 
-#: app/Providers/PreferenceProvider.php:348
+#: app/Providers/PreferenceProvider.php:387
 msgid "Zulu"
 msgstr ""
 
-#: app/Views/Admin.php:145
+#: app/Views/Admin.php:199
 msgid "is set to"
 msgstr ""
 
-#: app/Views/Admin.php:147
+#: app/Views/Admin.php:201
 msgid "You will not be able to edit files with"
 msgstr ""
 
-#: app/Views/Admin.php:149
+#: app/Views/Admin.php:203
 msgid "Please set"
 msgstr ""
 
-#: app/Views/Admin.php:150
+#: app/Views/Admin.php:204
 msgid "to"
 msgstr ""
 
-#: app/Views/Admin.php:187
-#: app/Views/Admin.php:198
+#: app/Views/Admin.php:286
+#: app/Views/Admin.php:297
 msgid "Dashboard | Bit File Manager"
 msgstr ""
 
-#: app/Views/Admin.php:188
+#: app/Views/Admin.php:287
 msgid "Bit File Manager"
 msgstr ""
 
-#: app/Views/Admin.php:210
+#: app/Views/Admin.php:307
 msgid "Logs | Bit File Manager"
 msgstr ""
 
-#: app/Views/Admin.php:219
+#: app/Views/Admin.php:315
 msgid "Settings | Bit File Manager"
 msgstr ""
 
-#: app/Views/Admin.php:228
+#: app/Views/Admin.php:323
 msgid "Permissions - Sets permission for specific user or by user role | Bit File Manager"
 msgstr ""
 
-#: app/Views/Admin.php:240
+#: app/Views/Admin.php:334
+msgid "Support | Bit File Manager"
+msgstr ""
+
+#: app/Views/Admin.php:345
 msgid "System Information | Bit File Manager"
 msgstr ""
 

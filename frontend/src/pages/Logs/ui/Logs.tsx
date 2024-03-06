@@ -1,4 +1,3 @@
-import { useId } from 'react'
 import { useParams } from 'react-router-dom'
 
 import config from '@config/config'
@@ -9,7 +8,6 @@ import { type TableColumnsType } from 'antd'
 
 const { USERS } = config
 const columns: TableColumnsType<LogType> = [
-  Table.SELECTION_COLUMN,
   { title: 'Id', dataIndex: 'id', key: 'id' },
   {
     title: 'User',
@@ -22,7 +20,7 @@ const columns: TableColumnsType<LogType> = [
     title: 'Details',
     dataIndex: 'details',
     key: 'details',
-    render: (details, record, index) => (
+    render: (details, _record, index) => (
       <Space>
         <Row>
           <Col>{details?.driver && `Driver: ${details?.driver}`}</Col>

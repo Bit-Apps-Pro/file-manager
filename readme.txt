@@ -1,15 +1,15 @@
 === File Manager – 100% Free & Open Source File Manager Plugin for WordPress | Bit File Manager ===
 
 Contributors: bitpressadmin, aihimel
-Tags: file manager, code editor, wp file manager, FTP, elfinder, file Browser, manage files, upload, delete, rename, copy, move, online file browser, remote file manager, drag and drop, folder upload
+Tags: code editor, wp file manager, elfinder, File Explorer, manage files
 Requires at least: 5.0
-Tested up to: 6.4.2
+Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 6.4.0
+Stable tag: 6.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-File manager allows Edit, create, upload, delete, copy, move, rename, compress and extract files. You don't need to worry about FTP anymore. It is really simple and easy to use.
+File manager simplifies file tasks: edit, create, upload, delete, copy, move, rename, compress, extract. No more FTP worries; it's easy to use.
 
 == Description ==
 

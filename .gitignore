@@ -9,3 +9,4 @@ build
 .php-cs-fixer.cache
 dependencies
 assets/js
+locale.pot

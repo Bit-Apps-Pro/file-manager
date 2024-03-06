@@ -1,24 +1,23 @@
 {
   "name": "file-manager",
-  "version": "6.4.0",
+  "version": "6.5.0",
   "description": "Manage your file the way you like. You can upload, delete, copy, move, rename, compress, extract files. You don't need to worry about ftp. It is really simple and easy to use.",
   "author": "Bit Apps",
-  "license": "GPL-3.0-or-later",
+  "license": "GPL-2.0-or-later",
   "scripts": {
-    "sass:compile": "node-sass sass/style.sass -o ./assets/css --output-style expanded --source-map true",
-    "sass:minify": "cleancss --format breakWith=lf --source-map --source-map-inline-sources --output ./assets/css/style.min.css ./assets/css/style.css",
-    "sass:build": "npm run sass:compile && npm run sass:minify",
-    "sass:watch": "npm run sass:build && onchange 'sass/**/*.sass' -- npm run sass:build",
     "build:elfinder": "./tools/build_elfinder.sh",
-    "elfinder:watch": "npm run build:elfinder && onchange 'submodule/sources/elFinder/**/*' -- npm run build:elfinder",
+    "elfinder:watch": "pnpm build:elfinder && onchange 'submodule/sources/elFinder/**/*' -- pnpm build:elfinder",
     "build:copy": "node tools/build_copy.js",
     "build:zip": "node tools/zip_build.js",
     "build:theme": "./tools/copy_themes.js",
-    "build:prod": "composer i --no-dev && pnpm i && npm run build:elfinder && npm run sass:build  && npm run build:theme && npm run build:copy && npm run build:zip",
+    "build:prod": "pnpm production && pnpm build:elfinder  && pnpm build:copy && pnpm build:zip",
+    "i18n:parse-js": "npx react-gettext-parser --output ./locale.pot --config ./gettext-parser.config.js  './frontend/src/**/{*.ts,*.tsx}'",
+    "i18n:json": "npx po2json locale.pot ./languages/file-manager-file-manager-MODULE-main.json -f jed1.x",
     "i18n:php": "[ ! -d \"languages/\" ] && mkdir languages/;wp i18n make-pot ./backend languages/file-manager.pot --include=*.php --skip-js --slug=file-manager --headers='{\"Last-Translator\":\"\",\"Language-Team\":\"support@bitapps.pro\",\"PO-Revision-Date\":\"\",\"Report-Msgid-Bugs-To\":\"\"}'",
-    "production": "composer i --no-dev && pnpm i && npm run i18n:php && npm run sass:build",
+    "i18n": "pnpm i18n:parse-js && pnpm i18n:php",
     "dev": "vite",
     "build": "tsc && vite build",
+    "production": "composer i -o --no-dev && pnpm i && pnpm build && pnpm  i18n",
     "pretty": "npx prettier ./frontend/src --check",
     "pretty:fix": "npx prettier ./frontend/src --check --write",
     "ts-check": "tsc",
@@ -96,5 +95,9 @@
     "vite-plugin-static-copy": "^1.0.0",
     "vitest": "^1.3.1",
     "zip-local": "^0.3.5"
+  },
+  "packageManager": "pnpm@8.15.4",
+  "engines": {
+    "node": "^20"
   }
 }
