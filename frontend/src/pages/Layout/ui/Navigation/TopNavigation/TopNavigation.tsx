@@ -42,10 +42,12 @@ export default function TopNavigation() {
     })
   }
 
-  const handleLanguageChange = value => {
+  const handleLanguageChange = (value: string) => {
     updateLanguage(value).then(response => {
       if (response.code === 'SUCCESS') {
         finder?.storage('lang', value)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         jQuery(`#${finder.id}`).elfinder('reload')
       } else {
         notification.error({ message: response?.message ?? __('Failed to update language') })

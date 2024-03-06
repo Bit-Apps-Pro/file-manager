@@ -10,7 +10,7 @@ interface SearchType {
   limit: number
 }
 
-type LoggedFileDetailsType = {
+export type LoggedFileDetailsType = {
   path: string
   hash: string
 }

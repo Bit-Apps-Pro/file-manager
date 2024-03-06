@@ -1,10 +1,8 @@
 import { useState } from 'react'
 
 import config from '@config/config'
-import LogoIcn from '@icons/LogoIcn'
-import LogoText from '@icons/LogoText'
 import LucideIcn from '@icons/LucideIcn'
-import { Avatar, Card, Checkbox, Col, Flex, Row, Skeleton, Space, Typography, theme } from 'antd'
+import { Avatar, Card, Col, Flex, Row, Skeleton, Space, Typography, theme } from 'antd'
 
 const { Meta } = Card
 

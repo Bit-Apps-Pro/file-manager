@@ -1,7 +1,7 @@
 // eslint-disable-next-line camelcase, @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const serverVariables = typeof fm === 'undefined' ? {} : fm // eslint-disable-line camelcase,
-const options = fm?.options ?? {}
+const options = serverVariables?.options ?? {}
 export function getServerVariable(key: string, fallback?: unknown) {
   if (!(key in serverVariables) || !serverVariables[key]) {
     console.error('🚥🚥🚥 Missing server variable: ', key) // eslint-disable-line no-console
@@ -44,12 +44,13 @@ const config = {
   AJAX_URL: getServerVariable('ajaxURL', 'http://.local/wp-admin/admin-ajax.php'),
   ROOT_URL: getServerVariable('rootURL', 'http://.local'),
   NONCE: getServerVariable('nonce', ''),
+  ACTION: getServerVariable('action', ''),
   ROUTE_PREFIX: getServerVariable('routePrefix', 'bit_fm_'),
   USERS: getServerVariable('users', []),
   BANNER: getServerVariable('adBanner', null),
   SYS_INFO: getServerVariable('sys_info', null),
   THEMES: getThemes(),
-  THEME: getOptionVariable('theme', []),
+  THEME: getOptionVariable('theme', 'default'),
   LANG: getOptionVariable('lang', 'en'),
   ViewType: getOptionVariable('defaultView', 'icons')
 }

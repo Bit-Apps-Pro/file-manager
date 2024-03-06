@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 
 export default function useUpdateTheme() {
   const { mutateAsync } = useMutation(async (theme: string) =>
-    request({
+    request<{ theme: Array<string> }>({
       action: 'theme/update',
       data: { theme }
     })

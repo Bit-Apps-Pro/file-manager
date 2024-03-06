@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom'
 
 import config from '@config/config'
-import { type LogType } from '@pages/Logs/data/useFetchLogs'
+import { type LogType, type LoggedFileDetailsType } from '@pages/Logs/data/useFetchLogs'
 import useFetchLogs from '@pages/Logs/data/useFetchLogs'
-import { Card, Col, Row, Space, Table } from 'antd'
+import { Col, Row, Space, Table } from 'antd'
 import { type TableColumnsType } from 'antd'
 
 const { USERS } = config
@@ -21,18 +21,18 @@ const columns: TableColumnsType<LogType> = [
     title: 'Details',
     dataIndex: 'details',
     key: 'details',
-    render: logDetails => (
+    render: details => (
       <Space>
         <Row>
-          <Col>{logDetails?.driver && `Driver: ${logDetails?.driver}`}</Col>
+          <Col>{details?.driver && `Driver: ${details?.driver}`}</Col>
         </Row>
         <hr />
         <Row>
           <Col>
-            {logDetails?.files && (
+            {details?.files && (
               <>
                 <span>Files:</span>
-                <li>{logDetails?.files?.map(file => <ol>{file?.path}</ol>)}</li>
+                <li>{details?.files?.map((file: LoggedFileDetailsType) => <ol>{file?.path}</ol>)}</li>
               </>
             )}
           </Col>
@@ -48,7 +48,7 @@ export default function Logs() {
   const pageNo = Number(page) || 1
   const limit = 14
 
-  const { isLoading, isLogsFetching, logs, total } = useFetchLogs({
+  const { isLoading, isLogsFetching, logs } = useFetchLogs({
     pageNo,
     limit
   })

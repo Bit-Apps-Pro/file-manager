@@ -1,5 +1,4 @@
 import request from '@common/helpers/request'
-import { type string } from '@pages/Settings/settingsTypes'
 import { useMutation } from '@tanstack/react-query'
 
 export default function useUpdateViewType() {

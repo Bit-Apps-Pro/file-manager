@@ -2,7 +2,6 @@ import CheckCircle from './CheckCircle'
 import CloseIcn from './CloseIcn'
 import DashboardIcn from './DashboardIcn'
 import EditIcon from './EditIcon'
-import FlowIcn from './FlowIcn'
 import cls from './Icons.module.css'
 import Plus from './Plus'
 import SearchIcon from './SearchIcon'
@@ -14,7 +13,6 @@ export default function Icons(): JSX.Element {
     <CloseIcn size={20} stroke={2} />,
     <DashboardIcn size={20} stroke={2} />,
     <EditIcon size={20} stroke={2} />,
-    <FlowIcn size={20} stroke={2} />,
     <Plus size={20} stroke={2} />,
     <SearchIcon size={20} stroke={2} />,
     <SunIcn size={20} stroke={2} />

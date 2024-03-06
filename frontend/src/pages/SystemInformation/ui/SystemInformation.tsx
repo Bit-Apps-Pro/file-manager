@@ -1,7 +1,5 @@
-import { useState } from 'react'
-
 import config from '@config/config'
-import { Card, Space, theme } from 'antd'
+import { Card, Space } from 'antd'
 
 export default function SystemInformation() {
   return (

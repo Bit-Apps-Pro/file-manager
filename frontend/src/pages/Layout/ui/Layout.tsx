@@ -7,7 +7,6 @@ import { Layout as AntLayout, theme } from 'antd'
 import { useAtomValue } from 'jotai'
 
 import cls from './Layout.module.css'
-import Sidebar from './Navigation/Sidebar'
 import TopNavigation from './Navigation/TopNavigation'
 
 const { useToken } = theme

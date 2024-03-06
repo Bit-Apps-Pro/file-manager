@@ -124,6 +124,10 @@ class Admin
             wp_enqueue_style('bfm-elfinder-theme-css');
         }
 
+        wp_enqueue_script('bfm-elfinder-script');
+        wp_enqueue_script('bfm-elfinder-editor-script');
+        wp_enqueue_script('bfm-elfinder-lang', $preferences->getLangUrl(), ['bfm-elfinder-script']);
+
         if (Config::isDev()) {
             $port   = file_get_contents(Config::get('BASEDIR') . '/port');
             $devUrl = 'http://localhost:' . $port;
@@ -135,12 +139,17 @@ class Admin
             );
             wp_enqueue_script(Config::SLUG . '-MODULE-vite-client', $devUrl . '/@vite/client', [], null);
             wp_enqueue_script(Config::SLUG . '-MODULE-index', $devUrl . '/main.tsx', [], null);
-        }
+        } else {
+            wp_enqueue_script(
+                Config::SLUG . '-MODULE-main',
+                Config::get('ASSET_JS_URI') . '/main.' . Config::VERSION . '.js'
+            );
 
-        wp_enqueue_script('bfm-elfinder-script');
-        wp_enqueue_script('bfm-elfinder-editor-script');
-        wp_enqueue_script('bfm-elfinder-lang', $preferences->getLangUrl(), ['bfm-elfinder-script']);
-        wp_enqueue_script('bfm-finder-loader');
+            wp_enqueue_style(
+                Config::SLUG . '-style-main',
+                Config::get('ASSET_JS_URI') . '/main.' . Config::VERSION . '.css'
+            );
+        }
     }
 
     public function dashboard()

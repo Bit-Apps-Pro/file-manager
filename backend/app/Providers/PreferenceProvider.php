@@ -3,6 +3,7 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
+use BitApps\FM\Dependencies\BitApps\WPKit\Http\RequestType;
 use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\ClientOptions;
@@ -626,13 +627,19 @@ class PreferenceProvider
 
     public function getUiOptions()
     {
-        return isset($this->preferences['display_ui_options'])
+        $uiOptions = isset($this->preferences['display_ui_options'])
         ? array_map(
             function ($option) {
                 return esc_attr($option);
             },
             $this->preferences['display_ui_options']
         ) : ['toolbar', 'places', 'tree', 'path', 'stat'];
+
+        if (RequestType::is(RequestType::ADMIN)) {
+            $uiOptions = array_diff($uiOptions, ['path']);
+        }
+
+        return $uiOptions;
     }
 
     public function finderOptions()
@@ -646,7 +653,12 @@ class PreferenceProvider
         $options->setOption('width', $this->getWidth());
         $options->setOption('height', $this->getHeight());
         $options->setOption('commands', $this->permissions()->getEnabledCommand());
-        $options->setOption('disabled', array_diff($this->permissions()->allCommands(), $this->permissions()->getEnabledCommand()));
+        $disabledCommands = array_diff($this->permissions()->allCommands(), $this->permissions()->getEnabledCommand());
+        if (in_array('download', $disabledCommands)) {
+            $disabledCommands[] = 'dblclick';
+        }
+
+        $options->setOption('disabled', $disabledCommands);
         $options->setOption('commandsOptions', $this->finderCommandsOptions());
         $options->setOption('rememberLastDir', $this->getRememberLastDir());
         $options->setOption('reloadClearHistory', $this->getClearHistoryOnReload());

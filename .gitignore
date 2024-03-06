@@ -8,3 +8,4 @@ build
 .wordpress-ripo
 .php-cs-fixer.cache
 dependencies
+assets/js

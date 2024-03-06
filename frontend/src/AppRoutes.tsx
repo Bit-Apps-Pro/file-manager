@@ -14,7 +14,6 @@ import { ConfigProvider, notification, theme } from 'antd'
 import { useAtom, useAtomValue } from 'jotai'
 
 const Support = loadable(() => import('@pages/Support'), { fallback: <div>Loading...</div> })
-const Error404 = loadable(() => import('@pages/Error404'), { fallback: <div>Loading...</div> })
 const Logs = loadable(() => import('@pages/Logs'), { fallback: <div>Loading...</div> })
 const Settings = loadable(() => import('@pages/Settings'), { fallback: <div>Loading...</div> })
 const Permissions = loadable(() => import('@pages/Permissions'), { fallback: <div>Loading...</div> })

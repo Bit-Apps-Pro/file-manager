@@ -1,34 +1,47 @@
-import config from '@config/config'
+import config, { getOptionVariable } from '@config/config'
+import { type FinderInstance } from 'elfinder'
 
-export default function configureElFinder() {
-  const { AJAX_URL, NONCE, LANG, THEME, ViewType } = config
+export default function configureElFinder(): FinderInstance {
+  const { AJAX_URL, NONCE, LANG, THEME, ViewType, ACTION } = config
+  // @ts-ignore
   const finder = jQuery('#file-manager').elfinder({
     url: AJAX_URL,
     customData: {
-      action: fm.action,
+      action: ACTION,
       nonce: NONCE
     },
-    themes: fm.options.themes,
-    theme: fm.options.theme,
-    cssAutoLoad: fm.options.cssAutoLoad,
-    contextmenu: fm.options.contextmenu,
-    lang: fm.options.lang,
-    requestType: fm.options.requestType,
-    width: fm.options.width,
-    height: fm.options.height,
-    commandsOptions: fm.options.commandsOptions,
-    rememberLastDir: fm.options.rememberLastDir,
-    reloadClearHistory: fm.options.reloadClearHistory,
-    defaultView: fm.options.defaultView,
-    ui: fm.options.ui,
-    sortOrder: fm.options.sortOrder,
-    sortStickFolders: fm.options.sortStickFolders,
-    dragUploadAllow: fm.options.dragUploadAllow,
-    fileModeStyle: fm.options.fileModeStyle,
-    resizable: fm.options.resizable
+    theme: THEME,
+    lang: LANG,
+    cssAutoLoad: getOptionVariable('cssAutoLoad'),
+    contextmenu: getOptionVariable('contextmenu'),
+    requestType: getOptionVariable('requestType'),
+    themes: getOptionVariable('themes', []),
+    width: getOptionVariable('width'),
+    height: getOptionVariable('height'),
+    commandsOptions: getOptionVariable('commandsOptions'),
+    disabled: getOptionVariable('disabled'),
+    rememberLastDir: getOptionVariable('rememberLastDir'),
+    reloadClearHistory: getOptionVariable('reloadClearHistory'),
+    defaultView: getOptionVariable('defaultView'),
+    ui: getOptionVariable('ui'),
+    sortOrder: getOptionVariable('sortOrder'),
+    sortStickFolders: getOptionVariable('sortStickFolders'),
+    dragUploadAllow: getOptionVariable('dragUploadAllow'),
+    fileModeStyle: getOptionVariable('fileModeStyle'),
+    resizable: getOptionVariable('resizable'),
+    handlers: {
+      dblclick() {
+        const disabled: Array<string> = getOptionVariable('disabled')
+        if (
+          disabled?.includes('dblclick') ||
+          disabled?.includes('download') ||
+          disabled?.includes('get')
+        ) {
+          return false
+        }
+      }
+    }
   })[0].elfinder
-  // .elfinder('instance')
-  // console.log('finder', finder)
 
   finder.storage('lang', LANG)
   finder.storage('theme', THEME)

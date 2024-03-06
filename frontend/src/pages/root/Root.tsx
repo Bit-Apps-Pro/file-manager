@@ -4,8 +4,9 @@ import $finder, { $finderCurrentPath, $finderViewType } from '@common/globalStat
 import config from '@config/config'
 import LucideIcn from '@icons/LucideIcn'
 import useUpdateViewType from '@pages/Settings/data/useUpdateViewType'
-import { Breadcrumb, Button, Col, Flex, Image, Row, Space } from 'antd'
-import { useAtom, useSetAtom } from 'jotai'
+import { Breadcrumb, Button, Flex, Image, Space } from 'antd'
+import { type FinderInstance } from 'elfinder'
+import { useAtom } from 'jotai'
 
 import configureElFinder from './helpers/configureElFinder'
 import initThemeChangeHandler from './helpers/initThemeChangeHandler'
@@ -18,7 +19,7 @@ export default function Root() {
 
   const { toggleViewType } = useUpdateViewType()
 
-  const generateFullPath = finder => {
+  const generateFullPath = (finder: FinderInstance) => {
     const parents = finder.parents(finder.cwd().hash)
     const breadcrumbItems = parents.map((hash: string) => {
       const fileObj = finder.file(hash)
@@ -28,7 +29,7 @@ export default function Root() {
     setFinderCurrentPath(breadcrumbItems)
   }
 
-  const changeViewState = finder => {
+  const changeViewState = (finder: FinderInstance) => {
     setFinderViewType(finder?.viewType)
   }
 
@@ -41,6 +42,7 @@ export default function Root() {
     const finder = configureElFinder()
     setFinder(finder)
     initThemeChangeHandler(finderRef)
+    console.log('finder', finder)
     finder.bind('open searchend parents', () => {
       generateFullPath(finder)
     })
@@ -50,7 +52,7 @@ export default function Root() {
     })
     return () => {
       finder?.destroy()
-      setFinder(null)
+      setFinder({} as FinderInstance)
     }
   }, [])
 

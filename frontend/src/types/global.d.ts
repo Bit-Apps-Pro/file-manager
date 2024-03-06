@@ -16,6 +16,7 @@ declare module '*.svg'
 declare module '*.png'
 declare module '*.json'
 declare module 'deepmerge-alt'
+declare module 'detect-port'
 
 // export type Prettify<T> = {
 //   [K in keyof T]: T[K]

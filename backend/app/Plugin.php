@@ -258,22 +258,12 @@ final class Plugin
             $version
         );
 
-        wp_register_script(
-            'bfm-admin-script',
-            BFM_ROOT_URL . 'assets/js/admin-script.js',
-            ['bfm-tippy-script'],
-            $version
-        );
-
         // Including admin-style.css
         if (strpos($currentScreen, 'bit-file-manager') !== false) {
             wp_enqueue_style('bfm-admin-style', BFM_ROOT_URL . 'assets/css/style.min.css');
         } else {
             wp_register_style('bfm-admin-style', BFM_ROOT_URL . 'assets/css/style.min.css');
         }
-
-        // Including admin-script.js
-        wp_register_script('bfm-admin-script', BFM_ROOT_URL . 'assets/js/admin-script.js', ['jquery']);
     }
 
     /**

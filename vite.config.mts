@@ -1,12 +1,13 @@
 /// <reference types="vite/client" />
 import commonjs from '@rollup/plugin-commonjs'
 import react from '@vitejs/plugin-react'
-import path from 'node:path'
-import fs from 'node:fs'
-import { AddressInfo } from 'node:net'
 import detectPort from 'detect-port'
+import fs from 'node:fs'
+import { type AddressInfo } from 'node:net'
+import path from 'node:path'
 import csso from 'postcss-csso'
-import { Alias, Plugin, defineConfig, normalizePath } from 'vite'
+import { type Alias, type Plugin } from 'vite'
+import { defineConfig, normalizePath } from 'vite'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 import * as tsconfig from './tsconfig.json'
@@ -30,11 +31,21 @@ function readAliasFromTsConfig(): Alias[] {
   }, [] as Alias[])
 }
 
+const getVersion = () => {
+  let version = '1.0.0'
+  if (fs.existsSync('readme.txt')) {
+    const readme = fs.readFileSync('readme.txt').toString()
+    const regex = /Stable\s+tag:\s+(\d+\.\d+(\.?\d+)*)/
+    const match = readme.match(regex)
+    version = match ? match[1] : '1.0.0'
+  }
+  return version
+}
+
 // @ts-ignore
 export default defineConfig(({ mode }) => {
   // const isProd = mode === 'production'
   const folderName = path.basename(process.cwd())
-  console.log(normalizePath(path.resolve(__dirname, 'frontend/src')))
   return {
     root: 'frontend/src',
     base: mode === 'development' ? `/wp-content/plugins/${folderName}/frontend/src/` : '',
@@ -49,29 +60,19 @@ export default defineConfig(({ mode }) => {
         // fastRefresh: true,
       }),
       commonjs(),
-      // babel()
-      // TODO: PWA not working
-      // for PWA resources genarate icon from this link https://realfavicongenerator.net/ and FULL DOCS https://vite-plugin-pwa.netlify.app/
-      // VitePWA({
-      //   ...PwaConfig(),
-      // }),
-      // css: {
-      //   preprocessorOptions: {
-      //     modules:{
-
-      //     }
-      //   }
-      // }
       setDevServerConfig(),
       viteStaticCopy({
         targets: [
           {
             src: normalizePath(path.resolve(__dirname, 'frontend/finder-loader.js')),
-            dest: 'js'
+            dest: '.'
           }
         ]
       })
     ],
+    esbuild: {
+      drop: mode === 'development' ? [] : ['console', 'debugger']
+    },
     css: {
       postcss: {
         plugins: [csso()]
@@ -80,13 +81,13 @@ export default defineConfig(({ mode }) => {
     resolve: { alias: readAliasFromTsConfig() },
 
     build: {
-      outDir: '../../assets',
+      outDir: '../../assets/js',
       emptyOutDir: true,
       // assetsDir: './',
       rollupOptions: {
         input: path.resolve(__dirname, 'frontend/src/main.tsx'),
         output: {
-          entryFileNames: 'main.js',
+          entryFileNames: `main.${getVersion()}.js`,
           manualChunks: {
             'react-vendor': ['react', 'react-dom'],
             '@emotion/react': ['@emotion/react'],
@@ -95,20 +96,7 @@ export default defineConfig(({ mode }) => {
             'react-router-dom': ['react-router-dom'],
             antd: ['antd']
           },
-          // compact: true,
-          // validate: true,
-          // generatedCode: {
-          // arrowFunctions: true
-          // objectShorthand: true
-          // },
-
-          chunkFileNames: () => {
-            // console.log(fInfo)
-            // if (fInfo.name === 'bit-flow-pro') {
-            //   return path.resolve(__dirname, '../bf-pro/[name]-[hash].js')
-            // }
-            return '[name]-[hash].js'
-          },
+          chunkFileNames: () => '[name]-[hash].js',
 
           assetFileNames: fInfo => {
             const pathArr = fInfo?.name?.split('/')
@@ -117,7 +105,7 @@ export default defineConfig(({ mode }) => {
             // console.log(fInfo.name, fileName)
 
             if (fileName === 'main.css') {
-              return 'main.css'
+              return `main.${getVersion()}.css`
             }
             if (fileName === 'logo.svg') {
               return 'logo.svg'
@@ -136,9 +124,7 @@ export default defineConfig(({ mode }) => {
       // css: true,
     },
     server: {
-      // origin: 'http://localhost:3000',
       cors: true, // required to load scripts from custom host
-      strictPort: true, // strict port to match on PHP side
       port: 3000,
       hmr: { host: 'localhost' }
       // commonjsOptions: { transformMixedEsModules: true },
@@ -170,9 +156,7 @@ function setDevServerConfig(): Plugin {
           }
         })
 
-        server.watcher.add([
-          'port',
-        ])
+        server.watcher.add(['port'])
 
         server.watcher.on('change', (file: string) => {
           if (file === 'port') {
@@ -181,7 +165,7 @@ function setDevServerConfig(): Plugin {
           }
         })
       }
-    },
+    }
   }
 }
 
