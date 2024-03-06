@@ -13,7 +13,6 @@ if (!\defined('ABSPATH')) {
 Route::group(
     function () {
         Route::match(['get', 'post'], 'connector', [FileManagerController::class, 'connector']);
-        Route::noAuth()->match(['get', 'post'], 'connector_front', [FileManagerController::class, 'connector']);
 
         Route::post('theme/update', [SettingsController::class, 'updateTheme']);
 
@@ -30,3 +29,8 @@ Route::group(
         Route::post('permissions/update', [PermissionsController::class, 'update']);
     }
 )->middleware('nonce:admin');
+
+
+Route::noAuth()
+->match(['get', 'post'], 'connector_front', [FileManagerController::class, 'connector'])
+->middleware('nonce:public');;

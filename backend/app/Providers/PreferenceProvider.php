@@ -646,6 +646,7 @@ class PreferenceProvider
         $options->setOption('width', $this->getWidth());
         $options->setOption('height', $this->getHeight());
         $options->setOption('commands', $this->permissions()->getEnabledCommand());
+        $options->setOption('disabled', array_diff($this->permissions()->allCommands(), $this->permissions()->getEnabledCommand()));
         $options->setOption('commandsOptions', $this->finderCommandsOptions());
         $options->setOption('rememberLastDir', $this->getRememberLastDir());
         $options->setOption('reloadClearHistory', $this->getClearHistoryOnReload());

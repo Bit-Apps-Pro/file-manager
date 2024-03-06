@@ -199,6 +199,10 @@ class ClientOptions
      * @var array
      */
     private $_commands = ['*'];
+    /**
+     * Commands to disable
+     */
+    private $_disabled = [];
 
     /**
      * Commands options used to interact with external callbacks, editors, plugins
@@ -433,6 +437,7 @@ class ClientOptions
             'width',
             'height',
             'commands',
+            'disabled',
             'commandsOptions',
             'rememberLastDir',
             'reloadClearHistory',
@@ -449,6 +454,7 @@ class ClientOptions
                 $options[$option] = $this->getOption($option);
             }
         }
+        error_log(print_r($options, true));
 
         return $options;
     }

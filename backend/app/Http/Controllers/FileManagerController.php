@@ -22,6 +22,7 @@ final class FileManagerController
     public function connector()
     {
         try {
+            Plugin::instance()->accessControl()->checkPermission($_REQUEST['cmd']);
             $finderProvider = new FileManagerProvider($this->getFinderOptions());
             $finderProvider->getFinder()->run();
         } catch (Exception $th) {

@@ -322,15 +322,7 @@ final class Plugin
         return apply_filters(
             Config::withPrefix('localized_script'),
             [
-                'nonce'        => wp_create_nonce('bfm_nonce'),
-                'rootURL'      => Config::get('ROOT_URI'),
-                'assetsURL'    => Config::get('ASSET_URI'),
-                'baseURL'      => Config::get('ADMIN_URL') . 'admin.php?page=' . Config::SLUG . '#elf_l1_Lw/',
-                'pluginSlug'   => Config::SLUG,
                 'ajaxURL'      => admin_url('admin-ajax.php'),
-                'routePrefix'  => Config::VAR_PREFIX,
-                'plugin_dir'   => BFM_ROOT_DIR,
-                'plugin_url'   => BFM_ROOT_URL,
                 'js_url'       => BFM_FINDER_URL . 'js/',
                 'elfinder'     => BFM_FINDER_URL,
                 'translations' => [],

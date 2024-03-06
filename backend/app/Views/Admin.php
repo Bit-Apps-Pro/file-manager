@@ -102,8 +102,16 @@ class Admin
         }
 
         return (array) $config + [
-            'action'  => Config::withPrefix('connector'),
-            'options' => Plugin::instance()->preferences()->finderOptions(),
+            'nonce'        => wp_create_nonce(Config::withPrefix('nonce')),
+            'baseURL'      => Config::get('ADMIN_URL') . 'admin.php?page=' . Config::SLUG . '#elf_l1_Lw/',
+            'pluginSlug'   => Config::SLUG,
+            'rootURL'      => Config::get('ROOT_URI'),
+            'assetsURL'    => Config::get('ASSET_URI'),
+            'routePrefix'  => Config::VAR_PREFIX,
+            'plugin_dir'   => BFM_ROOT_DIR,
+            'plugin_url'   => BFM_ROOT_URL,
+            'action'       => Config::withPrefix('connector'),
+            'options'      => Plugin::instance()->preferences()->finderOptions(),
         ];
     }
 
