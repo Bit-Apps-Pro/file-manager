@@ -102,16 +102,16 @@ class Admin
         }
 
         return (array) $config + [
-            'nonce'        => wp_create_nonce(Config::withPrefix('nonce')),
-            'baseURL'      => Config::get('ADMIN_URL') . 'admin.php?page=' . Config::SLUG . '#elf_l1_Lw/',
-            'pluginSlug'   => Config::SLUG,
-            'rootURL'      => Config::get('ROOT_URI'),
-            'assetsURL'    => Config::get('ASSET_URI'),
-            'routePrefix'  => Config::VAR_PREFIX,
-            'plugin_dir'   => BFM_ROOT_DIR,
-            'plugin_url'   => BFM_ROOT_URL,
-            'action'       => Config::withPrefix('connector'),
-            'options'      => Plugin::instance()->preferences()->finderOptions(),
+            'nonce'       => wp_create_nonce(Config::withPrefix('nonce')),
+            'baseURL'     => Config::get('ADMIN_URL') . 'admin.php?page=' . Config::SLUG . '#elf_l1_Lw/',
+            'pluginSlug'  => Config::SLUG,
+            'rootURL'     => Config::get('ROOT_URI'),
+            'assetsURL'   => Config::get('ASSET_URI'),
+            'routePrefix' => Config::VAR_PREFIX,
+            'plugin_dir'  => BFM_ROOT_DIR,
+            'plugin_url'  => BFM_ROOT_URL,
+            'action'      => Config::withPrefix('connector'),
+            'options'     => Plugin::instance()->preferences()->finderOptions(),
         ];
     }
 
@@ -121,12 +121,12 @@ class Admin
 
         wp_enqueue_style('bfm-jquery-ui-css');
         if (\in_array($preferences->getTheme(), ['default', 'bootstrap'])) {
-            wp_enqueue_style('bfm-elfinder-theme-css');
+            wp_enqueue_style(Config::SLUG . 'theme-css');
         }
 
-        wp_enqueue_script('bfm-elfinder-script');
-        wp_enqueue_script('bfm-elfinder-editor-script');
-        wp_enqueue_script('bfm-elfinder-lang', $preferences->getLangUrl(), ['bfm-elfinder-script']);
+        wp_enqueue_script(Config::SLUG . 'elfinder-script');
+        wp_enqueue_script(Config::SLUG . 'elfinder-editor-script');
+        wp_enqueue_script(Config::SLUG . 'elfinder-lang', $preferences->getLangUrl(), [Config::SLUG . 'elfinder-script']);
 
         if (Config::isDev()) {
             $port   = file_get_contents(Config::get('BASEDIR') . '/port');
@@ -142,7 +142,8 @@ class Admin
         } else {
             wp_enqueue_script(
                 Config::SLUG . '-MODULE-main',
-                Config::get('ASSET_JS_URI') . '/main.' . Config::VERSION . '.js'
+                Config::get('ASSET_JS_URI') . '/main.' . Config::VERSION . '.js',
+                [Config::SLUG . 'elfinder-script']
             );
 
             wp_enqueue_style(
@@ -347,48 +348,6 @@ class Admin
                 ),
                 'capability' => Hooks::applyFilter('bitapps_fm_can_view_sys_info', 'install_plugins'),
                 'slug'       => Config::SLUG . '#/system-info',
-            ],
-            'Old-Logs'               => [
-                'parent'     => Config::SLUG,
-                'type'       => 'submenu',
-                'name'       => 'Logs Old',
-                'title'      => __('Logs | Bit File Manager', 'file-manager'),
-                'capability' => Hooks::applyFilter('can_access_fm_logs', 'install_plugins'),
-                'slug'       => Config::SLUG . '-logs',
-                'callback'   => [$this, 'logsPage'],
-            ],
-            'Old-Settings'           => [
-                'parent'     => Config::SLUG,
-                'type'       => 'submenu',
-                'name'       => 'Settings Old',
-                'title'      => __('Settings | Bit File Manager', 'file-manager'),
-                'capability' => Hooks::applyFilter('can_change_fm_settings', 'install_plugins'),
-                'slug'       => Config::SLUG . '-settings',
-                'callback'   => [$this, 'settingsPage'],
-            ],
-            'Old-Permissions'        => [
-                'parent'     => Config::SLUG,
-                'type'       => 'submenu',
-                'name'       => 'Permissions Old',
-                'title'      => __(
-                    'Permissions - Sets permission for specific user or by user role | Bit File Manager',
-                    'file-manager'
-                ),
-                'capability' => Hooks::applyFilter('can_change_fm_permissions', 'install_plugins'),
-                'slug'       => Config::SLUG . '-permissions',
-                'callback'   => [$this, 'permissionsPage'],
-            ],
-            'Old-System Information' => [
-                'parent'     => Config::SLUG,
-                'type'       => 'submenu',
-                'name'       => 'System Information Old',
-                'title'      => __(
-                    'System Information | Bit File Manager',
-                    'file-manager'
-                ),
-                'capability' => Hooks::applyFilter('can_view_fm_sys_info', 'install_plugins'),
-                'slug'       => Config::SLUG . '-system-info',
-                'callback'   => [$this, 'systemInfoPage'],
             ],
         ];
     }

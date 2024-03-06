@@ -654,7 +654,7 @@ class PreferenceProvider
         $options->setOption('height', $this->getHeight());
         $options->setOption('commands', $this->permissions()->getEnabledCommand());
         $disabledCommands = array_diff($this->permissions()->allCommands(), $this->permissions()->getEnabledCommand());
-        if (in_array('download', $disabledCommands)) {
+        if (\in_array('download', $disabledCommands)) {
             $disabledCommands[] = 'dblclick';
         }
 

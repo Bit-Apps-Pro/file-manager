@@ -7,8 +7,8 @@ export const darkThemeToken: Partial<AliasToken> = {
   ...commonThemeToken,
   colorBgContainer: '#1c1a1e',
   colorBgBase: '#1c1a1e',
-  colorTextBase: '#ffffff',
-  colorTextQuaternary: '#ffffff'
+  colorTextBase: '#ffffff'
+  // colorTextQuaternary: '#ffffff'
   // colorBgBase: '#161218',
   // colorBgBase: '#040304',
   // colorTextBase: '#fef1ff',

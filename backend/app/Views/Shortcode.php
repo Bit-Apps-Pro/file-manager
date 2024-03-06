@@ -28,7 +28,7 @@ class Shortcode
     {
         return (array) $config + [
             'action'  => Config::withPrefix('connector_front'),
-            'nonce'  => wp_create_nonce(Config::withPrefix('public_nonce')),
+            'nonce'   => wp_create_nonce(Config::withPrefix('public_nonce')),
             'options' => Plugin::instance()->preferences()->finderOptions(),
         ];
     }
@@ -42,6 +42,7 @@ class Shortcode
     {
         ob_start();
         view('finder');
+
         return ob_get_clean();
     }
 }

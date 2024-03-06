@@ -24,6 +24,23 @@ export default function configureElFinder(): FinderInstance {
     reloadClearHistory: getOptionVariable('reloadClearHistory'),
     defaultView: getOptionVariable('defaultView'),
     ui: getOptionVariable('ui'),
+    uiOptions: {
+      toolbar: [
+        ['back', 'forward'],
+        ['reload'],
+        ['home', 'up'],
+        ['mkfile'],
+        ['open', 'download', 'getfile'],
+        ['info', 'sort'],
+        ['quicklook'],
+        ['copy', 'cut', 'paste'],
+        ['rm'],
+        ['duplicate', 'rename', 'edit', 'resize'],
+        ['extract', 'archive'],
+        ['fullscreen'],
+        ['search']
+      ]
+    },
     sortOrder: getOptionVariable('sortOrder'),
     sortStickFolders: getOptionVariable('sortStickFolders'),
     dragUploadAllow: getOptionVariable('dragUploadAllow'),

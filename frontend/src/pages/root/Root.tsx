@@ -38,6 +38,10 @@ export default function Root() {
     toggleViewType(viewType === 'list' ? 'icons' : 'list')
   }
 
+  const openSettings = () => {
+    elfinder?.exec('preference', [], { _userAction: true, _currentType: 'toolbar' })
+  }
+
   useEffect(() => {
     const finder = configureElFinder()
     setFinder(finder)
@@ -51,7 +55,9 @@ export default function Root() {
       changeViewState(finder)
     })
     return () => {
-      finder?.destroy()
+      if (finder) {
+        finder?.destroy()
+      }
       setFinder({} as FinderInstance)
     }
   }, [])
@@ -90,6 +96,7 @@ export default function Root() {
               </Button>
             </Flex>
             <Flex style={{ gap: 15 }}>
+              <Button icon={<LucideIcn name="Settings" />} onClick={openSettings} />
               <Button
                 icon={<LucideIcn name="LayoutGridIcon" />}
                 onClick={handleToggleViewType}

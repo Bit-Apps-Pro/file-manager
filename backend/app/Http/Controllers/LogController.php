@@ -3,7 +3,6 @@
 namespace BitApps\FM\Http\Controllers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Dependencies\BitApps\WPDatabase\Connection;
 use BitApps\FM\Dependencies\BitApps\WPKit\Http\Request\Request;
 use BitApps\FM\Dependencies\BitApps\WPKit\Http\Response;
 use BitApps\FM\Http\Services\LogService;

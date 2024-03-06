@@ -199,6 +199,7 @@ class ClientOptions
      * @var array
      */
     private $_commands = ['*'];
+
     /**
      * Commands to disable
      */

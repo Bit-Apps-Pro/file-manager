@@ -30,7 +30,6 @@ Route::group(
     }
 )->middleware('nonce:admin');
 
-
 Route::noAuth()
-->match(['get', 'post'], 'connector_front', [FileManagerController::class, 'connector'])
-->middleware('nonce:public');;
+    ->match(['get', 'post'], 'connector_front', [FileManagerController::class, 'connector'])
+    ->middleware('nonce:public');

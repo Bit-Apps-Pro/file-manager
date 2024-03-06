@@ -105,7 +105,7 @@ export default function TopNavigation() {
         }}
       />
       <Divider orientation="right" type="vertical" style={{ marginTop: '4px' }} />
-      <Space>
+      <Space id="fm-theme-lang">
         Theme:
         <Select
           defaultValue={config.THEME}

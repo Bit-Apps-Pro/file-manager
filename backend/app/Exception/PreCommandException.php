@@ -8,13 +8,13 @@ use Exception;
 
 class PreCommandException extends Exception
 {
-   public function getError()
-   {
+    public function getError()
+    {
         return [
             'preventexec' => true,
             'results'     => [
                 'error' => $this->getMessage(),
             ]
         ];
-   }
+    }
 }

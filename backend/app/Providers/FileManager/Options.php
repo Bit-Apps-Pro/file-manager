@@ -152,7 +152,6 @@ class Options
     public function __construct($debug = false)
     {
         $this->_debug = $debug;
-
     }
 
     /**

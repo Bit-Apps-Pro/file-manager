@@ -243,7 +243,7 @@ final class Plugin
         wp_register_script(
             'bfm-finder-loader',
             BFM_ROOT_URL . 'assets/js/finder-loader.js',
-            ['bfm-elfinder-script', 'jquery'],
+            [Config::SLUG . 'elfinder-script', 'jquery'],
             $version
         );
         $this->registerFinderAssets(); // Loads all the assets necessary for elFinder
@@ -280,28 +280,28 @@ final class Plugin
         );
 
         wp_register_style(
-            'bfm-elfinder-css',
+            Config::SLUG . 'css',
             BFM_FINDER_URL . 'css/elfinder.min.css',
             Config::VERSION
         );
 
-        wp_register_style('bfm-elfinder-theme-css', BFM_ROOT_URL . 'libs/js/jquery-ui/jquery-ui.theme.min.css');
+        wp_register_style(Config::SLUG . 'theme-css', BFM_ROOT_URL . 'libs/js/jquery-ui/jquery-ui.theme.min.css');
 
         // elFinder Scripts depends on jQuery UI core, selectable, draggable, droppable, resizable, dialog and slider.
         wp_register_script(
-            'bfm-elfinder-script',
+            Config::SLUG . 'elfinder-script',
             BFM_FINDER_URL . 'js/elfinder.full.js',
             ['jquery', 'jquery-ui-core', 'jquery-ui-selectable', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-resizable', 'jquery-ui-dialog', 'jquery-ui-slider', 'jquery-ui-tabs']
         );
 
         wp_register_script(
-            'bfm-elfinder-editor-script',
+            Config::SLUG . 'elfinder-editor-script',
             BFM_FINDER_URL . 'js/extras/editors.default.min.js',
-            ['bfm-elfinder-script']
+            [Config::SLUG . 'elfinder-script']
         );
 
         wp_localize_script(
-            'bfm-elfinder-script',
+            Config::SLUG . 'elfinder-script',
             'fm',
             $this->createConfigVariable()
         );

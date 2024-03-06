@@ -90,6 +90,10 @@
   min-height: 35px;
 }
 
+#fm-theme-lang .ant-select-arrow {
+  color: #f0f0f0;
+}
+
 @media (max-width: 700px) {
   .elfinder-to-editing.elfinder-dialog-edit.elfinder-maximized {
     top: 32px !important;

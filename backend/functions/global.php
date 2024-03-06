@@ -57,6 +57,7 @@ function bfmLoaded()
     // Autoload vendor files.
     if (!is_readable(BFM_BASEDIR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php')) {
         error_log('Failed to load File Manager. Cause: autoload does not exists');
+
         return;
     }
 
