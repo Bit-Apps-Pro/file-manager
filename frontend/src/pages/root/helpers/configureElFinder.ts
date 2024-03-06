@@ -1,10 +1,12 @@
+import { type RefObject } from 'react'
+
 import config, { getOptionVariable } from '@config/config'
 import { type FinderInstance } from 'elfinder'
 
-export default function configureElFinder(): FinderInstance {
+export default function configureElFinder(finderRef: RefObject<HTMLDivElement>): FinderInstance {
   const { AJAX_URL, NONCE, LANG, THEME, ViewType, ACTION } = config
   // @ts-ignore
-  const finder = jQuery('#file-manager').elfinder({
+  const finder = jQuery(finderRef.current).elfinder({
     url: AJAX_URL,
     customData: {
       action: ACTION,

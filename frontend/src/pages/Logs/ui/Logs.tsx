@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import { useParams } from 'react-router-dom'
 
 import config from '@config/config'
@@ -21,7 +22,7 @@ const columns: TableColumnsType<LogType> = [
     title: 'Details',
     dataIndex: 'details',
     key: 'details',
-    render: details => (
+    render: (details, record, index) => (
       <Space>
         <Row>
           <Col>{details?.driver && `Driver: ${details?.driver}`}</Col>
@@ -32,7 +33,11 @@ const columns: TableColumnsType<LogType> = [
             {details?.files && (
               <>
                 <span>Files:</span>
-                <li>{details?.files?.map((file: LoggedFileDetailsType) => <ol>{file?.path}</ol>)}</li>
+                <li>
+                  {details?.files?.map((file: LoggedFileDetailsType) => (
+                    <ol key={`${index}-${file?.path}`}>{file?.path}</ol>
+                  ))}
+                </li>
               </>
             )}
           </Col>

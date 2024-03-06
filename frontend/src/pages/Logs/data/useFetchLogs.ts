@@ -37,7 +37,8 @@ export default function useFetchLogs(searchData: SearchType) {
 
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ['all_logs', queryId],
-    queryFn: async () => request<FetchLogsType>({ action: 'logs/all', data: searchData })
+    queryFn: async () => request<FetchLogsType>({ action: 'logs/all', data: searchData }),
+    staleTime: 600000
   })
   return {
     isLoading,

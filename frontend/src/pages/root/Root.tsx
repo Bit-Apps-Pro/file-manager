@@ -43,28 +43,30 @@ export default function Root() {
   }
 
   useEffect(() => {
-    const finder = configureElFinder()
-    setFinder(finder)
-    initThemeChangeHandler(finderRef)
-    console.log('finder', finder)
-    finder.bind('open searchend parents', () => {
-      generateFullPath(finder)
-    })
+    if (finderRef) {
+      const finder = configureElFinder(finderRef)
+      setFinder(finder)
+      initThemeChangeHandler(finderRef)
+      console.log('finder', finder)
+      finder.bind('open searchend parents', () => {
+        generateFullPath(finder)
+      })
 
-    finder.bind('viewchange', () => {
-      changeViewState(finder)
-    })
+      finder.bind('viewchange', () => {
+        changeViewState(finder)
+      })
+    }
     return () => {
-      if (finder) {
+      /* if (finder) {
         finder?.destroy()
-      }
+      } */
       setFinder({} as FinderInstance)
     }
   }, [])
 
   return (
     <>
-      <Flex>
+      <Flex style={{ paddingBottom: 15 }}>
         <Flex
           style={{
             flexDirection: 'column',

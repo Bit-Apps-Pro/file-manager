@@ -455,7 +455,6 @@ class ClientOptions
                 $options[$option] = $this->getOption($option);
             }
         }
-        error_log(print_r($options, true));
 
         return $options;
     }

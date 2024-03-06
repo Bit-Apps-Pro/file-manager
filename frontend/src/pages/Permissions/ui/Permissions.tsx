@@ -45,7 +45,7 @@ function Permissions() {
   return (
     <>
       <Card title="File Manager Shortcode" style={{ marginInline: '0.625rem' }}>
-        <Typography.Text copyable={{ text: '[file-manger]' }}>[file-manger]</Typography.Text>
+        <Typography.Text copyable={{ text: '[file-manager]' }}>[file-manager]</Typography.Text>
       </Card>
       <Form
         form={form}
