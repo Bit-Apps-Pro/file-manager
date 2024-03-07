@@ -5,7 +5,7 @@ import config from '@config/config'
 import AntIconWrapper from '@icons/AntIconWrapper'
 import LogoIcn from '@icons/LogoIcn'
 import LogoText from '@icons/LogoText'
-import { Button, Divider, Layout, Menu, Select, Space, Typography, notification, theme } from 'antd'
+import { Button, Layout, Menu, Select, Space, Typography, notification, theme } from 'antd'
 import { useAtomValue } from 'jotai'
 
 import cls from './TopNavigation.module.css'
@@ -60,7 +60,7 @@ export default function TopNavigation() {
       style={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         background: isDarkTheme ? colorBgContainer : '#F1F5FF',
         flexWrap: 'wrap',
         width: '100%',
@@ -73,7 +73,6 @@ export default function TopNavigation() {
         <LogoIcn size={30} />
         <LogoText h={35} dark={isDarkTheme} />
       </div>
-      <Divider orientation="left" type="vertical" />
       <Space style={{ paddingInline: '40px', fontSize: '12px' }}>
         <Typography.Text>Share Your Product Experience!</Typography.Text>
         <Button
@@ -92,19 +91,17 @@ export default function TopNavigation() {
           </AntIconWrapper>
         </Button>
       </Space>
-      <Divider orientation="right" type="vertical" style={{ marginTop: '4px' }} />
       <Menu
         theme={isDarkTheme ? 'dark' : 'light'}
         mode="horizontal"
         selectable={false}
         items={items}
         style={{
-          flexWrap: 'nowrap',
+          width: '450px',
           backgroundColor: isDarkTheme ? colorBgContainer : '#F1F5FF',
           justifyContent: 'center'
         }}
       />
-      <Divider orientation="right" type="vertical" style={{ marginTop: '4px' }} />
       <Space id="fm-theme-lang">
         Theme:
         <Select

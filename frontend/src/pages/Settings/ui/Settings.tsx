@@ -5,10 +5,9 @@ import useFetchSettings from '@pages/Settings/data/useFetchSettings'
 import useUpdateSettings from '@pages/Settings/data/useUpdateSettings'
 import { type SettingsType } from '@pages/Settings/settingsTypes'
 import { Button, Card, Form, Input, Select, Space, Switch, notification } from 'antd'
-import { useForm } from 'antd/es/form/Form'
-import { type FieldData } from 'rc-field-form/es/interface'
 
 export default function Settings() {
+  const { useForm } = Form
   const { settings, themes, languages, defaults } = useFetchSettings()
   const { updateSettings, isSettingsUpdating } = useUpdateSettings()
   const [form] = useForm()
@@ -40,7 +39,7 @@ export default function Settings() {
         })
         form.setFields(updatedFields)
       } else {
-        const fieldErrors: FieldData[] = []
+        const fieldErrors: { name: string[]; errors: string[] }[] = []
         Object.keys(response.data).forEach(field => {
           fieldErrors.push({
             name: field.split('.'),

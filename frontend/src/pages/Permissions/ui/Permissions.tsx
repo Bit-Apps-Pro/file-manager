@@ -5,10 +5,9 @@ import { type PermissionsSettingsType } from '@pages/Permissions/PermissionsSett
 import useFetchPermissionsSettings from '@pages/Permissions/data/useFetchPermissionsSettings'
 import useUpdatePermissionsSettings from '@pages/Permissions/data/useUpdatePermissionsSettings'
 import { Button, Card, Form, Input, Radio, Select, Space, Switch, Typography, notification } from 'antd'
-import { useForm } from 'antd/es/form/Form'
-import { type FieldData } from 'rc-field-form/es/interface'
 
 function Permissions() {
+  const { useForm } = Form
   const { isLoading, permissions, commands, fileTypes, roles, users, wpRoot } =
     useFetchPermissionsSettings()
   const { updatePermission, isPermissionUpdating } = useUpdatePermissionsSettings()
@@ -29,7 +28,7 @@ function Permissions() {
         })
         form.setFields(updatedFields)
       } else {
-        const fieldErrors: FieldData[] = []
+        const fieldErrors: { name: string[]; errors: string[] }[] = []
         Object.keys(response.data).forEach(field => {
           fieldErrors.push({
             name: field.split('.'),
