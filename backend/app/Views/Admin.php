@@ -23,10 +23,8 @@ class Admin
         Hooks::addAction('admin_menu', [$this, 'sideBarMenuItem']);
         Hooks::addAction('admin_notices', [$this, 'adminNotice']);
         Hooks::addFilter(Config::withPrefix('localized_script'), [$this, 'filterConfigVariable']);
+        Hooks::addFilter('script_loader_tag', [$this, 'filterScriptTag'], 0, 3);
 
-        if (Config::isDev()) {
-            Hooks::addFilter('script_loader_tag', [$this, 'filterScriptTag'], 0, 3);
-        }
 
         /*
          * // For testing --

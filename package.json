@@ -10,7 +10,7 @@
     "build:copy": "node tools/build_copy.js",
     "build:zip": "node tools/zip_build.js",
     "build:theme": "./tools/copy_themes.js",
-    "build:prod": "pnpm production && pnpm build:elfinder  && pnpm build:copy && pnpm build:zip",
+    "build:prod": "pnpm production  && pnpm build:copy && pnpm build:zip",
     "i18n:parse-js": "npx react-gettext-parser --output ./locale.pot --config ./gettext-parser.config.js  './frontend/src/**/{*.ts,*.tsx}'",
     "i18n:json": "npx po2json locale.pot ./languages/file-manager-file-manager-MODULE-main.json -f jed1.x",
     "i18n:php": "[ ! -d \"languages/\" ] && mkdir languages/;wp i18n make-pot ./backend languages/file-manager.pot --include=*.php --skip-js --slug=file-manager --headers='{\"Last-Translator\":\"\",\"Language-Team\":\"support@bitapps.pro\",\"PO-Revision-Date\":\"\",\"Report-Msgid-Bugs-To\":\"\"}'",

@@ -11,6 +11,22 @@ export const items: MenuProps['items'] = [
     )
   },
   {
+    key: 'bit-integration',
+    label: (
+      <a href="https://bitapps.pro/bit-integration" target="_blank" rel="noreferrer">
+        Bit Integration
+      </a>
+    )
+  },
+  {
+    key: 'bit-pi',
+    label: (
+      <a href="https://bitapps.pro" target="_blank" rel="noreferrer">
+        Bit Pi
+      </a>
+    )
+  },
+  {
     key: 'bit-assist',
     label: (
       <a href="https://bitapps.pro/bit-assist" target="_blank" rel="noreferrer">
@@ -23,22 +39,6 @@ export const items: MenuProps['items'] = [
     label: (
       <a href="https://bitapps.pro/bit-social" target="_blank" rel="noreferrer">
         Bit Social
-      </a>
-    )
-  },
-  {
-    key: 'bit-integration',
-    label: (
-      <a href="https://bitapps.pro/bit-integration" target="_blank" rel="noreferrer">
-        Bit Integration
-      </a>
-    )
-  },
-  {
-    key: 'bit-smtp',
-    label: (
-      <a href="https://bitapps.pro/bit-smtp" target="_blank" rel="noreferrer">
-        Bit SMTP
       </a>
     )
   }

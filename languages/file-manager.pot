@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-03-07T02:22:25+00:00\n"
+"POT-Creation-Date: 2024-03-07T04:09:25+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: file-manager\n"
@@ -21,7 +21,7 @@ msgid "Settings"
 msgstr ""
 
 #: app/Config.php:203
-#: app/Views/Admin.php:298
+#: app/Views/Admin.php:296
 msgid "Home"
 msgstr ""
 
@@ -844,48 +844,48 @@ msgstr ""
 msgid "Zulu"
 msgstr ""
 
-#: app/Views/Admin.php:199
+#: app/Views/Admin.php:197
 msgid "is set to"
 msgstr ""
 
-#: app/Views/Admin.php:201
+#: app/Views/Admin.php:199
 msgid "You will not be able to edit files with"
 msgstr ""
 
-#: app/Views/Admin.php:203
+#: app/Views/Admin.php:201
 msgid "Please set"
 msgstr ""
 
-#: app/Views/Admin.php:204
+#: app/Views/Admin.php:202
 msgid "to"
 msgstr ""
 
-#: app/Views/Admin.php:286
-#: app/Views/Admin.php:297
+#: app/Views/Admin.php:284
+#: app/Views/Admin.php:295
 msgid "Dashboard | Bit File Manager"
 msgstr ""
 
-#: app/Views/Admin.php:287
+#: app/Views/Admin.php:285
 msgid "Bit File Manager"
 msgstr ""
 
-#: app/Views/Admin.php:307
+#: app/Views/Admin.php:305
 msgid "Logs | Bit File Manager"
 msgstr ""
 
-#: app/Views/Admin.php:315
+#: app/Views/Admin.php:313
 msgid "Settings | Bit File Manager"
 msgstr ""
 
-#: app/Views/Admin.php:323
+#: app/Views/Admin.php:321
 msgid "Permissions - Sets permission for specific user or by user role | Bit File Manager"
 msgstr ""
 
-#: app/Views/Admin.php:334
+#: app/Views/Admin.php:332
 msgid "Support | Bit File Manager"
 msgstr ""
 
-#: app/Views/Admin.php:345
+#: app/Views/Admin.php:343
 msgid "System Information | Bit File Manager"
 msgstr ""
 

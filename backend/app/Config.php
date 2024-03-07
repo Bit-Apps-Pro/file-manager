@@ -193,15 +193,15 @@ class Config
         return [
             'Support'  => [
                 'title' => __('Support', 'file-manager'),
-                'url'   => 'https://www.bitapps.pro',
+                'url'   => self::get('ADMIN_URL') . 'admin.php?page=file-manager#/support',
             ],
             'Settings' => [
                 'title' => __('Settings', 'file-manager'),
-                'url'   => self::get('ADMIN_URL') . 'admin.php?page=file-manager-settings',
+                'url'   => self::get('ADMIN_URL') . 'admin.php?page=file-manager#/settings',
             ],
             'Home'     => [
                 'title' => __('Home', 'file-manager'),
-                'url'   => self::get('ADMIN_URL') . 'admin.php?page=file-manager',
+                'url'   => self::get('ADMIN_URL') . 'admin.php?page=file-manager#/',
             ],
         ];
     }

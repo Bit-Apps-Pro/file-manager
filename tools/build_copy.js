@@ -9,6 +9,7 @@ var options = {
         // '**/*',
         'assets/**/*',
         'backend/**/*',
+        'dependencies/**/*',
         'languages/**/*',
         'libs/**/*',
         'vendor/**/*',

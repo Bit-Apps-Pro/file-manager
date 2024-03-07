@@ -5,7 +5,7 @@
  * Plugin URI: https://bitapps.pro/
  * Author:     File Manager by Bit Form Team
  * Author URI:  https://bitapps.pro
- * Version: 6.4.0
+ * Version: 6.5.0
  * PHP version: 7.4
  * Text domain: file-manager
  * License: GPLv2
