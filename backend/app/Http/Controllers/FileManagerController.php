@@ -93,7 +93,7 @@ final class FileManagerController
     {
         if (!is_user_logged_in()) {
             return $this->guestVolume();
-        } elseif (is_user_logged_in() && RequestType::is('admin') && Plugin::instance()->permissions()->isDisabledForAdmin()) {
+        } elseif (is_user_logged_in() && Plugin::instance()->permissions()->isRequestForAdminArea() && Plugin::instance()->permissions()->isDisabledForAdmin()) {
             return $this->getDashboardVolumes();
         }
 

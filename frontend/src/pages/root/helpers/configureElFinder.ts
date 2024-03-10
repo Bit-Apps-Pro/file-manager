@@ -61,7 +61,9 @@ export default function configureElFinder(finderRef: RefObject<HTMLDivElement>):
       }
     }
   })[0].elfinder
-
+  if (finder?.theme?.name && finder.theme.name !== THEME) {
+    window.location.reload()
+  }
   finder.storage('lang', LANG)
   finder.storage('theme', THEME)
   finder.storage('view', ViewType)

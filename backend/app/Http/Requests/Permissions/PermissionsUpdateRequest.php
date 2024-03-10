@@ -32,7 +32,7 @@ class PermissionsUpdateRequest extends Request
             'by_role.*.path'       => ['nullable', ValidPathRule::class],
             'by_role.*.commands'   => ['nullable', ValidateCommandsRule::class],
             'guest.path'           => ['sanitize:text', 'nullable','string', ValidPathRule::class],
-            'guest.can_download'   => ['sanitize:text', 'nullable','string', 'boolean'],
+            'guest.can_download'   => ['sanitize:text', 'nullable', 'boolean'],
         ];
     }
 }

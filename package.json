@@ -98,6 +98,6 @@
   },
   "packageManager": "pnpm@8.15.4",
   "engines": {
-    "node": "^20"
+    "node": ">=20"
   }
 }
