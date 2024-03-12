@@ -428,7 +428,7 @@ class PermissionsProvider
         return Config::updateOption('permissions', $permissions, 'yes');
     }
 
-    private function isRequestForAdminArea()
+    public function isRequestForAdminArea()
     {
         $action = '';
 

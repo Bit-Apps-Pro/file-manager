@@ -30,7 +30,10 @@ export default function TopNavigation() {
   const handleThemeChange = (updatedTheme: string) => {
     updateTheme(updatedTheme).then(response => {
       if (response.code === 'SUCCESS') {
-        finder?.changeTheme(updatedTheme).storage('theme', updatedTheme)
+        if (finder && typeof finder.changeTheme === 'function') {
+          finder?.changeTheme(updatedTheme).storage('theme', updatedTheme)
+        }
+
         if (config.THEME === 'default' || ['bootstrap', 'default'].includes(updatedTheme)) {
           window.location.reload()
         }

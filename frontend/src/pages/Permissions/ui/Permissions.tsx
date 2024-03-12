@@ -14,7 +14,7 @@ function Permissions() {
   const [form] = useForm()
   useEffect(() => {
     form.setFieldsValue(permissions)
-  }, [permissions, form])
+  }, [permissions])
 
   const handleSubmit = (changedValues: PermissionsSettingsType) => {
     updatePermission(changedValues).then(response => {
@@ -73,8 +73,7 @@ function Permissions() {
               <Switch />
             </Form.Item>
 
-            <h3>Allowed MIME types and size</h3>
-            <Form.Item name="fileType">
+            <Form.Item name="fileType" label="Allowed MIME types">
               <Select mode="multiple">
                 {fileTypes?.map(fileType => (
                   <Select.Option key={fileType} value={fileType}>
@@ -84,7 +83,7 @@ function Permissions() {
               </Select>
             </Form.Item>
 
-            <Form.Item name="file_size">
+            <Form.Item name="file_size" label="Max upload Size">
               <Input type="number" placeholder="Maximum File Size" addonAfter="MB" />
             </Form.Item>
           </Card>
