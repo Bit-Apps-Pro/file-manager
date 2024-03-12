@@ -26,6 +26,6 @@ class FileManagerProvider
     {
         $finder = new elFinder($this->_finderOptions->getOptions());
 
-        return new elFinderConnector($finder);
+        return new FinderConnector($finder);
     }
 }

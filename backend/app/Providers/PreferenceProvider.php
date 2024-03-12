@@ -639,6 +639,10 @@ class PreferenceProvider
             $uiOptions = array_diff($uiOptions, ['path']);
         }
 
+        if (!is_user_logged_in()) {
+            $uiOptions = array_diff($uiOptions, ['toolbar']);
+        }
+
         return $uiOptions;
     }
 

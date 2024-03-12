@@ -260,9 +260,19 @@ class PermissionsProvider
         ) {
             $settings['path'] = isset($this->permissions['guest']['path'])
                 ? $this->permissions['guest']['path'] : $settings['path'];
-            $settings['commands'] = isset($this->permissions['guest']['commands'])
-                && \is_array($this->permissions['guest']['commands'])
-                ? $this->permissions['guest']['commands'] : $settings['commands'];
+
+            // commands in guest permission removed. this is for back compat
+            if (
+                isset($this->permissions['guest']['commands'])
+            && \is_array($this->permissions['guest']['commands'])
+            ) {
+                $settings['commands'] =  $this->permissions['guest']['commands'];
+            } elseif (
+                \array_key_exists('can_download', $this->permissions['guest'])
+                 && $this->permissions['guest']['can_download']
+            ) {
+                $settings['commands'] = ['download'];
+            }
         }
 
         return $settings;

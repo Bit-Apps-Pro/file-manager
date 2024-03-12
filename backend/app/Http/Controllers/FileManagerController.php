@@ -149,21 +149,21 @@ final class FileManagerController
         $roots[] = $this->processFileRoot(
             $permissions->getPathByFolderOption(),
             'Public',
-            $permissions->getPublicRootURL()
+            $this->getUrlByPath($permissions->getPathByFolderOption())
         );
 
         $permissionByRole   = $permissions->getByRole($permissions->currentUserRole());
         $roots[]            = $this->processFileRoot(
             $permissionByRole['path'],
             $permissions->currentUserRole(),
-            $permissions->getPublicRootURL()
+            $this->getUrlByPath($permissionByRole['path'])
         );
 
         $permissionByUser   = $permissions->getByUser($permissions->currentUserID());
         $roots[]            = $this->processFileRoot(
             $permissionByUser['path'],
             $permissions->currentUser()->display_name,
-            $permissions->getPublicRootURL()
+            $this->getUrlByPath($permissionByUser['path'])
         );
 
         return $roots;
@@ -177,7 +177,7 @@ final class FileManagerController
 
         $root = new FileRoot(
             $guestPermission['path'],
-            $permissions->getURL(),
+            $this->getUrlByPath($guestPermission['path']),
             \array_key_exists('alias', $guestPermission)
                 ? $guestPermission['alias'] : basename($guestPermission['path'])
         );
@@ -229,5 +229,9 @@ final class FileManagerController
         }
 
         return $volume;
+    }
+
+    public function getUrlByPath($path) {
+        return home_url(str_replace(ABSPATH, $path, ''));
     }
 }
