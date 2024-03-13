@@ -34,7 +34,11 @@ export default function TopNavigation() {
           finder?.changeTheme(updatedTheme).storage('theme', updatedTheme)
         }
 
-        if (config.THEME === 'default' || ['bootstrap', 'default'].includes(updatedTheme)) {
+        if (
+          !(finder && typeof finder.changeTheme === 'function') ||
+          ['bootstrap', 'default'].includes(config.THEME) ||
+          ['bootstrap', 'default'].includes(updatedTheme)
+        ) {
           window.location.reload()
         }
       } else if (response?.message) {

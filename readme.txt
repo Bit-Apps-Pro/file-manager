@@ -1,4 +1,4 @@
-=== File Manager – 100% Free & Open Source File Manager Plugin for WordPress | Bit File Manager ===
+=== Bit File Manager – 100% Free & Open Source File Manager and Code Editor for WordPress ===
 
 Contributors: bitpressadmin, aihimel
 Tags: code editor, wp file manager, elfinder, File Explorer, manage files
@@ -51,6 +51,7 @@ Operation Control: Admin can control 13+ operations for specific user and user r
 = Key Features =
 
 ⭐ Operations (Edit, Upload, Download and Delete)
+⭐ Code Editor
 ⭐ File manager plugin comes with light and elegant client UI
 ⭐ File manager support drag & drop file upload
 ⭐ List and Icons view available in File Manager Plugin
@@ -262,12 +263,11 @@ loudspeaker **Join our community [Bit Apps](https://www.facebook.com/groups/bita
 
 = Requirements =
 
-- At least Firefox 12, Internet Explorer 9, Safari 6, Opera 12 or Chrome/Chromium 19
-- PHP 7.4+ (recommended)
-- Minimum 5.6
-- Up to 8.2.12
-- Supports 8.2.12 on production environment
-- DISALLOW_FILE_EDIT must be false to edit files from Bit File Manager.
+- Works on all modern browser
+- php version:
+    Minimum: 7.4
+    Tested up to: 8.3
+- "DISALLOW_FILE_EDIT" must be false to edit files from Bit File Manager.
 
 = Installation process =
 
@@ -281,9 +281,9 @@ loudspeaker **Join our community [Bit Apps](https://www.facebook.com/groups/bita
 
 = Invalid backend configuration. Readable volumes not available. =
 
-Please check your file permission from your hosting panel. The permission must be 0755 for file/folder. If you are using a vps(virtual private server) then you must ensure that the owner of your installation is PHP aka www-data. Another reason could be wrong root folder path/url. Inserting a correct root folder path/URL should fix the issue.
+Please check your file permission from your hosting panel. The permission must be 0755 for file/folder, this means the path you have set must be readable by php process. If you are using a vps(virtual private server) then you must ensure that the owner of your installation is PHP aka www-data. Another reason could be wrong root folder path/url. Inserting a correct root folder path/URL should fix the issue.
 
-= I can not upload larger files then \*MB =
+= I can not upload larger files then 2 MB =
 
 You can upload any size of file. Bit file manager plugin uploads files in chunks. So a very large file can be easily uploaded & downloaded.
 
@@ -294,6 +294,10 @@ Yes, documents like PSD, DOCX can be previewed via file manager preview.
 = Can I change file permission like cPanel? =
 
 Yes, file/folder permission can be changed like cPanel and other hosting management interfaces. It is very easy. Just right click on the file and you will see a menu named **Change Mode **. Clicking will open a dialogue box, where you can update the file permission, just like cPanel.
+
+= Is it possible to edit file using code editor =
+
+Yes, It is possible to edit writeable files in the wordpress directory using code editor. This plugin includes multiple code editing like "Ace Editor", "CodeMirror" and Text Editor.
 
 == Screenshots ==
 

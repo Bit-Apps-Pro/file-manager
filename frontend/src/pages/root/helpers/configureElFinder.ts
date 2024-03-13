@@ -5,6 +5,10 @@ import { type FinderInstance } from 'elfinder'
 
 export default function configureElFinder(finderRef: RefObject<HTMLDivElement>): FinderInstance {
   const { AJAX_URL, NONCE, LANG, THEME, ViewType, ACTION } = config
+  const themes = getOptionVariable('themes', [])
+  themes.default = {
+    name: 'Default'
+  }
   // @ts-ignore
   const finder = jQuery(finderRef.current).elfinder({
     url: AJAX_URL,
@@ -17,7 +21,7 @@ export default function configureElFinder(finderRef: RefObject<HTMLDivElement>):
     cssAutoLoad: getOptionVariable('cssAutoLoad'),
     contextmenu: getOptionVariable('contextmenu'),
     requestType: getOptionVariable('requestType'),
-    themes: getOptionVariable('themes', []),
+    themes,
     width: getOptionVariable('width'),
     height: getOptionVariable('height'),
     commandsOptions: getOptionVariable('commandsOptions'),
@@ -65,7 +69,9 @@ export default function configureElFinder(finderRef: RefObject<HTMLDivElement>):
     window.location.reload()
   }
   finder.storage('lang', LANG)
-  finder.storage('theme', THEME)
+  console.log('finder.storage', finder.storage)
+  finder?.changeTheme(THEME).storage('theme', THEME)
   finder.storage('view', ViewType)
+  console.log('THEME', THEME)
   return finder
 }

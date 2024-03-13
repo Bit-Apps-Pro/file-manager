@@ -23,7 +23,6 @@ use BitApps\FM\Providers\MediaSynchronizer;
 use BitApps\FM\Providers\MimeProvider;
 use BitApps\FM\Providers\PermissionsProvider;
 use BitApps\FM\Providers\PreferenceProvider;
-use BitApps\FM\Providers\ReviewProvider;
 use BitApps\FM\Providers\VersionMigrationProvider;
 use BitApps\FM\Views\Admin;
 
@@ -88,7 +87,6 @@ final class Plugin
     {
         Connection::setPluginPrefix(Config::DB_PREFIX);
         if (RequestType::is('admin')) {
-            // $this->_container['review_notifier'] = new ReviewProvider();
             new Admin();
         }
 
@@ -192,20 +190,6 @@ final class Plugin
         }
 
         return $this->_container['access_control'];
-    }
-
-    /**
-     * Provide review notifier
-     *
-     * @return ReviewProvider
-     */
-    public function reviewNotifier()
-    {
-        if (!isset($this->_container['review_notifier'])) {
-            $this->_container['review_notifier'] = new ReviewProvider();
-        }
-
-        return $this->_container['review_notifier'];
     }
 
     /**

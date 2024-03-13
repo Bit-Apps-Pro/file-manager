@@ -10,16 +10,14 @@ import { lightThemeComponentToken, lightThemeToken } from '@config/themes/theme.
 import loadable from '@loadable/component'
 import Layout from '@pages/Layout'
 import Root from '@pages/root/Root'
-import { ConfigProvider, notification, theme } from 'antd'
+import { ConfigProvider, Flex, Spin, notification, theme } from 'antd'
 import { useAtom, useAtomValue } from 'jotai'
 
-const Support = loadable(() => import('@pages/Support'), { fallback: <div>Loading...</div> })
-const Logs = loadable(() => import('@pages/Logs'), { fallback: <div>Loading...</div> })
-const Settings = loadable(() => import('@pages/Settings'), { fallback: <div>Loading...</div> })
-const Permissions = loadable(() => import('@pages/Permissions'), { fallback: <div>Loading...</div> })
-const SystemInformation = loadable(() => import('@pages/SystemInformation'), {
-  fallback: <div>Loading...</div>
-})
+const Support = loadable(() => import('@pages/Support'), { fallback: <Loader /> })
+const Logs = loadable(() => import('@pages/Logs'), { fallback: <Loader /> })
+const Settings = loadable(() => import('@pages/Settings'), { fallback: <Loader /> })
+const Permissions = loadable(() => import('@pages/Permissions'), { fallback: <Loader /> })
+const SystemInformation = loadable(() => import('@pages/SystemInformation'), { fallback: <Loader /> })
 
 const { defaultAlgorithm, darkAlgorithm } = theme
 
@@ -58,16 +56,27 @@ export default function AppRoutes() {
         {contextHolder}
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Root />} />
-            <Route path="*" caseSensitive element={<Root />} />
             <Route path="/support" element={<Support />} />
             <Route path="/logs" element={<Logs />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/permissions" element={<Permissions />} />
             <Route path="/system-info" element={<SystemInformation />} />
+            <Route path="*" caseSensitive element={<Root />} />
           </Route>
         </Routes>
       </StyleProvider>
     </ConfigProvider>
+  )
+}
+
+function Loader() {
+  return (
+    <Flex
+      align="center"
+      justify="center"
+      style={{ minWidth: 'calc(100vw - 180px)', minHeight: '100vh' }}
+    >
+      <Spin size="large" />
+    </Flex>
   )
 }
