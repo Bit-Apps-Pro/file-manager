@@ -75,17 +75,18 @@ export default function Root() {
   console.log('isOpening', isOpening)
   return (
     <>
-      <Flex
+      <div
         style={{
           position: 'relative',
-          top: 'calc(100dvh - 50%)',
-          left: 'calc(100dvw - 70%)',
+          top: '50%',
+          left: '50%',
           zIndex: 1,
-          display: isOpening ? 'flex' : 'none'
+          display: isOpening ? 'flex' : 'none',
+          width: 'max-content'
         }}
       >
         <Spin size="large" />
-      </Flex>
+      </div>
       <Flex style={{ paddingBottom: 15 }}>
         <Flex
           style={{
