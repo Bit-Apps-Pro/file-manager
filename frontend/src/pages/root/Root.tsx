@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import $finder, { $finderCurrentPath, $finderViewType } from '@common/globalStates/$finder'
 import config from '@config/config'
 import LucideIcn from '@icons/LucideIcn'
 import useUpdateViewType from '@pages/Settings/data/useUpdateViewType'
-import { Breadcrumb, Button, Flex, Image, Space } from 'antd'
+import { Breadcrumb, Button, Flex, Image, Space, Spin } from 'antd'
 import { type FinderInstance } from 'elfinder'
 import { useAtom } from 'jotai'
 
@@ -13,6 +13,7 @@ import initThemeChangeHandler from './helpers/initThemeChangeHandler'
 
 export default function Root() {
   const finderRef = useRef<HTMLDivElement>(null)
+  const [isOpening, setIsOpening] = useState(false)
   const [elfinder, setFinder] = useAtom($finder)
   const [currentPath, setFinderCurrentPath] = useAtom($finderCurrentPath)
   const [viewType, setFinderViewType] = useAtom($finderViewType)
@@ -47,9 +48,17 @@ export default function Root() {
       const finder = configureElFinder(finderRef)
       setFinder(finder)
       initThemeChangeHandler(finderRef)
-      console.log('finder', finder)
+
       finder.bind('open searchend parents', () => {
         generateFullPath(finder)
+      })
+
+      finder.bind('open', () => {
+        setIsOpening(true)
+      })
+
+      finder.bind('opendone', () => {
+        setIsOpening(false)
       })
 
       finder.bind('viewchange', () => {
@@ -63,9 +72,20 @@ export default function Root() {
       setFinder({} as FinderInstance)
     }
   }, [])
-
+  console.log('isOpening', isOpening)
   return (
     <>
+      <Flex
+        style={{
+          position: 'relative',
+          top: 'calc(100dvh - 50%)',
+          left: 'calc(100dvw - 70%)',
+          zIndex: 1,
+          display: isOpening ? 'flex' : 'none'
+        }}
+      >
+        <Spin size="large" />
+      </Flex>
       <Flex style={{ paddingBottom: 15 }}>
         <Flex
           style={{

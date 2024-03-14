@@ -13,8 +13,9 @@ function Permissions() {
   const { updatePermission, isPermissionUpdating } = useUpdatePermissionsSettings()
   const [form] = useForm()
   useEffect(() => {
+    console.log('form, ', form, form.isFieldsTouched(), form.isFieldsValidating)
     form.setFieldsValue(permissions)
-  }, [permissions])
+  }, [permissions, form])
 
   const handleSubmit = (changedValues: PermissionsSettingsType) => {
     updatePermission(changedValues).then(response => {

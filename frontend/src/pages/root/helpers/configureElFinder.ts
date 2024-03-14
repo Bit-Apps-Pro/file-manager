@@ -69,9 +69,8 @@ export default function configureElFinder(finderRef: RefObject<HTMLDivElement>):
     window.location.reload()
   }
   finder.storage('lang', LANG)
-  console.log('finder.storage', finder.storage)
   finder?.changeTheme(THEME).storage('theme', THEME)
   finder.storage('view', ViewType)
-  console.log('THEME', THEME)
+
   return finder
 }
