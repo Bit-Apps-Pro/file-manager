@@ -46,9 +46,7 @@ class Logger
          * update: put
          */
         $commandDetails = [];
-        if ($command === 'zipdl') {
-            $commandDetails = $this->processFileHashForZipDL($target, $volume);
-        } elseif ($command === 'upload') {
+        if ($command === 'upload') {
             $commandDetails = $this->processFileHashForUpload($target, $volume);
         } else {
             $commandDetails = $this->processFileHash($command, $target, $volume);
@@ -68,9 +66,16 @@ class Logger
      */
     private function processFileHash($command, $target, $volume)
     {
-        $details = [];
-        if (!empty($target['target'])) {
-            $details['driver']  = \get_class($volume);
+        $details            = [];
+        $details['driver']  = \get_class($volume);
+        if (!empty($target['targets'])) {
+            foreach ($target['targets'] as $file) {
+                $details['files'][] = [
+                    'path' => str_replace(ABSPATH, '', $volume->getPath($file)),
+                    'hash' => $file,
+                ];
+            }
+        } elseif (!empty($target['target'])) {
             $details['files'][] = [
                 'path' => str_replace(ABSPATH, '', $volume->getPath($target['target'])),
                 'hash' => $target['target'],
