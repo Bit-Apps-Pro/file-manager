@@ -2,12 +2,9 @@
 
 namespace BitApps\FM;
 
-// Main class for the plugin.
-
-use BitApps\FM\Dependencies\BitApps\WPDatabase\Connection;
-use BitApps\FM\Dependencies\BitApps\WPKit\Hooks\Hooks;
-use BitApps\FM\Dependencies\BitApps\WPKit\Http\RequestType;
-use BitApps\FM\Dependencies\BitApps\WPKit\Migration\MigrationHelper;
+use BitApps\WPKit\Hooks\Hooks;
+use BitApps\WPKit\Http\RequestType;
+use BitApps\WPKit\Migration\MigrationHelper;
 
 use function BitApps\FM\Functions\view;
 
@@ -85,7 +82,6 @@ final class Plugin
      */
     public function registerProviders()
     {
-        Connection::setPluginPrefix(Config::DB_PREFIX);
         if (RequestType::is('admin')) {
             new Admin();
         }
@@ -231,23 +227,6 @@ final class Plugin
             $version
         );
         $this->registerFinderAssets(); // Loads all the assets necessary for elFinder
-
-        wp_register_style('bfm-tippy-css', BFM_ROOT_URL . 'libs/js/tippy-v0.2.8/tippy.css', $version);
-
-        // Admin scripts
-        wp_register_script(
-            'bfm-tippy-script',
-            BFM_ROOT_URL . 'libs/js/tippy-v0.2.8/tippy.js',
-            ['jquery'],
-            $version
-        );
-
-        // Including admin-style.css
-        if (strpos($currentScreen, 'bit-file-manager') !== false) {
-            wp_enqueue_style('bfm-admin-style', BFM_ROOT_URL . 'assets/css/style.min.css');
-        } else {
-            wp_register_style('bfm-admin-style', BFM_ROOT_URL . 'assets/css/style.min.css');
-        }
     }
 
     /**
@@ -368,7 +347,6 @@ final class Plugin
 
         static::$_instance = new static();
         if (version_compare(Config::getOption('version'), Config::VERSION_ID, '<')) {
-            Connection::setPluginPrefix(Config::DB_PREFIX);
             MigrationHelper::migrate(InstallerProvider::migration());
         }
 
@@ -380,7 +358,7 @@ final class Plugin
      * */
     protected function setPhpIniVars()
     {
-        if (\defined('WP_DEBUG') && isset($_REQUEST['action']) && $_REQUEST['action'] === 'bit_fm_connector') {
+        if (\defined('WP_DEBUG') && isset($_REQUEST['action']) && sanitize_text_field($_REQUEST['action']) === 'bit_fm_connector') {
             ini_set('post_max_size', '128M');
             ini_set('upload_max_filesize', '128M');
         }

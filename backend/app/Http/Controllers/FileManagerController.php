@@ -3,8 +3,8 @@
 namespace BitApps\FM\Http\Controllers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Dependencies\BitApps\WPKit\Http\RequestType;
-use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
+use BitApps\WPKit\Http\RequestType;
+use BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\FileManagerProvider;
@@ -65,7 +65,7 @@ final class FileManagerController
         // 'zipdl.pre file.pre rename.pre put.pre upload.pre',
 
         $finderOptions->setBind(
-            'zipdl.pre file.pre rename.pre put.pre upload.pre',
+            'zipdl.pre file.pre rename.pre put.pre upload.pre rm.pre chmod.pre mkdir.pre mkfile.pre extract.pre',
             [Plugin::instance()->logger(), 'log']
         );
 

@@ -1,6 +1,6 @@
 <?php
 
-use BitApps\FM\Dependencies\BitApps\WPKit\Http\Router\Route;
+use BitApps\WPKit\Http\Router\Route;
 use BitApps\FM\Http\Controllers\FileManagerController;
 use BitApps\FM\Http\Controllers\LogController;
 use BitApps\FM\Http\Controllers\PermissionsController;

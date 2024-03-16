@@ -2,7 +2,7 @@
 
 namespace BitApps\FM\Http\Controllers;
 
-use BitApps\FM\Dependencies\BitApps\WPKit\Http\Response;
+use BitApps\WPKit\Http\Response;
 use BitApps\FM\Http\Requests\Permissions\PermissionsGetRequest;
 use BitApps\FM\Http\Requests\Permissions\PermissionsUpdateRequest;
 use BitApps\FM\Plugin;

@@ -1,8 +1,8 @@
 <?php
 
 use BitApps\FM\Config;
-use BitApps\FM\Dependencies\BitApps\WPDatabase\Connection;
-use BitApps\FM\Dependencies\BitApps\WPKit\Migration\Migration;
+use BitApps\WPDatabase\Connection;
+use BitApps\WPKit\Migration\Migration;
 
 if (!\defined('ABSPATH')) {
     exit;

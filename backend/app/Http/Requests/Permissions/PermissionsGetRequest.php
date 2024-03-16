@@ -2,8 +2,8 @@
 
 namespace BitApps\FM\Http\Requests\Permissions;
 
-use BitApps\FM\Dependencies\BitApps\WPKit\Http\Request\Request;
-use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
+use BitApps\WPKit\Http\Request\Request;
+use BitApps\WPKit\Utils\Capabilities;
 
 class PermissionsGetRequest extends Request
 {

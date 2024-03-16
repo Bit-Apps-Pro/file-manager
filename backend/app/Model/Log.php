@@ -2,7 +2,8 @@
 
 namespace BitApps\FM\Model;
 
-use BitApps\FM\Dependencies\BitApps\WPDatabase\Model;
+use BitApps\FM\Config;
+use BitApps\WPDatabase\Model;
 
 /**
  * Model for log
@@ -15,6 +16,8 @@ use BitApps\FM\Dependencies\BitApps\WPDatabase\Model;
 class Log extends Model
 {
     public $timestamps = false;
+
+    protected $prefix = Config::VAR_PREFIX;
 
     public $casts = ['details' => 'object'];
 

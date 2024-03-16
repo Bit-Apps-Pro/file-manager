@@ -2,7 +2,7 @@
 
 namespace BitApps\FM\Http\Rules;
 
-use BitApps\FM\Dependencies\BitApps\WPValidator\Rule;
+use BitApps\WPValidator\Rule;
 use BitApps\FM\Plugin;
 
 class ValidateLangRule extends Rule

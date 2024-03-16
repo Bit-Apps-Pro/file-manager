@@ -3,7 +3,7 @@
 namespace BitApps\FM\Http\Services;
 
 use BitApps\FM\Config;
-use BitApps\FM\Dependencies\BitApps\WPDatabase\QueryBuilder;
+use BitApps\WPDatabase\QueryBuilder;
 use BitApps\FM\Model\Log;
 use BitApps\FM\Plugin;
 use DateTime;

@@ -1,15 +1,8 @@
 <?php
-/**
- * @license MIT
- *
- * Modified using Strauss.
- *
- * @see https://github.com/BrianHenryIE/strauss
- */
 
 namespace BitApps\FM\Http\Rules;
 
-use BitApps\FM\Dependencies\BitApps\WPValidator\Rule;
+use BitApps\WPValidator\Rule;
 use BitApps\FM\Plugin;
 
 class ValidateCommandsRule extends Rule

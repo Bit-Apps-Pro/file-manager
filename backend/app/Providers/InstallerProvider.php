@@ -3,8 +3,8 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Dependencies\BitApps\WPDatabase\Connection;
-use BitApps\FM\Dependencies\BitApps\WPKit\Installer;
+use BitApps\WPDatabase\Connection;
+use BitApps\WPKit\Installer;
 
 class InstallerProvider
 {

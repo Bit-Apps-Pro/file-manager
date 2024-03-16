@@ -3,9 +3,9 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Dependencies\BitApps\WPKit\Hooks\Hooks;
-use BitApps\FM\Dependencies\BitApps\WPKit\Http\RequestType;
-use BitApps\FM\Dependencies\BitApps\WPKit\Http\Router\Router;
+use BitApps\WPKit\Hooks\Hooks;
+use BitApps\WPKit\Http\RequestType;
+use BitApps\WPKit\Http\Router\Router;
 use BitApps\FM\Plugin;
 
 class HookProvider

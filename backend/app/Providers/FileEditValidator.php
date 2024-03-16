@@ -2,7 +2,7 @@
 
 namespace BitApps\FM\Providers;
 
-use BitApps\FM\Dependencies\BitApps\WPKit\Utils\Capabilities;
+use BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
 
