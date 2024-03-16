@@ -90,7 +90,7 @@ final class SettingsController
 
     public function getLanguages()
     {
-        return Response::success(Plugin::instance()->preferences()->getLanguages())->message(__('Theme updated successfully', 'file-manger'));
+        return Response::success(Plugin::instance()->preferences()->getLanguages());
     }
 
     public function updateLanguage(LangUpdateRequest $request)
