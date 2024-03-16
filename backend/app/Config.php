@@ -167,7 +167,7 @@ class Config
 
     public static function adBanner()
     {
-        $hideAT  = new DateTimeImmutable('2024-01-10');
+        $hideAT  = new DateTimeImmutable('2024-03-31');
         $current = new DateTimeImmutable();
 
         $diff = date_diff($current, $hideAT);

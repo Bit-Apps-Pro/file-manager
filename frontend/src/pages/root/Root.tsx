@@ -53,7 +53,7 @@ export default function Root() {
         generateFullPath(finder)
       })
 
-      finder.bind('open', () => {
+      finder.bind('request.open', () => {
         setIsOpening(true)
       })
 
@@ -87,13 +87,13 @@ export default function Root() {
       >
         <Spin size="large" />
       </div>
-      <Flex style={{ paddingBottom: 15 }}>
+      <Flex>
         <Flex
           style={{
             flexDirection: 'column',
             width: `${config.BANNER !== null ? '50%' : '100%'}`,
             justifyContent: 'center',
-            paddingInline: 10
+            padding: 10
           }}
         >
           <Breadcrumb items={currentPath} />
@@ -135,7 +135,13 @@ export default function Root() {
         </Flex>
         {config.BANNER !== null && (
           <Space style={{ width: '50%' }}>
-            <Image alt="adBanner" src={config.BANNER.img} preview={false} />
+            <a
+              href={`${config.BANNER.url}/?utm_source=fm&utm_campaign=special_offer`}
+              target="_blank"
+              rel="external noreferrer"
+            >
+              <Image alt="adBanner" src={config.BANNER.img} preview={false} />
+            </a>
           </Space>
         )}
       </Flex>
