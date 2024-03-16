@@ -14,7 +14,6 @@ class InstallerProvider
 
     public function __construct()
     {
-        Connection::setPluginPrefix(Config::DB_PREFIX);
         $this->_activateHook   = Config::withPrefix('activate');
         self::$_uninstallHook  = Config::withPrefix('uninstall');
     }
@@ -64,7 +63,7 @@ class InstallerProvider
     public static function drop()
     {
         $migrations = [
-            'BFMLogTableMigration',
+            'BFMLogsTableMigration',
             'BFMPluginOptions',
         ];
 
