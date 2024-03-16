@@ -1,11 +1,11 @@
 === Bit File Manager – 100% Free & Open Source File Manager and Code Editor for WordPress ===
 
 Contributors: bitpressadmin, aihimel
-Tags: code editor, wp file manager, elfinder, File Explorer, manage files
+Tags: code editor, wp file manager, finder, explorer, edit php
 Requires at least: 5.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 6.5.0
+Stable tag: 6.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -317,11 +317,17 @@ Yes, It is possible to edit writeable files in the wordpress directory using cod
 
 == Upgrade Notice ==
 
-= 6.3 =
+= 6.5 =
 
 - No special requirements.
 
 == Changelog ==
+
+= 6.5 (16 March, 2024) =
+- UI updated.
+- Some minor issue fixed.
+- Multiple drive/folder by user/role.
+- elFinder updated.
 
 = 6.4 (24 Dec, 2023) =
 - elFinder updated.

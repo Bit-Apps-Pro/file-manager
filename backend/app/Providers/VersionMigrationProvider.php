@@ -39,17 +39,17 @@ class VersionMigrationProvider
 
     private function migrateToLatest()
     {
-        $this->migrateTo650();
+        $this->migrateTo651();
     }
 
-    private function migrateTo650()
+    private function migrateTo651()
     {
-        if ($this->_oldVersion >= 650) {
+        if ($this->_oldVersion >= 651) {
             return;
         }
 
-        Schema::withPrefix(Connection::wpPrefix() . 'fm')->drop('logs');
-        Schema::withPrefix(Connection::wpPrefix() . 'fm')->drop('log');
+        Schema::withPrefix(Connection::wpPrefix() . 'fm_')->drop('logs');
+        Schema::withPrefix(Connection::wpPrefix() . 'fm_')->drop('log');
         $this->migrateTo600();
     }
 

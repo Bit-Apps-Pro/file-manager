@@ -2,13 +2,15 @@
 
 /**
  * Plugin Name: Bit File Manager
- * Plugin URI: https://bitapps.pro/
+ * Plugin URI: https://bitapps.pro/bit-file-manager
  * Author:     File Manager by Bit Form Team
  * Author URI:  https://bitapps.pro
- * Version: 6.5.0
- * PHP version: 7.4
+ * Version: 6.5.1
+ * Requires at least: 5.0
+ * Requires PHP: 7.4
  * Text domain: file-manager
- * License: GPLv2
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Description: File Manager let you manage your file the way you like.
  *  You can upload, delete, copy, move, rename, compress, extract files.
  *  You don't need to worry about ftp. It is really simple and easy to use.
