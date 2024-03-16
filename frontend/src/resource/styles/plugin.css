@@ -35,6 +35,7 @@
 }
 
 .elfinder-dialog.elfinder-to-editing.elfinder-dialog-edit {
+  top: 32px !important;
   height: max-content !important;
 }
 
