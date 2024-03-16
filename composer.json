@@ -1,30 +1,33 @@
 {
   "name": "bitapps/file-manager",
-  "description": "An Integration plugin for wordpress",
+  "description": "A file management plugin for wordpress",
   "license": "gpl-2",
   "autoload": {
     "psr-4": {
-      "BitApps\\FM\\": "./backend/app",
-      "BitApps\\FM\\Core\\": "./backend/core"
+      "BitApps\\FM\\": "./backend/app"
     }
   },
   "scripts": {
     "lint": "./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php",
     "unused:variable": "phpcs -p --standard=VariableAnalysis backend",
-    "compat": "./vendor/bin/phpcs -p ./backend --standard=PHPCompatibilityWP --runtime-set testVersion 5.6-",
-    "test:unit": "./vendor/bin/phpunit --testdox --colors=always tests/ --exclude-group db"
+    "compat": "./vendor/bin/phpcs -p ./backend --standard=PHPCompatibilityWP --runtime-set testVersion 5.6-"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.10",
     "sirbrillig/phpcs-variable-analysis": "*",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
-    "phpunit/phpunit": "^9.3.0",
-    "yoast/phpunit-polyfills": "^1.0",
     "phpcompatibility/phpcompatibility-wp": "*"
   },
   "config": {
     "allow-plugins": {
-      "dealerdirect/phpcodesniffer-composer-installer": true
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "automattic/jetpack-autoloader": true
     }
+  },
+  "require": {
+    "bitapps/wp-validator": "^1.0.4",
+    "bitapps/wp-kit": "^1.1",
+    "bitapps/wp-database": "^1.1",
+    "automattic/jetpack-autoloader": "^3.0"
   }
 }

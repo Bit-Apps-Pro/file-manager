@@ -4,6 +4,8 @@
 
 namespace BitApps\FM;
 
+use DateTimeImmutable;
+
 if (!\defined('ABSPATH')) {
     exit;
 }
@@ -19,11 +21,9 @@ class Config
 
     const VAR_PREFIX = 'bit_fm_';
 
-    const DB_PREFIX = 'fm_';
+    const VERSION = '6.5.0';
 
-    const VERSION = '6.4.0';
-
-    const VERSION_ID = 640;
+    const VERSION_ID = 650;
 
     const DB_VERSION = '1.0';
 
@@ -57,6 +57,9 @@ class Config
                 return plugin_basename(trim(self::get('MAIN_FILE')));
 
             case 'BASEDIR':
+                return plugin_dir_path(self::get('MAIN_FILE'));
+
+            case 'BACKEND_DIR':
                 return plugin_dir_path(self::get('MAIN_FILE')) . 'backend';
 
             case 'SITE_URL':
@@ -157,7 +160,24 @@ class Config
 
     public static function isDev()
     {
-        return \defined('BITAPPS_DEV') && BITAPPS_DEV;
+        return is_readable(Config::get('BASEDIR') . '/port');
+    }
+
+    public static function adBanner()
+    {
+        $hideAT  = new DateTimeImmutable('2024-03-31');
+        $current = new DateTimeImmutable();
+
+        $diff = date_diff($current, $hideAT);
+
+        if ($diff->invert) {
+            return false;
+        }
+
+        return [
+            'url' => 'https://bitapps.pro',
+            'img' => self::get('ASSET_URI') . '/img/banner.png',
+        ];
     }
 
     /**
@@ -171,15 +191,15 @@ class Config
         return [
             'Support'  => [
                 'title' => __('Support', 'file-manager'),
-                'url'   => 'https://www.bitapps.pro',
+                'url'   => self::get('ADMIN_URL') . 'admin.php?page=file-manager#/support',
             ],
             'Settings' => [
                 'title' => __('Settings', 'file-manager'),
-                'url'   => self::get('ADMIN_URL') . 'admin.php?page=file-manager-settings',
+                'url'   => self::get('ADMIN_URL') . 'admin.php?page=file-manager#/settings',
             ],
             'Home'     => [
                 'title' => __('Home', 'file-manager'),
-                'url'   => self::get('ADMIN_URL') . 'admin.php?page=file-manager',
+                'url'   => self::get('ADMIN_URL') . 'admin.php?page=file-manager#/',
             ],
         ];
     }

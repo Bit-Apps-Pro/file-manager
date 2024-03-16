@@ -63,7 +63,6 @@ class AccessControlProvider
 
     public function checkPermission($command, ...$args)
     {
-
         if (\in_array($command, ['open'])) {
             return;
         }
@@ -112,17 +111,17 @@ class AccessControlProvider
      * - info
      * - size
      *
-     * @param string $cmd
+     * @param string              $cmd
      * @param PermissionsProvider $permissionProvider
      *
-     * @return boolean
+     * @return bool
      */
     public function isNotRequiredCommandForAllPermission($cmd, $permissionProvider)
     {
         $isNotRequired = true;
 
         if (
-            in_array($cmd, ["ls", "tree", "info", "size"])
+            \in_array($cmd, ['ls', 'tree', 'info', 'size'])
             && (
                 $permissionProvider->isCurrentRoleHasPermission()
                 || $permissionProvider->isCurrentUserHasPermission()

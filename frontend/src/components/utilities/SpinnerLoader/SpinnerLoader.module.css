@@ -1,0 +1,21 @@
+.loading {
+  display: inline-block;
+  border-style: solid;
+  border-radius: 50%;
+  border-top-color: hsla(0deg, 0%, 100%, 0%);
+}
+
+.primary {
+  border-color: var(--accent-light);
+}
+
+.loading :global {
+  animation: spin 1s linear infinite;
+}
+
+/* stylelint-disable-next-line keyframes-name-pattern, csstree/validator */
+@keyframes :global(spin) {
+  to {
+    transform: rotate(360deg);
+  }
+}

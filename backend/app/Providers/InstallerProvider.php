@@ -3,8 +3,8 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Core\Database\Connection;
-use BitApps\FM\Core\Installer;
+use BitApps\WPDatabase\Connection;
+use BitApps\WPKit\Installer;
 
 class InstallerProvider
 {
@@ -14,7 +14,6 @@ class InstallerProvider
 
     public function __construct()
     {
-        Connection::setPluginDBPrefix(Config::DB_PREFIX);
         $this->_activateHook   = Config::withPrefix('activate');
         self::$_uninstallHook  = Config::withPrefix('uninstall');
     }
@@ -51,7 +50,7 @@ class InstallerProvider
         ];
 
         return [
-            'path'       => Config::get('BASEDIR')
+            'path'       => Config::get('BACKEND_DIR')
                 . DIRECTORY_SEPARATOR
                 . 'db'
                 . DIRECTORY_SEPARATOR
@@ -64,12 +63,12 @@ class InstallerProvider
     public static function drop()
     {
         $migrations = [
-            'BFMLogTableMigration',
+            'BFMLogsTableMigration',
             'BFMPluginOptions',
         ];
 
         return [
-            'path'       => Config::get('BASEDIR')
+            'path'       => Config::get('BACKEND_DIR')
                 . DIRECTORY_SEPARATOR
                 . 'db'
                 . DIRECTORY_SEPARATOR

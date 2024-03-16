@@ -1,0 +1,122 @@
+.elfinder-ltr .elfinder-path {
+  opacity: 0;
+}
+
+.ui-widget textarea {
+  font-family: Verdana, Arial, sans-serif, 'Trebuchet MS', Tahoma;
+  font-size: 1.3em;
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: left;
+}
+
+.elfinder div.elfinder-bottomtray {
+  bottom: 40px !important;
+  left: 180px !important;
+}
+
+.elfinder-quicklook-titlebar-icon {
+  right: -90%;
+  font-size: 6px;
+  padding: 5px;
+  color: #faebd7 !important;
+}
+
+.elfinder-quicklook-titlebar-icon .ui-icon.ui-icon-closethick {
+  background-color: #e46962 !important;
+}
+
+.elfinder-quicklook-titlebar-icon .ui-icon.ui-icon-minusthick {
+  background-color: #4d6351 !important;
+}
+
+.elfinder-quicklook-titlebar-icon .ui-icon.ui-icon-plusthick {
+  background-color: #55885d !important;
+}
+
+.elfinder-dialog.elfinder-to-editing.elfinder-dialog-edit {
+  top: 32px !important;
+  height: max-content !important;
+}
+
+.elfinder-to-editing.elfinder-dialog-edit.elfinder-maximized {
+  top: 32px !important;
+  left: 165px !important;
+  right: 20px;
+  max-width: calc(100% - 180px) !important;
+  height: 81% !important;
+}
+
+.ui-dialog:nth-child(7) {
+  width: 760px !important;
+  top: 10px !important;
+  left: 10px !important;
+}
+
+.elfinder-file-edit {
+  height: 475px;
+}
+
+.ui-helper-reset:nth-child(9) {
+  position: absolute !important;
+  width: 760px !important;
+  height: auto !important;
+  top: 150px !important;
+  left: 190px !important;
+}
+
+.elfinder-quicklook-preview {
+  height: 510px;
+}
+
+.elfinder-quicklook-navbar-icon:nth-child(2) {
+  display: none;
+}
+
+.ui-icon:nth-child(4) {
+  display: none !important;
+}
+
+.ui-corner-all {
+  margin-top: 0;
+}
+
+.ui-helper-clearfix.ui-dialog-buttonpane.ui-widget-content {
+  font-size: 12px;
+}
+
+.ui-helper-clearfix.ui-dialog-buttonpane.ui-widget-content
+  .ui-dialog-buttonset.elfinder-edit-extras
+  .ui-corner-all {
+  margin-top: 0;
+}
+
+.ui-helper-clearfix .ui-button-icon-only {
+  min-width: 125px;
+}
+
+.ui-helper-clearfix .ui-button-icon-only .ui-button-icon.ui-icon.ui-icon-gear {
+  left: 12px;
+}
+
+#ace_settingsmenu {
+  top: 32px;
+}
+
+.elfinder-button-search-menu {
+  top: 32px !important;
+}
+
+.elfinder-dialog-error .ui-dialog-content,
+.elfinder-dialog-confirm .ui-dialog-content {
+  padding-left: 56px;
+  min-height: 35px;
+}
+
+@media (max-width: 700px) {
+  .elfinder-to-editing.elfinder-dialog-edit.elfinder-maximized {
+    top: 32px !important;
+    left: 40px !important;
+    max-width: calc(100% - 45px) !important;
+  }
+}

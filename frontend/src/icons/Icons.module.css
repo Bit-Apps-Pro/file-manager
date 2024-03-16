@@ -1,0 +1,10 @@
+.iconsSection {
+  composes: flx from global;
+}
+
+.icon {
+  composes: p-2 mr-2 pointer from global;
+  background-color: var(--light);
+  box-shadow: var(--shadow-1);
+  border-radius: 5px;
+}

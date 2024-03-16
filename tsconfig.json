@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "typeRoots": ["./node_modules/@types", "./frontend/src/types"],
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "importHelpers": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": false,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules"
+      }
+    ],
+    "paths": {
+      "@common/*": ["./frontend/src/common/*"],
+      "@features/*": ["./frontend/src/components/features/*"],
+      "@utilities/*": ["./frontend/src/components/utilities/*"],
+      "@config/*": ["./frontend/src/config/*"],
+      "@components/*": ["./frontend/src/components/*"],
+      "@icons/*": ["./frontend/src/icons/*"],
+      "@queries/*": ["./frontend/src/api/queries/*"],
+      "@mutations/*": ["./frontend/src/api/mutations/*"],
+      "@resource/*": ["./frontend/src/resource/*"],
+      "@pages/*": ["./frontend/src/pages/*"],
+      "@static/*": ["./frontend/src/static/*"],
+      "bit-flow-pro": ["./pro/frontend/*"]
+    }
+  },
+  "include": ["frontend/src", "frontend/src/types", "vite.config.mts", "vite.config.wp.ts"],
+  "exclude": ["node_modules"],
+  "types": ["cypress", "node", "@4tw/cypress-drag-drop", "vite/client"]
+}

@@ -1,8 +1,8 @@
 <?php
 
 use BitApps\FM\Config;
-use BitApps\FM\Core\Database\Connection as DB;
-use BitApps\FM\Core\Database\Migration;
+use BitApps\WPDatabase\Connection;
+use BitApps\WPKit\Migration\Migration;
 
 if (!\defined('ABSPATH')) {
     exit;
@@ -28,9 +28,9 @@ final class BFMPluginOptions extends Migration
             Config::withPrefix('log_deleted_at'),
         ];
 
-        DB::query(
-            DB::prepare(
-                'DELETE FROM `' . DB::wpPrefix() . 'options` WHERE option_name in ('
+        Connection::query(
+            Connection::prepare(
+                'DELETE FROM `' . Connection::wpPrefix() . 'options` WHERE option_name in ('
                     . implode(
                         ',',
                         array_map(

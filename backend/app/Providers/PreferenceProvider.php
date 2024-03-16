@@ -3,7 +3,8 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Core\Utils\Capabilities;
+use BitApps\WPKit\Http\RequestType;
+use BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\ClientOptions;
 
@@ -14,9 +15,17 @@ class PreferenceProvider
 
     private $_availableLang;
 
+    private $_availableThemes;
+
     public function __construct()
     {
         $this->preferences = Config::getOption('preferences', $this->defaultPrefs());
+        $this->fallback();
+    }
+
+    public function all()
+    {
+        return $this->preferences;
     }
 
     public function permissions()
@@ -27,20 +36,22 @@ class PreferenceProvider
     public function defaultPrefs()
     {
         return [
-            'show_url_path'         => 'show',
-            'language'              => 'en',
-            'size'                  => [
+            'show_url_path'      => 'show',
+            'language'           => 'en',
+            'size'               => [
                 'width'  => 'auto',
                 'height' => '500',
             ],
-            'fm_default_view_type'  => 'icons',
-            'fm_display_ui_options' => [
+            'default_view_type'  => 'icons',
+            'display_ui_options' => [
                 'toolbar',
                 'places',
                 'tree',
                 'path',
                 'stat',
             ],
+            'root_folder_path'   => ABSPATH,
+            'root_folder_url'    => Config::get('SITE_URL'),
         ];
     }
 
@@ -59,9 +70,14 @@ class PreferenceProvider
      */
     public function themes()
     {
-        $themeBase = BFM_ROOT_DIR . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'themes';
-        $themeDirs = scandir($themeBase);
-        $themes    = [];
+        if (isset($this->_availableThemes)) {
+            return $this->_availableThemes;
+        }
+
+        $this->_availableThemes = [];
+        $themeBase              = BFM_ROOT_DIR . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'themes';
+        $themeDirs              = scandir($themeBase);
+
         foreach ($themeDirs as $theme) {
             if ($theme === '.' || $theme === '..') {
                 continue;
@@ -80,10 +96,33 @@ class PreferenceProvider
                          . $variant
                          . '.json'
                     )) {
-                    $themes[$variant] = BFM_ASSET_URL . "themes/{$theme}/{$variant}/{$variant}.json";
+                    $this->_availableThemes[$variant] = BFM_ASSET_URL . "themes/{$theme}/{$variant}/{$variant}.json";
                 }
             }
         }
+
+        return $this->_availableThemes;
+    }
+
+    /**
+     * Returns available themes as an array of Assoc-array
+     *
+     * @return array<int, array<string,string>>
+     */
+    public function getThemes()
+    {
+        $themes = [];
+        foreach ($this->themes() as $key => $config) {
+            $themes[] = [
+                'key'   => $key,
+                'title' => ucfirst(str_replace('-', ' ', $key)),
+            ];
+        }
+
+        $themes[] = [
+            'key'   => 'default',
+            'title' => 'Default',
+        ];
 
         return $themes;
     }
@@ -97,7 +136,7 @@ class PreferenceProvider
     {
         $theme = 'material-default';
         if (isset($this->preferences['theme'])) {
-            $theme = $this->preferences['theme'];
+            $theme = esc_attr($this->preferences['theme']);
         }
 
         return $theme;
@@ -120,7 +159,7 @@ class PreferenceProvider
      *
      * @param string $view
      */
-    public function setUrlPathView($view)
+    public function setLinkPathVisibility($view)
     {
         $this->preferences['show_url_path'] = $view;
     }
@@ -130,14 +169,14 @@ class PreferenceProvider
      *
      * @return string
      */
-    public function getUrlPathView()
+    public function isLinkPathVisibleInInfo()
     {
-        $view = 'show';
+        $view = true;
         if (isset($this->preferences['show_url_path'])) {
-            $view = $this->preferences['show_url_path'];
+            $view = \boolval($this->preferences['show_url_path']);
         }
 
-        return $view;
+        return esc_attr($view);
     }
 
     public function getDefaultLangCode()
@@ -148,7 +187,7 @@ class PreferenceProvider
             $code = get_locale();
         }
 
-        return $code;
+        return esc_attr($code);
     }
 
     public function availableLanguages()
@@ -365,12 +404,27 @@ class PreferenceProvider
         return $this->_availableLang;
     }
 
+    /**
+     * Returns available languages as an array of Assoc-array
+     *
+     * @return array<int, array<string,string>>
+     */
+    public function getLanguages()
+    {
+        $languages = [];
+        foreach ($this->availableLanguages() as $code => $name) {
+            $languages[] = compact('code', 'name');
+        }
+
+        return $languages;
+    }
+
     public function getLangCode()
     {
         return
         isset($this->preferences['language'])
          && isset($this->availableLanguages()[(string) $this->preferences['language']])
-        ? $this->preferences['language']
+        ? esc_attr($this->preferences['language'])
         : $this->getDefaultLangCode();
     }
 
@@ -382,7 +436,7 @@ class PreferenceProvider
             $langUrl = BFM_FINDER_URL . 'js/i18n/elfinder.en.js';
         }
 
-        return $langUrl;
+        return esc_attr($langUrl);
     }
 
     public function setLang($lang)
@@ -404,21 +458,21 @@ class PreferenceProvider
          ? ABSPATH : $this->permissions()->getDefaultPublicRootPath();
 
         return isset($this->preferences['root_folder_path'])
-        ? $this->preferences['root_folder_path'] : $defaultPath;
+        ? esc_attr($this->preferences['root_folder_path']) : $defaultPath;
     }
 
     public function realPath($path)
     {
-        if (\is_null($path)) {
+        if (\is_null($path) || !\is_string($path)) {
             return $path;
         }
 
         // whether $path is unix or not
-        $unipath = \strlen($path) == 0 || $path[0] != '/';
+        $unipath  = \strlen($path) == 0 || $path[0] != '/';
         $prefixed = false;
         // attempts to detect if path is relative in which case, add cwd
         if (strpos($path, ':') === false && $unipath) {
-            $path = ABSPATH . $path;
+            $path     = ABSPATH . $path;
             $prefixed = true;
         }
 
@@ -468,13 +522,13 @@ class PreferenceProvider
 
     public function setRootVolumeName($name)
     {
-        $this->preferences['fm_root_folder_name'] = $name;
+        $this->preferences['root_folder_name'] = $name;
     }
 
     public function getRootVolumeName()
     {
-        return isset($this->preferences['fm_root_folder_name'])
-        ? $this->preferences['fm_root_folder_name'] : '';
+        return isset($this->preferences['root_folder_name'])
+        ? esc_attr($this->preferences['root_folder_name']) : basename($this->getRootPath());
     }
 
     public function setWidth($width)
@@ -484,8 +538,8 @@ class PreferenceProvider
 
     public function getWidth()
     {
-        return isset($this->preferences['size']['width'])
-        ? $this->preferences['size']['width'] : 'auto';
+        return isset($this->preferences['size']['width']) && $this->preferences['size']['width']
+        ? esc_attr($this->preferences['size']['width']) : 'auto';
     }
 
     public function setHeight($height)
@@ -496,90 +550,106 @@ class PreferenceProvider
     public function getHeight()
     {
         return isset($this->preferences['size']['height'])
-        ? $this->preferences['size']['height'] : '500';
+        ? esc_attr($this->preferences['size']['height']) : '500';
     }
 
     public function setVisibilityOfHiddenFile($visibility)
     {
-        $this->preferences['fm-show-hidden-files'] = $visibility;
+        $this->preferences['show_hidden_files'] = $visibility;
     }
 
     public function getVisibilityOfHiddenFile()
     {
-        return \array_key_exists('fm-show-hidden-files', $this->preferences)
-         && $this->preferences['fm-show-hidden-files'] ? true : false;
+        return \array_key_exists('show_hidden_files', $this->preferences)
+         && esc_attr($this->preferences['show_hidden_files']) ? true : false;
     }
 
     public function setPermissionForHiddenFolderCreation($permission)
     {
-        $this->preferences['fm-create-hidden-files-folders'] = $permission;
+        $this->preferences['create_hidden_files_folders'] = $permission;
     }
 
     public function isHiddenFolderAllowed()
     {
-        return \array_key_exists('fm-create-hidden-files-folders', $this->preferences)
-         && $this->preferences['fm-create-hidden-files-folders'] ? true : false;
+        return \array_key_exists('create_hidden_files_folders', $this->preferences)
+         && $this->preferences['create_hidden_files_folders'] ? true : false;
     }
 
     public function setPermissionForTrashCreation($permission)
     {
-        $this->preferences['fm-create-trash-files-folders'] = $permission;
+        $this->preferences['create_trash_files_folders'] = $permission;
     }
 
     public function isTrashAllowed()
     {
-        return \array_key_exists('fm-create-trash-files-folders', $this->preferences)
-         && $this->preferences['fm-create-trash-files-folders'] ? true : false;
+        return \array_key_exists('create_trash_files_folders', $this->preferences)
+         && $this->preferences['create_trash_files_folders'] ? true : false;
     }
 
     public function setViewType($type)
     {
-        $this->preferences['fm_default_view_type'] = $type;
+        $this->preferences['default_view_type'] = $type;
     }
 
     public function getViewType()
     {
-        return isset($this->preferences['fm_default_view_type']) ? $this->preferences['fm_default_view_type'] : 'icons';
+        return isset($this->preferences['default_view_type']) ? $this->preferences['default_view_type'] : 'icons';
     }
 
     public function setRememberLastDir($remember)
     {
-        $this->preferences['fm-remember-last-dir'] = $remember;
+        $this->preferences['remember_last_dir'] = $remember;
     }
 
     public function getRememberLastDir()
     {
-        return \array_key_exists('fm-remember-last-dir', $this->preferences)
-        && $this->preferences['fm-remember-last-dir']
-         ? $this->preferences['fm-remember-last-dir'] : false;
+        return \array_key_exists('remember_last_dir', $this->preferences)
+        && $this->preferences['remember_last_dir']
+         ? esc_attr($this->preferences['remember_last_dir']) : false;
     }
 
     public function setClearHistoryOnReload($clearHistory)
     {
-        $this->preferences['fm-clear-history-on-reload'] = $clearHistory;
+        $this->preferences['clear_history_on_reload'] = $clearHistory;
     }
 
     public function getClearHistoryOnReload()
     {
-        return \array_key_exists('fm-clear-history-on-reload', $this->preferences)
-        && $this->preferences['fm-clear-history-on-reload']
-         ? $this->preferences['fm-clear-history-on-reload'] : false;
+        return \array_key_exists('clear_history_on_reload', $this->preferences)
+        && $this->preferences['clear_history_on_reload']
+         ? $this->preferences['clear_history_on_reload'] : false;
     }
 
     public function setUiOptions($options)
     {
-        $this->preferences['fm_display_ui_options'] = $options;
+        $this->preferences['display_ui_options'] = $options;
     }
 
     public function getUiOptions()
     {
-        return isset($this->preferences['fm_display_ui_options'])
-         ? $this->preferences['fm_display_ui_options'] : ['toolbar', 'places', 'tree', 'path', 'stat'];
+        $uiOptions = isset($this->preferences['display_ui_options'])
+        ? array_map(
+            function ($option) {
+                return esc_attr($option);
+            },
+            $this->preferences['display_ui_options']
+        ) : ['toolbar', 'places', 'tree', 'path', 'stat'];
+
+        if (RequestType::is(RequestType::ADMIN)) {
+            $uiOptions = array_diff($uiOptions, ['path']);
+        }
+
+        if (!is_user_logged_in()) {
+            $uiOptions = array_diff($uiOptions, ['toolbar']);
+        }
+
+        return $uiOptions;
     }
 
     public function finderOptions()
     {
-        $options     = new ClientOptions();
+        $options = new ClientOptions();
+
         $options->setOption('url', admin_url('admin-ajax.php'));
         $options->setOption('themes', $this->themes());
         $options->setOption('theme', $this->getTheme());
@@ -587,6 +657,12 @@ class PreferenceProvider
         $options->setOption('width', $this->getWidth());
         $options->setOption('height', $this->getHeight());
         $options->setOption('commands', $this->permissions()->getEnabledCommand());
+        $disabledCommands = array_diff($this->permissions()->allCommands(), $this->permissions()->getEnabledCommand());
+        if (\in_array('download', $disabledCommands)) {
+            $disabledCommands[] = 'dblclick';
+        }
+
+        $options->setOption('disabled', $disabledCommands);
         $options->setOption('commandsOptions', $this->finderCommandsOptions());
         $options->setOption('rememberLastDir', $this->getRememberLastDir());
         $options->setOption('reloadClearHistory', $this->getClearHistoryOnReload());
@@ -612,10 +688,10 @@ class PreferenceProvider
             $contextMenu = [
                 'navbar' => [],
                 'cwd'    => ['reload', 'back', 'sort'],
-                'files'    => [],
+                'files'  => [],
             ];
-            if (count($this->permissions()->getEnabledCommand())) {
-                $contextMenu['files']  = ['download'];
+            if (\count($this->permissions()->getEnabledCommand())) {
+                $contextMenu['files'] = ['download'];
             }
         }
 
@@ -631,11 +707,42 @@ class PreferenceProvider
         $commandOptions['download']['minFilesZipdl']    = 2; // need to check
         $commandOptions['quicklook']['googleDocsMimes'] = ['application/pdf', 'image/tiff', 'application/vnd.ms-office', 'application/msword', 'application/vnd.ms-word', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
 
-        if ($this->getUrlPathView() == 'hide') {
+        if (!$this->isLinkPathVisibleInInfo()) {
             $commandOptions['info']['hideItems'][] = 'link';
             $commandOptions['info']['hideItems'][] = 'path';
         }
 
         return $commandOptions;
+    }
+
+    private function fallback()
+    {
+        // TODO: Need to remove
+        $fallbackSettings = [
+            'fm_root_folder_name'            => 'root_folder_name',
+            'fm-show-hidden-files'           => 'show_hidden_files',
+            'fm-create-hidden-files-folders' => 'create_hidden_files_folders',
+            'fm-create-trash-files-folders'  => 'create_trash_files_folders',
+            'fm_default_view_type'           => 'default_view_type',
+            'fm-remember-last-dir'           => 'remember_last_dir',
+            'fm-clear-history-on-reload'     => 'clear_history_on_reload',
+            'fm_display_ui_options'          => 'display_ui_options',
+        ];
+
+        foreach ($fallbackSettings as $key => $newKey) {
+            if (\array_key_exists($key, $this->preferences)) {
+                $this->preferences[$newKey] = $this->preferences[$key];
+                unset($this->preferences[$key]);
+            }
+        }
+
+        $this->preferences['size']['width'] = $this->getWidth();
+
+        $this->preferences['show_url_path']               = $this->isLinkPathVisibleInInfo();
+        $this->preferences['show_hidden_files']           = $this->getVisibilityOfHiddenFile();
+        $this->preferences['create_trash_files_folders']  = $this->isTrashAllowed();
+        $this->preferences['create_hidden_files_folders'] = $this->isHiddenFolderAllowed();
+        $this->preferences['remember_last_dir']           = $this->getRememberLastDir();
+        $this->preferences['clear_history_on_reload']     = $this->getClearHistoryOnReload();
     }
 }

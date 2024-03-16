@@ -2,12 +2,14 @@
 
 namespace BitApps\FM;
 
-// Main class for the plugin.
+use BitApps\WPKit\Hooks\Hooks;
+use BitApps\WPKit\Http\RequestType;
+use BitApps\WPKit\Migration\MigrationHelper;
 
-use BitApps\FM\Core\Database\Connection;
-use BitApps\FM\Core\Database\Operator;
-use BitApps\FM\Core\Hooks\Hooks;
-use BitApps\FM\Core\Http\RequestType;
+use function BitApps\FM\Functions\view;
+
+use BitApps\FM\Http\Middleware\CapCheckerMiddleware;
+
 use BitApps\FM\Http\Middleware\NonceCheckerMiddleware;
 use BitApps\FM\Providers\AccessControlProvider;
 use BitApps\FM\Providers\FileEditValidator;
@@ -18,12 +20,10 @@ use BitApps\FM\Providers\MediaSynchronizer;
 use BitApps\FM\Providers\MimeProvider;
 use BitApps\FM\Providers\PermissionsProvider;
 use BitApps\FM\Providers\PreferenceProvider;
-use BitApps\FM\Providers\ReviewProvider;
 use BitApps\FM\Providers\VersionMigrationProvider;
 use BitApps\FM\Views\Admin;
-use BitApps\FM\Views\Shortcode;
 
-use function BitApps\FM\Functions\view;
+use BitApps\FM\Views\Shortcode;
 
 final class Plugin
 {
@@ -55,6 +55,7 @@ final class Plugin
     {
         return [
             'nonce' => NonceCheckerMiddleware::class,
+            'cap'   => CapCheckerMiddleware::class,
         ];
     }
 
@@ -81,9 +82,7 @@ final class Plugin
      */
     public function registerProviders()
     {
-        Connection::setPluginDBPrefix(Config::DB_PREFIX);
         if (RequestType::is('admin')) {
-            $this->_container['review_notifier'] = new ReviewProvider();
             new Admin();
         }
 
@@ -190,20 +189,6 @@ final class Plugin
     }
 
     /**
-     * Provide review notifier
-     *
-     * @return ReviewProvider
-     */
-    public function reviewNotifier()
-    {
-        if (!isset($this->_container['review_notifier'])) {
-            $this->_container['review_notifier'] = new ReviewProvider();
-        }
-
-        return $this->_container['review_notifier'];
-    }
-
-    /**
      * Provide Logger for finder
      *
      * @return Logger
@@ -238,37 +223,10 @@ final class Plugin
         wp_register_script(
             'bfm-finder-loader',
             BFM_ROOT_URL . 'assets/js/finder-loader.js',
-            ['bfm-elfinder-script', 'jquery'],
+            [Config::SLUG . 'elfinder-script', 'jquery'],
             $version
         );
         $this->registerFinderAssets(); // Loads all the assets necessary for elFinder
-
-        wp_register_style('bfm-tippy-css', BFM_ROOT_URL . 'libs/js/tippy-v0.2.8/tippy.css', $version);
-
-        // Admin scripts
-        wp_register_script(
-            'bfm-tippy-script',
-            BFM_ROOT_URL . 'libs/js/tippy-v0.2.8/tippy.js',
-            ['jquery'],
-            $version
-        );
-
-        wp_register_script(
-            'bfm-admin-script',
-            BFM_ROOT_URL . 'assets/js/admin-script.js',
-            ['bfm-tippy-script'],
-            $version
-        );
-
-        // Including admin-style.css
-        if (strpos($currentScreen, 'bit-file-manager') !== false) {
-            wp_enqueue_style('bfm-admin-style', BFM_ROOT_URL . 'assets/css/style.min.css');
-        } else {
-            wp_register_style('bfm-admin-style', BFM_ROOT_URL . 'assets/css/style.min.css');
-        }
-
-        // Including admin-script.js
-        wp_register_script('bfm-admin-script', BFM_ROOT_URL . 'assets/js/admin-script.js', ['jquery']);
     }
 
     /**
@@ -285,28 +243,28 @@ final class Plugin
         );
 
         wp_register_style(
-            'bfm-elfinder-css',
+            Config::SLUG . 'css',
             BFM_FINDER_URL . 'css/elfinder.min.css',
             Config::VERSION
         );
 
-        wp_register_style('bfm-elfinder-theme-css', BFM_ROOT_URL . 'libs/js/jquery-ui/jquery-ui.theme.min.css');
+        wp_register_style(Config::SLUG . 'theme-css', BFM_ROOT_URL . 'libs/js/jquery-ui/jquery-ui.theme.min.css');
 
         // elFinder Scripts depends on jQuery UI core, selectable, draggable, droppable, resizable, dialog and slider.
         wp_register_script(
-            'bfm-elfinder-script',
+            Config::SLUG . 'elfinder-script',
             BFM_FINDER_URL . 'js/elfinder.min.js',
             ['jquery', 'jquery-ui-core', 'jquery-ui-selectable', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-resizable', 'jquery-ui-dialog', 'jquery-ui-slider', 'jquery-ui-tabs']
         );
 
         wp_register_script(
-            'bfm-elfinder-editor-script',
+            Config::SLUG . 'elfinder-editor-script',
             BFM_FINDER_URL . 'js/extras/editors.default.min.js',
-            ['bfm-elfinder-script']
+            [Config::SLUG . 'elfinder-script']
         );
 
         wp_localize_script(
-            'bfm-elfinder-script',
+            Config::SLUG . 'elfinder-script',
             'fm',
             $this->createConfigVariable()
         );
@@ -317,12 +275,10 @@ final class Plugin
         return apply_filters(
             Config::withPrefix('localized_script'),
             [
-                'ajax_url'   => admin_url('admin-ajax.php'),
-                'nonce'      => wp_create_nonce('bfm_nonce'),
-                'plugin_dir' => BFM_ROOT_DIR,
-                'plugin_url' => BFM_ROOT_URL,
-                'js_url'     => BFM_FINDER_URL . 'js/',
-                'elfinder'   => BFM_FINDER_URL,
+                'ajaxURL'      => admin_url('admin-ajax.php'),
+                'js_url'       => BFM_FINDER_URL . 'js/',
+                'elfinder'     => BFM_FINDER_URL,
+                'translations' => [],
             ]
         );
     }
@@ -360,12 +316,12 @@ final class Plugin
 
         global $wp_meta_boxes;
 
-            $metaBox = $wp_meta_boxes['dashboard']['normal']['high'];
-            $notice = [
-                'bitapps_notice' => $metaBox['bitapps_notice'],
-            ];
+        $metaBox = $wp_meta_boxes['dashboard']['normal']['high'];
+        $notice  = [
+            'bitapps_notice' => $metaBox['bitapps_notice'],
+        ];
 
-            $wp_meta_boxes['dashboard']['normal']['high'] = array_merge($notice, $metaBox);
+        $wp_meta_boxes['dashboard']['normal']['high'] = array_merge($notice, $metaBox);
     }
 
     /**
@@ -391,8 +347,7 @@ final class Plugin
 
         static::$_instance = new static();
         if (version_compare(Config::getOption('version'), Config::VERSION_ID, '<')) {
-            Connection::setPluginDBPrefix(Config::DB_PREFIX);
-            Operator::migrate(InstallerProvider::migration());
+            MigrationHelper::migrate(InstallerProvider::migration());
         }
 
         return true;
@@ -403,7 +358,7 @@ final class Plugin
      * */
     protected function setPhpIniVars()
     {
-        if (\defined('WP_DEBUG') && isset($_REQUEST['action']) && $_REQUEST['action'] === 'bit_fm_connector') {
+        if (\defined('WP_DEBUG') && isset($_REQUEST['action']) && sanitize_text_field($_REQUEST['action']) === 'bit_fm_connector') {
             ini_set('post_max_size', '128M');
             ini_set('upload_max_filesize', '128M');
         }

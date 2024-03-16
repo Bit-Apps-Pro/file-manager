@@ -3,9 +3,9 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Core\Hooks\Hooks;
-use BitApps\FM\Core\Http\RequestType;
-use BitApps\FM\Core\Http\Router\Router;
+use BitApps\WPKit\Hooks\Hooks;
+use BitApps\WPKit\Http\RequestType;
+use BitApps\WPKit\Http\Router\Router;
 use BitApps\FM\Plugin;
 
 class HookProvider
@@ -14,7 +14,7 @@ class HookProvider
 
     public function __construct()
     {
-        $this->_pluginBackend = Config::get('BASEDIR') . DIRECTORY_SEPARATOR;
+        $this->_pluginBackend = Config::get('BACKEND_DIR') . DIRECTORY_SEPARATOR;
         $this->loadAppHooks();
         Hooks::addAction('rest_api_init', [$this, 'loadApi']);
     }

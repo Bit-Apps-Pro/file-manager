@@ -1,8 +1,10 @@
 <?php
 
-use BitApps\FM\Core\Database\Blueprint;
-use BitApps\FM\Core\Database\Migration;
-use BitApps\FM\Core\Database\Schema;
+use BitApps\FM\Config;
+use BitApps\WPDatabase\Blueprint;
+use BitApps\WPDatabase\Schema;
+use BitApps\WPKit\Migration\Migration;
+use BitApps\WPDatabase\Connection;
 
 if (! \defined('ABSPATH')) {
     exit;
@@ -12,7 +14,7 @@ final class BFMLogsTableMigration extends Migration
 {
     public function up()
     {
-        Schema::create(
+        Schema::withPrefix(Connection::wpPrefix() . Config::VAR_PREFIX)->create(
             'logs',
             function (Blueprint $table) {
                 $table->id();

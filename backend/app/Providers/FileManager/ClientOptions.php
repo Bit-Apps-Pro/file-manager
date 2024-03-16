@@ -201,6 +201,11 @@ class ClientOptions
     private $_commands = ['*'];
 
     /**
+     * Commands to disable
+     */
+    private $_disabled = [];
+
+    /**
      * Commands options used to interact with external callbacks, editors, plugins
      *
      * @see https://github.com/Studio-42/elFinder/wiki/Client-configuration-options-2.1#commandsoptions
@@ -433,6 +438,7 @@ class ClientOptions
             'width',
             'height',
             'commands',
+            'disabled',
             'commandsOptions',
             'rememberLastDir',
             'reloadClearHistory',

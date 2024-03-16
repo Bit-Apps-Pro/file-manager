@@ -1,0 +1,33 @@
+.sidebar {
+  composes: flx ai-cen flx-col from global;
+  height: 100%;
+  transition: width var(--tran-4);
+  transition-delay: 0s;
+}
+
+.sidebarLogo {
+  composes: flx ai-cen col-gap-1 from global;
+  color: white;
+  margin-top: 5px;
+  height: 42px;
+  min-height: 42px;
+}
+
+.navList {
+  composes: flx flx-col jc-sb mt-1 w-100 from global;
+  height: calc(100% - 58px);
+}
+
+.navItem {
+  composes: link flx ai-cen col-gap-1 pos-rel fw-med from global;
+  padding: 10px 15px;
+  margin-block: 0.1875rem;
+  transition: background ease-in var(--tran-2);
+  height: 40px;
+  z-index: 0;
+}
+
+.navItem:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}

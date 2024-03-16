@@ -3,9 +3,9 @@
 namespace BitApps\FM\Http\Controllers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Core\Http\Request\Request;
-use BitApps\FM\Core\Http\Response;
-use BitApps\FM\Core\Utils\Capabilities;
+use BitApps\WPKit\Http\RequestType;
+use BitApps\WPKit\Utils\Capabilities;
+use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\FileManagerProvider;
 use BitApps\FM\Providers\FileManager\FileRoot;
@@ -14,19 +14,6 @@ use Exception;
 
 final class FileManagerController
 {
-    public function changeTheme(Request $request)
-    {
-        if ($request->has('theme') && Capabilities::filter(Config::VAR_PREFIX . 'user_can_change_theme')) {
-            $prefs = Plugin::instance()->preferences();
-            $prefs->setTheme(sanitize_text_field($request->theme));
-            if ($prefs->saveOptions()) {
-                return Response::message(__('Theme updated successfully', 'file-manger'));
-            }
-        }
-
-        return Response::message(__('Failed to update theme', 'file-manger'));
-    }
-
     /**
      * File Manager connector function
      *
@@ -35,6 +22,7 @@ final class FileManagerController
     public function connector()
     {
         try {
+            Plugin::instance()->accessControl()->checkPermission($_REQUEST['cmd']);
             $finderProvider = new FileManagerProvider($this->getFinderOptions());
             $finderProvider->getFinder()->run();
         } catch (Exception $th) {
@@ -47,7 +35,7 @@ final class FileManagerController
 
     public function getFinderOptions()
     {
-        $finderOptions = new Options(is_user_logged_in() && defined('WP_DEBUG') && WP_DEBUG);
+        $finderOptions = new Options(is_user_logged_in() && \defined('WP_DEBUG') && WP_DEBUG);
 
         $finderOptions->setBind(
             'put.pre',
@@ -74,15 +62,28 @@ final class FileManagerController
             [Plugin::instance()->mediaSyncs(), 'onFileUpload']
         );
 
-            // 'zipdl.pre file.pre rename.pre put.pre upload.pre',
+        // 'zipdl.pre file.pre rename.pre put.pre upload.pre',
 
         $finderOptions->setBind(
-            'zipdl.pre file.pre rename.pre put.pre upload.pre',
+            'zipdl.pre file.pre rename.pre put.pre upload.pre rm.pre chmod.pre mkdir.pre mkfile.pre extract.pre',
             [Plugin::instance()->logger(), 'log']
         );
 
-        foreach ($this->getFileRoots() as $root) {
+        $allVolumes         = $this->getFileRoots();
+        $volumeCount        = \count($allVolumes);
+        $invalidVolumeCount = 0;
+        foreach ($allVolumes as $root) {
+            if (!$root->isReadable()) {
+                $invalidVolumeCount++;
+
+                continue;
+            }
+
             $finderOptions->setRoot($root);
+        }
+
+        if ($volumeCount === $invalidVolumeCount) {
+            throw new PreCommandException(esc_html__('There is no readable volume. Please select an readable folder from settings', 'file-manager'));
         }
 
         return $finderOptions;
@@ -90,34 +91,44 @@ final class FileManagerController
 
     public function getFileRoots()
     {
+        if (!is_user_logged_in()) {
+            return $this->guestVolume();
+        } elseif (is_user_logged_in() && Plugin::instance()->permissions()->isRequestForAdminArea() && Plugin::instance()->permissions()->isDisabledForAdmin()) {
+            return $this->getDashboardVolumes();
+        }
+
+        return $this->getUserVolumes();
+    }
+
+    private function getDashboardVolumes()
+    {
         $mimes                 = Plugin::instance()->mimes()->getTypes();
         $preferences           = Plugin::instance()->preferences();
         $accessControlProvider = Plugin::instance()->accessControl();
         $permissions           = Plugin::instance()->permissions();
 
-        $path     = $permissions->getPath();
         $baseRoot = new FileRoot(
-            $path,
-            $permissions->getURL(),
-            $permissions->getVolumeAlias()
+            $preferences->getRootPath(),
+            $preferences->getRootUrl(),
+            $preferences->getRootVolumeName()
         );
 
         if ($permissions->currentUserRole() !== 'administrator') {
-            $mimes = $permissions->getEnabledFileType();
+            $mimes         = $permissions->getEnabledFileType();
             $maxUploadSize = $permissions->getMaximumUploadSize();
-            $baseRoot->setUploadMaxSize($maxUploadSize == 0 ? 0 : $maxUploadSize. "M");
+            $baseRoot->setUploadMaxSize($maxUploadSize == 0 ? 0 : $maxUploadSize . 'M');
             $denyUploadType = array_diff(Plugin::instance()->mimes()->getTypes(), $mimes);
             $baseRoot->setOption('uploadDeny', $denyUploadType);
         }
 
-        if (is_writable(stripslashes($path) . DIRECTORY_SEPARATOR . '.tmbPath')) {
+        if (is_writable(stripslashes($preferences->getRootPath()) . DIRECTORY_SEPARATOR . '.tmbPath')) {
             $baseRoot->setOption('tmbPath', '.tmb');
         }
 
         $baseRoot->setUploadAllow($mimes);
         $baseRoot->setAccessControl([$accessControlProvider, 'control']);
         $baseRoot->setAcceptedName([$accessControlProvider, 'validateName']);
-        $baseRoot->setDisabled($permissions->getDisabledCommand());
+        $baseRoot->setDisabled([]);
         $baseRoot->setWinHashFix(DIRECTORY_SEPARATOR !== '/');
 
         if (Capabilities::filter(Config::VAR_PREFIX . 'user_can_manage_options')) {
@@ -128,26 +139,99 @@ final class FileManagerController
 
         $roots[] = $baseRoot;
 
-        if ($permissions->currentUserRole() === 'administrator') {
-            $baseRoot->setTrashHash($preferences->isTrashAllowed() ? 't1_Lw' : '');
+        return $roots;
+    }
 
-            $mediaRoot = new FileRoot(FM_MEDIA_BASE_DIR_PATH, FM_MEDIA_BASE_DIR_URL, 'Media');
-            $mediaRoot->setUploadAllow($mimes);
-            $mediaRoot->setAccessControl([$accessControlProvider, 'control']);
+    private function getUserVolumes()
+    {
+        $permissions           = Plugin::instance()->permissions();
 
-            $roots[] = $mediaRoot;
+        $roots[] = $this->processFileRoot(
+            $permissions->getPathByFolderOption(),
+            'Public',
+            $this->getUrlByPath($permissions->getPathByFolderOption())
+        );
 
-            if ($preferences->isTrashAllowed()) {
-                $trashRoot = new FileRoot(FM_TRASH_DIR_PATH, FM_TRASH_TMB_DIR_URL, 'trash', 'Trash');
-                $trashRoot->setOption('id', 1);
-                $trashRoot->setUploadAllow($mimes);
-                $trashRoot->setAccessControl([$accessControlProvider, 'control']);
-                $trashRoot->setAcceptedName([$accessControlProvider, 'validateName']);
+        $permissionByRole   = $permissions->getByRole($permissions->currentUserRole());
+        $roots[]            = $this->processFileRoot(
+            $permissionByRole['path'],
+            $permissions->currentUserRole(),
+            $this->getUrlByPath($permissionByRole['path'])
+        );
 
-                $roots[] = $trashRoot;
-            }
-        }
+        $permissionByUser   = $permissions->getByUser($permissions->currentUserID());
+        $roots[]            = $this->processFileRoot(
+            $permissionByUser['path'],
+            $permissions->currentUser()->display_name,
+            $this->getUrlByPath($permissionByUser['path'])
+        );
 
         return $roots;
+    }
+
+    private function guestVolume()
+    {
+        $permissions = Plugin::instance()->permissions();
+
+        $guestPermission = $permissions->getGuestPermissions();
+
+        $root = new FileRoot(
+            $guestPermission['path'],
+            $this->getUrlByPath($guestPermission['path']),
+            \array_key_exists('alias', $guestPermission)
+                ? $guestPermission['alias'] : basename($guestPermission['path'])
+        );
+
+        $root->setDisabled(array_diff($permissions->allCommands(), $guestPermission['commands']));
+
+        return [$root];
+    }
+
+    /**
+     * Create Instance of FileRoot
+     *
+     * @param string $path
+     * @param string $alias
+     * @param string $url
+     *
+     * @return FileRoot
+     */
+    private function processFileRoot($path, $alias, $url)
+    {
+        $mimes                 = Plugin::instance()->mimes()->getTypes();
+        $permissions           = Plugin::instance()->permissions();
+        $accessControlProvider = Plugin::instance()->accessControl();
+
+        $volume = new FileRoot(
+            $path,
+            $url,
+            $alias
+        );
+
+        if ($permissions->currentUserRole() !== 'administrator') {
+            $mimes         = $permissions->getEnabledFileType();
+            $maxUploadSize = $permissions->getMaximumUploadSize();
+            $volume->setUploadMaxSize($maxUploadSize == 0 ? 0 : $maxUploadSize . 'M');
+            $denyUploadType = array_diff(Plugin::instance()->mimes()->getTypes(), $mimes);
+            $volume->setOption('uploadDeny', $denyUploadType);
+        }
+
+        $volume->setUploadAllow($mimes);
+        $volume->setAccessControl([$accessControlProvider, 'control']);
+        $volume->setAcceptedName([$accessControlProvider, 'validateName']);
+        $volume->setDisabled($permissions->getDisabledCommand());
+        $volume->setWinHashFix(DIRECTORY_SEPARATOR !== '/');
+
+        if (Capabilities::filter(Config::VAR_PREFIX . 'user_can_manage_options')) {
+            $volume->setAllowChmodReadOnly(true);
+            $volume->setStatOwner(true);
+            $volume->setUploadMaxSize(0);
+        }
+
+        return $volume;
+    }
+
+    public function getUrlByPath($path) {
+        return home_url(str_replace(ABSPATH, $path, ''));
     }
 }

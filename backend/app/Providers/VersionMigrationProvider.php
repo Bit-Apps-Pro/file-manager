@@ -3,9 +3,10 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Core\Database\Operator as DBOperator;
-use BitApps\FM\Core\Database\Schema;
-use BitApps\FM\Core\Utils\Capabilities;
+use BitApps\WPDatabase\Schema;
+use BitApps\WPKit\Migration\MigrationHelper;
+use BitApps\WPKit\Utils\Capabilities;
+use BitApps\WPDatabase\Connection;
 
 \defined('ABSPATH') || exit();
 
@@ -32,12 +33,23 @@ class VersionMigrationProvider
         }
 
         if (version_compare(Config::getOption('db_version', '0.0'), Config::DB_VERSION, '<')) {
-            DBOperator::migrate(InstallerProvider::migration());
+            MigrationHelper::migrate(InstallerProvider::migration());
         }
     }
 
     private function migrateToLatest()
     {
+        $this->migrateTo650();
+    }
+
+    private function migrateTo650()
+    {
+        if ($this->_oldVersion >= 650) {
+            return;
+        }
+
+        Schema::withPrefix(Connection::wpPrefix() . 'fm')->drop('logs');
+        Schema::withPrefix(Connection::wpPrefix() . 'fm')->drop('log');
         $this->migrateTo600();
     }
 
@@ -47,7 +59,6 @@ class VersionMigrationProvider
             return;
         }
 
-        Schema::drop('log');
         delete_option('fm_current_version');
         delete_option('fm_log');
         $this->renameSettingsOptionV600();

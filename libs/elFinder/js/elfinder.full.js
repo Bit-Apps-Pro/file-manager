@@ -1,9 +1,9 @@
 /*!
  * elFinder - file manager for web
- * Version 2.1.62 (2023-10-24)
+ * Version 2.1.65 (2024-03-07)
  * http://elfinder.org
  * 
- * Copyright 2009-2023, Studio 42
+ * Copyright 2009-2024, Studio 42
  * Licensed under a 3-clauses BSD license
  */
 (function(root, factory) {
@@ -3259,7 +3259,7 @@ var elFinder = function(elm, opts, bootCallback) {
 	this.shortcut = function(s) {
 		var patterns, pattern, code, i, parts;
 		
-		if (this.options.allowShortcuts && s.pattern && $.isFunction(s.callback)) {
+		if (this.options.allowShortcuts && s.pattern && typeof s.callback === 'function') {
 			patterns = s.pattern.toUpperCase().split(/\s+/);
 			
 			for (i= 0; i < patterns.length; i++) {
@@ -5279,10 +5279,10 @@ var elFinder = function(elm, opts, bootCallback) {
 		$.each(self.commands, function(name, cmd) {
 			var proto = Object.assign({}, cmd.prototype),
 				extendsCmd, opts;
-			if ($.isFunction(cmd) && !self._commands[name] && (cmd.prototype.forceLoad || $.inArray(name, self.options.commands) !== -1)) {
+			if (typeof cmd === 'function' && !self._commands[name] && (cmd.prototype.forceLoad || $.inArray(name, self.options.commands) !== -1)) {
 				extendsCmd = cmd.prototype.extendsCmd || '';
 				if (extendsCmd) {
-					if ($.isFunction(self.commands[extendsCmd])) {
+					if (typeof self.commands[extendsCmd] === 'function') {
 						cmd.prototype = Object.assign({}, base, new self.commands[extendsCmd](), cmd.prototype);
 					} else {
 						return true;
@@ -5301,7 +5301,7 @@ var elFinder = function(elm, opts, bootCallback) {
 				if (self._commands[name].linkedCmds.length) {
 					$.each(self._commands[name].linkedCmds, function(i, n) {
 						var lcmd = self.commands[n];
-						if ($.isFunction(lcmd) && !self._commands[n]) {
+						if (typeof lcmd === 'function' && !self._commands[n]) {
 							lcmd.prototype = base;
 							self._commands[n] = new lcmd();
 							self._commands[n].setup(n, self.options.commandsOptions[n]||{});
@@ -8642,7 +8642,7 @@ elFinder.prototype = {
 		
 		if (cnt > 0) {
 			if (cancel && button.length) {
-				if ($.isFunction(cancel) || (typeof cancel === 'object' && cancel.promise)) {
+				if (typeof cancel === 'function' || (typeof cancel === 'object' && cancel.promise)) {
 					notify._esc = function(e) {
 						if (e.type == 'keydown' && e.keyCode != $.ui.keyCode.ESCAPE) {
 							return;
@@ -8799,7 +8799,7 @@ elFinder.prototype = {
 			};
 		}
 		
-		if (opts.optionsCallback && $.isFunction(opts.optionsCallback)) {
+		if (opts.optionsCallback && typeof opts.optionsCallback === 'function') {
 			opts.optionsCallback(options);
 		}
 		
@@ -9293,7 +9293,7 @@ elFinder.prototype = {
 	 * @return void
 	 */
 	registRawStringDecoder : function(rawStringDecoder) {
-		if ($.isFunction(rawStringDecoder)) {
+		if (typeof rawStringDecoder === 'function') {
 			this.decodeRawString = this.options.rawStringDecoder = rawStringDecoder;
 		}
 	},
@@ -9785,7 +9785,7 @@ elFinder.prototype = {
 					}
 				});
 				if (!hasError) {
-					if ($.isFunction(callback)) {
+					if (typeof callback === 'function') {
 						if (check) {
 							if (typeof check.obj[check.name] === 'undefined') {
 								cnt = check.timeout? (check.timeout / 10) : 1;
@@ -9803,7 +9803,7 @@ elFinder.prototype = {
 						}
 					}
 				} else {
-					if (opts.error && $.isFunction(opts.error)) {
+					if (opts.error && typeof opts.error === 'function') {
 						opts.error({ loadResults: results });
 					}
 				}
@@ -10748,7 +10748,7 @@ if (!window.cancelAnimationFrame) {
  *
  * @type String
  **/
-elFinder.prototype.version = '2.1.62';
+elFinder.prototype.version = '2.1.65';
 
 
 
@@ -11143,7 +11143,7 @@ $.fn.elfinder = function(o, o2) {
 					if (elfinder) {
 						opts = $.extend(true, elfinder.options, $.isPlainObject(o2)? o2 : {});
 						bootCallback = elfinder.bootCallback;
-						if (elfinder.reloadCallback && $.isFunction(elfinder.reloadCallback)) {
+						if (elfinder.reloadCallback && typeof elfinder.reloadCallback === 'function') {
 							elfinder.reloadCallback(opts, bootCallback);
 						} else {
 							elfinder.destroy();
@@ -11233,20 +11233,21 @@ elFinder.prototype._options = {
 	 */
 	cdns : {
 		// for editor etc.
-		ace        : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.22.0',
+		ace        : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.2',
 		codemirror : 'https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7',
-		ckeditor   : 'https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.21.0',
-		ckeditor5  : 'https://cdn.ckeditor.com/ckeditor5/38.0.1',
-		tinymce    : 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.4.2',
+		ckeditor   : 'https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.22.1', // last version of Open Source Project
+		ckeditor5  : 'https://cdn.ckeditor.com/ckeditor5/40.2.0',
+		tinymce    : 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2',
 		simplemde  : 'https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2',
 		fabric     : 'https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1',
 		fabric16   : 'https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.6.7',
 		tui        : 'https://uicdn.toast.com',
 		// for quicklook etc.
+
 		hls        : fm.js_url+'/cdn',
 		dash       : fm.js_url+'/cdn',
 		flv        : fm.js_url+'/cdn',
-		videojs    : 'https://cdnjs.cloudflare.com/ajax/libs/video.js/8.3.0',
+		videojs    : 'https://cdnjs.cloudflare.com/ajax/libs/video.js/8.8.0',
 		prettify   : fm.js_url+'/cdn/run_prettify.js',
 		psd        : fm.js_url+'/cdn',
 		rar        : fm.js_url+'/cdn',
@@ -12566,7 +12567,7 @@ elFinder.prototype._options = {
 	 * 
 	 * @type Null|Function
 	 */
-	rawStringDecoder : typeof Encoding === 'object' && $.isFunction(Encoding.convert)? function(str) {
+	rawStringDecoder : typeof Encoding === 'object' && typeof Encoding.convert === 'function'? function(str) {
 		return Encoding.convert(str, {
 			to: 'UNICODE',
 			type: 'string'
@@ -26002,7 +26003,7 @@ elFinder.prototype.commands.fullscreen = function() {
 			
 			html.push(sep);
 			html.push('<div class="'+lic+'">Licence: 3-clauses BSD Licence</div>');
-			html.push('<div class="'+lic+'">Copyright © 2009-2022, Studio 42 / nao-pon</div>');
+			html.push('<div class="'+lic+'">Copyright © 2009-2024, Studio 42 / nao-pon</div>');
 			html.push('<div class="'+lic+'">„ …'+fm.i18n('dontforget')+' ”</div>');
 			html.push('</div>');
 		},
@@ -30658,12 +30659,16 @@ elFinder.prototype.commands.quicklook.plugins = [
 						}
 					},
 					err = 0, 
+					cssClass = '',
 					canPlay;
 				//reset();
 				pDash = null;
 				opts = opts || {};
+				if (opts.cssClass) {
+					cssClass = ' ' + opts.cssClass;
+				}
 				ql.hideinfo();
-				node = $('<video class="elfinder-quicklook-preview-video" controls' + controlsList + ' preload="auto" autobuffer playsinline>'
+				node = $('<video class="elfinder-quicklook-preview-video' + cssClass + '" controls' + controlsList + ' preload="auto" autobuffer playsinline>'
 						+'</video>')
 					.on('change', function(e) {
 						// Firefox fire change event on seek or volume change
@@ -30770,10 +30775,13 @@ elFinder.prototype.commands.quicklook.plugins = [
 				opDfd = fm.openUrl(file.hash, false, function(url) {
 					loading.remove();
 					if (url) {
-						render(file);
+						render(file, {
+							src: url,
+							cssClass: 'video-js'
+						});
 						node[0].src = url;
 						cVideojs(node[0], {
-							src: url
+							autoplay: true
 						});
 					}
 				}, { progressBar: prog });

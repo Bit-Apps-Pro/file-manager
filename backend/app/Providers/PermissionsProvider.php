@@ -3,8 +3,7 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Core\Http\RequestType;
-use BitApps\FM\Core\Utils\Capabilities;
+use BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
 use WP_User;
@@ -35,10 +34,14 @@ class PermissionsProvider
     public function __construct()
     {
         global $wp_roles;
-        $this->permissions    = Config::getOption(
+        $this->permissions = Config::getOption(
             'permissions',
             $this->defaultPermissions()
         );
+
+        if (\array_key_exists('do_not_use_for_admin', $this->permissions)) {
+            $this->permissions['do_not_use_for_admin'] = \boolval($this->permissions['do_not_use_for_admin']);
+        }
 
         $this->_preferences = Plugin::instance()->preferences();
         $this->roles        = array_keys($wp_roles->roles);
@@ -101,7 +104,7 @@ class PermissionsProvider
 
     public function defaultPermissions()
     {
-        $permissions['do_not_use_for_admin']     = 'do_not_use_for_admin';
+        $permissions['do_not_use_for_admin']     = true;
         $permissions['file_type']                = ['text', 'image', 'application', 'video', 'audio'];
         $permissions['file_size']                = 2;
         $permissions['folder_options']           = 'common'; // common | role | user
@@ -111,17 +114,6 @@ class PermissionsProvider
         ];
 
         return $permissions;
-    }
-
-    private function isRequestForAdminArea()
-    {
-        $action = '';
-
-        if (isset($_REQUEST['action'])) {
-            $action = sanitize_key($_REQUEST['action']);
-        }
-
-        return is_user_logged_in() && $action === 'bit_fm_connector';
     }
 
     public function getPath()
@@ -140,10 +132,8 @@ class PermissionsProvider
             $path = $this->permissionsForCurrentRole()['path'];
         }
 
-        if (empty($path) || !file_exists($path)) {
-            throw new PreCommandException(
-                esc_html__('please check root folder for file manager, from file manager settings', 'file-manager')
-            );
+        if (empty($path) || !is_readable($path)) {
+            throw new PreCommandException(esc_html__('please check root folder for file manager, from file manager settings', 'file-manager'));
         }
 
         return $path;
@@ -187,7 +177,7 @@ class PermissionsProvider
             : $this->getDefaultPublicRootURL();
     }
 
-    public function getDefaultRootPathByCriteria($criteria, $type)
+    public function getPublicRootPathByCriteria($criteria, $type)
     {
         $defaultPath = $this->getDefaultPublicRootPath();
         $rootPath    = wp_unslash($defaultPath) . DIRECTORY_SEPARATOR . "{$type}_{$criteria}";
@@ -202,14 +192,26 @@ class PermissionsProvider
         return $rootPath;
     }
 
-    public function getDefaultRootPathForUser($userID)
+    public function getPublicRootPathForUser($userID)
     {
-        return $this->getDefaultRootPathByCriteria($userID, 'user');
+        return $this->getPublicRootPathByCriteria($userID, 'user');
     }
 
-    public function getDefaultRootPathForRole($role)
+    public function getPublicRootPathForRole($role)
     {
-        return $this->getDefaultRootPathByCriteria($role, 'role');
+        return $this->getPublicRootPathByCriteria($role, 'role');
+    }
+
+    public function getPathByFolderOption()
+    {
+        switch ($this->getFolderOption()) {
+            case 'role':
+                return $this->getPublicRootPathForRole($this->currentUserRole());
+            case 'user':
+                return $this->getPublicRootPathForRole($this->currentUserRole());
+            default:
+                return $this->getPublicRootPath();
+        }
     }
 
     public function getByRole($role)
@@ -224,17 +226,9 @@ class PermissionsProvider
 
     public function getPermissions($type, $name)
     {
-        if ($this->isCommonFolderEnabled()) {
-            $defaultPath = $this->getDefaultPublicRootPath();
-        } elseif ($type === 'by_user') {
-            $defaultPath = $this->getDefaultRootPathForUser($name);
-        } else {
-            $defaultPath = $this->getDefaultRootPathForRole($name);
-        }
-
         $settings = [
             'commands' => [],
-            'path'     => $defaultPath,
+            'path'     => '',
         ];
 
         if (
@@ -266,9 +260,19 @@ class PermissionsProvider
         ) {
             $settings['path'] = isset($this->permissions['guest']['path'])
                 ? $this->permissions['guest']['path'] : $settings['path'];
-            $settings['commands'] = isset($this->permissions['guest']['commands'])
-                && \is_array($this->permissions['guest']['commands'])
-                ? $this->permissions['guest']['commands'] : $settings['commands'];
+
+            // commands in guest permission removed. this is for back compat
+            if (
+                isset($this->permissions['guest']['commands'])
+            && \is_array($this->permissions['guest']['commands'])
+            ) {
+                $settings['commands'] =  $this->permissions['guest']['commands'];
+            } elseif (
+                \array_key_exists('can_download', $this->permissions['guest'])
+                 && $this->permissions['guest']['can_download']
+            ) {
+                $settings['commands'] = ['download'];
+            }
         }
 
         return $settings;
@@ -289,7 +293,7 @@ class PermissionsProvider
     public function isDisabledForAdmin()
     {
         return isset($this->permissions['do_not_use_for_admin'])
-            && $this->permissions['do_not_use_for_admin'] === 'do_not_use_for_admin';
+            && \boolval($this->permissions['do_not_use_for_admin']);
     }
 
     public function getFolderOption()
@@ -417,6 +421,22 @@ class PermissionsProvider
         }
 
         return $disabledCommand;
+    }
+
+    public function updatePermissionSetting($permissions)
+    {
+        return Config::updateOption('permissions', $permissions, 'yes');
+    }
+
+    public function isRequestForAdminArea()
+    {
+        $action = '';
+
+        if (isset($_REQUEST['action'])) {
+            $action = sanitize_key($_REQUEST['action']);
+        }
+
+        return is_user_logged_in() && $action === 'bit_fm_connector';
     }
 
     /**

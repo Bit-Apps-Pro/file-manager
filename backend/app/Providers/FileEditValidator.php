@@ -2,6 +2,7 @@
 
 namespace BitApps\FM\Providers;
 
+use BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
 
@@ -72,7 +73,7 @@ class FileEditValidator
             return;
         }
 
-        if (!empty($error)) {
+        if (!empty($error) && !Capabilities::check('install_plugins')) {
             throw new PreCommandException(esc_html($error));
         }
     }

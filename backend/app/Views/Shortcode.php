@@ -5,8 +5,8 @@
 namespace BitApps\FM\Views;
 
 use BitApps\FM\Config;
-use BitApps\FM\Core\Hooks\Hooks;
-use BitApps\FM\Core\Shortcode\Shortcode as SWrapper;
+use BitApps\WPKit\Hooks\Hooks;
+use BitApps\WPKit\Shortcode\Shortcode as SWrapper;
 
 use function BitApps\FM\Functions\view;
 
@@ -28,6 +28,7 @@ class Shortcode
     {
         return (array) $config + [
             'action'  => Config::withPrefix('connector_front'),
+            'nonce'   => wp_create_nonce(Config::withPrefix('public_nonce')),
             'options' => Plugin::instance()->preferences()->finderOptions(),
         ];
     }
@@ -41,6 +42,7 @@ class Shortcode
     {
         ob_start();
         view('finder');
+
         return ob_get_clean();
     }
 }

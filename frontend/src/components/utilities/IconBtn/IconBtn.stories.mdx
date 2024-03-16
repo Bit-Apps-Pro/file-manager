@@ -1,0 +1,153 @@
+import SearchIcon from '@icons/SearchIcon'
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+
+import IconBtn from './IconBtn'
+
+<Meta title="Component/IconButton" component={IconBtn} />
+
+# IconButton
+
+Use icon button for the main actions on a page or form.
+
+## Variant
+
+<Canvas withToolbar>
+  <Story
+    name="Variant"
+    argTypes={{
+      color: { table: { disable: true }, control: { disable: true } },
+      type: { table: { disable: true }, control: { disable: true } },
+      size: { table: { disable: true }, control: { disable: true } },
+      round: { table: { disable: true }, control: { disable: true } }
+    }}
+  >
+    <IconBtn size="lg" className="mr-3">
+      <SearchIcon size={20} stroke={2} />
+    </IconBtn>
+    <IconBtn variant="outline" size="lg" className="mr-3">
+      <SearchIcon size={20} stroke={2} />
+    </IconBtn>
+    <IconBtn variant="ghost" size="lg" className="mr-3">
+      <SearchIcon size={20} stroke={2} />
+    </IconBtn>
+  </Story>
+</Canvas>
+<ArgsTable story="Variant" />
+
+## Color
+
+<Canvas withToolbar>
+  <Story
+    name="Color"
+    argTypes={{
+      variant: { table: { disable: true }, control: { disable: true } },
+      type: { table: { disable: true }, control: { disable: true } },
+      size: { table: { disable: true }, control: { disable: true } },
+      round: { table: { disable: true }, control: { disable: true } }
+    }}
+  >
+    <IconBtn size="lg" className="mr-3">
+      <SearchIcon size={20} stroke={2} />
+    </IconBtn>
+    <IconBtn color="primary" size="lg" className="mr-3">
+      <SearchIcon size={20} stroke={2} />
+    </IconBtn>
+  </Story>
+</Canvas>
+<ArgsTable story="Color" />
+
+## Type
+
+<Canvas withToolbar>
+  <Story
+    name="Type"
+    argTypes={{
+      variant: { table: { disable: true }, control: { disable: true } },
+      color: { table: { disable: true }, control: { disable: true } },
+      size: { table: { disable: true }, control: { disable: true } },
+      round: { table: { disable: true }, control: { disable: true } }
+    }}
+  >
+    <IconBtn className="mr-3">
+      <SearchIcon size={20} stroke={2} />
+    </IconBtn>
+    <IconBtn type="submit" className="mr-3">
+      <SearchIcon size={20} stroke={2} />
+    </IconBtn>
+    <IconBtn type="reset" className="mr-3">
+      <SearchIcon size={20} stroke={2} />
+    </IconBtn>
+  </Story>
+</Canvas>
+<ArgsTable story="Type" />
+
+## Size
+
+<Canvas withToolbar>
+  <Story
+    name="Size"
+    argTypes={{
+      variant: { table: { disable: true }, control: { disable: true } },
+      color: { table: { disable: true }, control: { disable: true } },
+      type: { table: { disable: true }, control: { disable: true } },
+      round: { table: { disable: true }, control: { disable: true } }
+    }}
+  >
+    <IconBtn size="lg" className="mr-3">
+      <SearchIcon size={20} stroke={2} />
+    </IconBtn>
+    <IconBtn className="mr-3">
+      <SearchIcon size={20} stroke={2} />
+    </IconBtn>
+    <IconBtn size="sm" className="mr-3">
+      <SearchIcon size={20} stroke={2} />
+    </IconBtn>
+  </Story>
+</Canvas>
+<ArgsTable story="Size" />
+
+## Round
+
+**`rounded`**
+
+<Canvas withToolbar>
+  <Story
+    name="Round"
+    argTypes={{
+      variant: { table: { disable: true }, control: { disable: true } },
+      color: { table: { disable: true }, control: { disable: true } },
+      type: { table: { disable: true }, control: { disable: true } },
+      size: { table: { disable: true }, control: { disable: true } }
+    }}
+  >
+    <IconBtn round className="mr-3">
+      <SearchIcon size={20} stroke={2} />
+    </IconBtn>
+  </Story>
+</Canvas>
+<ArgsTable story="Round" />
+
+## Disabled
+
+**`disabled`**
+
+<Canvas withToolbar>
+  <Story
+    name="Disabled"
+    argTypes={{
+      variant: { table: { disable: true }, control: { disable: true } },
+      color: { table: { disable: true }, control: { disable: true } },
+      type: { table: { disable: true }, control: { disable: true } },
+      round: { table: { disable: true }, control: { disable: true } },
+      size: { table: { disable: true }, control: { disable: true } },
+      disabled: { description: `boolean`, default: 'false' }
+    }}
+  >
+    <IconBtn className="mr-3">
+      <SearchIcon size={20} stroke={2} />
+    </IconBtn>
+    <IconBtn disabled className="mr-3">
+      <SearchIcon size={20} stroke={2} />
+    </IconBtn>
+  </Story>
+</Canvas>
