@@ -17,7 +17,7 @@ Best File manager and Code editor plugin for WordPress. You can edit, upload, de
 
 = Advance Plugin Of Your WordPress system =
 
-📢 **Join our new community [Bit Integrations](https://www.facebook.com/groups/bitapps) & get updates of our new plugin.**
+📢 **Join our new community [File Manager](https://www.facebook.com/groups/bitapps) & get updates of our new plugin.**
 
 📢 **We are open for freelance work/custom development for this plugin. [Connect](https://bitapps.pro/contact) with us for further information.**
 
@@ -51,7 +51,7 @@ Operation Control: Admin can control 13+ operations for specific user and user r
 = Key Features =
 
 ⭐ Operations (Edit, Upload, Download and Delete)
-⭐ Code Editor
+⭐ Code Editor to edit php, js, css and any type of text files
 ⭐ File manager plugin comes with light and elegant client UI
 ⭐ File manager support drag & drop file upload
 ⭐ List and Icons view available in File Manager Plugin
@@ -216,7 +216,9 @@ sparkles Overview of other products we are offering :
 
 🎉 [**Bit SMTP**](https://wordpress.org/plugins/bit-smtp/): The ultimate goal of Bit SMTP plugin to make your email deliverability more easy as well as secure.
 
-🎉 [**Bit ASSIST**](https://wordpress.org/plugins/bit-assist/): Connect your all support assistant in a single button. Floating Chat Widget, Contact Chat Icons, Telegram Chat, Line Messenger, WeChat, WhatsApp, Email, SMS, Call Button & more.
+🎉 [**Bit Assist**](https://wordpress.org/plugins/bit-assist/): Connect your all support assistant in a single button. Floating Chat Widget, Contact Chat Icons, Telegram Chat, Line Messenger, WeChat, WhatsApp, Email, SMS, Call Button & more.
+
+🎉 [**Bit Social**](https://wordpress.org/plugins/bit-social/): Connect your all support assistant in a single button. Floating Chat Widget, Contact Chat Icons, Telegram Chat, Line Messenger, WeChat, WhatsApp, Email, SMS, Call Button & more.
 
 loudspeaker **Join our community [Bit Apps](https://www.facebook.com/groups/bitapps) & get updates of our plugins.**
 
