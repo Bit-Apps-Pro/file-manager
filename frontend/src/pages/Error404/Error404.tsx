@@ -18,7 +18,7 @@ export default function Error404() {
     }, 1000)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sec])
-console.log('location', location)
+  console.log('location', location)
   return (
     <div className="error-404">
       <div>

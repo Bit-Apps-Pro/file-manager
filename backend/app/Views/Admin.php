@@ -3,12 +3,14 @@
 namespace BitApps\FM\Views;
 
 use BitApps\FM\Config;
-use BitApps\WPKit\Hooks\Hooks;
-use BitApps\WPKit\Utils\Capabilities;
 
 use function BitApps\FM\Functions\view;
 
 use BitApps\FM\Plugin;
+
+use BitApps\WPKit\Hooks\Hooks;
+
+use BitApps\WPKit\Utils\Capabilities;
 
 /**
  * The admin Layout and page handler class.
@@ -24,7 +26,6 @@ class Admin
         Hooks::addAction('admin_notices', [$this, 'adminNotice']);
         Hooks::addFilter(Config::withPrefix('localized_script'), [$this, 'filterConfigVariable']);
         Hooks::addFilter('script_loader_tag', [$this, 'filterScriptTag'], 0, 3);
-
 
         /*
          * // For testing --

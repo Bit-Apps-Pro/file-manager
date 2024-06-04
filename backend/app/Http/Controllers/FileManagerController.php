@@ -3,13 +3,12 @@
 namespace BitApps\FM\Http\Controllers;
 
 use BitApps\FM\Config;
-use BitApps\WPKit\Http\RequestType;
-use BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\FileManagerProvider;
 use BitApps\FM\Providers\FileManager\FileRoot;
 use BitApps\FM\Providers\FileManager\Options;
+use BitApps\WPKit\Utils\Capabilities;
 use Exception;
 
 final class FileManagerController
@@ -98,6 +97,11 @@ final class FileManagerController
         }
 
         return $this->getUserVolumes();
+    }
+
+    public function getUrlByPath($path)
+    {
+        return home_url(str_replace(ABSPATH, '', $path));
     }
 
     private function getDashboardVolumes()
@@ -229,9 +233,5 @@ final class FileManagerController
         }
 
         return $volume;
-    }
-
-    public function getUrlByPath($path) {
-        return home_url(str_replace(ABSPATH, $path, ''));
     }
 }
