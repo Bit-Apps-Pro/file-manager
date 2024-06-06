@@ -28,6 +28,7 @@
     "bitapps/wp-validator": "^1.0.4",
     "bitapps/wp-kit": "^1.1",
     "bitapps/wp-database": "^1.1",
-    "automattic/jetpack-autoloader": "^3.0"
+    "automattic/jetpack-autoloader": "^3.0",
+    "bitapps/wp-telemetry": "^0.0.8"
   }
 }

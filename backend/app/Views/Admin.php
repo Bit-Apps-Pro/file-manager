@@ -21,7 +21,7 @@ class Admin
 
     public function __construct()
     {
-        Hooks::addAction('in_admin_header', [$this, 'removeAdminNotices']);
+        // Hooks::addAction('in_admin_header', [$this, 'removeAdminNotices']);
         Hooks::addAction('admin_menu', [$this, 'sideBarMenuItem']);
         Hooks::addAction('admin_notices', [$this, 'adminNotice']);
         Hooks::addFilter(Config::withPrefix('localized_script'), [$this, 'filterConfigVariable']);
@@ -75,7 +75,7 @@ class Admin
     public function removeAdminNotices()
     {
         // phpcs:disable
-        global $plugin_page;
+        global $plugin_page, $wp_filter;
         if (empty($plugin_page) || strpos($plugin_page, Config::SLUG) === false) {
             return;
         }

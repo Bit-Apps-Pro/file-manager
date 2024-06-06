@@ -2,17 +2,15 @@
 
 namespace BitApps\FM;
 
-use BitApps\WPKit\Hooks\Hooks;
-use BitApps\WPKit\Http\RequestType;
-use BitApps\WPKit\Migration\MigrationHelper;
-
 use function BitApps\FM\Functions\view;
 
 use BitApps\FM\Http\Middleware\CapCheckerMiddleware;
-
 use BitApps\FM\Http\Middleware\NonceCheckerMiddleware;
+
 use BitApps\FM\Providers\AccessControlProvider;
+
 use BitApps\FM\Providers\FileEditValidator;
+
 use BitApps\FM\Providers\HookProvider;
 use BitApps\FM\Providers\InstallerProvider;
 use BitApps\FM\Providers\Logger;
@@ -22,8 +20,13 @@ use BitApps\FM\Providers\PermissionsProvider;
 use BitApps\FM\Providers\PreferenceProvider;
 use BitApps\FM\Providers\VersionMigrationProvider;
 use BitApps\FM\Views\Admin;
-
 use BitApps\FM\Views\Shortcode;
+use BitApps\WPKit\Hooks\Hooks;
+use BitApps\WPKit\Http\RequestType;
+
+use BitApps\WPKit\Migration\MigrationHelper;
+use BitApps\WPTelemetry\Telemetry\Telemetry;
+use BitApps\WPTelemetry\Telemetry\TelemetryConfig;
 
 final class Plugin
 {
@@ -91,6 +94,8 @@ final class Plugin
         }
 
         new HookProvider();
+
+        $this->initTelemetry();
 
         $this->_container['access_control']      = new AccessControlProvider();
         $this->_container['logger']              = new Logger();
@@ -351,6 +356,17 @@ final class Plugin
         }
 
         return true;
+    }
+
+    public function initTelemetry()
+    {
+        TelemetryConfig::setSlug(Config::SLUG);
+        TelemetryConfig::setTitle(Config::TITLE);
+        TelemetryConfig::setPrefix(Config::VAR_PREFIX);
+        TelemetryConfig::setVersion(Config::VERSION);
+
+        Telemetry::report()->init();
+        Telemetry::feedback()->init();
     }
 
     /**

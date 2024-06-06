@@ -50,6 +50,7 @@ function bfmDeactivate()
 function bfmLoaded()
 {
     do_action('file_manager_init');
+    do_action('bit_fm_loaded');
 
     // Including elFinder class
     include_once BFM_FINDER_DIR . 'php' . DS . 'autoload.php';
