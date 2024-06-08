@@ -8,7 +8,7 @@ use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
 use WP_User;
 
-\defined('ABSPATH') or exit();
+\defined('ABSPATH') || exit();
 class PermissionsProvider
 {
     public $permissions;
@@ -105,7 +105,10 @@ class PermissionsProvider
     public function defaultPermissions()
     {
         $permissions['do_not_use_for_admin']     = true;
-        $permissions['file_type']                = ['text', 'image', 'application', 'video', 'audio'];
+        $permissions['file_type']                = apply_filters(
+            Config::withPrefix('filter_file_type'),
+            ['text', 'image', 'application', 'video', 'audio']
+        );
         $permissions['file_size']                = 2;
         $permissions['folder_options']           = 'common'; // common | role | user
         $permissions['by_role']['administrator'] = [

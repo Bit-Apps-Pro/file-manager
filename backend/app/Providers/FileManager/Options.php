@@ -2,6 +2,7 @@
 
 namespace BitApps\FM\Providers\FileManager;
 
+use BitApps\FM\Config;
 use BitApps\WPKit\Hooks\Hooks;
 
 \defined('ABSPATH') || exit();
@@ -263,11 +264,13 @@ class Options
             $options['bind'] = $this->_bind;
         }
 
-        $options['roots'] = $this->getRoots();
+        $options['roots'] = Hooks::applyFilter(Config::withPrefix('filter_volumes'), $this->getRoots());
 
-        $filteredOPtions = Hooks::applyFilter('fm_options_filter', $options);
-        if (!empty($filteredOPtions['roots'])) {
-            $options = $filteredOPtions;
+        $filteredOptions = Hooks::applyFilter('fm_options_filter', $options);
+
+        $filteredOptions = Hooks::applyFilter(Config::withPrefix('filter_options'), $filteredOptions);
+        if (!empty($filteredOptions['roots'])) {
+            $options = $filteredOptions;
         }
 
         return $options;

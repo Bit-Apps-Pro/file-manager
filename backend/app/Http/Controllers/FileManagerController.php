@@ -8,6 +8,7 @@ use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\FileManagerProvider;
 use BitApps\FM\Providers\FileManager\FileRoot;
 use BitApps\FM\Providers\FileManager\Options;
+use BitApps\WPKit\Hooks\Hooks;
 use BitApps\WPKit\Utils\Capabilities;
 use Exception;
 

@@ -662,7 +662,7 @@ class PreferenceProvider
             $disabledCommands[] = 'dblclick';
         }
 
-        $options->setOption('disabled', $disabledCommands);
+        $options->setOption('disabled', array_values($disabledCommands));
         $options->setOption('commandsOptions', $this->finderCommandsOptions());
         $options->setOption('rememberLastDir', $this->getRememberLastDir());
         $options->setOption('reloadClearHistory', $this->getClearHistoryOnReload());
