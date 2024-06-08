@@ -33,7 +33,6 @@ class Shortcode
             $options['commands'][] = 'view';
         }
 
-        error_log(print_r(['options', $options['commands']], true));
         return (array) $config + [
             'action'  => Config::withPrefix('connector_front'),
             'nonce'   => wp_create_nonce(Config::withPrefix('public_nonce')),
