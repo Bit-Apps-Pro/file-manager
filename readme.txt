@@ -1,7 +1,7 @@
 === Bit File Manager – 100% Free & Open Source File Manager and Code Editor for WordPress ===
 
 Contributors: bitpressadmin, aihimel
-Tags: code editor, wp file manager, finder, explorer, edit php
+Tags: File Manager, Code Editor, Snippet, Code Snippet, Editor
 Requires at least: 5.0
 Tested up to: 6.5
 Requires PHP: 7.4
