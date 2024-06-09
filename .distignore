@@ -20,7 +20,6 @@ yarn.lock
 pnpm-lock.yaml
 .prettierignore
 .prettierrc
-readme.txt*
 .stylelintignore
 .stylelintrc.json
 sass

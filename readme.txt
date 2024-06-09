@@ -261,6 +261,12 @@ loudspeaker **Join our community [Bit Apps](https://www.facebook.com/groups/bita
 - Vietnamese
 - Chinese
 
+= Telemetry Data =
+
+Bit Social uses [wp-telemetry](https://packagist.org/packages/bitapps/wp-telemetry) to collect some telemetry data upon user’s confirmation. This helps us to troubleshoot problems faster & make product improvements.
+
+Wp-Telemetry **DOES NOT IMMEDIATELY** start gathering data, rather it will gather basic telemetry data when a user allows it. We collect the data to ensure great user experience for all our users.
+
 == Installation ==
 
 = Requirements =
@@ -319,11 +325,18 @@ Yes, It is possible to edit writeable files in the wordpress directory using cod
 
 == Upgrade Notice ==
 
-= 6.5 =
+= 6.5.2 =
 
 - No special requirements.
 
 == Changelog ==
+
+= 6.5.2 (9 Jun, 2024) =
+- Fix: sort button in frontend
+- Fix: full screen button in frontend
+- Fix: view change button in frontend
+- Fix: pdf preview due to wrong file path
+- Misc: Added wp-telemetry package to collect some insights from users
 
 = 6.5 (16 March, 2024) =
 - UI updated.
