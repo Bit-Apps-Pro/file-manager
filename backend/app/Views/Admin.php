@@ -198,7 +198,7 @@ class Admin
                 <b>DISALLOW_FILE_EDIT</b> <?php esc_html_e('is set to', 'file-manager'); ?>
                 <b>TRUE</b>.
                 <?php esc_html_e('You will not be able to edit files with', 'file-manager'); ?>
-                 <a href='admin.php?page=file-manager-settings'>Bit File Manager</a>.
+                 <a href='admin.php?page=file-manager#/settings'>Bit File Manager</a>.
                 <?php esc_html_e('Please set', 'file-manager'); ?>
                 <b>DISALLOW_FILE_EDIT</b> <?php esc_html_e('to', 'file-manager'); ?>
                 <b>FALSE</b>

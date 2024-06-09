@@ -75,12 +75,12 @@ export default function Settings() {
             name="root_folder_path"
             tooltip={`${__('Root folder path must be correct. Default: ')}${defaults?.root_folder_path}`}
             rules={[
-              { required: true, message: __('Root folder is required') },
-              {
-                // eslint-disable-next-line no-useless-escape
-                pattern: new RegExp(`^${defaults?.root_folder_path}?(?:\/[^\/]+)*\/?$`),
-                message: __('Folder Path Must be within WordPress root directory')
-              }
+              { required: true, message: __('Root folder is required') }
+              // {
+              //   // eslint-disable-next-line no-useless-escape
+              //   pattern: new RegExp(`^${defaults?.root_folder_path}?(?:\/[^\/]+)*\/?$`),
+              //   message: __('Folder Path Must be within WordPress root directory')
+              // }
             ]}
           >
             <Input />

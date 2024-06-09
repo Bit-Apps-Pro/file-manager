@@ -8,8 +8,7 @@ import { Button, Card, Form, Input, Radio, Select, Space, Switch, Typography, no
 
 function Permissions() {
   const { useForm } = Form
-  const { isLoading, permissions, commands, fileTypes, roles, users, wpRoot } =
-    useFetchPermissionsSettings()
+  const { isLoading, permissions, commands, fileTypes, roles, users } = useFetchPermissionsSettings()
   const { updatePermission, isPermissionUpdating } = useUpdatePermissionsSettings()
   const [form] = useForm()
   useEffect(() => {
@@ -113,13 +112,13 @@ function Permissions() {
                   <Form.Item
                     name={['by_role', role, 'path']}
                     label={__('Path')}
-                    rules={[
+                    /* rules={[
                       {
                         // eslint-disable-next-line no-useless-escape
                         pattern: new RegExp(`^${wpRoot}?(?:\/[^\/]+)*\/?$`),
                         message: __('Folder Path Must be within WordPress root directory')
                       }
-                    ]}
+                    ]} */
                   >
                     <Input placeholder="Root Folder Path" />
                   </Form.Item>
@@ -144,13 +143,13 @@ function Permissions() {
                   <Form.Item
                     name={['by_user', user.ID, 'path']}
                     label={__('Path')}
-                    rules={[
+                    /* rules={[
                       {
                         // eslint-disable-next-line no-useless-escape
                         pattern: new RegExp(`^${wpRoot}?(?:\/[^\/]+)*\/?$`),
                         message: __('Folder Path Must be within WordPress root directory')
                       }
-                    ]}
+                    ]} */
                   >
                     <Input placeholder="Root Folder Path" />
                   </Form.Item>
@@ -171,13 +170,13 @@ function Permissions() {
             <Form.Item
               name={['guest', 'path']}
               label={__('Path')}
-              rules={[
+              /* rules={[
                 {
                   // eslint-disable-next-line no-useless-escape
                   pattern: new RegExp(`^${wpRoot}?(?:\/[^\/]+)*\/?$`),
                   message: __('Folder Path Must be within WordPress root directory')
                 }
-              ]}
+              ]} */
             >
               <Input placeholder="Root Folder Path" />
             </Form.Item>
