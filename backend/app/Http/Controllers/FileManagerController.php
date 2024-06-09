@@ -8,7 +8,6 @@ use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\FileManagerProvider;
 use BitApps\FM\Providers\FileManager\FileRoot;
 use BitApps\FM\Providers\FileManager\Options;
-use BitApps\WPKit\Hooks\Hooks;
 use BitApps\WPKit\Utils\Capabilities;
 use Exception;
 
@@ -22,7 +21,7 @@ final class FileManagerController
     public function connector()
     {
         try {
-            Plugin::instance()->accessControl()->checkPermission($_REQUEST['cmd']);
+            Plugin::instance()->accessControl()->checkPermission(sanitize_key($_REQUEST['cmd']));
             $finderProvider = new FileManagerProvider($this->getFinderOptions());
             $finderProvider->getFinder()->run();
         } catch (Exception $th) {
