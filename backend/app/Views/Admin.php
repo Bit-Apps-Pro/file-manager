@@ -120,6 +120,7 @@ class Admin
 
         wp_enqueue_style('bfm-jquery-ui-css');
         if (\in_array($preferences->getTheme(), ['default', 'bootstrap'])) {
+            wp_enqueue_style(Config::SLUG . 'elfinder-css');
             wp_enqueue_style(Config::SLUG . 'theme-css');
         }
 

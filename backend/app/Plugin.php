@@ -248,7 +248,7 @@ final class Plugin
         );
 
         wp_register_style(
-            Config::SLUG . 'css',
+            Config::SLUG . 'elfinder-css',
             BFM_FINDER_URL . 'css/elfinder.min.css',
             Config::VERSION
         );

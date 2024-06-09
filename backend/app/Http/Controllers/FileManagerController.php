@@ -101,7 +101,7 @@ final class FileManagerController
 
     public function getUrlByPath($path)
     {
-        return home_url(str_replace(ABSPATH, '', $path));
+        return home_url(str_replace(ABSPATH, '', trailingslashit($path)));
     }
 
     private function getDashboardVolumes()

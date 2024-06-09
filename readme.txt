@@ -5,7 +5,7 @@ Tags: code editor, wp file manager, finder, explorer, edit php
 Requires at least: 5.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 6.5.2
+Stable tag: 6.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -325,17 +325,19 @@ Yes, It is possible to edit writeable files in the wordpress directory using cod
 
 == Upgrade Notice ==
 
-= 6.5.2 =
+= 6.5.3 =
 
 - No special requirements.
 
 == Changelog ==
 
+= 6.5.3 (9 Jun, 2024) =
+- Fix: pdf preview due to wrong file path
+
 = 6.5.2 (9 Jun, 2024) =
 - Fix: sort button in frontend
 - Fix: full screen button in frontend
 - Fix: view change button in frontend
-- Fix: pdf preview due to wrong file path
 - Misc: Added wp-telemetry package to collect some insights from users
 
 = 6.5 (16 March, 2024) =
