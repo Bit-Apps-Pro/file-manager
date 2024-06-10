@@ -365,6 +365,11 @@ final class Plugin
         TelemetryConfig::setPrefix(Config::VAR_PREFIX);
         TelemetryConfig::setVersion(Config::VERSION);
 
+        TelemetryConfig::setServerBaseUrl('https://wp-api.bitapps.pro/public/');
+
+        TelemetryConfig::setTermsUrl('https://bitapps.pro/terms-of-service/');
+        TelemetryConfig::setPolicyUrl('https://bitapps.pro/refund-policy/');
+
         Telemetry::report()->init();
         Telemetry::feedback()->init();
     }
