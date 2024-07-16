@@ -20,10 +20,10 @@ function bfmActivate()
     // Creating necessary folders for library file manager
     $uploadDir = wp_upload_dir();
     $index     = $uploadDir['basedir'] . DS . 'file-manager' . DS . 'index.html';
-    wp_mkdir_p(\dirname($index));
+    $isPublicDirCreated = wp_mkdir_p(\dirname($index));
 
     // Creating index file
-    if (!file_exists($index)) {
+    if ($isPublicDirCreated && !file_exists($index)) {
         $fp = fopen($index, 'a');
         fwrite($fp, ' ');
         fclose($fp);
