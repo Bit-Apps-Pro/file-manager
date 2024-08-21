@@ -111,7 +111,6 @@ final class FileManagerController
      */
     public function setAllowedFileType(FileRoot $volume)
     {
-        $mimes                 = Plugin::instance()->mimes()->getTypes();
         $permissions           = Plugin::instance()->permissions();
         $mimes                 = $permissions->getEnabledFileType();
         $maxUploadSize         = $permissions->getMaximumUploadSize();
