@@ -25,7 +25,7 @@ final class PermissionsController
                 'roles'       => $this->permissionProvider->allRoles(),
                 'users'       => array_values($this->permissionProvider->allUsers()),
                 'commands'    => $this->permissionProvider->allCommands(),
-                'fileTypes'   => ['text', 'image', 'application', 'video', 'audio'],
+                'fileTypes'   => ['text', 'image', 'application', 'video', 'audio', 'php'],
                 'wpRoot'      => ABSPATH,
             ]
         );

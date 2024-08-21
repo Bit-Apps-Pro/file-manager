@@ -104,6 +104,27 @@ final class FileManagerController
         return home_url(str_replace(ABSPATH, '', trailingslashit($path)));
     }
 
+    /**
+     * Sets allowed mimetype for a volume/root
+     *
+     * @return void
+     */
+    public function setAllowedFileType(FileRoot $volume)
+    {
+        $permissions           = Plugin::instance()->permissions();
+        $mimes                 = $permissions->getEnabledFileType();
+        $maxUploadSize         = $permissions->getMaximumUploadSize();
+        $volume->setUploadMaxSize($maxUploadSize == 0 ? 0 : $maxUploadSize . 'M');
+        $denyUploadType = array_diff(Plugin::instance()->mimes()->getTypes(), $mimes);
+        if (!\in_array('php', $mimes)) {
+            $denyUploadType[] = 'text/x-php';
+        }
+        $volume->setUploadOrder(['allow', 'deny']);
+        $volume->setOption('uploadDeny', $denyUploadType);
+
+        $volume->setUploadAllow($mimes);
+    }
+
     private function getDashboardVolumes()
     {
         $mimes                 = Plugin::instance()->mimes()->getTypes();
@@ -117,19 +138,16 @@ final class FileManagerController
             $preferences->getRootVolumeName()
         );
 
+        $baseRoot->setUploadAllow($mimes);
+
         if ($permissions->currentUserRole() !== 'administrator') {
-            $mimes         = $permissions->getEnabledFileType();
-            $maxUploadSize = $permissions->getMaximumUploadSize();
-            $baseRoot->setUploadMaxSize($maxUploadSize == 0 ? 0 : $maxUploadSize . 'M');
-            $denyUploadType = array_diff(Plugin::instance()->mimes()->getTypes(), $mimes);
-            $baseRoot->setOption('uploadDeny', $denyUploadType);
+            $this->setAllowedFileType($baseRoot);
         }
 
         if (is_writable(stripslashes($preferences->getRootPath()) . DIRECTORY_SEPARATOR . '.tmbPath')) {
             $baseRoot->setOption('tmbPath', '.tmb');
         }
 
-        $baseRoot->setUploadAllow($mimes);
         $baseRoot->setAccessControl([$accessControlProvider, 'control']);
         $baseRoot->setAcceptedName([$accessControlProvider, 'validateName']);
         $baseRoot->setDisabled([]);
@@ -202,7 +220,6 @@ final class FileManagerController
      */
     private function processFileRoot($path, $alias, $url)
     {
-        $mimes                 = Plugin::instance()->mimes()->getTypes();
         $permissions           = Plugin::instance()->permissions();
         $accessControlProvider = Plugin::instance()->accessControl();
 
@@ -211,16 +228,7 @@ final class FileManagerController
             $url,
             $alias
         );
-
-        if ($permissions->currentUserRole() !== 'administrator') {
-            $mimes         = $permissions->getEnabledFileType();
-            $maxUploadSize = $permissions->getMaximumUploadSize();
-            $volume->setUploadMaxSize($maxUploadSize == 0 ? 0 : $maxUploadSize . 'M');
-            $denyUploadType = array_diff(Plugin::instance()->mimes()->getTypes(), $mimes);
-            $volume->setOption('uploadDeny', $denyUploadType);
-        }
-
-        $volume->setUploadAllow($mimes);
+        $this->setAllowedFileType($volume);
         $volume->setAccessControl([$accessControlProvider, 'control']);
         $volume->setAcceptedName([$accessControlProvider, 'validateName']);
         $volume->setDisabled($permissions->getDisabledCommand());

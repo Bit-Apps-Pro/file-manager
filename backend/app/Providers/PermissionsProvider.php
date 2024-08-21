@@ -3,9 +3,9 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
+use BitApps\WPKit\Utils\Capabilities;
 use WP_User;
 
 \defined('ABSPATH') || exit();
@@ -440,6 +440,17 @@ class PermissionsProvider
         }
 
         return is_user_logged_in() && $action === 'bit_fm_connector';
+    }
+
+    public function isRequestForShortcode()
+    {
+        $action = '';
+
+        if (isset($_REQUEST['action'])) {
+            $action = sanitize_key($_REQUEST['action']);
+        }
+
+        return $action === Config::withPrefix('connector_front');
     }
 
     /**
