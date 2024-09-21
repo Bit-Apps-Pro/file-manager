@@ -86,8 +86,8 @@
 }
 
 .ui-helper-clearfix.ui-dialog-buttonpane.ui-widget-content
-  .ui-dialog-buttonset.elfinder-edit-extras
-  .ui-corner-all {
+.ui-dialog-buttonset.elfinder-edit-extras
+.ui-corner-all {
   margin-top: 0;
 }
 
@@ -120,3 +120,78 @@
     max-width: calc(100% - 45px) !important;
   }
 }
+
+
+/* --Telemetry-Popup-ant-modal-custom-css-- */
+
+.telemetry-popup .ant-modal-content{
+  background-color: white!important;
+}
+
+.telemetry-popup .ant-modal-header{
+  background: white!important;
+}
+
+.telemetry-popup .ant-modal-title{
+  color: #000!important;
+}
+
+.telemetry-popup .ant-modal-body p{
+  color: #000;
+}
+
+
+.telemetry-popup .ant-btn-primary{
+  background: #1677ff;
+  box-shadow: none;
+}
+
+.telemetry-popup .ant-btn-primary:hover{
+  background: #4096ff!important;
+}
+
+.telemetry-popup .ant-btn-default{
+  background: none!important;
+  border: none;
+}
+
+.telemetry-popup .ant-btn-default:hover{
+  background: none;
+  transition: none;
+}
+
+.telemetry-popup  .ant-steps-item-process .ant-steps-item-icon{
+  background-color: #1677ff!important;
+  border-color: #1677ff!important;
+}
+
+.telemetry-popup  .ant-steps-item-wait .ant-steps-item-icon{
+  background-color: #F0F0F0!important;
+  border-color: transparent!important;
+
+}
+
+.telemetry-popup  .ant-steps-item-wait .ant-steps-item-icon span{
+  color: rgba(0, 0, 0, 0.65)!important;
+}
+
+
+.telemetry-popup .ant-steps-item-finish .ant-steps-item-icon{
+  background-color: #e6f4ff!important;
+  border-color: #e6f4ff!important;
+}
+
+.telemetry-popup .ant-checkbox-inner{
+  background-color: #fff!important;
+  border-color: #d9d9d9!important;
+}
+
+.telemetry-popup .ant-checkbox-wrapper span{ 
+  color: rgba(0, 0, 0, 0.88)!important;
+}
+
+.telemetry-popup .ant-checkbox-checked .ant-checkbox-inner{
+  background-color: #4096ff!important;
+}
+
+/* --Telemetry-Popup-ant-modal-custom-css-- */

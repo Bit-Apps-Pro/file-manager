@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 
 import $finder, { $finderCurrentPath, $finderViewType } from '@common/globalStates/$finder'
+import request from '@common/helpers/request'
 import config from '@config/config'
 import LucideIcn from '@icons/LucideIcn'
 import useUpdateViewType from '@pages/Settings/data/useUpdateViewType'
+import TelemetryPopup from '@utilities/TelemetryPopup/TelemetryPopup'
 import { Breadcrumb, Button, Flex, Image, Space, Spin } from 'antd'
 import { type FinderInstance } from 'elfinder'
 import { useAtom } from 'jotai'
@@ -17,6 +19,7 @@ export default function Root() {
   const [elfinder, setFinder] = useAtom($finder)
   const [currentPath, setFinderCurrentPath] = useAtom($finderCurrentPath)
   const [viewType, setFinderViewType] = useAtom($finderViewType)
+  const [isTelemetryPopupOpen, setIsTelemetryPopupOpen] = useState(false)
 
   const { toggleViewType } = useUpdateViewType()
 
@@ -72,7 +75,23 @@ export default function Root() {
       setFinder({} as FinderInstance)
     }
   }, [])
-  console.log('isOpening', isOpening)
+
+  useEffect(() => {
+    request({ action: 'telemetry_popup_disable_check', method: 'GET' }).then((res: any) => {
+      setIsTelemetryPopupOpen(!res.data)
+    })
+  }, [])
+
+  const handleTelemetryAccess = () => {
+    request({ action: 'telemetry_permission_handle', data: { isChecked: true } })
+    setIsTelemetryPopupOpen(false)
+  }
+
+  const handleTelemetryPopupSkip = () => {
+    request({ action: 'telemetry_permission_handle', data: { isChecked: false } })
+    setIsTelemetryPopupOpen(false)
+  }
+
   return (
     <>
       <div
@@ -146,6 +165,16 @@ export default function Root() {
         )}
       </Flex>
       <div id="file-manager" ref={finderRef} style={{ height: '100%' }} />
+
+      {isTelemetryPopupOpen ? (
+        <TelemetryPopup
+          isPopupOpen={isTelemetryPopupOpen}
+          handleSubmit={handleTelemetryAccess}
+          handlePopupSkip={handleTelemetryPopupSkip}
+        />
+      ) : (
+        ''
+      )}
     </>
   )
 }
