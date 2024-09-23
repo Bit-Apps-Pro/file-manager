@@ -1,10 +1,11 @@
 <?php
 
-use BitApps\WPKit\Http\Router\Route;
 use BitApps\FM\Http\Controllers\FileManagerController;
 use BitApps\FM\Http\Controllers\LogController;
 use BitApps\FM\Http\Controllers\PermissionsController;
 use BitApps\FM\Http\Controllers\SettingsController;
+use BitApps\FM\Http\Controllers\TelemetryPopupController;
+use BitApps\WPKit\Http\Router\Route;
 
 if (!\defined('ABSPATH')) {
     exit;
@@ -27,6 +28,9 @@ Route::group(
 
         Route::get('permissions/get', [PermissionsController::class, 'get']);
         Route::post('permissions/update', [PermissionsController::class, 'update']);
+
+        Route::post('telemetry_permission_handle', [TelemetryPopupController::class, 'telemetryPermissionHandle']);
+        Route::get('telemetry_popup_disable_check', [TelemetryPopupController::class, 'telemetryPopupDisableCheck']);
     }
 )->middleware('nonce:admin');
 

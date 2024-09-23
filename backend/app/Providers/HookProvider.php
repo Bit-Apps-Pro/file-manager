@@ -3,10 +3,11 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
+use BitApps\FM\Http\Controllers\TelemetryPopupController;
+use BitApps\FM\Plugin;
 use BitApps\WPKit\Hooks\Hooks;
 use BitApps\WPKit\Http\RequestType;
 use BitApps\WPKit\Http\Router\Router;
-use BitApps\FM\Plugin;
 
 class HookProvider
 {
@@ -17,6 +18,7 @@ class HookProvider
         $this->_pluginBackend = Config::get('BACKEND_DIR') . DIRECTORY_SEPARATOR;
         $this->loadAppHooks();
         Hooks::addAction('rest_api_init', [$this, 'loadApi']);
+        Hooks::addFilter(Config::VAR_PREFIX . 'telemetry_additional_data',[new TelemetryPopupController(),'filterTrackingData']);
     }
 
     /**
