@@ -156,7 +156,7 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
               open={isPopConfirmOpen}
               onConfirm={() => handleTelemetryAccess()}
               onCancel={() => handleTelemetryPopConfirmSkip()}
-              okText="Yes, Count me in!"
+              okText="Yes"
               cancelText="No Thanks"
               placement="topLeft"
               overlayClassName="telemetry-popconfirm"

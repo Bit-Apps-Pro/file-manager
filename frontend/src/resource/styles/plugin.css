@@ -209,27 +209,32 @@
   display: flex;
   justify-content: space-between;
   margin-top: 15px;
+  flex-flow: row-reverse;
 }
 
 .telemetry-popconfirm .ant-popconfirm-buttons .ant-btn-default{
+  background: #1677ff;
+  box-shadow: none;
+  border-color: transparent!important;
+}
+
+.telemetry-popconfirm .ant-popconfirm-buttons .ant-btn-default:hover{
+  background: #4096ff!important;
+  color:#fff!important;
+  border-color: none;
+}
+
+.telemetry-popconfirm .ant-popconfirm-buttons .ant-btn-primary{
   background: none;
   border: none;
   box-shadow: none;
   color:#776d6d;
 }
 
-.telemetry-popconfirm .ant-popconfirm-buttons .ant-btn-default:hover{
+.telemetry-popconfirm .ant-popconfirm-buttons .ant-btn-primary:hover{
   background: none!important;
   color:#534e4e!important;
-}
 
-.telemetry-popconfirm .ant-popconfirm-buttons .ant-btn-primary{
-  background: #1677ff;
-  box-shadow: none;
-}
-
-.telemetry-popconfirm .ant-popconfirm-buttons .ant-btn-primary:hover{
-  background: #4096ff!important;
 }
 
 
