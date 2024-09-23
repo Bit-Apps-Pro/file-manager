@@ -29,8 +29,8 @@ Route::group(
         Route::get('permissions/get', [PermissionsController::class, 'get']);
         Route::post('permissions/update', [PermissionsController::class, 'update']);
 
-        Route::post('telemetry_permission_handle', [TelemetryPopupController::class, 'telemetryPermissionHandle']);
-        Route::get('telemetry_popup_disable_check', [TelemetryPopupController::class, 'telemetryPopupDisableCheck']);
+        Route::post('telemetry_permission_handle', [TelemetryPopupController::class, 'handleTelemetryPermission']);
+        Route::get('telemetry_popup_disable_check', [TelemetryPopupController::class, 'isPopupDisabled']);
     }
 )->middleware('nonce:admin');
 

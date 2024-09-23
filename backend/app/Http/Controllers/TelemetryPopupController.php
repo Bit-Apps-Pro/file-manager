@@ -13,7 +13,7 @@ class TelemetryPopupController
         return $additional_data;
     }
 
-    public function telemetryPermissionHandle(Request $request)
+    public function handleTelemetryPermission(Request $request)
     {
         if ($request->isChecked == true) {
             Telemetry::report()->trackingOptIn();
@@ -28,7 +28,7 @@ class TelemetryPopupController
         return false;
     }
 
-    public function telemetryPopupDisableCheck()
+    public function isPopupDisabled()
     {
         $allowed = Telemetry::report()->isTrackingAllowed();
         if ($allowed == true) {
