@@ -1,3 +1,4 @@
+/* stylelint-disable alpha-value-notation */
 .elfinder-ltr .elfinder-path {
   opacity: 0;
 }
@@ -153,6 +154,7 @@
 .telemetry-popup .ant-btn-default{
   background: none!important;
   border: none;
+  padding: 0;
 }
 
 .telemetry-popup .ant-btn-default:hover{
@@ -186,12 +188,49 @@
   border-color: #d9d9d9!important;
 }
 
-.telemetry-popup .ant-checkbox-wrapper span{ 
+/* .telemetry-popup .ant-checkbox-wrapper span{ 
   color: rgba(0, 0, 0, 0.88)!important;
-}
+} */
 
 .telemetry-popup .ant-checkbox-checked .ant-checkbox-inner{
   background-color: #4096ff!important;
 }
+
+.telemetry-popconfirm .ant-popover-content .ant-popover-inner{
+  width: 450px;
+  background-color: #fff!important;
+}
+
+.telemetry-popconfirm .ant-popconfirm-title, .ant-popconfirm-description{
+  color: #000!important;
+}
+
+.telemetry-popconfirm .ant-popconfirm-buttons{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.telemetry-popconfirm .ant-popconfirm-buttons .ant-btn-default{
+  background: none;
+  border: none;
+  box-shadow: none;
+  color:#776d6d;
+}
+
+.telemetry-popconfirm .ant-popconfirm-buttons .ant-btn-default:hover{
+  background: none!important;
+  color:#534e4e!important;
+}
+
+.telemetry-popconfirm .ant-popconfirm-buttons .ant-btn-primary{
+  background: #1677ff;
+  box-shadow: none;
+}
+
+.telemetry-popconfirm .ant-popconfirm-buttons .ant-btn-primary:hover{
+  background: #4096ff!important;
+}
+
 
 /* --Telemetry-Popup-ant-modal-custom-css-- */

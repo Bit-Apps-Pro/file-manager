@@ -19,7 +19,7 @@ export default function Root() {
   const [elfinder, setFinder] = useAtom($finder)
   const [currentPath, setFinderCurrentPath] = useAtom($finderCurrentPath)
   const [viewType, setFinderViewType] = useAtom($finderViewType)
-  const [isTelemetryPopupOpen, setIsTelemetryPopupOpen] = useState(false)
+  const [isTelemetryModalOpen, setIsTelemetryModalOpen] = useState(false)
 
   const { toggleViewType } = useUpdateViewType()
 
@@ -78,19 +78,9 @@ export default function Root() {
 
   useEffect(() => {
     request({ action: 'telemetry_popup_disable_check', method: 'GET' }).then((res: any) => {
-      setIsTelemetryPopupOpen(!res.data)
+      setIsTelemetryModalOpen(!res.data)
     })
   }, [])
-
-  const handleTelemetryAccess = () => {
-    request({ action: 'telemetry_permission_handle', data: { isChecked: true } })
-    setIsTelemetryPopupOpen(false)
-  }
-
-  const handleTelemetryPopupSkip = () => {
-    request({ action: 'telemetry_permission_handle', data: { isChecked: false } })
-    setIsTelemetryPopupOpen(false)
-  }
 
   return (
     <>
@@ -166,11 +156,10 @@ export default function Root() {
       </Flex>
       <div id="file-manager" ref={finderRef} style={{ height: '100%' }} />
 
-      {isTelemetryPopupOpen ? (
+      {isTelemetryModalOpen ? (
         <TelemetryPopup
-          isPopupOpen={isTelemetryPopupOpen}
-          handleSubmit={handleTelemetryAccess}
-          handlePopupSkip={handleTelemetryPopupSkip}
+          isTelemetryModalOpen={isTelemetryModalOpen}
+          setIsTelemetryModalOpen={setIsTelemetryModalOpen}
         />
       ) : (
         ''
