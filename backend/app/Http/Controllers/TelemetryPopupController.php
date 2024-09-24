@@ -35,9 +35,10 @@ class TelemetryPopupController
             return true;
         }
 
-        $skipped             = get_option(Config::VAR_PREFIX . 'tracking_skipped');
-        $getOldPluginVersion = get_option(Config::VAR_PREFIX . 'old_version');
+        $popupSkipped             = get_option(Config::VAR_PREFIX . 'tracking_skipped');
+        $adminNoticeSkipped       = get_option(Config::VAR_PREFIX . 'tracking_notice_dismissed');
+        $getOldPluginVersion      = get_option(Config::VAR_PREFIX . 'old_version');
 
-        return (bool) ($skipped == true && $getOldPluginVersion === Config::VERSION);
+        return (bool) (($popupSkipped== true || $adminNoticeSkipped==true) && $getOldPluginVersion === Config::VERSION);
     }
 }

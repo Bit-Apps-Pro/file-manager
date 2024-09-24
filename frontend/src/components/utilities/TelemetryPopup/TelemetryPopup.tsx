@@ -1,3 +1,5 @@
+/* eslint-disable import/no-relative-parent-imports */
+
 /* eslint-disable no-nested-ternary */
 import type React from 'react'
 import { useState } from 'react'
@@ -6,6 +8,7 @@ import request from '@common/helpers/request'
 import bitSocialBanner from '@resource/img/bit-social-release.png'
 import { Modal as AntModal, Button, Popconfirm, Steps } from 'antd'
 
+import changeLogs from '../../../changeLog'
 import cls from './TelemetryPopup.module.css'
 
 type TelemetryPopupProps = {
@@ -58,22 +61,17 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
           <span className={cls.improvementsTitle}>New Improvements</span>
           <div className={cls.improvements}>
             <ul>
-              <li>1. UI updated.</li>
-              <li>2. Multiple drive/folder by user/role.</li>
-              <li>3. ElFinder updated.</li>
+              {changeLogs.improvements.map(item => (
+                <li>{item}</li>
+              ))}
             </ul>
           </div>
           <span className={cls.fixedTitle}>Fixed</span>
           <div className={cls.fixed}>
             <ul>
-              <li>
-                1. Addressed a potential RCE vulnerability related to a race condition during PHP syntax
-                checks.
-              </li>
-              <li>
-                2. Restricted file types in shortcodes. Users must grant permission to allow PHP files.
-              </li>
-              <li>3. PDF preview due to wrong file path.</li>
+              {changeLogs.fixed.map(item => (
+                <li>{item}</li>
+              ))}
             </ul>
           </div>
           {/* <Checkbox onChange={handleStepToggle}>Install Bit Form to create multi step form</Checkbox> */}
