@@ -30,7 +30,8 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
     setIsPopConfirmOpen(true)
     const modalContent = document.getElementsByClassName('ant-modal-content')
     if (modalContent.length) {
-      modalContent[0].style.filter = 'blur(2px)'
+      const content = modalContent[0] as HTMLElement
+      content.style.filter = 'blur(2px)'
     }
   }
 
@@ -41,6 +42,7 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
 
   const steps = [
     {
+      title: '',
       content: (
         <div className={cls.bitSocialReleaseBanner}>
           <a href="https://bit-social.com/" target="_blank" rel="noreferrer">
@@ -50,6 +52,7 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
       )
     },
     {
+      title: '',
       content: (
         <>
           <span className={cls.improvementsTitle}>New Improvements</span>
@@ -78,6 +81,7 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
       )
     },
     {
+      title: '',
       content: (
         <div className={cls.telemetryContent}>
           <h3>
@@ -111,7 +115,6 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
   const next = () => {
     setCurrent(current + 1)
   }
-
   const footerBtnStyle: React.CSSProperties = {
     display: 'flex',
     justifyContent: 'space-between',
