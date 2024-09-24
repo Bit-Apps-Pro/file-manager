@@ -3,6 +3,11 @@
   margin-block: 20px;
 }
 
+.popupContent ul{
+  list-style-type: disc;
+    margin-left: 15px;
+}
+
 .improvementsTitle {
   background-color: orange;
   color: #000;
