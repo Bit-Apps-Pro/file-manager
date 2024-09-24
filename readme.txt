@@ -3,9 +3,9 @@
 Contributors: bitpressadmin, aihimel
 Tags: File Manager, Code Editor, Snippet, Code Snippet, Editor
 Requires at least: 5.0
-Tested up to: 6.5
+Tested up to: 6.6.2
 Requires PHP: 7.4
-Stable tag: 6.5.6
+Stable tag: 6.5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -325,11 +325,15 @@ Yes, It is possible to edit writeable files in the wordpress directory using cod
 
 == Upgrade Notice ==
 
-= 6.5.6 =
+= 6.5.7 =
 
 - No special requirements.
 
 == Changelog ==
+
+= 6.5.7 (24 Sep, 2024) =
+- Telemetry Notice banner replaced with Modal
+- Tested with WordPress Version 6.6
 
 = 6.5.6 (21 Aug, 2024) =
 - Fix: Addressed a potential RCE vulnerability related to a race condition during PHP syntax checks.

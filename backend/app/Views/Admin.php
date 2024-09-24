@@ -143,7 +143,8 @@ class Admin
             wp_enqueue_script(
                 Config::SLUG . '-MODULE-main',
                 Config::get('ASSET_JS_URI') . '/main.' . Config::VERSION . '.js',
-                [Config::SLUG . 'elfinder-script']
+                [Config::SLUG . 'elfinder-script'],
+                Config::VERSION
             );
 
             wp_enqueue_style(

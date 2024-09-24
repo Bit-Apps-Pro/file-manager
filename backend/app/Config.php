@@ -21,9 +21,9 @@ class Config
 
     const VAR_PREFIX = 'bit_fm_';
 
-    const VERSION = '6.5.6';
+    const VERSION = '6.5.7';
 
-    const VERSION_ID = 656;
+    const VERSION_ID = 657;
 
     const DB_VERSION = '1.0';
 

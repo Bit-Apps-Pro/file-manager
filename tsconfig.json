@@ -37,8 +37,7 @@
       "@mutations/*": ["./frontend/src/api/mutations/*"],
       "@resource/*": ["./frontend/src/resource/*"],
       "@pages/*": ["./frontend/src/pages/*"],
-      "@static/*": ["./frontend/src/static/*"],
-      "bit-flow-pro": ["./pro/frontend/*"]
+      "@static/*": ["./frontend/src/static/*"]
     }
   },
   "include": ["frontend/src", "frontend/src/types", "vite.config.mts", "vite.config.wp.ts"],
