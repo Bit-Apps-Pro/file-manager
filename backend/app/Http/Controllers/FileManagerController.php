@@ -115,10 +115,37 @@ final class FileManagerController
         $mimes                 = $permissions->getEnabledFileType();
         $maxUploadSize         = $permissions->getMaximumUploadSize();
         $volume->setUploadMaxSize($maxUploadSize == 0 ? 0 : $maxUploadSize . 'M');
-        $denyUploadType = array_diff(Plugin::instance()->mimes()->getTypes(), $mimes);
+        $denyUploadType     = array_diff(Plugin::instance()->mimes()->getTypes(), $mimes);
+        $isTextDisabled     = false; // is text is enabled or exists in $mimes then false else true
+        $isTextLikeDisabled = true; // is text like php,javascript, css is enabled or exists in $mimes then false else true
+        if (!\in_array('text', $mimes)) {
+            $isTextDisabled = true;
+        } else {
+            $isTextLikeDisabled = false;
+        }
+
         if (!\in_array('php', $mimes)) {
             $denyUploadType[] = 'text/x-php';
+        } else {
+            $isTextLikeDisabled = false;
         }
+
+        if (!\in_array('javascript', $mimes)) {
+            $denyUploadType[] = 'text/javascript';
+        } else {
+            $isTextLikeDisabled = false;
+        }
+
+        if (!\in_array('css', $mimes)) {
+            $denyUploadType[] = 'text/css';
+        } else {
+            $isTextLikeDisabled = false;
+        }
+
+        if ($isTextDisabled && !$isTextLikeDisabled) {
+            $mimes[] = 'text';
+        }
+
         $volume->setUploadOrder(['allow', 'deny']);
         $volume->setOption('uploadDeny', $denyUploadType);
 

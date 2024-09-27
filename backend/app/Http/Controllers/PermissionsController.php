@@ -2,11 +2,11 @@
 
 namespace BitApps\FM\Http\Controllers;
 
-use BitApps\WPKit\Http\Response;
 use BitApps\FM\Http\Requests\Permissions\PermissionsGetRequest;
 use BitApps\FM\Http\Requests\Permissions\PermissionsUpdateRequest;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\PermissionsProvider;
+use BitApps\WPKit\Http\Response;
 
 final class PermissionsController
 {
@@ -25,7 +25,7 @@ final class PermissionsController
                 'roles'       => $this->permissionProvider->allRoles(),
                 'users'       => array_values($this->permissionProvider->allUsers()),
                 'commands'    => $this->permissionProvider->allCommands(),
-                'fileTypes'   => ['text', 'image', 'application', 'video', 'audio', 'php'],
+                'fileTypes'   => ['text', 'image', 'application', 'video', 'audio', 'php', 'javascript', 'css'],
                 'wpRoot'      => ABSPATH,
             ]
         );
