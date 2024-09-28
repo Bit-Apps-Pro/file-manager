@@ -324,7 +324,7 @@ class PermissionsProvider
             return false;
         }
 
-        return $this->currentUser()->roles[0];
+        return isset($this->currentUser()->roles[0])? $this->currentUser()->roles[0] : false;
     }
 
     public function currentUserID()
