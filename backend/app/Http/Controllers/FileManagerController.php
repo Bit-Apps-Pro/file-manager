@@ -115,14 +115,41 @@ final class FileManagerController
         $mimes                 = $permissions->getEnabledFileType();
         $maxUploadSize         = $permissions->getMaximumUploadSize();
         $volume->setUploadMaxSize($maxUploadSize == 0 ? 0 : $maxUploadSize . 'M');
-        $denyUploadType = array_diff(Plugin::instance()->mimes()->getTypes(), $mimes);
+        $denyUploadType     = array_diff(Plugin::instance()->mimes()->getTypes(), $mimes);
+        $isTextLikeEnabled = false; // is text like php,javascript, css is enabled or exists in $mimes then true else false
+
         if (!\in_array('php', $mimes)) {
             $denyUploadType[] = 'text/x-php';
+        } else {
+            $mimes[] = 'text/x-php';
+            $isTextLikeEnabled = true;
         }
+
+        if (!\in_array('javascript', $mimes)) {
+            $denyUploadType[] = 'text/javascript';
+        } else {
+            $mimes[] = 'text/javascript';
+            $isTextLikeEnabled = true;
+        }
+
+        if (!\in_array('css', $mimes)) {
+            $denyUploadType[] = 'text/css';
+        } else {
+            $mimes[] = 'text/css';
+            $isTextLikeEnabled = true;
+        }
+
+        $allowedMimes = array_diff($mimes, $denyUploadType);
+
+        if ( $isTextLikeEnabled && !\in_array('text', $allowedMimes)) {
+            $allowedMimes[] = 'text';
+            $denyUploadType = array_diff($denyUploadType, ['text']);
+        }
+
         $volume->setUploadOrder(['allow', 'deny']);
         $volume->setOption('uploadDeny', $denyUploadType);
 
-        $volume->setUploadAllow($mimes);
+        $volume->setUploadAllow($allowedMimes);
     }
 
     private function getDashboardVolumes()

@@ -72,7 +72,7 @@ class AccessControlProvider
         $cmd                = $command;
         if ($command === 'file' || $command === 'zipdl') {
             $cmd = 'download';
-        } elseif ($command === 'put') {
+        } elseif ($command === 'put' || $command === 'get') {
             $cmd = 'edit';
         }
 

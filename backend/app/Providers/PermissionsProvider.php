@@ -105,9 +105,9 @@ class PermissionsProvider
     public function defaultPermissions()
     {
         $permissions['do_not_use_for_admin']     = true;
-        $permissions['file_type']                = apply_filters(
+        $permissions['fileType']                = apply_filters(
             Config::withPrefix('filter_file_type'),
-            ['text', 'image', 'application', 'video', 'audio']
+            []
         );
         $permissions['file_size']                = 2;
         $permissions['folder_options']           = 'common'; // common | role | user
