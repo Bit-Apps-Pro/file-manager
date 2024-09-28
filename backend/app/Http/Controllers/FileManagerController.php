@@ -116,40 +116,40 @@ final class FileManagerController
         $maxUploadSize         = $permissions->getMaximumUploadSize();
         $volume->setUploadMaxSize($maxUploadSize == 0 ? 0 : $maxUploadSize . 'M');
         $denyUploadType     = array_diff(Plugin::instance()->mimes()->getTypes(), $mimes);
-        $isTextDisabled     = false; // is text is enabled or exists in $mimes then false else true
-        $isTextLikeDisabled = true; // is text like php,javascript, css is enabled or exists in $mimes then false else true
-        if (!\in_array('text', $mimes)) {
-            $isTextDisabled = true;
-        } else {
-            $isTextLikeDisabled = false;
-        }
+        $isTextLikeEnabled = false; // is text like php,javascript, css is enabled or exists in $mimes then true else false
 
         if (!\in_array('php', $mimes)) {
             $denyUploadType[] = 'text/x-php';
         } else {
-            $isTextLikeDisabled = false;
+            $mimes[] = 'text/x-php';
+            $isTextLikeEnabled = true;
         }
 
         if (!\in_array('javascript', $mimes)) {
             $denyUploadType[] = 'text/javascript';
         } else {
-            $isTextLikeDisabled = false;
+            $mimes[] = 'text/javascript';
+            $isTextLikeEnabled = true;
         }
 
         if (!\in_array('css', $mimes)) {
             $denyUploadType[] = 'text/css';
         } else {
-            $isTextLikeDisabled = false;
+            $mimes[] = 'text/css';
+            $isTextLikeEnabled = true;
         }
 
-        if ($isTextDisabled && !$isTextLikeDisabled) {
-            $mimes[] = 'text';
+        $allowedMimes = array_diff($mimes, $denyUploadType);
+
+        if ( $isTextLikeEnabled && !\in_array('text', $allowedMimes)) {
+            $allowedMimes[] = 'text';
+            $denyUploadType = array_diff($denyUploadType, ['text']);
         }
 
         $volume->setUploadOrder(['allow', 'deny']);
         $volume->setOption('uploadDeny', $denyUploadType);
 
-        $volume->setUploadAllow($mimes);
+        $volume->setUploadAllow($allowedMimes);
     }
 
     private function getDashboardVolumes()
