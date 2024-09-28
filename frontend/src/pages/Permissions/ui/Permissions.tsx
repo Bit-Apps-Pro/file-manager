@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
 
 import { __ } from '@common/helpers/i18nwrap'
-import { type PermissionsSettingsType } from '@pages/Permissions/PermissionsSettingsTypes'
+import {
+  type PermissionsSettingsType,
+  type UserPermissionType
+} from '@pages/Permissions/PermissionsSettingsTypes'
 import useFetchPermissionsSettings from '@pages/Permissions/data/useFetchPermissionsSettings'
 import useUpdatePermissionsSettings from '@pages/Permissions/data/useUpdatePermissionsSettings'
+import useUpdateUserPermission from '@pages/Permissions/data/useUpdateUserPermission'
 import {
   Button,
   Card,
@@ -22,8 +26,11 @@ function Permissions() {
   const { useForm } = Form
   const { isLoading, permissions, commands, fileTypes, roles, users } = useFetchPermissionsSettings()
   const { updatePermission, isPermissionUpdating } = useUpdatePermissionsSettings()
-  const [form] = useForm()
+  // const { isUserPermissionUpdating, updateUserPermission } = useUpdateUserPermission()
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [userPermission, setUserPermission] = useState<UserPermissionType>({} as UserPermissionType)
+  const [form] = useForm()
+  console.log('userPermission, setUserPermission', userPermission, setUserPermission)
   useEffect(() => {
     console.log('form, ', form, form.isFieldsTouched(), form.isFieldsValidating)
     form.setFieldsValue(permissions)

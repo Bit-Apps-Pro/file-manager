@@ -11,6 +11,9 @@ export interface PermissionsSettingsType {
   by_role: Array<string, PermissionConfig>
   by_user: Array<string, PermissionConfig>
 }
+export interface UserPermissionType extends PermissionConfig {
+  user_id: number
+}
 
 export type User = {
   ID: number
