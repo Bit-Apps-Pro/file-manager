@@ -23,7 +23,7 @@ final class PermissionsController
             [
                 'permissions' => $this->permissionProvider->permissions,
                 'roles'       => $this->permissionProvider->allRoles(),
-                'users'       => array_values($this->permissionProvider->allUsers()),
+                'users'       => array_values($this->permissionProvider->permittedUsers()),
                 'commands'    => $this->permissionProvider->allCommands(),
                 'fileTypes'   => ['text', 'image', 'application', 'video', 'audio', 'php', 'javascript', 'css'],
                 'wpRoot'      => ABSPATH,

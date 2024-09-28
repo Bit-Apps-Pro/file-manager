@@ -3,7 +3,7 @@ import { type FetchPermissionsSettingsType } from '@pages/Permissions/Permission
 import { useQuery } from '@tanstack/react-query'
 
 export default function useFetchPermissionsSettings() {
-  const { data, isLoading, isFetching } = useQuery({
+  const { data, isLoading, isFetching, refetch } = useQuery({
     refetchOnWindowFocus: false,
     staleTime: 120000,
     queryKey: ['fetch_permissions_settings'],
@@ -14,6 +14,7 @@ export default function useFetchPermissionsSettings() {
   return {
     isLoading,
     isFetching,
+    refetch,
     permissions: data?.data.permissions,
     roles: data?.data.roles,
     users: data?.data.users,

@@ -105,7 +105,7 @@ class PermissionsProvider
     public function defaultPermissions()
     {
         $permissions['do_not_use_for_admin']     = true;
-        $permissions['fileType']                = apply_filters(
+        $permissions['fileType']                 = apply_filters(
             Config::withPrefix('filter_file_type'),
             []
         );
@@ -324,7 +324,7 @@ class PermissionsProvider
             return false;
         }
 
-        return isset($this->currentUser()->roles[0])? $this->currentUser()->roles[0] : false;
+        return isset($this->currentUser()->roles[0]) ? $this->currentUser()->roles[0] : false;
     }
 
     public function currentUserID()
@@ -451,6 +451,31 @@ class PermissionsProvider
         }
 
         return $action === Config::withPrefix('connector_front');
+    }
+
+    /**
+     * Returns all users who are in the permission by_user list
+     *
+     * @return array<int, WP_User>
+     */
+    public function permittedUsers()
+    {
+        $users          = get_users(['fields' => ['ID', 'user_login', 'display_name']]);
+        $processedUsers = [];
+
+        $permissionsByUser = [];
+
+        if (isset($this->permissions['by_user']) && \is_array($this->permissions['by_user'])) {
+            $permissionsByUser = $this->permissions['by_user'];
+        }
+
+        foreach ($users as $user) {
+            if (\array_key_exists($user->ID, $permissionsByUser)) {
+                $processedUsers[$user->ID] = $user;
+            }
+        }
+
+        return $processedUsers;
     }
 
     /**

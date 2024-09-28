@@ -1,16 +1,29 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { __ } from '@common/helpers/i18nwrap'
 import { type PermissionsSettingsType } from '@pages/Permissions/PermissionsSettingsTypes'
 import useFetchPermissionsSettings from '@pages/Permissions/data/useFetchPermissionsSettings'
 import useUpdatePermissionsSettings from '@pages/Permissions/data/useUpdatePermissionsSettings'
-import { Button, Card, Form, Input, Radio, Select, Space, Switch, Typography, notification } from 'antd'
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  Modal,
+  Radio,
+  Select,
+  Space,
+  Switch,
+  Typography,
+  notification
+} from 'antd'
 
 function Permissions() {
   const { useForm } = Form
   const { isLoading, permissions, commands, fileTypes, roles, users } = useFetchPermissionsSettings()
   const { updatePermission, isPermissionUpdating } = useUpdatePermissionsSettings()
   const [form] = useForm()
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   useEffect(() => {
     console.log('form, ', form, form.isFieldsTouched(), form.isFieldsValidating)
     form.setFieldsValue(permissions)
@@ -136,8 +149,26 @@ function Permissions() {
             </Space>
           </Card>
 
-          <Card title={__('Permissions by User')}>
+          <Card
+            title={__('Permissions by User')}
+            extra={
+              <Button
+                type="dashed"
+                htmlType="button"
+                title={`${__('Add permission for a user')}`}
+                onClick={() => setIsModalOpen(true)}
+              >
+                +
+              </Button>
+            }
+          >
             <Space size={20} wrap>
+              <Modal
+                open={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onCancel={() => setIsModalOpen(false)}
+                centered
+              />
               {users?.map(user => (
                 <Card title={user.display_name} key={`permissions-for-${user.ID}`}>
                   <Form.Item
