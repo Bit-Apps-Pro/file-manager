@@ -18,7 +18,7 @@ export default function useFetchPermissionsSettings() {
     permissions: data?.data.permissions,
     roles: data?.data.roles,
     users: data?.data.users,
-    commands: data?.data.commands,
+    commands: data?.data.commands || [],
     fileTypes: data?.data.fileTypes,
     wpRoot: data?.data.wpRoot
   }

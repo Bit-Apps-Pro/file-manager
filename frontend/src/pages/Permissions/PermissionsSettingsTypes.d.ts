@@ -31,3 +31,8 @@ interface FetchPermissionsSettingsType {
   fileTypes: Array<string>
   wpRoot: string
 }
+
+interface FetchUsersType {
+  users: Array<User>
+  totalPages: number
+}

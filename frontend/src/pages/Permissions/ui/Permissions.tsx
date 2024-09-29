@@ -7,26 +7,14 @@ import {
 } from '@pages/Permissions/PermissionsSettingsTypes'
 import useFetchPermissionsSettings from '@pages/Permissions/data/useFetchPermissionsSettings'
 import useUpdatePermissionsSettings from '@pages/Permissions/data/useUpdatePermissionsSettings'
-import useUpdateUserPermission from '@pages/Permissions/data/useUpdateUserPermission'
-import {
-  Button,
-  Card,
-  Form,
-  Input,
-  Modal,
-  Radio,
-  Select,
-  Space,
-  Switch,
-  Typography,
-  notification
-} from 'antd'
+import { Button, Card, Form, Input, Radio, Select, Space, Switch, Typography, notification } from 'antd'
+
+import AddUserPermissionModal from './AddUserPermissionModal'
 
 function Permissions() {
   const { useForm } = Form
   const { isLoading, permissions, commands, fileTypes, roles, users } = useFetchPermissionsSettings()
   const { updatePermission, isPermissionUpdating } = useUpdatePermissionsSettings()
-  // const { isUserPermissionUpdating, updateUserPermission } = useUpdateUserPermission()
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [userPermission, setUserPermission] = useState<UserPermissionType>({} as UserPermissionType)
   const [form] = useForm()
@@ -170,11 +158,10 @@ function Permissions() {
             }
           >
             <Space size={20} wrap>
-              <Modal
-                open={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                onCancel={() => setIsModalOpen(false)}
-                centered
+              <AddUserPermissionModal
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+                commands={commands}
               />
               {users?.map(user => (
                 <Card title={user.display_name} key={`permissions-for-${user.ID}`}>
