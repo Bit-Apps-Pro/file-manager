@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { $appConfig } from '@common/globalStates'
 import $finder from '@common/globalStates/$finder'
 import { __ } from '@common/helpers/i18nwrap'
@@ -5,7 +7,7 @@ import config from '@config/config'
 import AntIconWrapper from '@icons/AntIconWrapper'
 import LogoIcn from '@icons/LogoIcn'
 import LogoText from '@icons/LogoText'
-import { Button, Layout, Menu, Select, Space, Typography, notification, theme } from 'antd'
+import { Button, Layout, Menu, Modal, Select, Space, Typography, notification, theme } from 'antd'
 import { useAtomValue } from 'jotai'
 
 import cls from './TopNavigation.module.css'
@@ -13,10 +15,24 @@ import useFetchLang from './data/useFetchLang'
 import useUpdateLang from './data/useUpdateLang'
 import useUpdateTheme from './data/useUpdateTheme'
 import { items } from './static/MenuItems'
+import earlyBirdOffer from '@resource/img/earlyBirdOffer.webp'
 
 const { Header } = Layout
 
 export default function TopNavigation() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const showModal = () => {
+    setIsModalOpen(true)
+  }
+
+  const handleOk = () => {
+    setIsModalOpen(false)
+  }
+
+  const handleCancel = () => {
+    setIsModalOpen(false)
+  }
   const {
     token: { colorBgContainer }
   } = theme.useToken()
@@ -63,6 +79,7 @@ export default function TopNavigation() {
   }
 
   return (
+    <>
     <Header
       style={{
         display: 'flex',
@@ -98,6 +115,18 @@ export default function TopNavigation() {
           </AntIconWrapper>
         </Button>
       </Space>
+
+      <Space style={{ paddingInline: '10px', fontSize: '12px' }}>
+        <div className={cls.bitSocialMenu}>
+          <button type="button" onClick={() => showModal()} className={cls.btn}>
+            New Product Released
+            <span className={cls.star} />
+            <span className={cls.star} />
+            <span className={cls.star} />
+            <span className={cls.star} />
+          </button>
+        </div>
+      </Space>
       <Menu
         theme={isDarkTheme ? 'dark' : 'light'}
         mode="horizontal"
@@ -131,5 +160,32 @@ export default function TopNavigation() {
         </Select>
       </Space>
     </Header>
+    <Modal
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null}
+        centered
+        className="bit-social-release-modal"
+      >
+        <a
+          href="https://bit-social.com/?utm_source=bit-fm&utm_medium=inside-plugin&utm_campaign=early-bird-offer"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img src={earlyBirdOffer} alt="Bit Social Release Promotional Banner" width="100%" />
+        </a>
+        <div className={cls.footerBtn}>
+          <a
+            href="https://bit-social.com/?utm_source=bit-fm&utm_medium=inside-plugin&utm_campaign=early-bird-offer"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Get My Discount!
+          </a>
+        </div>
+      </Modal>
+    </>
+
   )
 }

@@ -5,7 +5,7 @@ import type React from 'react'
 import { useState } from 'react'
 
 import request from '@common/helpers/request'
-import bitSocialBanner from '@resource/img/bit-social-release.png'
+import earlyBirdOffer from '@resource/img/earlyBirdOffer.webp'
 import { Modal as AntModal, Button, Popconfirm, Steps } from 'antd'
 
 import changeLogs from '../../../changeLog'
@@ -48,9 +48,22 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
       title: '',
       content: (
         <div className={cls.bitSocialReleaseBanner}>
-          <a href="https://bit-social.com/" target="_blank" rel="noreferrer">
-            <img src={bitSocialBanner} alt="Bit Social Release Promotional Banner" width="100%" />
+          <a
+            href="https://bit-social.com/?utm_source=bit-fm&utm_medium=inside-plugin&utm_campaign=early-bird-offer"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={earlyBirdOffer} alt="Bit Social Release Promotional Banner" width="100%" />
           </a>
+          <div className={cls.footerBtn}>
+            <a
+              href="https://bit-social.com/?utm_source=bit-fm&utm_medium=inside-plugin&utm_campaign=early-bird-offer"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Get My Discount!
+            </a>
+          </div>
         </div>
       )
     },
@@ -74,38 +87,33 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
               ))}
             </ul>
           </div>
-          {/* <Checkbox onChange={handleStepToggle}>Install Bit Form to create multi step form</Checkbox> */}
+          <div className={cls.telemetryContent}>
+            <h3>
+              <b>Build a better Bit File Manager</b>
+            </h3>
+            <span>
+              Accept and complete to share non-sensitive diagnostic data to help us improve your
+              experience.
+            </span>
+            <button type="button" onClick={() => setIsDataNoticeShow(true)}>
+              What we collect?
+            </button>
+            {isDataNoticeShow && (
+              <>
+                <br />
+                <span>
+                  Server details (PHP, MySQL, server, WordPress versions), plugin usage
+                  (active/inactive), site name and URL, your name and email. No sensitive data is
+                  tracked.{' '}
+                  <a href="https://bitapps.pro/terms-of-service/" target="_blank" rel="noreferrer">
+                    {' '}
+                    Terms & Conditions.
+                  </a>
+                </span>
+              </>
+            )}
+          </div>
         </>
-      )
-    },
-    {
-      title: '',
-      content: (
-        <div className={cls.telemetryContent}>
-          <h3>
-            <b>Build a better Bit File Manager</b>
-          </h3>
-          <span>
-            Accept and complete to share non-sensitive diagnostic data to help us improve your
-            experience.
-          </span>
-          <button type="button" onClick={() => setIsDataNoticeShow(true)}>
-            What we collect?
-          </button>
-          {isDataNoticeShow && (
-            <>
-              <br />
-              <span>
-                Server details (PHP, MySQL, server, WordPress versions), plugin usage (active/inactive),
-                site name and URL, your name and email. No sensitive data is tracked.{' '}
-                <a href="https://bitapps.pro/terms-of-service/" target="_blank" rel="noreferrer">
-                  {' '}
-                  Terms & Conditions.
-                </a>
-              </span>
-            </>
-          )}
-        </div>
       )
     }
   ]
@@ -116,7 +124,7 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
   const footerBtnStyle: React.CSSProperties = {
     display: 'flex',
     justifyContent: 'space-between',
-    flexFlow: current !== 2 ? 'row-reverse' : 'initial',
+    flexFlow: current !== 1 ? 'row-reverse' : 'initial',
     marginTop: '30px'
   }
 
@@ -129,7 +137,7 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
       }
       open={isTelemetryModalOpen}
       closable={false}
-      width="400px"
+      width="450px"
       centered
       className="telemetry-popup"
       footer={null}
@@ -143,7 +151,7 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
               Next
             </Button>
           )}
-          {current === 2 && (
+          {current === 1 && (
             <Popconfirm
               title="Help Us Improve Your Experience"
               description={
@@ -157,8 +165,8 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
               open={isPopConfirmOpen}
               onConfirm={() => handleTelemetryAccess()}
               onCancel={() => handleTelemetryPopConfirmSkip()}
-              okText="Yes"
-              cancelText="No Thanks"
+              okText="Don't Skip"
+              cancelText="I won't accept"
               placement="topLeft"
               overlayClassName="telemetry-popconfirm"
             >
