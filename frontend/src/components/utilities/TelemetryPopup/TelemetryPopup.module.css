@@ -83,5 +83,36 @@
   box-shadow: none;
 }
 
+.bitSocialReleaseBanner img{
+  height: 400px;
+}
+
+.footerBtn {
+  background-color: #fcfbff;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  height: 55px;
+  padding-top: 8px;
+  text-align: center;
+}
+
+.footerBtn a {
+  color: white;
+  font-weight: bold;
+  background-color: #5700fa;
+  padding: 12px 30px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.footerBtn a:hover {
+  background-color: #500cce!important;
+  color: white;
+}
+
+.footerBtn a:focus {
+  box-shadow: none;
+}
+
 
 

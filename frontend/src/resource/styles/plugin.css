@@ -234,8 +234,32 @@
 .telemetry-popconfirm .ant-popconfirm-buttons .ant-btn-primary:hover{
   background: none!important;
   color:#534e4e!important;
-
 }
 
-
 /* --Telemetry-Popup-ant-modal-custom-css-- */
+
+/*--ant-header--*/
+
+.ant-layout-header{
+  line-height: 10px!important;
+  padding-top: 20px!important;
+}
+
+/*--ant-header--*/
+
+/*--bit-social-release-modal--*/
+
+.bit-social-release-modal img {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.bit-social-release-modal .ant-modal-content {
+  padding: 0 !important;
+  text-align: center;
+}
+.bit-social-release-modal .ant-modal-close-x{
+  color: black;
+}
+
+/*--bit-social-release-modal--*/
