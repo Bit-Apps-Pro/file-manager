@@ -14,6 +14,9 @@ import 'antd/dist/reset.css'
 import AppRoutes from './AppRoutes'
 
 // if (config.IS_DEV) window.appState = {}
+if (!window.location.hash) {
+  window.location = fm.baseURL
+}
 
 const queryClient = new QueryClient()
 const elm = document.getElementById('bit-fm-root')

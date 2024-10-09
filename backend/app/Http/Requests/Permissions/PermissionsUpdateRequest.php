@@ -4,12 +4,12 @@ namespace BitApps\FM\Http\Requests\Permissions;
 
 use BitApps\WPKit\Http\Request\Request;
 use BitApps\WPKit\Utils\Capabilities;
-use BitApps\FM\Http\Rules\ValidateCommandsRule;
-use BitApps\FM\Http\Rules\ValidateRolesRule;
-use BitApps\FM\Http\Rules\ValidateUsersRule;
-use BitApps\FM\Http\Rules\ValidPathRule;
 
-class PermissionsUpdateRequest extends Request
+/**
+ * @property string $search
+ * @property int    $page
+ */
+class SearchUserRequest extends Request
 {
     public function authorize()
     {
@@ -19,20 +19,8 @@ class PermissionsUpdateRequest extends Request
     public function rules()
     {
         return [
-            'do_not_use_for_admin' => ['sanitize:text', 'nullable','boolean'],
-            'fileType'             => ['nullable','array'],
-            'file_size'            => ['sanitize:text', 'nullable','Integer'],
-            'root_folder'          => ['sanitize:text', 'nullable', ValidPathRule::class],
-            'root_folder_url'      => ['sanitize:text', 'nullable','string'],
-            'folder_options'       => ['sanitize:text', 'nullable','string'],
-            'by_role'              => ['nullable', ValidateRolesRule::class],
-            'by_user'              => ['nullable', ValidateUsersRule::class],
-            'by_user.*.path'       => ['nullable', ValidPathRule::class],
-            'by_user.*.commands'   => ['nullable', ValidateCommandsRule::class],
-            'by_role.*.path'       => ['nullable', ValidPathRule::class],
-            'by_role.*.commands'   => ['nullable', ValidateCommandsRule::class],
-            'guest.path'           => ['sanitize:text', 'nullable','string', ValidPathRule::class],
-            'guest.can_download'   => ['sanitize:text', 'nullable', 'boolean'],
+            'search'               => ['sanitize:text'],
+            'page'                 => ['sanitize:text', 'nullable','Integer']
         ];
     }
 }

@@ -7,7 +7,19 @@ import {
 } from '@pages/Permissions/PermissionsSettingsTypes'
 import useFetchPermissionsSettings from '@pages/Permissions/data/useFetchPermissionsSettings'
 import useUpdatePermissionsSettings from '@pages/Permissions/data/useUpdatePermissionsSettings'
-import { Button, Card, Form, Input, Radio, Select, Space, Switch, Typography, notification } from 'antd'
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  Radio,
+  Select,
+  Space,
+  Switch,
+  Tooltip,
+  Typography,
+  notification
+} from 'antd'
 
 import AddUserPermissionModal from './AddUserPermissionModal'
 
@@ -147,14 +159,11 @@ function Permissions() {
           <Card
             title={__('Permissions by User')}
             extra={
-              <Button
-                type="dashed"
-                htmlType="button"
-                title={`${__('Add permission for a user')}`}
-                onClick={() => setIsModalOpen(true)}
-              >
-                +
-              </Button>
+              <Tooltip title={`${__('Add permission for a user')}`}>
+                <Button type="dashed" htmlType="button" onClick={() => setIsModalOpen(true)}>
+                  +
+                </Button>
+              </Tooltip>
             }
           >
             <Space size={20} wrap>

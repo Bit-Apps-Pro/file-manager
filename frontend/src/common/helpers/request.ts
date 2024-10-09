@@ -9,6 +9,7 @@ interface OptionsType {
   method: MethodType
   headers: Record<string, string>
   body?: string | FormData
+  signal?: AbortSignal
 }
 
 interface QueryParam {
@@ -25,6 +26,7 @@ interface RequestOptionsType {
   data?: Record<string, unknown> | FormData | null | any // eslint-disable-line @typescript-eslint/no-explicit-any
   queryParam?: QueryParam | null
   method?: MethodType
+  signal?: AbortSignal
 }
 
 export type ApiResponseType = Record<string, string | number>
@@ -40,7 +42,8 @@ export default async function request<T>({
   action,
   data,
   queryParam,
-  method = 'POST'
+  method = 'POST',
+  signal
 }: RequestOptionsType): Promise<Response<T>> {
   const { AJAX_URL, NONCE, ROUTE_PREFIX } = config
   const uri = new URL(AJAX_URL)
@@ -65,5 +68,6 @@ export default async function request<T>({
     options.body = data instanceof FormData ? data : JSON.stringify(data)
   }
 
+  options.signal = signal
   return (await fetch(uri, options).then(res => res.json())) as Response<T>
 }

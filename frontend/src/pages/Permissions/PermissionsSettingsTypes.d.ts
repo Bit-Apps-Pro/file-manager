@@ -34,5 +34,7 @@ interface FetchPermissionsSettingsType {
 
 interface FetchUsersType {
   users: Array<User>
-  totalPages: number
+  total: number
+  pages: number
+  current: number
 }
