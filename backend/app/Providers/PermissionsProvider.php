@@ -460,32 +460,31 @@ class PermissionsProvider
      */
     public function permittedUsers()
     {
-        $users          = get_users(['fields' => ['ID', 'user_login', 'display_name']]);
-        $processedUsers = [];
-
-        $permissionsByUser = [];
+        $allowedUsers = [];
 
         if (isset($this->permissions['by_user']) && \is_array($this->permissions['by_user'])) {
-            $permissionsByUser = $this->permissions['by_user'];
+            $allowedUsers = array_keys($this->permissions['by_user']);
         }
 
-        foreach ($users as $user) {
-            if (\array_key_exists($user->ID, $permissionsByUser)) {
-                $processedUsers[$user->ID] = $user;
-            }
-        }
-
-        return $processedUsers;
+        return \count($allowedUsers) ? $this->mappedUsers($allowedUsers) : [];
     }
 
     /**
      * Returns all available users. Array Index will be user ID
      *
+     * @param array $userIDs List of user ids to fetch
+     *
      * @return array<int, WP_User>
      */
-    private function mappedUsers()
+    public function mappedUsers(array $userIDs = [])
     {
-        $users          = get_users(['fields' => ['ID', 'user_login', 'display_name']]);
+        $query = ['fields' => ['ID', 'user_login', 'display_name']];
+
+        if (\count($userIDs)) {
+            $query['include'] = $userIDs;
+        }
+
+        $users          = get_users($query);
         $processedUsers = [];
 
         foreach ($users as $user) {

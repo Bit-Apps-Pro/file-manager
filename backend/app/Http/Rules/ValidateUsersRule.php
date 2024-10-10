@@ -9,7 +9,7 @@ class ValidateUsersRule extends Rule
 {
     public function validate($value)
     {
-        $users = Plugin::instance()->permissions()->allUsers();
+        $users = Plugin::instance()->permissions()->mappedUsers(array_keys($value));
 
         if (!\is_array($value)) {
             return false;
@@ -26,6 +26,6 @@ class ValidateUsersRule extends Rule
 
     public function message()
     {
-        return __('Folder Path Must be within WordPress root directory', 'file-manager');
+        return __('User is not valid', 'file-manager');
     }
 }

@@ -2,6 +2,8 @@
 
 namespace BitApps\FM\Http\Controllers;
 
+use BitApps\FM\Http\Requests\Permissions\AddUserPermissionRequest;
+use BitApps\FM\Http\Requests\Permissions\DeleteUserPermissionRequest;
 use BitApps\FM\Http\Requests\Permissions\PermissionsGetRequest;
 use BitApps\FM\Http\Requests\Permissions\PermissionsUpdateRequest;
 use BitApps\FM\Http\Requests\Permissions\SearchUserRequest;
@@ -46,8 +48,7 @@ final class PermissionsController
     {
         $paged       = $request->has('page') && $request->page > 0 ? $request->page : 1;
         $per_page    = 50;
-        error_log(print_r([compact('paged', 'per_page')], true));
-        $args = [
+        $args        = [
             'search'         => '*' . esc_attr($request->search) . '*',
             'search_columns' => ['user_login', 'user_nicename', 'user_email'],
             'number'         => $per_page,
@@ -71,5 +72,13 @@ final class PermissionsController
         }
 
         return Response::success(['users' => $results, 'total' => $total_users, 'pages' => $pages, 'current' => $paged]);
+    }
+
+    public function addPermisisionByUer(AddUserPermissionRequest $request)
+    {
+    }
+
+    public function deletePermisisionByUer(DeleteUserPermissionRequest $request)
+    {
     }
 }

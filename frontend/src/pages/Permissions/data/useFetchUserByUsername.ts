@@ -7,7 +7,7 @@ export default function useFetchUserByUsername(search: string) {
     console.log({ pageParam })
 
     const response = await request<FetchUsersType>({
-      action: 'user/get',
+      action: 'permissions/user/get',
       method: 'GET',
       queryParam: { search, page: pageParam },
       signal
@@ -19,7 +19,7 @@ export default function useFetchUserByUsername(search: string) {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } =
     useInfiniteQuery({
       refetchOnWindowFocus: false,
-      queryKey: ['user/get', search],
+      queryKey: ['permissions/user/get', search],
       queryFn: sendRequest,
       keepPreviousData: true,
       enabled: !!search,

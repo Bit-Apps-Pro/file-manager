@@ -28,7 +28,9 @@ Route::group(
 
         Route::get('permissions/get', [PermissionsController::class, 'get']);
         Route::post('permissions/update', [PermissionsController::class, 'update']);
-        Route::get('user/get', [PermissionsController::class, 'searchUser']);
+        Route::get('permissions/user/get', [PermissionsController::class, 'searchUser']);
+        Route::post('permissions/user/add', [PermissionsController::class, 'addPermisisionByUer']);
+        Route::post('permissions/user/delete', [PermissionsController::class, 'deletePermisisionByUer']);
 
         Route::post('telemetry_permission_handle', [TelemetryPopupController::class, 'handleTelemetryPermission']);
         Route::get('telemetry_popup_disable_check', [TelemetryPopupController::class, 'isPopupDisabled']);
