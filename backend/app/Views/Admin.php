@@ -88,9 +88,6 @@ class Admin
 
     public function filterConfigVariable($config)
     {
-        if (Capabilities::check('list_users')) {
-            $config['users'] = Plugin::instance()->permissions()->allUsers();
-        }
 
         if (Capabilities::check('install_plugins')) {
             $config['sys_info'] = $this->getSystemInfo();

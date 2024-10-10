@@ -1,11 +1,8 @@
 import request from '@common/helpers/request'
 import { useQuery } from '@tanstack/react-query'
 
-interface SearchType {
-  searchKeyValue?: {
-    title: string
-    tags: number[]
-  }
+export interface LogQueryType {
+  searchKeyValue?: string
   pageNo: number
   limit: number
 }
@@ -30,9 +27,11 @@ export type LogType = {
 type FetchLogsType = {
   logs: Array<LogType>
   count: number
+  current: number
+  pages: number
 }
 
-export default function useFetchLogs(searchData: SearchType) {
+export default function useFetchLogs(searchData: LogQueryType) {
   const queryId = `logs-${searchData.pageNo}`
 
   const { data, isLoading, isFetching } = useQuery({
@@ -43,6 +42,8 @@ export default function useFetchLogs(searchData: SearchType) {
     isLoading,
     isLogsFetching: isFetching,
     logs: data?.data?.logs ?? [],
-    total: data?.data?.count ?? 0
+    total: data?.data?.count ?? 0,
+    current: data?.data?.current ?? 0,
+    pages: data?.data?.pages ?? 0
   }
 }

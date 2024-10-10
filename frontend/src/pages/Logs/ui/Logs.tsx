@@ -1,19 +1,21 @@
-import { useParams } from 'react-router-dom'
+import { useState } from 'react'
 
-import config from '@config/config'
-import { type LogType, type LoggedFileDetailsType } from '@pages/Logs/data/useFetchLogs'
+import {
+  type LogQueryType,
+  type LogType,
+  type LoggedFileDetailsType
+} from '@pages/Logs/data/useFetchLogs'
 import useFetchLogs from '@pages/Logs/data/useFetchLogs'
 import { Col, Row, Space, Table } from 'antd'
 import { type TableColumnsType } from 'antd'
 
-const { USERS } = config
 const columns: TableColumnsType<LogType> = [
   { title: 'Id', dataIndex: 'id', key: 'id' },
   {
     title: 'User',
-    dataIndex: 'user_id',
+    dataIndex: 'user',
     key: 'user',
-    render: userId => USERS[userId]?.display_name ?? ''
+    render: user => user?.display_name ?? ''
   },
   { title: 'Command', dataIndex: 'command', key: 'command' },
   {
@@ -47,16 +49,29 @@ const columns: TableColumnsType<LogType> = [
 ]
 
 export default function Logs() {
-  const { page } = useParams()
-  const pageNo = Number(page) || 1
-  const limit = 14
+  const [pagination, setPagination] = useState<LogQueryType>({
+    pageNo: 1,
+    limit: 20
+  } as LogQueryType)
+  const { isLoading, isLogsFetching, logs, total } = useFetchLogs(pagination)
 
-  const { isLoading, isLogsFetching, logs } = useFetchLogs({
-    pageNo,
-    limit
-  })
+  const onChange = (page: number, pageSize: number) => {
+    setPagination({ pageNo: page, limit: pageSize })
+  }
 
   return (
-    <Table columns={columns} rowSelection={{}} dataSource={logs} loading={isLoading || isLogsFetching} />
+    <Table
+      columns={columns}
+      rowSelection={{}}
+      dataSource={logs}
+      loading={isLoading || isLogsFetching}
+      pagination={{
+        current: pagination.pageNo,
+        total,
+        pageSize: pagination.limit,
+        onChange,
+        position: ['bottomRight', 'topLeft']
+      }}
+    />
   )
 }

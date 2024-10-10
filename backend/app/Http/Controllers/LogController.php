@@ -3,9 +3,9 @@
 namespace BitApps\FM\Http\Controllers;
 
 use BitApps\FM\Config;
+use BitApps\FM\Http\Services\LogService;
 use BitApps\WPKit\Http\Request\Request;
 use BitApps\WPKit\Http\Response;
-use BitApps\FM\Http\Services\LogService;
 
 final class LogController
 {
@@ -15,8 +15,7 @@ final class LogController
     {
         $this->logger = new LogService();
         $currentTime  = time();
-        $logDeletedAt = Config::getOption('log_deleted_at', $currentTime);
-
+        $logDeletedAt = Config::getOption('log_deleted_at', ($currentTime - (DAY_IN_SECONDS * 30)));
         if ((abs($logDeletedAt - $currentTime) / DAY_IN_SECONDS) > 30) {
             $this->logger->deleteOlder();
         }

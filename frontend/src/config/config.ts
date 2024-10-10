@@ -46,7 +46,6 @@ const config = {
   NONCE: getServerVariable('nonce', ''),
   ACTION: getServerVariable('action', ''),
   ROUTE_PREFIX: getServerVariable('routePrefix', 'bit_fm_'),
-  USERS: getServerVariable('users', []),
   BANNER: getServerVariable('adBanner', null),
   SYS_INFO: getServerVariable('sys_info', null),
   THEMES: getThemes(),
