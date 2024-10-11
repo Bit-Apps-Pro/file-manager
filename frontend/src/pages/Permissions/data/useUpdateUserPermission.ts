@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query'
 export default function useUpdateUserPermission() {
   const { mutateAsync, isLoading } = useMutation(async (updatedPermission: UserPermissionType) =>
     request<UserPermissionType & Record<string, unknown>>({
-      action: 'permissions/user/update',
+      action: 'permissions/user/add',
       data: updatedPermission
     })
   )

@@ -2,9 +2,10 @@ import { useState } from 'react'
 
 import { __ } from '@common/helpers/i18nwrap'
 import { type User, type UserPermissionType } from '@pages/Permissions/PermissionsSettingsTypes'
+import useFetchPermissionsSettings from '@pages/Permissions/data/useFetchPermissionsSettings'
 import useFetchUserByUsername from '@pages/Permissions/data/useFetchUserByUsername'
 import useUpdateUserPermission from '@pages/Permissions/data/useUpdateUserPermission'
-import { Card, Form, Input, Modal, Select, Space, Spin, notification } from 'antd'
+import { Button, Card, Form, Input, Modal, Select, Space, Spin, notification } from 'antd'
 
 function AddUserPermissionModal({
   isModalOpen,
@@ -15,11 +16,12 @@ function AddUserPermissionModal({
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   commands: Array<string>
 }) {
+  const { refetch } = useFetchPermissionsSettings()
   const { isUserPermissionUpdating, updateUserPermission } = useUpdateUserPermission()
   const [searchQuery, setSearchQuery] = useState('')
   const { users, fetchNextPage, isFetching, isFetchingNextPage } = useFetchUserByUsername(searchQuery)
-
   const { useForm } = Form
+  const [form] = useForm()
 
   const [selectedUser, setSelectedUser] = useState<User>({} as User)
 
@@ -35,13 +37,17 @@ function AddUserPermissionModal({
   }
 
   const handleChange = (value: number, option: any) => {
-    setSelectedUser(option?.user)
+    if (option?.user) {
+      setSelectedUser(option?.user)
+      form.resetFields()
+      form.setFieldValue('id', option?.user?.id)
+    }
   }
-  const [form] = useForm()
   const handleSubmit = (changedValues: UserPermissionType) => {
     updateUserPermission(changedValues).then(response => {
       if (response.code === 'SUCCESS') {
-        notification.success({ message: response.message })
+        notification.success({ message: response?.message ?? __('User permission deleted') })
+        refetch()
         const updatedFields = form.getFieldsError().map(field => {
           if (field.errors) {
             field.errors = []
@@ -69,6 +75,7 @@ function AddUserPermissionModal({
       onClose={() => setIsModalOpen(false)}
       onCancel={() => setIsModalOpen(false)}
       centered
+      footer={false}
       title="Set Permission for selected user"
     >
       <Space direction="vertical" style={{ display: 'flex' }} className="px-2">
@@ -95,13 +102,13 @@ function AddUserPermissionModal({
           >
             <Space direction="vertical" size="middle" style={{ display: 'flex' }} className="px-2">
               <Card title={selectedUser.display_name} key={`permissions-for-${selectedUser.ID}`}>
-                <Form.Item name={['by_user', selectedUser.ID, 'path']} label={__('Path')}>
+                <Form.Item name="id" initialValue={selectedUser.ID} hidden>
+                  <Input />
+                </Form.Item>
+                <Form.Item name="path" label={__('Path')}>
                   <Input placeholder="Root Folder Path" />
                 </Form.Item>
-                <Form.Item
-                  name={['by_user', selectedUser.ID, 'commands']}
-                  label={__('Enabled Commands')}
-                >
+                <Form.Item name="commands" label={__('Enabled Commands')}>
                   <Select mode="multiple">
                     {commands?.map(command => (
                       <Select.Option key={command} value={command}>
@@ -109,6 +116,11 @@ function AddUserPermissionModal({
                       </Select.Option>
                     ))}
                   </Select>
+                </Form.Item>
+                <Form.Item style={{ marginBottom: 0 }}>
+                  <Button type="primary" htmlType="submit" loading={isUserPermissionUpdating}>
+                    Save
+                  </Button>
                 </Form.Item>
               </Card>
             </Space>

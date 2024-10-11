@@ -80,5 +80,10 @@ final class PermissionsController
 
     public function deletePermisisionByUer(DeleteUserPermissionRequest $request)
     {
+        if (Plugin::instance()->permissions()->removeByUser($request->id)) {
+            return Response::success([])->message(__("User permission removed", "file-manager"));
+        } else {
+            return Response::error([])->message(__("Failed to remove user permission", "file-manager"));
+        }
     }
 }

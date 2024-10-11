@@ -5,6 +5,7 @@ namespace BitApps\FM\Providers;
 use BitApps\FM\Config;
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
+use BitApps\WPKit\Helpers\Arr;
 use BitApps\WPKit\Utils\Capabilities;
 use WP_User;
 
@@ -223,6 +224,20 @@ class PermissionsProvider
     }
 
     public function getByUser($userID)
+    {
+        return $this->getPermissions('by_user', $userID);
+    }
+
+    public function removeByUser(int $userID)
+    {
+        if (Arr::has($this->permissions, "by_user.{$userID}")) {
+            unset($this->permissions['by_user'][$userID]);
+        }
+
+        return $this->updatePermissionSetting($this->permissions);
+    }
+
+    public function addByUser($userID)
     {
         return $this->getPermissions('by_user', $userID);
     }

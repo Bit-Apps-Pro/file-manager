@@ -12,7 +12,7 @@ export interface PermissionsSettingsType {
   by_user: Array<string, PermissionConfig>
 }
 export interface UserPermissionType extends PermissionConfig {
-  user_id: number
+  id: number
 }
 
 export type User = {
