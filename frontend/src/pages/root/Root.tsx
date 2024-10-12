@@ -60,7 +60,7 @@ export default function Root() {
         setIsOpening(true)
       })
 
-      finder.bind('opendone', () => {
+      finder.bind('opendone reload', () => {
         setIsOpening(false)
       })
 

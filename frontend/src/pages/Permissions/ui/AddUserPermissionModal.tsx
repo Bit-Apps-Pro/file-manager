@@ -36,7 +36,7 @@ function AddUserPermissionModal({
     fetchNextPage()
   }
 
-  const handleChange = (value: number, option: any) => {
+  const handleChange = (_: number, option: any) => {
     if (option?.user) {
       setSelectedUser(option?.user)
       form.resetFields()

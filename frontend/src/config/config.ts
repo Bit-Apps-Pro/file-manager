@@ -43,6 +43,7 @@ const config = {
   PLUGIN_SLUG: getServerVariable('pluginSlug'),
   AJAX_URL: getServerVariable('ajaxURL', 'http://.local/wp-admin/admin-ajax.php'),
   ROOT_URL: getServerVariable('rootURL', 'http://.local'),
+  BASE_URL: getServerVariable('baseURL', ''),
   NONCE: getServerVariable('nonce', ''),
   ACTION: getServerVariable('action', ''),
   ROUTE_PREFIX: getServerVariable('routePrefix', 'bit_fm_'),
