@@ -8,7 +8,7 @@ use BitApps\WPKit\Http\Request\Request;
 use BitApps\WPKit\Utils\Capabilities;
 
 /**
- * @property int    $page
+ * @property int    $id
  * @property string $path
  * @property array  $commands
  */

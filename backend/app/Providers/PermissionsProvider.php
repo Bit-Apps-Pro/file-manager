@@ -248,9 +248,28 @@ class PermissionsProvider
         return $this->updatePermissionSetting($this->permissions);
     }
 
-    public function addByUser($userID)
+    /**
+     * Adds permission for a user
+     *
+     * @param int   $userID
+     * @param array $permission {
+     *                          Permission details
+     *
+     * @type string $path
+     * @type array  $command
+     *              }
+     *
+     * @return bool
+     */
+    public function addByUser(int $userID, array $permission)
     {
-        return $this->getPermissions('by_user', $userID);
+        if (!Arr::exists($this->permissions, 'by_user')) {
+            $this->permissions['by_user'] = [];
+        }
+
+        $this->permissions['by_user'][$userID] = $permission;
+
+        return $this->updatePermissionSetting($this->permissions);
     }
 
     public function getPermissions($type, $name)
@@ -486,13 +505,25 @@ class PermissionsProvider
      */
     public function permittedUsers()
     {
+        $allowedUsers = $this->permittedUserIds();
+
+        return \count($allowedUsers) ? $this->mappedUsers($allowedUsers) : [];
+    }
+
+    /**
+     * Returns all user's id who are in the permission by_user list
+     *
+     * @return array<int, int>
+     */
+    public function permittedUserIds()
+    {
         $allowedUsers = [];
 
         if (isset($this->permissions['by_user']) && \is_array($this->permissions['by_user'])) {
             $allowedUsers = array_keys($this->permissions['by_user']);
         }
 
-        return \count($allowedUsers) ? $this->mappedUsers($allowedUsers) : [];
+        return $allowedUsers;
     }
 
     /**

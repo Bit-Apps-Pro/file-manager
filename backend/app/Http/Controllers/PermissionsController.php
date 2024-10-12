@@ -53,6 +53,7 @@ final class PermissionsController
             'search_columns' => ['user_login', 'user_nicename', 'user_email'],
             'number'         => $per_page,
             'paged'          => $paged,
+            'exclude'        => Plugin::instance()->permissions()->permittedUserIds(),
         ];
 
         $users       = new WP_User_Query($args);
@@ -76,14 +77,19 @@ final class PermissionsController
 
     public function addPermisisionByUer(AddUserPermissionRequest $request)
     {
+        if (Plugin::instance()->permissions()->addByUser($request->id, ['path' => $request->path, 'commands' => $request->commands])) {
+            return Response::success([])->message(__('Permission granted to user', 'file-manager'));
+        }
+
+        return Response::error([])->message(__('Unable to add user permission', 'file-manager'));
     }
 
     public function deletePermisisionByUer(DeleteUserPermissionRequest $request)
     {
         if (Plugin::instance()->permissions()->removeByUser($request->id)) {
-            return Response::success([])->message(__("User permission removed", "file-manager"));
-        } else {
-            return Response::error([])->message(__("Failed to remove user permission", "file-manager"));
+            return Response::success([])->message(__('User permission revoked', 'file-manager'));
         }
+
+        return Response::error([])->message(__('Unable to revoke user permission', 'file-manager'));
     }
 }
