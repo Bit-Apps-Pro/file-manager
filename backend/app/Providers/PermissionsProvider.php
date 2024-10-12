@@ -46,7 +46,6 @@ class PermissionsProvider
 
         $this->_preferences = Plugin::instance()->preferences();
         $this->roles        = array_keys($wp_roles->roles);
-        $this->users        = $this->mappedUsers();
     }
 
     public function refresh()
@@ -69,6 +68,10 @@ class PermissionsProvider
      */
     public function allUsers()
     {
+        if (!isset($this->users)) {
+            $this->users        = $this->mappedUsers();
+        }
+
         return $this->users;
     }
 
@@ -81,7 +84,15 @@ class PermissionsProvider
      */
     public function getUserDisplayName($id)
     {
-        return isset($this->users[$id]) ? $this->users[$id]->display_name : 'guest';
+        if (!isset($this->users) && $id) {
+            $users = $this->mappedUsers([$id]);
+        } elseif (isset($this->users)) {
+            $users = $this->users;
+        } else {
+            $users = [];
+        }
+
+        return isset($users[$id]) ? $users[$id]->display_name : 'guest';
     }
 
     public function allCommands()
