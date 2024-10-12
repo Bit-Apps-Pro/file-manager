@@ -62,7 +62,7 @@ function AddUserPermissionModal({
             name: field.split('.'),
             errors: response.data[field] as string[]
           })
-          notification.error({ message: response?.message ?? __('Failed to update permission') })
+          notification.error({ message: response?.message ?? __('Failed to save permission') })
         })
         form.setFields(fieldErrors)
       }

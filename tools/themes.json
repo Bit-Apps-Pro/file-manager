@@ -7,7 +7,7 @@
         "author": "Róbert Kelčák",
         "license": "MIT",
         "link": "https://github.com/RobiNN1/elFinder-Material-Theme",
-        "image": "https://raw.githubusercontent.com/RobiNN1/elFinder-Material-Theme/master/.github/img/preview-default.png",
+        "image": "https://raw.githubusercontent.com/RobiNN1/elFinder-Material-Theme/master/.github/img/preview-darkblue.png",
         "description": "Material Theme for elFinder."
       },
       "material-gray": {
@@ -30,8 +30,7 @@
       }
     },
     "resources": [
-      "submodule/sources/elFinder-Material-Theme/Material/icons",
-      "submodule/sources/elFinder-Material-Theme/Material/images"
+      "submodule/sources/elFinder-Material-Theme/Material/font"
     ]
   },
     "bootstrap": {
