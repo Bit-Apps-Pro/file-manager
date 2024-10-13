@@ -46,6 +46,7 @@ const config = {
   BASE_URL: getServerVariable('baseURL', ''),
   NONCE: getServerVariable('nonce', ''),
   ACTION: getServerVariable('action', ''),
+  TELEMETRY: getServerVariable('telemetry', {}),
   ROUTE_PREFIX: getServerVariable('routePrefix', 'bit_fm_'),
   BANNER: getServerVariable('adBanner', null),
   SYS_INFO: getServerVariable('sys_info', null),

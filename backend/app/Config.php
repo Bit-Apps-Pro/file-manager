@@ -180,6 +180,29 @@ class Config
         ];
     }
 
+    public static function tryPlugin()
+    {
+        if (!current_user_can('install_plugins')) {
+            return [];
+        }
+
+        $pluginToTry = [
+            'bit-form/bitform.php' => [
+                'title' => 'Bit Form',
+                'slug'  => 'bit-form',
+            ]
+        ];
+
+        $installed = get_plugins();
+        foreach ($pluginToTry as $pluginFile => $value) {
+            if (isset($installed[$pluginFile])) {
+                unset($pluginToTry[$pluginFile]);
+            }
+        }
+
+        return $pluginToTry;
+    }
+
     /**
      * Provides links for plugin pages. Those links will bi displayed in
      * all plugin pages under the plugin name.

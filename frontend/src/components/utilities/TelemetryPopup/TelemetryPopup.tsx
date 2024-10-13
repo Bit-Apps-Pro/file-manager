@@ -2,11 +2,14 @@
 
 /* eslint-disable no-nested-ternary */
 import type React from 'react'
+import { type Dispatch, type SetStateAction, useEffect } from 'react'
 import { useState } from 'react'
 
 import request from '@common/helpers/request'
+import config from '@config/config'
 import earlyBirdOffer from '@resource/img/earlyBirdOffer.webp'
-import { Modal as AntModal, Button, Popconfirm, Steps } from 'antd'
+import { type CheckboxProps } from 'antd'
+import { Modal as AntModal, Button, Checkbox, Flex, Popconfirm, Steps } from 'antd'
 
 import changeLogs from '../../../changeLog'
 import cls from './TelemetryPopup.module.css'
@@ -18,14 +21,23 @@ type TelemetryPopupProps = {
 
 function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: TelemetryPopupProps) {
   const [current, setCurrent] = useState(0)
+  const { TELEMETRY } = config
   const [isDataNoticeShow, setIsDataNoticeShow] = useState(false)
   const [isPopConfirmOpen, setIsPopConfirmOpen] = useState(false)
-  // const handleStepToggle = () => {
-  //   setIsBitFormInstallChecked(prev => !prev)
-  // }
+  const [tryPlugin, setTryPlugin] = useState<Record<string, boolean>>({})
+
+  useEffect(() => {
+    if (TELEMETRY.tryPlugin) {
+      const defaultAccptedPlugin: Record<string, boolean> = {}
+      Object.values<{ title: string; slug: string }>(TELEMETRY.tryPlugin).map(plugin => {
+        defaultAccptedPlugin[plugin.slug] = true
+      })
+      setTryPlugin(defaultAccptedPlugin)
+    }
+  }, [])
 
   const handleTelemetryAccess = () => {
-    request({ action: 'telemetry_permission_handle', data: { isChecked: true } })
+    request({ action: 'telemetry_permission_handle', data: { isChecked: true, tryPlugin } })
     setIsTelemetryModalOpen(false)
   }
 
@@ -46,6 +58,7 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
   const steps = [
     {
       title: '',
+      modalTitle: 'Bit Social Release',
       content: (
         <div className={cls.bitSocialReleaseBanner}>
           <a
@@ -69,6 +82,7 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
     },
     {
       title: '',
+      modalTitle: 'Bit File Manager 2024 Updates',
       content: (
         <>
           <span className={cls.improvementsTitle}>New Improvements</span>
@@ -118,6 +132,16 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
     }
   ]
 
+  console.log({ tryPlugin })
+
+  if (TELEMETRY.tryPlugin) {
+    steps.splice(steps.length - 1, 0, {
+      title: '',
+      modalTitle: 'Try Bit Apps Plugins',
+      content: <TryPlugins setTryPlugin={setTryPlugin} />
+    })
+  }
+
   const next = () => {
     setCurrent(current + 1)
   }
@@ -132,7 +156,7 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
     <AntModal
       title={
         <div style={{ textAlign: 'center', fontSize: '20px', marginBottom: '20px' }}>
-          {current === 0 ? 'Bit Social Release' : current === 1 ? 'Bit File Manager 2024 Updates' : ''}
+          {steps[current].modalTitle}
         </div>
       }
       open={isTelemetryModalOpen}
@@ -151,7 +175,7 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
               Next
             </Button>
           )}
-          {current === 1 && (
+          {current === steps.length - 1 && (
             <Popconfirm
               title="Help Us Improve Your Experience"
               description={
@@ -187,3 +211,34 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
 }
 
 export default TelemetryPopup
+
+function TryPlugins({
+  setTryPlugin
+}: {
+  setTryPlugin: Dispatch<SetStateAction<Record<string, boolean>>>
+}) {
+  const { TELEMETRY } = config
+
+  const onChange: CheckboxProps['onChange'] = e => {
+    console.log(`checked = ${e.target.checked} ${e.target.name}`)
+    if (e?.target?.name) {
+      setTryPlugin({ [e.target.name]: e?.target?.checked })
+    }
+  }
+  return (
+    <Flex>
+      {Object.values<{ title: string; slug: string }>(TELEMETRY.tryPlugin).map(plugin => (
+        <Checkbox
+          key={plugin.slug}
+          style={{ color: 'black' }}
+          defaultChecked
+          name={plugin.slug}
+          onChange={onChange}
+        >
+          {' '}
+          {plugin.title}{' '}
+        </Checkbox>
+      ))}
+    </Flex>
+  )
+}

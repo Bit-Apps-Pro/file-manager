@@ -108,6 +108,7 @@ class Admin
             'plugin_url'  => BFM_ROOT_URL,
             'action'      => Config::withPrefix('connector'),
             'options'     => Plugin::instance()->preferences()->finderOptions(),
+            'telemetry'     => ['tryPlugin' => Config::tryPlugin()],
         ];
     }
 
