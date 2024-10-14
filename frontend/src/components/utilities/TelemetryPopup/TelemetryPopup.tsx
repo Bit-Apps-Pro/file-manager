@@ -132,9 +132,7 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
     }
   ]
 
-  console.log({ tryPlugin })
-
-  if (TELEMETRY.tryPlugin) {
+  if (TELEMETRY?.tryPlugin && Object.keys(TELEMETRY.tryPlugin).length) {
     steps.splice(steps.length - 1, 0, {
       title: '',
       modalTitle: 'Try Bit Apps Plugins',

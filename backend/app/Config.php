@@ -187,7 +187,7 @@ class Config
         }
 
         $pluginToTry = [
-            'bit-form/bitform.php' => [
+            'bit-form/bitforms.php' => [
                 'title' => 'Bit Form',
                 'slug'  => 'bit-form',
             ]

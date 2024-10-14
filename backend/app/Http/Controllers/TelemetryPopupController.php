@@ -7,6 +7,7 @@ use BitApps\FM\Config;
 use BitApps\WPKit\Http\Request\Request;
 use BitApps\WPTelemetry\Telemetry\Telemetry;
 use Plugin_Upgrader;
+use Throwable;
 
 class TelemetryPopupController
 {
@@ -83,22 +84,26 @@ class TelemetryPopupController
 
         $upgrader = new Plugin_Upgrader(new Automatic_Upgrader_Skin());
 
-        $installStatus = $upgrader->install($pluginInfo->download_link);
+        try {
+            $installStatus = $upgrader->install($pluginInfo->download_link);
 
-        if (is_wp_error($installStatus)) {
-            return $installStatus;
-        }
-
-        if ($installStatus === true) {
-            $activationStatus = activate_plugin($upgrader->plugin_info(), '', false, true);
-
-            if (is_wp_error($activationStatus)) {
-                return $activationStatus;
+            if (is_wp_error($installStatus)) {
+                return $installStatus;
             }
 
-            return $activationStatus === null;
-        }
+            if ($installStatus === true) {
+                $activationStatus = activate_plugin($upgrader->plugin_info(), '', false, true);
 
-        return $installStatus;
+                if (is_wp_error($activationStatus)) {
+                    return $activationStatus;
+                }
+
+                return $activationStatus === null;
+            }
+
+            return $installStatus;
+        } catch (Throwable $th) {
+            return false;
+        }
     }
 }
