@@ -119,7 +119,7 @@ class PermissionsProvider
         $permissions['do_not_use_for_admin']     = true;
         $permissions['fileType']                 = apply_filters(
             Config::withPrefix('filter_file_type'),
-            []
+            ['image', 'application']
         );
         $permissions['file_size']                = 2;
         $permissions['folder_options']           = 'common'; // common | role | user
