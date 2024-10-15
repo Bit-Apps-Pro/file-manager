@@ -2,8 +2,12 @@
 
 namespace BitApps\FM\Providers;
 
+use function Avifinfo\read;
+
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
+
+use elFinder;
 
 \defined('ABSPATH') || exit();
 
@@ -89,6 +93,10 @@ class AccessControlProvider
             );
         }
 
+        if ($command == 'file' && $this->isFileAllowedToOpen($args)) {
+            $error = '';
+        }
+
         if (!empty($error)) {
             try {
                 throw new PreCommandException($error);
@@ -131,5 +139,25 @@ class AccessControlProvider
         }
 
         return $isNotRequired;
+    }
+
+    private function isFileAllowedToOpen($args)
+    {
+        if (isset($args[1]) && $args[1] instanceof elFinder) {
+            $volume         = $args[1]->getVolume($args[0]['target']);
+            $file           = $volume->getPath($args[0]['target']);
+            $fileName       = wp_basename($file);
+            $fileTypeAndExt = wp_check_filetype_and_ext($file, $fileName);
+            if (isset($fileTypeAndExt['ext'], $fileTypeAndExt['type'])) {
+                $fileType        = str_replace('/' . $fileTypeAndExt['ext'], '', $fileTypeAndExt['type']);
+                $enabledFileType = Plugin::instance()->permissions()->getEnabledFileType();
+
+                if (\in_array($fileType, $enabledFileType)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

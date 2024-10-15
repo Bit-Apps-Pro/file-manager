@@ -190,6 +190,10 @@ class Config
             'bit-form/bitforms.php' => [
                 'title' => 'Bit Form',
                 'slug'  => 'bit-form',
+            ],
+            'bit-integrations/bitwpfi.php' => [
+                'title' => 'Bit Integrations',
+                'slug'  => 'bit-integrations',
             ]
         ];
 
@@ -198,6 +202,10 @@ class Config
             if (isset($installed[$pluginFile])) {
                 unset($pluginToTry[$pluginFile]);
             }
+        }
+
+        if (isset($pluginToTry['bit-form/bitforms.php'], $pluginToTry['bit-integrations/bitwpfi.php'])) {
+            unset($pluginToTry['bit-integrations/bitwpfi.php']);
         }
 
         return $pluginToTry;

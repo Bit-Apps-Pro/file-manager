@@ -25,7 +25,20 @@ jQuery(document).ready(function () {
     sortStickFolders: fm.options.sortStickFolders,
     dragUploadAllow: fm.options.dragUploadAllow,
     fileModeStyle: fm.options.fileModeStyle,
-    resizable: fm.options.resizable
+    resizable: fm.options.resizable,
+    handlers: {
+      dblclick() {
+        const disabled = fm?.options?.disabled || []
+        if (
+          disabled?.includes('dblclick') ||
+          disabled?.includes('download') ||
+          disabled?.includes('get')
+        ) {
+          return false
+        }
+      }
+    }
+
   })
 
   jQuery('#file-manager').on('change', 'select.elfinder-tabstop', function (e) {

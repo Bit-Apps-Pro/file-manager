@@ -70,6 +70,7 @@ class TelemetryPopupController
             include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
         }
 
+        ignore_user_abort(true);
         $pluginInfo = plugins_api(
             'plugin_information',
             [
