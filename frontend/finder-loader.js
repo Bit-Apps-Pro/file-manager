@@ -40,23 +40,4 @@ jQuery(document).ready(function () {
     }
 
   })
-
-  jQuery('#file-manager').on('change', 'select.elfinder-tabstop', function (e) {
-    if (
-      e.currentTarget[0] &&
-      e.currentTarget[0].className &&
-      e.currentTarget[0].className.indexOf('elfinder-theme-option') !== -1
-    ) {
-      jQuery
-        .ajax(ajaxurl, {
-          method: 'POST',
-          data: {
-            action: 'bit_fm_theme',
-            nonce: fm.nonce,
-            theme: e.currentTarget.value
-          }
-        })
-        .done(() => location.reload())
-    }
-  })
 })

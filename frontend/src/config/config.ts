@@ -42,6 +42,7 @@ const config = {
   PRODUCT_NAME: 'Bit File Manager',
   PLUGIN_SLUG: getServerVariable('pluginSlug'),
   AJAX_URL: getServerVariable('ajaxURL', 'http://.local/wp-admin/admin-ajax.php'),
+  API_BASE: getServerVariable('apiBase', 'http://.local/wp-admin/admin-ajax.php'),
   ROOT_URL: getServerVariable('rootURL', 'http://.local'),
   BASE_URL: getServerVariable('baseURL', ''),
   NONCE: getServerVariable('nonce', ''),

@@ -17,6 +17,9 @@ class LogService
     {
         $logs  = [];
         $count = 0;
+        if ($take < 1) {
+            $take = 1;
+        }
 
         try {
             $logs  = Log::skip($skip)

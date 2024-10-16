@@ -45,10 +45,12 @@ export default async function request<T>({
   method = 'POST',
   signal
 }: RequestOptionsType): Promise<Response<T>> {
-  const { AJAX_URL, NONCE, ROUTE_PREFIX } = config
-  const uri = new URL(AJAX_URL)
-  uri.searchParams.append('action', `${ROUTE_PREFIX}${action}`)
-  uri.searchParams.append('nonce', NONCE)
+  const { AJAX_URL, API_BASE, NONCE, ROUTE_PREFIX } = config
+  const uri = new URL(`${API_BASE}/${action}`)
+  console.log(uri, ROUTE_PREFIX)
+
+  // uri.searchParams.append('action', `${ROUTE_PREFIX}${action}`)
+  // uri.searchParams.append('nonce', NONCE)
 
   // append query params in url
   if (queryParam !== null) {
@@ -61,7 +63,7 @@ export default async function request<T>({
 
   const options: OptionsType = {
     method,
-    headers: {}
+    headers: { 'x-wp-nonce': NONCE }
   }
 
   if (method.toLowerCase() === 'post') {
@@ -69,5 +71,26 @@ export default async function request<T>({
   }
 
   options.signal = signal
-  return (await fetch(uri, options).then(res => res.json())) as Response<T>
+  return (await fetch(uri, options)
+    .then(res => res.text())
+    .then(res => {
+      try {
+        return JSON.parse(res)
+      } catch (error) {
+        const parsedRes = res.match(/{"success":(?:[^{}]*)*}/)
+        return parsedRes ? JSON.parse(parsedRes[0]) : { success: false, data: res }
+      }
+    })) as Response<T>
+}
+
+function isScalar(value: unknown): boolean {
+  return (
+    value === null ||
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    typeof value === 'boolean' ||
+    typeof value === 'undefined' ||
+    typeof value === 'symbol' ||
+    typeof value === 'bigint'
+  )
 }
