@@ -73,8 +73,8 @@ export default async function request<T>({
       try {
         return JSON.parse(res)
       } catch (error) {
-        const parsedRes = res.match(/{"success":(?:[^{}]*)*}/)
-        return parsedRes ? JSON.parse(parsedRes[0]) : { success: false, data: res }
+        const parsedRes = res.match(/{"code":(?:[^{}]*)*}/)
+        return parsedRes ? JSON.parse(parsedRes[0]) : { code: 'ERROR', data: res }
       }
     })) as Response<T>
 }

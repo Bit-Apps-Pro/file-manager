@@ -1,13 +1,16 @@
 import { useState } from 'react'
 
+import useDeleteLog from '@pages/Logs/data/useDeleteLog'
 import {
   type LogQueryType,
   type LogType,
   type LoggedFileDetailsType
 } from '@pages/Logs/data/useFetchLogs'
 import useFetchLogs from '@pages/Logs/data/useFetchLogs'
+import { Button, Flex, type TableColumnsType, type TableProps, Typography, notification } from 'antd'
 import { Col, Row, Space, Table } from 'antd'
-import { type TableColumnsType } from 'antd'
+
+type TableRowSelection<T extends object = object> = TableProps<T>['rowSelection']
 
 const columns: TableColumnsType<LogType> = [
   { title: 'Id', dataIndex: 'id', key: 'id' },
@@ -53,25 +56,58 @@ export default function Logs() {
     pageNo: 1,
     limit: 20
   } as LogQueryType)
-  const { isLoading, isLogsFetching, logs, total } = useFetchLogs(pagination)
+  const { isLoading, isLogsFetching, logs, total, refetch } = useFetchLogs(pagination)
+  const { isLogDeleting, deleteLog } = useDeleteLog()
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
 
+  const handleDelete = () => {
+    deleteLog(selectedRowKeys as number[]).then(res => {
+      if (res.code === 'SUCCESS') {
+        setSelectedRowKeys([])
+        refetch()
+        notification.success({ message: res?.message || 'Log deleted successfully' })
+      } else {
+        notification.error({ message: res?.message || 'Failed to delete logs' })
+      }
+    })
+  }
+
+  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+    setSelectedRowKeys(newSelectedRowKeys)
+  }
+
+  const rowSelection: TableRowSelection<LogType> = {
+    selectedRowKeys,
+    onChange: onSelectChange
+  }
+
+  const hasSelected = selectedRowKeys.length > 0
   const onChange = (page: number, pageSize: number) => {
     setPagination({ pageNo: page, limit: pageSize })
   }
 
   return (
-    <Table
-      columns={columns}
-      rowSelection={{}}
-      dataSource={logs}
-      loading={isLoading || isLogsFetching}
-      pagination={{
-        current: pagination.pageNo,
-        total,
-        pageSize: pagination.limit,
-        onChange,
-        position: ['bottomRight', 'topLeft']
-      }}
-    />
+    <Flex gap="middle" vertical>
+      <Flex align="center" gap="middle">
+        <Button type="primary" onClick={handleDelete} disabled={!hasSelected} loading={isLogDeleting}>
+          Delete
+        </Button>
+        {hasSelected ? <Typography>Selected {selectedRowKeys.length} items</Typography> : null}
+      </Flex>
+      <Table
+        rowKey="id"
+        columns={columns}
+        rowSelection={rowSelection}
+        dataSource={logs}
+        loading={isLoading || isLogsFetching}
+        pagination={{
+          current: pagination.pageNo,
+          total,
+          pageSize: pagination.limit,
+          onChange,
+          position: ['bottomRight', 'topLeft']
+        }}
+      />
+    </Flex>
   )
 }

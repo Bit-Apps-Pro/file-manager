@@ -5,6 +5,7 @@ namespace BitApps\FM\Http\Services;
 use BitApps\FM\Config;
 use BitApps\FM\Model\Log;
 use BitApps\FM\Plugin;
+use BitApps\WPDatabase\Connection;
 use BitApps\WPDatabase\QueryBuilder;
 use DateTime;
 use Throwable;
@@ -55,7 +56,9 @@ class LogService
 
     public function delete($id)
     {
-        return Log::where('id', $id)->delete();
+        Log::where('id', $id)->delete();
+
+        return Connection::prop('last_error') ? false : true;
     }
 
     public function deleteOlder()

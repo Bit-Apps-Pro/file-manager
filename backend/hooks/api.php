@@ -18,6 +18,7 @@ Route::group(
         Route::post('language/update', [SettingsController::class, 'updateLanguage']);
 
         Route::post('logs/all', [LogController::class, 'all'])->middleware('cap:bitapps_fm_can_access_logs');
+        Route::post('logs/delete', [LogController::class, 'delete']);
 
         Route::get('settings/get', [SettingsController::class, 'get']);
         Route::post('settings/update', [SettingsController::class, 'update']);
@@ -29,6 +30,7 @@ Route::group(
         Route::post('permissions/user/add', [PermissionsController::class, 'addPermisisionByUer']);
         Route::post('permissions/user/delete', [PermissionsController::class, 'deletePermisisionByUer']);
 
+        Route::post('telemetry/tryplugin', [TelemetryPopupController::class, 'tryPlugin']);
         Route::post('telemetry_permission_handle', [TelemetryPopupController::class, 'handleTelemetryPermission']);
         Route::get('telemetry_popup_disable_check', [TelemetryPopupController::class, 'isPopupDisabled']);
     }
