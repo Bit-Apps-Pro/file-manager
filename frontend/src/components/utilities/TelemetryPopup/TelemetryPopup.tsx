@@ -171,9 +171,9 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
             </Button>
           )}
 
-          {steps[current].id == 'tryplugin' && (
+          {steps[current].id === 'tryplugin' && (
             <Button type="primary" onClick={handleTryPlugin}>
-              Accept & Install
+              Install and Continue
             </Button>
           )}
 

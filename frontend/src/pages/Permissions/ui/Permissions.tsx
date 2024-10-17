@@ -196,12 +196,16 @@ function Permissions() {
                   extra={
                     <Popconfirm
                       title={__('Delete the User Permission')}
-                      description={__(
-                        sprintf(
-                          'Are you sure to delete permission for %s?',
-                          `${user.display_name}${user.user_login !== user.display_name ? `(${user.user_login})` : ''}`
-                        )
-                      )}
+                      description={
+                        <Typography.Text>
+                          {__(
+                            sprintf(
+                              'Are you sure to delete permission for %s?',
+                              `${user.display_name}${user.user_login !== user.display_name ? `(${user.user_login})` : ''}`
+                            )
+                          )}
+                        </Typography.Text>
+                      }
                       onConfirm={() => handleDelete(user)}
                       okText="Yes"
                       cancelText="No"
