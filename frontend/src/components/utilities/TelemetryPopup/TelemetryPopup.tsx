@@ -2,14 +2,12 @@
 
 /* eslint-disable no-nested-ternary */
 import type React from 'react'
-import { type Dispatch, type SetStateAction, useEffect } from 'react'
 import { useState } from 'react'
 
 import request from '@common/helpers/request'
 import config from '@config/config'
 import earlyBirdOffer from '@resource/img/earlyBirdOffer.webp'
-import { type CheckboxProps } from 'antd'
-import { Modal as AntModal, Button, Checkbox, Flex, Popconfirm, Steps } from 'antd'
+import { Button, Flex, Modal, Popconfirm, Steps, Typography } from 'antd'
 
 import changeLogs from '../../../changeLog'
 import cls from './TelemetryPopup.module.css'
@@ -24,23 +22,20 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
   const { TELEMETRY } = config
   const [isDataNoticeShow, setIsDataNoticeShow] = useState(false)
   const [isPopConfirmOpen, setIsPopConfirmOpen] = useState(false)
-  const [tryPlugin, setTryPlugin] = useState<Record<string, boolean>>({})
-
-  useEffect(() => {
-    if (TELEMETRY.tryPlugin) {
-      const defaultAccptedPlugin: Record<string, boolean> = {}
-      Object.values<{ title: string; slug: string }>(TELEMETRY.tryPlugin).map(plugin => {
-        defaultAccptedPlugin[plugin.slug] = true
-      })
-      setTryPlugin(defaultAccptedPlugin)
-    }
-  }, [])
 
   const handleTelemetryAccess = () => {
-    request({ action: 'telemetry_permission_handle', data: { isChecked: true, tryPlugin } })
+    request({ action: 'telemetry_permission_handle', data: { isChecked: true } })
     setIsTelemetryModalOpen(false)
   }
 
+  const handleTryPlugin = () => {
+    setCurrent(previous => previous + 1)
+    const defaultAccptedPlugin: Record<string, boolean> = {}
+    Object.values<{ title: string; slug: string }>(TELEMETRY.tryPlugin).map(plugin => {
+      defaultAccptedPlugin[plugin.slug] = true
+    })
+    request({ action: 'telemetry/tryplugin', data: { tryPlugin: defaultAccptedPlugin } })
+  }
   const handleTelemetryModalSkip = () => {
     setIsPopConfirmOpen(true)
     const modalContent = document.getElementsByClassName('ant-modal-content')
@@ -58,7 +53,8 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
   const steps = [
     {
       title: '',
-      modalTitle: 'Bit Social Release',
+      id: '',
+      'data-modaltitle': 'Bit Social Release',
       content: (
         <div className={cls.bitSocialReleaseBanner}>
           <a
@@ -82,14 +78,14 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
     },
     {
       title: '',
-      modalTitle: 'Bit File Manager 2024 Updates',
+      'data-modaltitle': 'Bit File Manager 2024 Updates',
       content: (
         <>
           <span className={cls.improvementsTitle}>New Improvements</span>
           <div className={cls.improvements}>
             <ul>
               {changeLogs.improvements.map(item => (
-                <li>{item}</li>
+                <li key={item}>{item}</li>
               ))}
             </ul>
           </div>
@@ -97,7 +93,7 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
           <div className={cls.fixed}>
             <ul>
               {changeLogs.fixed.map(item => (
-                <li>{item}</li>
+                <li key={item}>{item}</li>
               ))}
             </ul>
           </div>
@@ -135,8 +131,9 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
   if (TELEMETRY?.tryPlugin && Object.keys(TELEMETRY.tryPlugin).length) {
     steps.splice(steps.length - 1, 0, {
       title: '',
-      modalTitle: 'Try Bit Apps Plugins',
-      content: <TryPlugins setTryPlugin={setTryPlugin} />
+      id: 'tryplugin',
+      'data-modaltitle': 'Try Bit Apps Plugins',
+      content: <TryPlugins />
     })
   }
 
@@ -151,10 +148,10 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
   }
 
   return (
-    <AntModal
+    <Modal
       title={
         <div style={{ textAlign: 'center', fontSize: '20px', marginBottom: '20px' }}>
-          {steps[current].modalTitle}
+          {steps[current]['data-modaltitle']}
         </div>
       }
       open={isTelemetryModalOpen}
@@ -169,10 +166,17 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
         <div className={cls.popupContent}>{steps[current].content}</div>
         <div style={footerBtnStyle}>
           {current < steps.length - 1 && (
-            <Button type="primary" onClick={() => next()}>
-              Next
+            <Button type={current === 1 ? 'link' : 'primary'} onClick={() => next()}>
+              {current === 1 ? 'Skip' : 'Next'}
             </Button>
           )}
+
+          {steps[current].id == 'tryplugin' && (
+            <Button type="primary" onClick={handleTryPlugin}>
+              Accept & Install
+            </Button>
+          )}
+
           {current === steps.length - 1 && (
             <Popconfirm
               title="Help Us Improve Your Experience"
@@ -204,38 +208,18 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
           )}
         </div>
       </>
-    </AntModal>
+    </Modal>
   )
 }
 
 export default TelemetryPopup
 
-function TryPlugins({
-  setTryPlugin
-}: {
-  setTryPlugin: Dispatch<SetStateAction<Record<string, boolean>>>
-}) {
+function TryPlugins() {
   const { TELEMETRY } = config
-
-  const onChange: CheckboxProps['onChange'] = e => {
-    console.log(`checked = ${e.target.checked} ${e.target.name}`)
-    if (e?.target?.name) {
-      setTryPlugin({ [e.target.name]: e?.target?.checked })
-    }
-  }
   return (
-    <Flex>
+    <Flex vertical>
       {Object.values<{ title: string; slug: string }>(TELEMETRY.tryPlugin).map(plugin => (
-        <Checkbox
-          key={plugin.slug}
-          style={{ color: 'black' }}
-          defaultChecked
-          name={plugin.slug}
-          onChange={onChange}
-        >
-          {' '}
-          {plugin.title}{' '}
-        </Checkbox>
+        <Typography.Text style={{ color: 'black' }}>{plugin.title}</Typography.Text>
       ))}
     </Flex>
   )

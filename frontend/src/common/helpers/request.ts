@@ -46,7 +46,7 @@ export default async function request<T>({
   signal
 }: RequestOptionsType): Promise<Response<T>> {
   const { API_BASE, NONCE } = config
-  const uri = new URL(`${API_BASE}/${action}`)
+  const uri = new URL(`${API_BASE}/${action}`, `${window.location.protocol}//${window.location.host}`)
 
   // append query params in url
   if (queryParam !== null) {

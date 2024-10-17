@@ -1,0 +1,20 @@
+<?php
+
+namespace BitApps\FM\Http\Requests;
+
+use BitApps\WPKit\Http\Request\Request;
+
+class TryPluginRequest extends Request
+{
+    public function authorize()
+    {
+        return current_user_can('install_plugins');
+    }
+
+    public function rules()
+    {
+        return [
+            'tryPlugin' => ['required','array']
+        ];
+    }
+}

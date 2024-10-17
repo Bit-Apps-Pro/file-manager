@@ -188,12 +188,8 @@ class Config
 
         $pluginToTry = [
             'bit-form/bitforms.php' => [
-                'title' => 'Bit Form',
+                'title' => 'Bit Form - An advanced contact form plugin',
                 'slug'  => 'bit-form',
-            ],
-            'bit-integrations/bitwpfi.php' => [
-                'title' => 'Bit Integrations',
-                'slug'  => 'bit-integrations',
             ]
         ];
 
@@ -202,10 +198,6 @@ class Config
             if (isset($installed[$pluginFile])) {
                 unset($pluginToTry[$pluginFile]);
             }
-        }
-
-        if (isset($pluginToTry['bit-form/bitforms.php'], $pluginToTry['bit-integrations/bitwpfi.php'])) {
-            unset($pluginToTry['bit-integrations/bitwpfi.php']);
         }
 
         return $pluginToTry;

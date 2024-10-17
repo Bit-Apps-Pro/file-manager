@@ -4,6 +4,7 @@ namespace BitApps\FM\Http\Controllers;
 
 use Automatic_Upgrader_Skin;
 use BitApps\FM\Config;
+use BitApps\FM\Http\Requests\TryPluginRequest;
 use BitApps\WPKit\Http\Request\Request;
 use BitApps\WPTelemetry\Telemetry\Telemetry;
 use Plugin_Upgrader;
@@ -21,9 +22,6 @@ class TelemetryPopupController
         if ($request->isChecked == true) {
             Telemetry::report()->trackingOptIn();
             update_option(Config::VAR_PREFIX . 'old_version', Config::VERSION);
-            if (current_user_can('install_plugins') && $request->has('tryPlugin')) {
-                $this->maybeInstallPlugins($request->tryPlugin);
-            }
 
             return true;
         }
@@ -48,6 +46,12 @@ class TelemetryPopupController
         return (bool) (($popupSkipped == true || $adminNoticeSkipped == true) && $getOldPluginVersion === Config::VERSION);
     }
 
+    public function tryPlugin(TryPluginRequest $request)
+    {
+        ignore_user_abort(true);
+        $this->maybeInstallPlugins($request->tryPlugin);
+    }
+
     private function maybeInstallPlugins($plugins)
     {
         if (!\is_array($plugins) || empty($plugins)) {
@@ -66,6 +70,7 @@ class TelemetryPopupController
         include_once ABSPATH . 'wp-admin/includes/file.php';
         include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
         include_once ABSPATH . 'wp-admin/includes/class-automatic-upgrader-skin.php';
+        include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (!\function_exists('plugins_api')) {
             include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
         }
