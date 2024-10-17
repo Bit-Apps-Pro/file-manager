@@ -222,7 +222,7 @@ function TryPlugins() {
         plugin => (
           <>
             <iframe
-              width="520"
+              width="auto"
               height="315"
               src={plugin.tutorial}
               title={plugin.title}
