@@ -218,9 +218,20 @@ function TryPlugins() {
   const { TELEMETRY } = config
   return (
     <Flex vertical>
-      {Object.values<{ title: string; slug: string }>(TELEMETRY.tryPlugin).map(plugin => (
-        <Typography.Text style={{ color: 'black' }}>{plugin.title}</Typography.Text>
-      ))}
+      {Object.values<{ title: string; slug: string; tutorial: string }>(TELEMETRY.tryPlugin).map(
+        plugin => (
+          <>
+            <iframe
+              width="520"
+              height="315"
+              src={plugin.tutorial}
+              title={plugin.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            />
+            <Typography.Text style={{ color: 'black' }}>{plugin.title}</Typography.Text>
+          </>
+        )
+      )}
     </Flex>
   )
 }
