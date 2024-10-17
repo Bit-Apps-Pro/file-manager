@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c8d77866da369dd75c9bdce68b52d6b4",
+    "content-hash": "9abf03b88c4af0d30dd2db6880df157e",
     "packages": [
         {
             "name": "automattic/jetpack-autoloader",
@@ -128,16 +128,16 @@
         },
         {
             "name": "bitapps/wp-kit",
-            "version": "1.6",
+            "version": "1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Bit-Apps-Pro/wp-kit.git",
-                "reference": "9d214a23c998dfa6e34b44c06c35ffeab8128bba"
+                "reference": "37282f745e13161fddbe9e0b9c9ddf9f1be85e63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Bit-Apps-Pro/wp-kit/zipball/9d214a23c998dfa6e34b44c06c35ffeab8128bba",
-                "reference": "9d214a23c998dfa6e34b44c06c35ffeab8128bba",
+                "url": "https://api.github.com/repos/Bit-Apps-Pro/wp-kit/zipball/37282f745e13161fddbe9e0b9c9ddf9f1be85e63",
+                "reference": "37282f745e13161fddbe9e0b9c9ddf9f1be85e63",
                 "shasum": ""
             },
             "require": {
@@ -172,9 +172,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Bit-Apps-Pro/wp-kit/issues",
-                "source": "https://github.com/Bit-Apps-Pro/wp-kit/tree/1.6"
+                "source": "https://github.com/Bit-Apps-Pro/wp-kit/tree/1.7"
             },
-            "time": "2024-10-16T11:44:16+00:00"
+            "time": "2024-10-17T12:31:58+00:00"
         },
         {
             "name": "bitapps/wp-telemetry",
