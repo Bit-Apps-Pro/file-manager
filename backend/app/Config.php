@@ -189,7 +189,7 @@ class Config
         $pluginToTry = [
             'bit-form/bitforms.php' => [
                 'title' => 'Try Bit Form: Super Fast, Advanced & Lightweight form builder for WordPress. Create Multi Step Form, Conversational Form, Quiz Form Completely Free.',
-                'tutorial' => 'https://www.youtube.com/embed/BUX6-BIPfSA',
+                'tutorial' => 'https://www.youtube.com/embed/BUX6-BIPfSA?rel=0&autoplay=1&mute=1&controls=0',
                 'slug'  => 'bit-form',
             ]
         ];

@@ -2,11 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { DeleteFilled } from '@ant-design/icons'
 import { __, sprintf } from '@common/helpers/i18nwrap'
-import {
-  type PermissionsSettingsType,
-  type User,
-  type UserPermissionType
-} from '@pages/Permissions/PermissionsSettingsTypes'
+import { type PermissionsSettingsType, type User } from '@pages/Permissions/PermissionsSettingsTypes'
 import useDeleteUserPermission from '@pages/Permissions/data/useDeleteUserPermission'
 import useFetchPermissionsSettings from '@pages/Permissions/data/useFetchPermissionsSettings'
 import useUpdatePermissionsSettings from '@pages/Permissions/data/useUpdatePermissionsSettings'
@@ -35,9 +31,8 @@ function Permissions() {
   const { deletePermission, isUserPermissionDeleting, delInProgressId } = useDeleteUserPermission()
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const [userPermission, setUserPermission] = useState<UserPermissionType>({} as UserPermissionType)
   const [form] = useForm()
-  console.log('userPermission, setUserPermission', userPermission, setUserPermission)
+
   useEffect(() => {
     form.setFieldsValue(permissions)
   }, [permissions, form])

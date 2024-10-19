@@ -2,7 +2,7 @@
 
 /* eslint-disable no-nested-ternary */
 import type React from 'react'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 
 import request from '@common/helpers/request'
 import config from '@config/config'
@@ -220,7 +220,7 @@ function TryPlugins() {
     <Flex vertical>
       {Object.values<{ title: string; slug: string; tutorial: string }>(TELEMETRY.tryPlugin).map(
         plugin => (
-          <>
+          <Fragment key={plugin.slug}>
             <iframe
               width="auto"
               height="315"
@@ -229,7 +229,7 @@ function TryPlugins() {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             />
             <Typography.Text style={{ color: 'black' }}>{plugin.title}</Typography.Text>
-          </>
+          </Fragment>
         )
       )}
     </Flex>

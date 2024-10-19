@@ -24,8 +24,6 @@ export default function useFetchUserByUsername(search: string) {
       keepPreviousData: true,
       enabled: !!search,
       getNextPageParam: lastPage => {
-        console.log({ lastPage })
-
         const nextPage = Number(lastPage.current) + 1
         return nextPage <= lastPage.pages ? nextPage : undefined
       }
@@ -33,8 +31,6 @@ export default function useFetchUserByUsername(search: string) {
 
   const users: Array<User> = []
   data?.pages.forEach(queryResponse => users.push(...queryResponse.users))
-
-  console.log({ users, current: data?.pageParams })
 
   return {
     isLoading,
