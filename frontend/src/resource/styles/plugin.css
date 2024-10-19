@@ -48,6 +48,10 @@
   height: 81% !important;
 }
 
+.elfinder-rtl > .elfinder-to-editing.elfinder-dialog-edit.elfinder-maximized {
+  right: 165px !important;
+}
+
 .ui-dialog:nth-child(7) {
   width: 760px !important;
   top: 10px !important;

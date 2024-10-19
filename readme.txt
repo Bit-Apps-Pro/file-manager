@@ -339,6 +339,7 @@ Yes, It is possible to edit writeable files in the wordpress directory using cod
 - Enhancement: PHP packages updated.
 - Enhancement: Users can now try certain plugins through the changelog modal.
 - Fix: Search functionality in the shortcode view.
+- Fix: Editor full screen issue in rtl view.
 
 = 6.5.8 (02 Oct, 2024) =
 - Fix: javascript, css file type Restricted for shortrcode. Admin can allow from permission settings if needed.

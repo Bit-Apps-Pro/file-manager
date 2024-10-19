@@ -7,7 +7,7 @@ const changeLogs = {
     'PHP packages updated.',
     'Users can now try certain plugins through the changelog modal.'
   ],
-  fixed: ['Search functionality in the shortcode view.']
+  fixed: ['Search functionality in the shortcode view.', 'Editor full screen issue in rtl view']
 }
 
 export default changeLogs
