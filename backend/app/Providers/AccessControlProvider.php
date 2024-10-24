@@ -67,7 +67,7 @@ class AccessControlProvider
 
     public function checkPermission($command, ...$args)
     {
-        if (\in_array($command, ['open'])) {
+        if (\in_array($command, ['open', 'search'])) {
             return;
         }
 
