@@ -331,15 +331,16 @@ Yes, It is possible to edit writeable files in the wordpress directory using cod
 
 == Changelog ==
 
-= 6.6.0 (02 Oct, 2024) =
+= 6.6.0 (27 Oct, 2024) =
 - Enhancement: The user permission grant UI has been updated, allowing users to search and grant permissions more efficiently. This resolves out-of-memory issues on the permission page.
 - Enhancement: Previously, dashboard requests were handled via AJAX, but they are now managed through the REST API.
 - Enhancement: Theme updated.
-- Enhancement: Dashboard .
+- Enhancement: Dashboard.
 - Enhancement: PHP packages updated.
-- Enhancement: Users can now try certain plugins through the changelog modal.
+- Misc: Users can now try certain plugins through the changelog modal.
 - Fix: Search functionality in the shortcode view.
 - Fix: Editor full screen issue in rtl view.
+- Fix: Public folder not displaying as per the user-selected option.
 
 = 6.5.8 (02 Oct, 2024) =
 - Fix: javascript, css file type Restricted for shortrcode. Admin can allow from permission settings if needed.

@@ -8,7 +8,7 @@ import AntIconWrapper from '@icons/AntIconWrapper'
 import LogoIcn from '@icons/LogoIcn'
 import LogoText from '@icons/LogoText'
 import earlyBirdOffer from '@resource/img/earlyBirdOffer.webp'
-import { Button, Layout, Menu, Modal, Select, Space, Typography, notification, theme } from 'antd'
+import { Button, Layout, Modal, Select, Space, Typography, notification, theme } from 'antd'
 import { useAtomValue } from 'jotai'
 
 import cls from './TopNavigation.module.css'
