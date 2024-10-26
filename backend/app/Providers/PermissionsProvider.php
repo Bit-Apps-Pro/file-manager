@@ -194,7 +194,7 @@ class PermissionsProvider
 
     public function getPublicRootPathByCriteria($criteria, $type)
     {
-        $defaultPath = $this->getDefaultPublicRootPath();
+        $defaultPath = $this->getPublicRootPath();
         $rootPath    = wp_unslash($defaultPath) . DIRECTORY_SEPARATOR . "{$type}_{$criteria}";
         if (!file_exists($rootPath) && is_dir($defaultPath) && is_writable($defaultPath)) {
             wp_mkdir_p($rootPath);
@@ -223,7 +223,7 @@ class PermissionsProvider
             case 'role':
                 return $this->getPublicRootPathForRole($this->currentUserRole());
             case 'user':
-                return $this->getPublicRootPathForRole($this->currentUserRole());
+                return $this->getPublicRootPathForUser($this->currentUserID());
             default:
                 return $this->getPublicRootPath();
         }

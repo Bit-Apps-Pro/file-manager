@@ -2,8 +2,6 @@
 
 namespace BitApps\FM\Providers;
 
-use function Avifinfo\read;
-
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
 
