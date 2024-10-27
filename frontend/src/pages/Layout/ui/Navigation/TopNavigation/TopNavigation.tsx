@@ -17,7 +17,6 @@ import useUpdateLang from './data/useUpdateLang'
 import useUpdateTheme from './data/useUpdateTheme'
 import { type ProductDetail } from './static/MenuItems'
 import { items } from './static/MenuItems'
-import earlyBirdOffer from '@resource/img/earlyBirdOffer.webp'
 
 const { Header } = Layout
 
