@@ -61,7 +61,7 @@ export default function AppRoutes() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/permissions" element={<Permissions />} />
             <Route path="/system-info" element={<SystemInformation />} />
-            <Route path="*" caseSensitive element={<Root />} />
+            <Route path="*" element={<Root />} />
           </Route>
         </Routes>
       </StyleProvider>

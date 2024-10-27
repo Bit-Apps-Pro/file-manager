@@ -3,6 +3,10 @@
   opacity: 0;
 }
 
+.fm-cursor-pointer {
+  cursor: pointer;
+}
+
 .ui-widget textarea {
   font-family: Verdana, Arial, sans-serif, 'Trebuchet MS', Tahoma;
   font-size: 1.3em;
@@ -262,6 +266,7 @@
   padding: 0 !important;
   text-align: center;
 }
+
 .bit-social-release-modal .ant-modal-close-x{
   color: black;
 }

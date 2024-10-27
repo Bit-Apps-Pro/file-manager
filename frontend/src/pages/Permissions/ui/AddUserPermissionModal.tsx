@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { __ } from '@common/helpers/i18nwrap'
+import useDebounce from '@common/hooks/useDebounce'
 import { type User, type UserPermissionType } from '@pages/Permissions/PermissionsSettingsTypes'
 import useFetchPermissionsSettings from '@pages/Permissions/data/useFetchPermissionsSettings'
 import useFetchUserByUsername from '@pages/Permissions/data/useFetchUserByUsername'
@@ -19,7 +20,8 @@ function AddUserPermissionModal({
   const { refetch } = useFetchPermissionsSettings()
   const { isUserPermissionUpdating, updateUserPermission } = useUpdateUserPermission()
   const [searchQuery, setSearchQuery] = useState('')
-  const { users, fetchNextPage, isFetching, isFetchingNextPage } = useFetchUserByUsername(searchQuery)
+  const debouncedQuery = useDebounce(searchQuery)
+  const { users, fetchNextPage, isFetching, isFetchingNextPage } = useFetchUserByUsername(debouncedQuery)
   const { useForm } = Form
   const [form] = useForm()
 

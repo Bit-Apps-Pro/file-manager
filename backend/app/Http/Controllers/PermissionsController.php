@@ -50,7 +50,7 @@ final class PermissionsController
         $per_page    = 50;
         $args        = [
             'search'         => '*' . esc_attr($request->search) . '*',
-            'search_columns' => ['user_login', 'user_nicename', 'user_email'],
+            'search_columns' => ['user_login', 'display_name', 'user_email'],
             'number'         => $per_page,
             'paged'          => $paged,
             'exclude'        => Plugin::instance()->permissions()->permittedUserIds(),

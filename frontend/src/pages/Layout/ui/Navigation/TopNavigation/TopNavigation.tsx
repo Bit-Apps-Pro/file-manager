@@ -130,7 +130,7 @@ export default function TopNavigation() {
         </Space>
         <Space id="product-list">
           {items?.map((item: ProductDetail) => (
-            <Button type="text" title={item.title}>
+            <Button type="text" title={item.title} key={item.key}>
               {item.label}
             </Button>
           ))}

@@ -22,7 +22,7 @@ export default function useFetchUserByUsername(search: string) {
       queryKey: ['permissions/user/get', search],
       queryFn: sendRequest,
       keepPreviousData: true,
-      enabled: !!search,
+      // enabled: !!search,
       getNextPageParam: lastPage => {
         const nextPage = Number(lastPage.current) + 1
         return nextPage <= lastPage.pages ? nextPage : undefined

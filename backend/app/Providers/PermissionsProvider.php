@@ -207,9 +207,9 @@ class PermissionsProvider
         return $rootPath;
     }
 
-    public function getPublicRootPathForUser($userID)
+    public function getPublicRootPathForUser($userName)
     {
-        return $this->getPublicRootPathByCriteria($userID, 'user');
+        return $this->getPublicRootPathByCriteria($userName, 'user');
     }
 
     public function getPublicRootPathForRole($role)
@@ -223,7 +223,7 @@ class PermissionsProvider
             case 'role':
                 return $this->getPublicRootPathForRole($this->currentUserRole());
             case 'user':
-                return $this->getPublicRootPathForUser($this->currentUserID());
+                return $this->getPublicRootPathForUser($this->currentUserName());
             default:
                 return $this->getPublicRootPath();
         }
@@ -379,6 +379,15 @@ class PermissionsProvider
         }
 
         return $this->currentUser()->ID;
+    }
+
+    public function currentUserName()
+    {
+        if (!$this->currentUser() instanceof WP_User) {
+            return false;
+        }
+
+        return $this->currentUser()->user_login;
     }
 
     public function isCurrentUserHasPermission()

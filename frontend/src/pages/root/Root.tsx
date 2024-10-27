@@ -1,6 +1,8 @@
+import { type MouseEventHandler } from 'react'
 import { useEffect, useRef, useState } from 'react'
 
 import $finder, { $finderCurrentPath, $finderViewType } from '@common/globalStates/$finder'
+import { type BreadcrumbItemType } from '@common/globalStates/GlobalStates'
 import request from '@common/helpers/request'
 import config from '@config/config'
 import LucideIcn from '@icons/LucideIcn'
@@ -25,10 +27,19 @@ export default function Root() {
 
   const generateFullPath = (finder: FinderInstance) => {
     const parents = finder.parents(finder.cwd().hash)
-    const breadcrumbItems = parents.map((hash: string) => {
+    const breadcrumbItems = parents.map((hash: string, index: number) => {
       const fileObj = finder.file(hash)
       const fileName = fileObj.i18n ?? fileObj.name
-      return { title: fileName }
+      const item: BreadcrumbItemType = {
+        title: fileName
+      }
+
+      if (index < parents.length - 1) {
+        item.onClick = () => finder?.exec('open', hash, { _userAction: true })
+        item.className = 'fm-cursor-pointer'
+      }
+
+      return item
     })
     setFinderCurrentPath(breadcrumbItems)
   }

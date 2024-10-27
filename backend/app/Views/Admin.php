@@ -99,7 +99,7 @@ class Admin
         return (array) $config + [
             'nonce'         => wp_create_nonce('wp_rest'),
             'apiBase'       => get_rest_url(null, '/file-manager/v1'),
-            'baseURL'       => Config::get('ADMIN_URL') . 'admin.php?page=' . Config::SLUG . '#elf_l1_Lw/',
+            'baseURL'       => Config::get('ADMIN_URL') . 'admin.php?page=' . Config::SLUG . '#/home',
             'pluginSlug'    => Config::SLUG,
             'rootURL'       => Config::get('ROOT_URI'),
             'assetsURL'     => Config::get('ASSET_URI'),
@@ -202,6 +202,7 @@ class Admin
                 <?php esc_html_e('Please set', 'file-manager'); ?>
                 <b>DISALLOW_FILE_EDIT</b> <?php esc_html_e('to', 'file-manager'); ?>
                 <b>FALSE</b>
+                in wp-config.php
             </div>
             <style>
                 .fm-error {
@@ -296,7 +297,7 @@ class Admin
                 'title'      => __('Dashboard | Bit File Manager', 'file-manager'),
                 'name'       => __('Home', 'file-manager'),
                 'capability' => Hooks::applyFilter('bitapps_fm_can_access_home', 'manage_options'),
-                'slug'       => Config::SLUG . '#elf_l1_Lw/',
+                'slug'       => Config::SLUG . '#/home',
                 'position'   => '2',
             ],
             'Logs'           => [
