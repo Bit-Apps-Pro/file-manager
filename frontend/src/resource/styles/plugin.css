@@ -3,6 +3,10 @@
   opacity: 0;
 }
 
+.fm-cursor-pointer {
+  cursor: pointer;
+}
+
 .ui-widget textarea {
   font-family: Verdana, Arial, sans-serif, 'Trebuchet MS', Tahoma;
   font-size: 1.3em;
@@ -46,6 +50,10 @@
   right: 20px;
   max-width: calc(100% - 180px) !important;
   height: 81% !important;
+}
+
+.elfinder-rtl > .elfinder-to-editing.elfinder-dialog-edit.elfinder-maximized {
+  right: 165px !important;
 }
 
 .ui-dialog:nth-child(7) {
@@ -258,6 +266,7 @@
   padding: 0 !important;
   text-align: center;
 }
+
 .bit-social-release-modal .ant-modal-close-x{
   color: black;
 }

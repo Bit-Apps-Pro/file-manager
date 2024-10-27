@@ -1,18 +1,39 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-import { __ } from '@common/helpers/i18nwrap'
-import { type PermissionsSettingsType } from '@pages/Permissions/PermissionsSettingsTypes'
+import { DeleteFilled } from '@ant-design/icons'
+import { __, sprintf } from '@common/helpers/i18nwrap'
+import { type PermissionsSettingsType, type User } from '@pages/Permissions/PermissionsSettingsTypes'
+import useDeleteUserPermission from '@pages/Permissions/data/useDeleteUserPermission'
 import useFetchPermissionsSettings from '@pages/Permissions/data/useFetchPermissionsSettings'
 import useUpdatePermissionsSettings from '@pages/Permissions/data/useUpdatePermissionsSettings'
-import { Button, Card, Form, Input, Radio, Select, Space, Switch, Typography, notification } from 'antd'
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  Popconfirm,
+  Radio,
+  Select,
+  Space,
+  Switch,
+  Tooltip,
+  Typography,
+  notification
+} from 'antd'
+
+import AddUserPermissionModal from './AddUserPermissionModal'
 
 function Permissions() {
   const { useForm } = Form
-  const { isLoading, permissions, commands, fileTypes, roles, users } = useFetchPermissionsSettings()
+  const { isLoading, permissions, commands, fileTypes, roles, users, refetch } =
+    useFetchPermissionsSettings()
   const { updatePermission, isPermissionUpdating } = useUpdatePermissionsSettings()
+  const { deletePermission, isUserPermissionDeleting, delInProgressId } = useDeleteUserPermission()
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [form] = useForm()
+
   useEffect(() => {
-    console.log('form, ', form, form.isFieldsTouched(), form.isFieldsValidating)
     form.setFieldsValue(permissions)
   }, [permissions, form])
 
@@ -37,6 +58,17 @@ function Permissions() {
           notification.error({ message: response?.message ?? __('Failed to update permission') })
         })
         form.setFields(fieldErrors)
+      }
+    })
+  }
+
+  const handleDelete = (user: User) => {
+    deletePermission(user.ID).then(response => {
+      if (response.code === 'SUCCESS') {
+        notification.success({ message: response?.message ?? __('User permission removed') })
+        refetch()
+      } else {
+        notification.error({ message: response?.message ?? __('Failed to remove permission') })
       }
     })
   }
@@ -136,10 +168,49 @@ function Permissions() {
             </Space>
           </Card>
 
-          <Card title={__('Permissions by User')}>
+          <Card
+            title={__('Permissions by User')}
+            extra={
+              <Tooltip title={`${__('Add permission for a user')}`}>
+                <Button type="dashed" htmlType="button" onClick={() => setIsModalOpen(true)}>
+                  +
+                </Button>
+              </Tooltip>
+            }
+          >
             <Space size={20} wrap>
+              <AddUserPermissionModal
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+                commands={commands}
+              />
               {users?.map(user => (
-                <Card title={user.display_name} key={`permissions-for-${user.ID}`}>
+                <Card
+                  title={user.display_name}
+                  key={`permissions-for-${user.ID}`}
+                  extra={
+                    <Popconfirm
+                      title={__('Delete the User Permission')}
+                      description={
+                        <Typography.Text>
+                          {__(
+                            sprintf(
+                              'Are you sure to delete permission for %s?',
+                              `${user.display_name}${user.user_login !== user.display_name ? `(${user.user_login})` : ''}`
+                            )
+                          )}
+                        </Typography.Text>
+                      }
+                      onConfirm={() => handleDelete(user)}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <Button loading={isUserPermissionDeleting && delInProgressId === user.ID}>
+                        <DeleteFilled />
+                      </Button>
+                    </Popconfirm>
+                  }
+                >
                   <Form.Item
                     name={['by_user', user.ID, 'path']}
                     label={__('Path')}

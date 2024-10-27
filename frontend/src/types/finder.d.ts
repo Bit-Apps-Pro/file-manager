@@ -28,6 +28,6 @@ declare module 'elfinder' {
     enable(): void
     addCommand(commandName: string, commandOptions?: CommandOptions): void
     removeCommand(commandName: string): void
-    exec(cmd: string, files?: Array<File>, opts?, dstHash?): void
+    exec(cmd: string, files?: Array<File> | string, opts?, dstHash?): void
   }
 }

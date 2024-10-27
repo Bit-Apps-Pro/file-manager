@@ -9,7 +9,7 @@ final class NonceCheckerMiddleware
 {
     public function handle(Request $request, $role, ...$params)
     {
-        $nonceKey = $role === 'admin' ? Config::withPrefix('nonce') : Config::withPrefix('public_nonce');
+        $nonceKey = $role === 'admin' ? 'wp_rest' : Config::withPrefix('public_nonce');
         if (
             ! $request->has('nonce')
             || !(

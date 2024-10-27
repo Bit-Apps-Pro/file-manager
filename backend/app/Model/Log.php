@@ -27,4 +27,8 @@ class Log extends Model
         'details',
         'created_at',
     ];
+
+    public function user() {
+        return $this->hasOne(User::class, 'ID', 'user_id');
+    }
 }

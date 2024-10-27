@@ -1,5 +1,37 @@
 <?php
 
+use BitApps\FM\Http\Controllers\LogController;
+use BitApps\FM\Http\Controllers\PermissionsController;
+use BitApps\FM\Http\Controllers\SettingsController;
+use BitApps\FM\Http\Controllers\TelemetryPopupController;
+use BitApps\WPKit\Http\Router\Route;
+
 if (!\defined('ABSPATH')) {
     exit;
 }
+
+Route::group(
+    function () {
+        Route::post('theme/update', [SettingsController::class, 'updateTheme']);
+
+        Route::get('language/get', [SettingsController::class, 'getLanguages']);
+        Route::post('language/update', [SettingsController::class, 'updateLanguage']);
+
+        Route::post('logs/all', [LogController::class, 'all'])->middleware('cap:bitapps_fm_can_access_logs');
+        Route::post('logs/delete', [LogController::class, 'delete']);
+
+        Route::get('settings/get', [SettingsController::class, 'get']);
+        Route::post('settings/update', [SettingsController::class, 'update']);
+        Route::post('settings/toggle-view', [SettingsController::class, 'toggleView']);
+
+        Route::get('permissions/get', [PermissionsController::class, 'get']);
+        Route::post('permissions/update', [PermissionsController::class, 'update']);
+        Route::get('permissions/user/get', [PermissionsController::class, 'searchUser']);
+        Route::post('permissions/user/add', [PermissionsController::class, 'addPermisisionByUer']);
+        Route::post('permissions/user/delete', [PermissionsController::class, 'deletePermisisionByUer']);
+
+        Route::post('telemetry/tryplugin', [TelemetryPopupController::class, 'tryPlugin']);
+        Route::post('telemetry_permission_handle', [TelemetryPopupController::class, 'handleTelemetryPermission']);
+        Route::get('telemetry_popup_disable_check', [TelemetryPopupController::class, 'isPopupDisabled']);
+    }
+);

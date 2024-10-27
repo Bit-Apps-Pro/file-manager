@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { HashRouter } from 'react-router-dom'
 
+import config from '@config/config'
 import '@resource/styles/global.css'
 import '@resource/styles/plugin.css'
 import '@resource/styles/utilities.sass'
@@ -13,7 +14,11 @@ import 'antd/dist/reset.css'
 
 import AppRoutes from './AppRoutes'
 
-// if (config.IS_DEV) window.appState = {}
+const { BASE_URL } = config
+
+if (!window.location.hash && BASE_URL) {
+  window.location = BASE_URL
+}
 
 const queryClient = new QueryClient()
 const elm = document.getElementById('bit-fm-root')

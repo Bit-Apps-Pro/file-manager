@@ -3,9 +3,10 @@
 namespace BitApps\FM\Http\Controllers;
 
 use BitApps\FM\Config;
+use BitApps\FM\Http\Requests\Log\DeleteLogRequest;
+use BitApps\FM\Http\Services\LogService;
 use BitApps\WPKit\Http\Request\Request;
 use BitApps\WPKit\Http\Response;
-use BitApps\FM\Http\Services\LogService;
 
 final class LogController
 {
@@ -15,8 +16,7 @@ final class LogController
     {
         $this->logger = new LogService();
         $currentTime  = time();
-        $logDeletedAt = Config::getOption('log_deleted_at', $currentTime);
-
+        $logDeletedAt = Config::getOption('log_deleted_at', ($currentTime - (DAY_IN_SECONDS * 30)));
         if ((abs($logDeletedAt - $currentTime) / DAY_IN_SECONDS) > 30) {
             $this->logger->deleteOlder();
         }
@@ -30,18 +30,10 @@ final class LogController
         return Response::success($this->logger->all((($pageNo - 1) * $limit), $limit));
     }
 
-    public function delete(Request $request)
+    public function delete(DeleteLogRequest $request)
     {
-        if (!$request->has('id')) {
-            return Response::error(['id' => 'log id is required'])->message('failed to delete log');
-        }
-
-        $id = $request->id;
-        if (!\is_array($id)) {
-            return Response::error(['id' => 'array of log id is required'])->message('failed to delete log');
-        }
-
-        $status = $this->logger->delete($id);
+        $validatedIds = array_map(function($id) { return intval($id);}, $request->ids);
+        $status = $this->logger->delete($validatedIds);
         if ($status) {
             return Response::success([])->message('log deleted successfully');
         }

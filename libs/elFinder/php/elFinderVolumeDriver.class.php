@@ -3908,7 +3908,7 @@ abstract class elFinderVolumeDriver
      **/
     protected function encode($path)
     {
-        if ($path !== '') {
+        if (!is_null($path) && $path !== '') {
 
             // cut ROOT from $path for security reason, even if hacker decodes the path he will not know the root
             $p = $this->relpathCE($path);
@@ -3944,7 +3944,7 @@ abstract class elFinderVolumeDriver
      **/
     protected function decode($hash)
     {
-        if (strpos($hash, $this->id) === 0) {
+        if ($hash && strpos($hash, $this->id) === 0) {
             // cut volume id after it was prepended in encode
             $h = substr($hash, strlen($this->id));
             // replace HTML safe base64 to normal

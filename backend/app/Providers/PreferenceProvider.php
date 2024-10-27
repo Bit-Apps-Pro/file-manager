@@ -421,11 +421,15 @@ class PreferenceProvider
 
     public function getLangCode()
     {
-        return
-        isset($this->preferences['language'])
-         && isset($this->availableLanguages()[(string) $this->preferences['language']])
-        ? esc_attr($this->preferences['language'])
-        : $this->getDefaultLangCode();
+        $selectedCode = $this->getDefaultLangCode();
+        if (isset($this->preferences['language'])
+        && is_string($this->preferences['language'])
+        && isset($this->availableLanguages()[$this->preferences['language']])
+        ) {
+            $selectedCode = esc_attr($this->preferences['language']);
+        }
+
+        return $selectedCode;
     }
 
     public function getLangUrl()

@@ -3,9 +3,10 @@
 namespace BitApps\FM\Http\Services;
 
 use BitApps\FM\Config;
-use BitApps\WPDatabase\QueryBuilder;
 use BitApps\FM\Model\Log;
 use BitApps\FM\Plugin;
+use BitApps\WPDatabase\Connection;
+use BitApps\WPDatabase\QueryBuilder;
 use DateTime;
 use Throwable;
 
@@ -17,15 +18,28 @@ class LogService
     {
         $logs  = [];
         $count = 0;
+        if ($take < 1) {
+            $take = 1;
+        }
 
         try {
-            $logs  = Log::skip($skip)->take($take)->desc()->get();
+            $logs  = Log::skip($skip)
+                ->take($take)
+                ->desc()
+                ->with('user',
+                    function (QueryBuilder $query) {
+                        $query->select(['ID', 'display_name']);
+                    })
+                ->get();
             $count = Log::count();
         } catch (Throwable $th) {
             // throw $th;
         }
 
-        return compact('count', 'logs');
+        $pages   = \intval($count / $take);
+        $current = ($skip / $take) + 1;
+
+        return compact('count', 'logs', 'pages', 'current');
     }
 
     public function save($command, $details)
@@ -42,7 +56,9 @@ class LogService
 
     public function delete($id)
     {
-        return Log::where('id', $id)->delete();
+        Log::where('id', $id)->delete();
+
+        return Connection::prop('last_error') ? false : true;
     }
 
     public function deleteOlder()

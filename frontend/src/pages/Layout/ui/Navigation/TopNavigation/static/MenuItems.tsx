@@ -1,7 +1,10 @@
-import { type MenuProps } from 'antd'
-
+export interface ProductDetail {
+  key: string
+  label: React.ReactNode // Change React.ReactHTMLElement to React.ReactNode for better compatibility
+  title: string
+}
 // eslint-disable-next-line import/prefer-default-export
-export const items: MenuProps['items'] = [
+export const items: Array<ProductDetail> = [
   {
     key: 'bit-form',
     label: (

@@ -9,6 +9,7 @@ interface OptionsType {
   method: MethodType
   headers: Record<string, string>
   body?: string | FormData
+  signal?: AbortSignal
 }
 
 interface QueryParam {
@@ -25,6 +26,7 @@ interface RequestOptionsType {
   data?: Record<string, unknown> | FormData | null | any // eslint-disable-line @typescript-eslint/no-explicit-any
   queryParam?: QueryParam | null
   method?: MethodType
+  signal?: AbortSignal
 }
 
 export type ApiResponseType = Record<string, string | number>
@@ -40,12 +42,11 @@ export default async function request<T>({
   action,
   data,
   queryParam,
-  method = 'POST'
+  method = 'POST',
+  signal
 }: RequestOptionsType): Promise<Response<T>> {
-  const { AJAX_URL, NONCE, ROUTE_PREFIX } = config
-  const uri = new URL(AJAX_URL)
-  uri.searchParams.append('action', `${ROUTE_PREFIX}${action}`)
-  uri.searchParams.append('nonce', NONCE)
+  const { API_BASE, NONCE } = config
+  const uri = new URL(`${API_BASE}/${action}`, `${window.location.protocol}//${window.location.host}`)
 
   // append query params in url
   if (queryParam !== null) {
@@ -58,12 +59,22 @@ export default async function request<T>({
 
   const options: OptionsType = {
     method,
-    headers: {}
+    headers: { 'x-wp-nonce': NONCE }
   }
 
   if (method.toLowerCase() === 'post') {
     options.body = data instanceof FormData ? data : JSON.stringify(data)
   }
 
-  return (await fetch(uri, options).then(res => res.json())) as Response<T>
+  options.signal = signal
+  return (await fetch(uri, options)
+    .then(res => res.text())
+    .then(res => {
+      try {
+        return JSON.parse(res)
+      } catch (error) {
+        const parsedRes = res.match(/{"code":(?:[^{}]*)*}/)
+        return parsedRes ? JSON.parse(parsedRes[0]) : { code: 'ERROR', data: res }
+      }
+    })) as Response<T>
 }

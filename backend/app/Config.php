@@ -21,9 +21,9 @@ class Config
 
     const VAR_PREFIX = 'bit_fm_';
 
-    const VERSION = '6.5.8';
+    const VERSION = '6.6.0';
 
-    const VERSION_ID = 658;
+    const VERSION_ID = 660;
 
     const DB_VERSION = '1.0';
 
@@ -178,6 +178,30 @@ class Config
             'url' => 'https://bitapps.pro',
             'img' => self::get('ASSET_URI') . '/img/banner.png',
         ];
+    }
+
+    public static function tryPlugin()
+    {
+        if (!current_user_can('install_plugins')) {
+            return [];
+        }
+
+        $pluginToTry = [
+            'bit-form/bitforms.php' => [
+                'title' => 'Try Bit Form: Super Fast, Advanced & Lightweight form builder for WordPress. Create Multi Step Form, Conversational Form, Quiz Form Completely Free.',
+                'tutorial' => 'https://www.youtube.com/embed/BUX6-BIPfSA?rel=0&autoplay=1&mute=1&controls=0',
+                'slug'  => 'bit-form',
+            ]
+        ];
+
+        $installed = get_plugins();
+        foreach ($pluginToTry as $pluginFile => $value) {
+            if (isset($installed[$pluginFile])) {
+                unset($pluginToTry[$pluginFile]);
+            }
+        }
+
+        return $pluginToTry;
     }
 
     /**

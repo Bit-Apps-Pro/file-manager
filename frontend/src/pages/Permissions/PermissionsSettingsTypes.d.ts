@@ -11,6 +11,9 @@ export interface PermissionsSettingsType {
   by_role: Array<string, PermissionConfig>
   by_user: Array<string, PermissionConfig>
 }
+export interface UserPermissionType extends PermissionConfig {
+  id: number
+}
 
 export type User = {
   ID: number
@@ -27,4 +30,11 @@ interface FetchPermissionsSettingsType {
   commands: Array<string>
   fileTypes: Array<string>
   wpRoot: string
+}
+
+interface FetchUsersType {
+  users: Array<User>
+  total: number
+  pages: number
+  current: number
 }

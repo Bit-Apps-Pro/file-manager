@@ -2,11 +2,12 @@
 
 /* eslint-disable no-nested-ternary */
 import type React from 'react'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 
 import request from '@common/helpers/request'
+import config from '@config/config'
 import earlyBirdOffer from '@resource/img/earlyBirdOffer.webp'
-import { Modal as AntModal, Button, Popconfirm, Steps } from 'antd'
+import { Button, Flex, Modal, Popconfirm, Steps, Typography } from 'antd'
 
 import changeLogs from '../../../changeLog'
 import cls from './TelemetryPopup.module.css'
@@ -18,17 +19,23 @@ type TelemetryPopupProps = {
 
 function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: TelemetryPopupProps) {
   const [current, setCurrent] = useState(0)
+  const { TELEMETRY } = config
   const [isDataNoticeShow, setIsDataNoticeShow] = useState(false)
   const [isPopConfirmOpen, setIsPopConfirmOpen] = useState(false)
-  // const handleStepToggle = () => {
-  //   setIsBitFormInstallChecked(prev => !prev)
-  // }
 
   const handleTelemetryAccess = () => {
     request({ action: 'telemetry_permission_handle', data: { isChecked: true } })
     setIsTelemetryModalOpen(false)
   }
 
+  const handleTryPlugin = () => {
+    setCurrent(previous => previous + 1)
+    const defaultAccptedPlugin: Record<string, boolean> = {}
+    Object.values<{ title: string; slug: string }>(TELEMETRY.tryPlugin).map(plugin => {
+      defaultAccptedPlugin[plugin.slug] = true
+    })
+    request({ action: 'telemetry/tryplugin', data: { tryPlugin: defaultAccptedPlugin } })
+  }
   const handleTelemetryModalSkip = () => {
     setIsPopConfirmOpen(true)
     const modalContent = document.getElementsByClassName('ant-modal-content')
@@ -46,6 +53,8 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
   const steps = [
     {
       title: '',
+      id: '',
+      'data-modaltitle': 'Bit Social Release',
       content: (
         <div className={cls.bitSocialReleaseBanner}>
           <a
@@ -69,13 +78,14 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
     },
     {
       title: '',
+      'data-modaltitle': 'Bit File Manager 2024 Updates',
       content: (
         <>
           <span className={cls.improvementsTitle}>New Improvements</span>
           <div className={cls.improvements}>
             <ul>
               {changeLogs.improvements.map(item => (
-                <li>{item}</li>
+                <li key={item}>{item}</li>
               ))}
             </ul>
           </div>
@@ -83,7 +93,7 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
           <div className={cls.fixed}>
             <ul>
               {changeLogs.fixed.map(item => (
-                <li>{item}</li>
+                <li key={item}>{item}</li>
               ))}
             </ul>
           </div>
@@ -118,6 +128,15 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
     }
   ]
 
+  if (TELEMETRY?.tryPlugin && Object.keys(TELEMETRY.tryPlugin).length) {
+    steps.splice(steps.length - 1, 0, {
+      title: '',
+      id: 'tryplugin',
+      'data-modaltitle': 'Try Bit Apps Plugins',
+      content: <TryPlugins />
+    })
+  }
+
   const next = () => {
     setCurrent(current + 1)
   }
@@ -129,10 +148,10 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
   }
 
   return (
-    <AntModal
+    <Modal
       title={
         <div style={{ textAlign: 'center', fontSize: '20px', marginBottom: '20px' }}>
-          {current === 0 ? 'Bit Social Release' : current === 1 ? 'Bit File Manager 2024 Updates' : ''}
+          {steps[current]['data-modaltitle']}
         </div>
       }
       open={isTelemetryModalOpen}
@@ -147,11 +166,18 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
         <div className={cls.popupContent}>{steps[current].content}</div>
         <div style={footerBtnStyle}>
           {current < steps.length - 1 && (
-            <Button type="primary" onClick={() => next()}>
-              Next
+            <Button type={current === 1 ? 'link' : 'primary'} onClick={() => next()}>
+              {current === 1 ? 'Skip' : 'Next'}
             </Button>
           )}
-          {current === 1 && (
+
+          {steps[current].id === 'tryplugin' && (
+            <Button type="primary" onClick={handleTryPlugin}>
+              Install and Continue
+            </Button>
+          )}
+
+          {current === steps.length - 1 && (
             <Popconfirm
               title="Help Us Improve Your Experience"
               description={
@@ -182,8 +208,30 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
           )}
         </div>
       </>
-    </AntModal>
+    </Modal>
   )
 }
 
 export default TelemetryPopup
+
+function TryPlugins() {
+  const { TELEMETRY } = config
+  return (
+    <Flex vertical>
+      {Object.values<{ title: string; slug: string; tutorial: string }>(TELEMETRY.tryPlugin).map(
+        plugin => (
+          <Fragment key={plugin.slug}>
+            <iframe
+              width="auto"
+              height="315"
+              src={plugin.tutorial}
+              title={plugin.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            />
+            <Typography.Text style={{ color: 'black' }}>{plugin.title}</Typography.Text>
+          </Fragment>
+        )
+      )}
+    </Flex>
+  )
+}

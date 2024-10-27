@@ -14,6 +14,6 @@ export default function useFetchLang() {
   return {
     isLoading,
     isFetching,
-    languages: data?.code === 'ERROR' ? [] : data?.data
+    languages: data?.code !== 'SUCCESS' ? [] : data?.data
   }
 }

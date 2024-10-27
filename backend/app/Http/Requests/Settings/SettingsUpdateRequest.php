@@ -2,10 +2,10 @@
 
 namespace BitApps\FM\Http\Requests\Settings;
 
-use BitApps\WPKit\Http\Request\Request;
-use BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Http\Rules\ValidPathRule;
 use BitApps\FM\Http\Rules\ValidUIOptionRule;
+use BitApps\WPKit\Http\Request\Request;
+use BitApps\WPKit\Utils\Capabilities;
 
 class SettingsUpdateRequest extends Request
 {

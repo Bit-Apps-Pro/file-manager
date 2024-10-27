@@ -31,6 +31,7 @@ class Shortcode
             $options['commands'][] = 'sort';
             $options['commands'][] = 'fullscreen';
             $options['commands'][] = 'view';
+            $options['commands'][] = 'search';
         }
 
         return (array) $config + [

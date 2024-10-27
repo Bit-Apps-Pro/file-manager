@@ -5,6 +5,7 @@ namespace BitApps\FM\Providers;
 use BitApps\FM\Config;
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
+use BitApps\WPKit\Helpers\Arr;
 use BitApps\WPKit\Utils\Capabilities;
 use WP_User;
 
@@ -45,7 +46,6 @@ class PermissionsProvider
 
         $this->_preferences = Plugin::instance()->preferences();
         $this->roles        = array_keys($wp_roles->roles);
-        $this->users        = $this->mappedUsers();
     }
 
     public function refresh()
@@ -68,6 +68,10 @@ class PermissionsProvider
      */
     public function allUsers()
     {
+        if (!isset($this->users)) {
+            $this->users        = $this->mappedUsers();
+        }
+
         return $this->users;
     }
 
@@ -80,7 +84,15 @@ class PermissionsProvider
      */
     public function getUserDisplayName($id)
     {
-        return isset($this->users[$id]) ? $this->users[$id]->display_name : 'guest';
+        if (!isset($this->users) && $id) {
+            $users = $this->mappedUsers([$id]);
+        } elseif (isset($this->users)) {
+            $users = $this->users;
+        } else {
+            $users = [];
+        }
+
+        return isset($users[$id]) ? $users[$id]->display_name : 'guest';
     }
 
     public function allCommands()
@@ -105,9 +117,9 @@ class PermissionsProvider
     public function defaultPermissions()
     {
         $permissions['do_not_use_for_admin']     = true;
-        $permissions['fileType']                = apply_filters(
+        $permissions['fileType']                 = apply_filters(
             Config::withPrefix('filter_file_type'),
-            []
+            ['image', 'application']
         );
         $permissions['file_size']                = 2;
         $permissions['folder_options']           = 'common'; // common | role | user
@@ -182,7 +194,7 @@ class PermissionsProvider
 
     public function getPublicRootPathByCriteria($criteria, $type)
     {
-        $defaultPath = $this->getDefaultPublicRootPath();
+        $defaultPath = $this->getPublicRootPath();
         $rootPath    = wp_unslash($defaultPath) . DIRECTORY_SEPARATOR . "{$type}_{$criteria}";
         if (!file_exists($rootPath) && is_dir($defaultPath) && is_writable($defaultPath)) {
             wp_mkdir_p($rootPath);
@@ -195,9 +207,9 @@ class PermissionsProvider
         return $rootPath;
     }
 
-    public function getPublicRootPathForUser($userID)
+    public function getPublicRootPathForUser($userName)
     {
-        return $this->getPublicRootPathByCriteria($userID, 'user');
+        return $this->getPublicRootPathByCriteria($userName, 'user');
     }
 
     public function getPublicRootPathForRole($role)
@@ -211,7 +223,7 @@ class PermissionsProvider
             case 'role':
                 return $this->getPublicRootPathForRole($this->currentUserRole());
             case 'user':
-                return $this->getPublicRootPathForRole($this->currentUserRole());
+                return $this->getPublicRootPathForUser($this->currentUserName());
             default:
                 return $this->getPublicRootPath();
         }
@@ -225,6 +237,39 @@ class PermissionsProvider
     public function getByUser($userID)
     {
         return $this->getPermissions('by_user', $userID);
+    }
+
+    public function removeByUser(int $userID)
+    {
+        if (Arr::has($this->permissions, "by_user.{$userID}")) {
+            unset($this->permissions['by_user'][$userID]);
+        }
+
+        return $this->updatePermissionSetting($this->permissions);
+    }
+
+    /**
+     * Adds permission for a user
+     *
+     * @param int   $userID
+     * @param array $permission {
+     *                          Permission details
+     *
+     * @type string $path
+     * @type array  $command
+     *              }
+     *
+     * @return bool
+     */
+    public function addByUser(int $userID, array $permission)
+    {
+        if (!Arr::exists($this->permissions, 'by_user')) {
+            $this->permissions['by_user'] = [];
+        }
+
+        $this->permissions['by_user'][$userID] = $permission;
+
+        return $this->updatePermissionSetting($this->permissions);
     }
 
     public function getPermissions($type, $name)
@@ -324,7 +369,7 @@ class PermissionsProvider
             return false;
         }
 
-        return $this->currentUser()->roles[0];
+        return isset($this->currentUser()->roles[0]) ? $this->currentUser()->roles[0] : false;
     }
 
     public function currentUserID()
@@ -334,6 +379,15 @@ class PermissionsProvider
         }
 
         return $this->currentUser()->ID;
+    }
+
+    public function currentUserName()
+    {
+        if (!$this->currentUser() instanceof WP_User) {
+            return false;
+        }
+
+        return $this->currentUser()->user_login;
     }
 
     public function isCurrentUserHasPermission()
@@ -454,13 +508,49 @@ class PermissionsProvider
     }
 
     /**
-     * Returns all available users. Array Index will be user ID
+     * Returns all users who are in the permission by_user list
      *
      * @return array<int, WP_User>
      */
-    private function mappedUsers()
+    public function permittedUsers()
     {
-        $users          = get_users(['fields' => ['ID', 'user_login', 'display_name']]);
+        $allowedUsers = $this->permittedUserIds();
+
+        return \count($allowedUsers) ? $this->mappedUsers($allowedUsers) : [];
+    }
+
+    /**
+     * Returns all user's id who are in the permission by_user list
+     *
+     * @return array<int, int>
+     */
+    public function permittedUserIds()
+    {
+        $allowedUsers = [];
+
+        if (isset($this->permissions['by_user']) && \is_array($this->permissions['by_user'])) {
+            $allowedUsers = array_keys($this->permissions['by_user']);
+        }
+
+        return $allowedUsers;
+    }
+
+    /**
+     * Returns all available users. Array Index will be user ID
+     *
+     * @param array $userIDs List of user ids to fetch
+     *
+     * @return array<int, WP_User>
+     */
+    public function mappedUsers(array $userIDs = [])
+    {
+        $query = ['fields' => ['ID', 'user_login', 'display_name']];
+
+        if (\count($userIDs)) {
+            $query['include'] = $userIDs;
+        }
+
+        $users          = get_users($query);
         $processedUsers = [];
 
         foreach ($users as $user) {

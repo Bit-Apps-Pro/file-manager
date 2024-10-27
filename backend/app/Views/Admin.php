@@ -88,10 +88,6 @@ class Admin
 
     public function filterConfigVariable($config)
     {
-        if (Capabilities::check('list_users')) {
-            $config['users'] = Plugin::instance()->permissions()->allUsers();
-        }
-
         if (Capabilities::check('install_plugins')) {
             $config['sys_info'] = $this->getSystemInfo();
         }
@@ -101,16 +97,18 @@ class Admin
         }
 
         return (array) $config + [
-            'nonce'       => wp_create_nonce(Config::withPrefix('nonce')),
-            'baseURL'     => Config::get('ADMIN_URL') . 'admin.php?page=' . Config::SLUG . '#elf_l1_Lw/',
-            'pluginSlug'  => Config::SLUG,
-            'rootURL'     => Config::get('ROOT_URI'),
-            'assetsURL'   => Config::get('ASSET_URI'),
-            'routePrefix' => Config::VAR_PREFIX,
-            'plugin_dir'  => BFM_ROOT_DIR,
-            'plugin_url'  => BFM_ROOT_URL,
-            'action'      => Config::withPrefix('connector'),
-            'options'     => Plugin::instance()->preferences()->finderOptions(),
+            'nonce'         => wp_create_nonce('wp_rest'),
+            'apiBase'       => get_rest_url(null, '/file-manager/v1'),
+            'baseURL'       => Config::get('ADMIN_URL') . 'admin.php?page=' . Config::SLUG . '#/home',
+            'pluginSlug'    => Config::SLUG,
+            'rootURL'       => Config::get('ROOT_URI'),
+            'assetsURL'     => Config::get('ASSET_URI'),
+            'routePrefix'   => Config::VAR_PREFIX,
+            'plugin_dir'    => BFM_ROOT_DIR,
+            'plugin_url'    => BFM_ROOT_URL,
+            'action'        => Config::withPrefix('connector'),
+            'options'       => Plugin::instance()->preferences()->finderOptions(),
+            'telemetry'     => ['tryPlugin' => Config::tryPlugin()],
         ];
     }
 
@@ -204,6 +202,7 @@ class Admin
                 <?php esc_html_e('Please set', 'file-manager'); ?>
                 <b>DISALLOW_FILE_EDIT</b> <?php esc_html_e('to', 'file-manager'); ?>
                 <b>FALSE</b>
+                in wp-config.php
             </div>
             <style>
                 .fm-error {
@@ -298,7 +297,7 @@ class Admin
                 'title'      => __('Dashboard | Bit File Manager', 'file-manager'),
                 'name'       => __('Home', 'file-manager'),
                 'capability' => Hooks::applyFilter('bitapps_fm_can_access_home', 'manage_options'),
-                'slug'       => Config::SLUG . '#elf_l1_Lw/',
+                'slug'       => Config::SLUG . '#/home',
                 'position'   => '2',
             ],
             'Logs'           => [
