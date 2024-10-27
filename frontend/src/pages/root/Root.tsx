@@ -1,4 +1,3 @@
-import { type MouseEventHandler } from 'react'
 import { useEffect, useRef, useState } from 'react'
 
 import $finder, { $finderCurrentPath, $finderViewType } from '@common/globalStates/$finder'
