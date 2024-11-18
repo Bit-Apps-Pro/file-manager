@@ -31,3 +31,4 @@ tsconfig.json
 tsconfig.node.json
 vite.config.mts
 .vscode
+vendor/typisttech
