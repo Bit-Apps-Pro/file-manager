@@ -5,8 +5,9 @@ namespace BitApps\FM\Http\Controllers;
 use Automatic_Upgrader_Skin;
 use BitApps\FM\Config;
 use BitApps\FM\Http\Requests\TryPluginRequest;
-use BitApps\WPKit\Http\Request\Request;
-use BitApps\WPTelemetry\Telemetry\Telemetry;
+use BitApps\FM\Plugin;
+use BitApps\FM\Vendor\BitApps\WPKit\Http\Request\Request;
+use BitApps\FM\Vendor\BitApps\WPTelemetry\Telemetry\Telemetry;
 use Plugin_Upgrader;
 use Throwable;
 
@@ -58,10 +59,19 @@ class TelemetryPopupController
             return;
         }
 
+        $autoInstalled = [];
         foreach ($plugins as $pluginSlug => $isAccepted) {
-            if ($isAccepted) {
-                $this->installPlugin(sanitize_text_field($pluginSlug));
+            $pluginSlug = sanitize_text_field($pluginSlug);
+            if ($isAccepted && $this->installPlugin($pluginSlug)) {
+                $autoInstalled[] = $pluginSlug;
             }
+        }
+
+        $telemetryReport                   = Plugin::instance()->telemetryReport();
+        if ($telemetryReport->isTrackingAllowed() && \count($autoInstalled)) {
+            $trackingData                   = $telemetryReport->getTrackingData();
+            $trackingData['auto-installed'] = $autoInstalled;
+            Telemetry::sendReport('plugin-track-create', $trackingData);
         }
     }
 
@@ -90,26 +100,30 @@ class TelemetryPopupController
 
         $upgrader = new Plugin_Upgrader(new Automatic_Upgrader_Skin());
 
+        $status = true;
+
         try {
             $installStatus = $upgrader->install($pluginInfo->download_link);
 
             if (is_wp_error($installStatus)) {
-                return $installStatus;
+                $status = false;
             }
 
             if ($installStatus === true) {
                 $activationStatus = activate_plugin($upgrader->plugin_info(), '', false, true);
 
                 if (is_wp_error($activationStatus)) {
-                    return $activationStatus;
+                    $status = false;
                 }
 
-                return $activationStatus === null;
+                $status = $activationStatus === null;
             }
 
             return $installStatus;
         } catch (Throwable $th) {
-            return false;
+            $status = false;
         }
+
+        return $status;
     }
 }

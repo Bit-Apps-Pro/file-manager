@@ -21,12 +21,13 @@ use BitApps\FM\Providers\PreferenceProvider;
 use BitApps\FM\Providers\VersionMigrationProvider;
 use BitApps\FM\Views\Admin;
 use BitApps\FM\Views\Shortcode;
-use BitApps\WPKit\Hooks\Hooks;
-use BitApps\WPKit\Http\RequestType;
+use BitApps\FM\Vendor\BitApps\WPKit\Hooks\Hooks;
+use BitApps\FM\Vendor\BitApps\WPKit\Http\RequestType;
 
-use BitApps\WPKit\Migration\MigrationHelper;
-use BitApps\WPTelemetry\Telemetry\Telemetry;
-use BitApps\WPTelemetry\Telemetry\TelemetryConfig;
+use BitApps\FM\Vendor\BitApps\WPKit\Migration\MigrationHelper;
+use BitApps\FM\Vendor\BitApps\WPTelemetry\Telemetry\Report\Report;
+use BitApps\FM\Vendor\BitApps\WPTelemetry\Telemetry\Telemetry;
+use BitApps\FM\Vendor\BitApps\WPTelemetry\Telemetry\TelemetryConfig;
 
 final class Plugin
 {
@@ -370,8 +371,23 @@ final class Plugin
         TelemetryConfig::setTermsUrl('https://bitapps.pro/terms-of-service/');
         TelemetryConfig::setPolicyUrl('https://bitapps.pro/refund-policy/');
 
-        Telemetry::report()->init();
+        $this->telemetryReport();
         Telemetry::feedback()->init();
+    }
+
+    /**
+     * Telemetry Report Instance
+     * 
+     * @return Report
+     */
+    public function telemetryReport() {
+        if (!isset($this->_container['telemetry_report'])) {
+            $telemetryReport = Telemetry::report();
+            $this->_container['telemetry_report'] = $telemetryReport;
+            $telemetryReport->init();
+        }
+
+        return  $this->_container['telemetry_report'];
     }
 
     /**
