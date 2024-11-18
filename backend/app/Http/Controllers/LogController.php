@@ -5,8 +5,8 @@ namespace BitApps\FM\Http\Controllers;
 use BitApps\FM\Config;
 use BitApps\FM\Http\Requests\Log\DeleteLogRequest;
 use BitApps\FM\Http\Services\LogService;
-use BitApps\WPKit\Http\Request\Request;
-use BitApps\WPKit\Http\Response;
+use BitApps\FM\Vendor\BitApps\WPKit\Http\Request\Request;
+use BitApps\FM\Vendor\BitApps\WPKit\Http\Response;
 
 final class LogController
 {

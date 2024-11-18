@@ -4,7 +4,7 @@ use BitApps\FM\Http\Controllers\LogController;
 use BitApps\FM\Http\Controllers\PermissionsController;
 use BitApps\FM\Http\Controllers\SettingsController;
 use BitApps\FM\Http\Controllers\TelemetryPopupController;
-use BitApps\WPKit\Http\Router\Route;
+use BitApps\FM\Vendor\BitApps\WPKit\Http\Router\Route;
 
 if (!\defined('ABSPATH')) {
     exit;
@@ -27,8 +27,8 @@ Route::group(
         Route::get('permissions/get', [PermissionsController::class, 'get']);
         Route::post('permissions/update', [PermissionsController::class, 'update']);
         Route::get('permissions/user/get', [PermissionsController::class, 'searchUser']);
-        Route::post('permissions/user/add', [PermissionsController::class, 'addPermisisionByUer']);
-        Route::post('permissions/user/delete', [PermissionsController::class, 'deletePermisisionByUer']);
+        Route::post('permissions/user/add', [PermissionsController::class, 'addPermissionByUser']);
+        Route::post('permissions/user/delete', [PermissionsController::class, 'deletePermissionByUser']);
 
         Route::post('telemetry/tryplugin', [TelemetryPopupController::class, 'tryPlugin']);
         Route::post('telemetry_permission_handle', [TelemetryPopupController::class, 'handleTelemetryPermission']);

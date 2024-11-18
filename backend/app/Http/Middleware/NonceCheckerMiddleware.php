@@ -3,7 +3,7 @@
 namespace BitApps\FM\Http\Middleware;
 
 use BitApps\FM\Config;
-use BitApps\WPKit\Http\Request\Request;
+use BitApps\FM\Vendor\BitApps\WPKit\Http\Request\Request;
 
 final class NonceCheckerMiddleware
 {

@@ -4,8 +4,8 @@ namespace BitApps\FM\Http\Requests\Settings;
 
 use BitApps\FM\Http\Rules\ValidPathRule;
 use BitApps\FM\Http\Rules\ValidUIOptionRule;
-use BitApps\WPKit\Http\Request\Request;
-use BitApps\WPKit\Utils\Capabilities;
+use BitApps\FM\Vendor\BitApps\WPKit\Http\Request\Request;
+use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
 
 class SettingsUpdateRequest extends Request
 {

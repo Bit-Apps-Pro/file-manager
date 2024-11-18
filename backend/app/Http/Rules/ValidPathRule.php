@@ -3,7 +3,7 @@
 namespace BitApps\FM\Http\Rules;
 
 use BitApps\FM\Plugin;
-use BitApps\WPValidator\Rule;
+use BitApps\FM\Vendor\BitApps\WPValidator\Rule;
 
 class ValidPathRule extends Rule
 {

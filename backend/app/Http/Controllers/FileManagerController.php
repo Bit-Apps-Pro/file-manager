@@ -8,7 +8,7 @@ use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\FileManagerProvider;
 use BitApps\FM\Providers\FileManager\FileRoot;
 use BitApps\FM\Providers\FileManager\Options;
-use BitApps\WPKit\Utils\Capabilities;
+use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
 use Exception;
 
 final class FileManagerController

@@ -9,7 +9,7 @@ use BitApps\FM\Http\Requests\Permissions\PermissionsUpdateRequest;
 use BitApps\FM\Http\Requests\Permissions\SearchUserRequest;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\PermissionsProvider;
-use BitApps\WPKit\Http\Response;
+use BitApps\FM\Vendor\BitApps\WPKit\Http\Response;
 use WP_User_Query;
 
 final class PermissionsController
@@ -75,7 +75,7 @@ final class PermissionsController
         return Response::success(['users' => $results, 'total' => $total_users, 'pages' => $pages, 'current' => $paged]);
     }
 
-    public function addPermisisionByUer(AddUserPermissionRequest $request)
+    public function addPermissionByUser(AddUserPermissionRequest $request)
     {
         if (Plugin::instance()->permissions()->addByUser($request->id, ['path' => $request->path, 'commands' => $request->commands])) {
             return Response::success([])->message(__('Permission granted to user', 'file-manager'));
@@ -84,7 +84,7 @@ final class PermissionsController
         return Response::error([])->message(__('Unable to add user permission', 'file-manager'));
     }
 
-    public function deletePermisisionByUer(DeleteUserPermissionRequest $request)
+    public function deletePermissionByUser(DeleteUserPermissionRequest $request)
     {
         if (Plugin::instance()->permissions()->removeByUser($request->id)) {
             return Response::success([])->message(__('User permission revoked', 'file-manager'));

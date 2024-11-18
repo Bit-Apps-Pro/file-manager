@@ -2,7 +2,7 @@
 
 namespace BitApps\FM\Http\Rules;
 
-use BitApps\WPValidator\Rule;
+use BitApps\FM\Vendor\BitApps\WPValidator\Rule;
 
 class ValidUIOptionRule extends Rule
 {

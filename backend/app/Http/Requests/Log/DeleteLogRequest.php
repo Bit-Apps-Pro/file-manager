@@ -2,8 +2,8 @@
 
 namespace BitApps\FM\Http\Requests\Log;
 
-use BitApps\WPKit\Http\Request\Request;
-use BitApps\WPKit\Utils\Capabilities;
+use BitApps\FM\Vendor\BitApps\WPKit\Http\Request\Request;
+use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
 
 class DeleteLogRequest extends Request
 {

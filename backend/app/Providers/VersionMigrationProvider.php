@@ -3,10 +3,10 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\WPDatabase\Schema;
-use BitApps\WPKit\Migration\MigrationHelper;
-use BitApps\WPKit\Utils\Capabilities;
-use BitApps\WPDatabase\Connection;
+use BitApps\FM\Vendor\BitApps\WPDatabase\Schema;
+use BitApps\FM\Vendor\BitApps\WPKit\Migration\MigrationHelper;
+use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
+use BitApps\FM\Vendor\BitApps\WPDatabase\Connection;
 
 \defined('ABSPATH') || exit();
 

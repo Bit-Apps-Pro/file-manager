@@ -3,7 +3,7 @@
 namespace BitApps\FM\Model;
 
 use BitApps\FM\Config;
-use BitApps\WPDatabase\Model;
+use BitApps\FM\Vendor\BitApps\WPDatabase\Model;
 
 /**
  * Model for log

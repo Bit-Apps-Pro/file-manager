@@ -8,9 +8,9 @@ use function BitApps\FM\Functions\view;
 
 use BitApps\FM\Plugin;
 
-use BitApps\WPKit\Hooks\Hooks;
+use BitApps\FM\Vendor\BitApps\WPKit\Hooks\Hooks;
 
-use BitApps\WPKit\Utils\Capabilities;
+use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
 
 /**
  * The admin Layout and page handler class.

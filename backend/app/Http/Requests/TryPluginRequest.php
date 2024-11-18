@@ -2,7 +2,7 @@
 
 namespace BitApps\FM\Http\Requests;
 
-use BitApps\WPKit\Http\Request\Request;
+use BitApps\FM\Vendor\BitApps\WPKit\Http\Request\Request;
 
 class TryPluginRequest extends Request
 {

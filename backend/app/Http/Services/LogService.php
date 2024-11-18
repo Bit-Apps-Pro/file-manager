@@ -5,8 +5,8 @@ namespace BitApps\FM\Http\Services;
 use BitApps\FM\Config;
 use BitApps\FM\Model\Log;
 use BitApps\FM\Plugin;
-use BitApps\WPDatabase\Connection;
-use BitApps\WPDatabase\QueryBuilder;
+use BitApps\FM\Vendor\BitApps\WPDatabase\Connection;
+use BitApps\FM\Vendor\BitApps\WPDatabase\QueryBuilder;
 use DateTime;
 use Throwable;
 

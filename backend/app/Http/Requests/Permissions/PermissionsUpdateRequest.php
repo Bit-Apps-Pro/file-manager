@@ -2,8 +2,8 @@
 
 namespace BitApps\FM\Http\Requests\Permissions;
 
-use BitApps\WPKit\Http\Request\Request;
-use BitApps\WPKit\Utils\Capabilities;
+use BitApps\FM\Vendor\BitApps\WPKit\Http\Request\Request;
+use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Http\Rules\ValidateCommandsRule;
 use BitApps\FM\Http\Rules\ValidateRolesRule;
 use BitApps\FM\Http\Rules\ValidateUsersRule;

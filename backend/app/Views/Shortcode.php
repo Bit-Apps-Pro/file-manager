@@ -5,8 +5,8 @@
 namespace BitApps\FM\Views;
 
 use BitApps\FM\Config;
-use BitApps\WPKit\Hooks\Hooks;
-use BitApps\WPKit\Shortcode\Shortcode as SWrapper;
+use BitApps\FM\Vendor\BitApps\WPKit\Hooks\Hooks;
+use BitApps\FM\Vendor\BitApps\WPKit\Shortcode\Shortcode as SWrapper;
 
 use function BitApps\FM\Functions\view;
 

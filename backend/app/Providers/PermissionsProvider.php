@@ -5,8 +5,8 @@ namespace BitApps\FM\Providers;
 use BitApps\FM\Config;
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
-use BitApps\WPKit\Helpers\Arr;
-use BitApps\WPKit\Utils\Capabilities;
+use BitApps\FM\Vendor\BitApps\WPKit\Helpers\Arr;
+use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
 use WP_User;
 
 \defined('ABSPATH') || exit();

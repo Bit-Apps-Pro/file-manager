@@ -1,10 +1,10 @@
 <?php
 
 use BitApps\FM\Config;
-use BitApps\WPDatabase\Blueprint;
-use BitApps\WPDatabase\Schema;
-use BitApps\WPKit\Migration\Migration;
-use BitApps\WPDatabase\Connection;
+use BitApps\FM\Vendor\BitApps\WPDatabase\Blueprint;
+use BitApps\FM\Vendor\BitApps\WPDatabase\Schema;
+use BitApps\FM\Vendor\BitApps\WPKit\Migration\Migration;
+use BitApps\FM\Vendor\BitApps\WPDatabase\Connection;
 
 if (! \defined('ABSPATH')) {
     exit;

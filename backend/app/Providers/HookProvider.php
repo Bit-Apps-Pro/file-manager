@@ -5,9 +5,9 @@ namespace BitApps\FM\Providers;
 use BitApps\FM\Config;
 use BitApps\FM\Http\Controllers\TelemetryPopupController;
 use BitApps\FM\Plugin;
-use BitApps\WPKit\Hooks\Hooks;
-use BitApps\WPKit\Http\RequestType;
-use BitApps\WPKit\Http\Router\Router;
+use BitApps\FM\Vendor\BitApps\WPKit\Hooks\Hooks;
+use BitApps\FM\Vendor\BitApps\WPKit\Http\RequestType;
+use BitApps\FM\Vendor\BitApps\WPKit\Http\Router\Router;
 
 class HookProvider
 {

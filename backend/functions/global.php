@@ -56,13 +56,13 @@ function bfmLoaded()
     include_once BFM_FINDER_DIR . 'php' . DS . 'autoload.php';
 
     // Autoload vendor files.
-    if (!is_readable(BFM_BASEDIR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload_packages.php')) {
+    if (!is_readable(BFM_BASEDIR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php')) {
         error_log('Failed to load File Manager. Cause: autoload does not exists');
 
         return;
     }
 
-    include_once BFM_BASEDIR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload_packages.php';
+    include_once BFM_BASEDIR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
     include_once BFM_BASEDIR . 'backend' . DIRECTORY_SEPARATOR . 'functions' . DIRECTORY_SEPARATOR . 'common.php';
 
     // Initialize the plugin.

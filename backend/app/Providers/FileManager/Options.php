@@ -3,7 +3,7 @@
 namespace BitApps\FM\Providers\FileManager;
 
 use BitApps\FM\Config;
-use BitApps\WPKit\Hooks\Hooks;
+use BitApps\FM\Vendor\BitApps\WPKit\Hooks\Hooks;
 
 \defined('ABSPATH') || exit();
 class Options
