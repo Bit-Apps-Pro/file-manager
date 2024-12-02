@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { $appConfig } from '@common/globalStates'
 import $finder from '@common/globalStates/$finder'
 import { __ } from '@common/helpers/i18nwrap'
@@ -7,8 +5,7 @@ import config from '@config/config'
 import AntIconWrapper from '@icons/AntIconWrapper'
 import LogoIcn from '@icons/LogoIcn'
 import LogoText from '@icons/LogoText'
-import earlyBirdOffer from '@resource/img/earlyBirdOffer.webp'
-import { Button, Layout, Modal, Select, Space, Typography, notification, theme } from 'antd'
+import { Button, Layout, Select, Space, Typography, notification, theme } from 'antd'
 import { useAtomValue } from 'jotai'
 
 import cls from './TopNavigation.module.css'
@@ -21,19 +18,6 @@ import { items } from './static/MenuItems'
 const { Header } = Layout
 
 export default function TopNavigation() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const showModal = () => {
-    setIsModalOpen(true)
-  }
-
-  const handleOk = () => {
-    setIsModalOpen(false)
-  }
-
-  const handleCancel = () => {
-    setIsModalOpen(false)
-  }
   const {
     token: { colorBgContainer }
   } = theme.useToken()
@@ -80,108 +64,70 @@ export default function TopNavigation() {
   }
 
   return (
-    <>
-      <Header
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          background: isDarkTheme ? colorBgContainer : '#F1F5FF',
-          flexWrap: 'wrap',
-          width: '100%',
-          height: 'auto',
-          zIndex: 1,
-          paddingInline: '10px'
-        }}
-      >
-        <div className={cls.logo}>
-          <LogoIcn size={30} />
-          <LogoText h={35} dark={isDarkTheme} />
-        </div>
-        <Space style={{ paddingInline: '40px', fontSize: '12px' }}>
-          <Typography.Text>Share Your Product Experience!</Typography.Text>
-          <Button
-            style={{ fontSize: 14, borderRadius: 14 }}
-            className={cls.reviewUs}
-            ghost
-            href="https://wordpress.org/support/plugin/file-manager/reviews/#new-post"
-            target="_blank"
-          >
-            Review us
-            <AntIconWrapper>
-              <span
-                className="dashicons dashicons-star-filled"
-                style={{ display: 'inline', fontSize: '14px' }}
-              />
-            </AntIconWrapper>
-          </Button>
-        </Space>
-
-        <Space style={{ paddingInline: '10px', fontSize: '12px' }}>
-          <div className={cls.bitSocialMenu}>
-            <button type="button" onClick={() => showModal()} className={cls.btn}>
-              New Product Released
-              <span className={cls.star} />
-              <span className={cls.star} />
-              <span className={cls.star} />
-              <span className={cls.star} />
-            </button>
-          </div>
-        </Space>
-        <Space id="product-list">
-          {items?.map((item: ProductDetail) => (
-            <Button type="text" title={item.title} key={item.key}>
-              {item.label}
-            </Button>
-          ))}
-        </Space>
-        <Space id="fm-theme-lang">
-          Theme:
-          <Select
-            defaultValue={config.THEME}
-            style={{ width: 'max-content' }}
-            variant="borderless"
-            onChange={handleThemeChange}
-          >
-            {config.THEMES.map(finderTheme => (
-              <Select.Option key={finderTheme.key}>{finderTheme.title}</Select.Option>
-            ))}
-          </Select>
-          <Select
-            defaultValue={config.LANG}
-            style={{ width: 'max-content' }}
-            variant="borderless"
-            onChange={handleLanguageChange}
-          >
-            {languages?.map(lang => <Select.Option key={lang.code}>{lang.name}</Select.Option>)}
-          </Select>
-        </Space>
-      </Header>
-      <Modal
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={null}
-        centered
-        className="bit-social-release-modal"
-      >
-        <a
-          href="https://bit-social.com/?utm_source=bit-fm&utm_medium=inside-plugin&utm_campaign=early-bird-offer"
+    <Header
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        background: isDarkTheme ? colorBgContainer : '#F1F5FF',
+        flexWrap: 'wrap',
+        width: '100%',
+        height: 'auto',
+        zIndex: 1,
+        paddingInline: '10px'
+      }}
+    >
+      <div className={cls.logo}>
+        <LogoIcn size={30} />
+        <LogoText h={35} dark={isDarkTheme} />
+      </div>
+      <Space style={{ paddingInline: '40px', fontSize: '12px' }}>
+        <Typography.Text>Share Your Product Experience!</Typography.Text>
+        <Button
+          style={{ fontSize: 14, borderRadius: 14 }}
+          className={cls.reviewUs}
+          ghost
+          href="https://wordpress.org/support/plugin/file-manager/reviews/#new-post"
           target="_blank"
-          rel="noreferrer"
         >
-          <img src={earlyBirdOffer} alt="Bit Social Release Promotional Banner" width="100%" />
-        </a>
-        <div className={cls.footerBtn}>
-          <a
-            href="https://bit-social.com/?utm_source=bit-fm&utm_medium=inside-plugin&utm_campaign=early-bird-offer"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Get My Discount!
-          </a>
-        </div>
-      </Modal>
-    </>
+          Review us
+          <AntIconWrapper>
+            <span
+              className="dashicons dashicons-star-filled"
+              style={{ display: 'inline', fontSize: '14px' }}
+            />
+          </AntIconWrapper>
+        </Button>
+      </Space>
+
+      <Space id="product-list">
+        {items?.map((item: ProductDetail) => (
+          <Button type="text" title={item.title} key={item.key}>
+            {item.label}
+          </Button>
+        ))}
+      </Space>
+      <Space id="fm-theme-lang">
+        Theme:
+        <Select
+          defaultValue={config.THEME}
+          style={{ width: 'max-content' }}
+          variant="borderless"
+          onChange={handleThemeChange}
+        >
+          {config.THEMES.map(finderTheme => (
+            <Select.Option key={finderTheme.key}>{finderTheme.title}</Select.Option>
+          ))}
+        </Select>
+        <Select
+          defaultValue={config.LANG}
+          style={{ width: 'max-content' }}
+          variant="borderless"
+          onChange={handleLanguageChange}
+        >
+          {languages?.map(lang => <Select.Option key={lang.code}>{lang.name}</Select.Option>)}
+        </Select>
+      </Space>
+    </Header>
   )
 }
