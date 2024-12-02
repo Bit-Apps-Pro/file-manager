@@ -325,6 +325,10 @@ Yes, It is possible to edit writeable files in the wordpress directory using cod
 
 == Upgrade Notice ==
 
+= 6.6.1 =
+
+- No special requirements.
+
 == Changelog ==
 
 = 6.6.2 =
