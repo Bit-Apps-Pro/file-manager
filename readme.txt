@@ -327,8 +327,6 @@ Yes, It is possible to edit writeable files in the wordpress directory using cod
 
 = 6.6.1 =
 
-= 6.6.0 =
-
 - No special requirements.
 
 == Changelog ==

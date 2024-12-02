@@ -23,7 +23,7 @@ class Config
 
     const VERSION = '6.6.1';
 
-    const VERSION_ID = 660;
+    const VERSION_ID = 661;
 
     const DB_VERSION = '1.0';
 
