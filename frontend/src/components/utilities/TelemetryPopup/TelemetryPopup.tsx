@@ -2,11 +2,12 @@
 
 /* eslint-disable no-nested-ternary */
 import type React from 'react'
+import { type ReactElement } from 'react'
 import { Fragment, useState } from 'react'
 
 import request from '@common/helpers/request'
 import config from '@config/config'
-import earlyBirdOffer from '@resource/img/earlyBirdOffer.webp'
+import { type StepProps } from 'antd'
 import { Button, Flex, Modal, Popconfirm, Steps, Typography } from 'antd'
 
 import changeLogs from '../../../changeLog'
@@ -15,6 +16,12 @@ import cls from './TelemetryPopup.module.css'
 type TelemetryPopupProps = {
   isTelemetryModalOpen: boolean
   setIsTelemetryModalOpen: (value: boolean) => void
+}
+
+interface CustomStepProps extends StepProps {
+  id?: string
+  'data-modaltitle': string
+  content: ReactElement
 }
 
 function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: TelemetryPopupProps) {
@@ -50,32 +57,7 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
     request({ action: 'telemetry_permission_handle', data: { isChecked: false } })
   }
 
-  const steps = [
-    {
-      title: '',
-      id: '',
-      'data-modaltitle': 'Bit Social Release',
-      content: (
-        <div className={cls.bitSocialReleaseBanner}>
-          <a
-            href="https://bit-social.com/?utm_source=bit-fm&utm_medium=inside-plugin&utm_campaign=early-bird-offer"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img src={earlyBirdOffer} alt="Bit Social Release Promotional Banner" width="100%" />
-          </a>
-          <div className={cls.footerBtn}>
-            <a
-              href="https://bit-social.com/?utm_source=bit-fm&utm_medium=inside-plugin&utm_campaign=early-bird-offer"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Get My Discount!
-            </a>
-          </div>
-        </div>
-      )
-    },
+  const steps: CustomStepProps[] = [
     {
       title: '',
       'data-modaltitle': 'Bit File Manager 2024 Updates',
