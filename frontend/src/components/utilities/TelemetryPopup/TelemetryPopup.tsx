@@ -8,7 +8,7 @@ import { Fragment, useState } from 'react'
 import request from '@common/helpers/request'
 import config from '@config/config'
 import { type StepProps } from 'antd'
-import { Button, Flex, Modal, Popconfirm, Steps, Typography } from 'antd'
+import { Button, Flex, Modal, Steps, Typography } from 'antd'
 
 import changeLogs from '../../../changeLog'
 import cls from './TelemetryPopup.module.css'
@@ -28,7 +28,6 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
   const [current, setCurrent] = useState(0)
   const { TELEMETRY } = config
   const [isDataNoticeShow, setIsDataNoticeShow] = useState(false)
-  const [isPopConfirmOpen, setIsPopConfirmOpen] = useState(false)
 
   const handleTelemetryAccess = () => {
     request({ action: 'telemetry_permission_handle', data: { isChecked: true } })
@@ -43,16 +42,8 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
     })
     request({ action: 'telemetry/tryplugin', data: { tryPlugin: defaultAccptedPlugin } })
   }
-  const handleTelemetryModalSkip = () => {
-    setIsPopConfirmOpen(true)
-    const modalContent = document.getElementsByClassName('ant-modal-content')
-    if (modalContent.length) {
-      const content = modalContent[0] as HTMLElement
-      content.style.filter = 'blur(2px)'
-    }
-  }
 
-  const handleTelemetryPopConfirmSkip = () => {
+  const handleTelemetryModalSkip = () => {
     setIsTelemetryModalOpen(false)
     request({ action: 'telemetry_permission_handle', data: { isChecked: false } })
   }
@@ -160,28 +151,9 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
           )}
 
           {current === steps.length - 1 && (
-            <Popconfirm
-              title="Help Us Improve Your Experience"
-              description={
-                <>
-                  It has helped us make informed decisions to improve our most popular features, resolve
-                  issues more quickly, and enhance the overall user experience.
-                  <br /> We guarantee no personal data is stored, and there’s absolutely no spam - WE
-                  PROMISE!
-                </>
-              }
-              open={isPopConfirmOpen}
-              onConfirm={() => handleTelemetryAccess()}
-              onCancel={() => handleTelemetryPopConfirmSkip()}
-              okText="Don't Skip"
-              cancelText="I won't accept"
-              placement="topLeft"
-              overlayClassName="telemetry-popconfirm"
-            >
-              <Button className={cls.skipBtn} onClick={handleTelemetryModalSkip}>
-                Skip
-              </Button>
-            </Popconfirm>
+            <Button className={cls.skipBtn} onClick={() => handleTelemetryModalSkip()}>
+              Skip
+            </Button>
           )}
           {current === steps.length - 1 && (
             <Button type="primary" onClick={() => handleTelemetryAccess()}>
