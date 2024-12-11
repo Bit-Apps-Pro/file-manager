@@ -332,6 +332,7 @@ Yes, It is possible to edit writeable files in the wordpress directory using cod
 == Changelog ==
 
 = 6.6.2 =
+- telemetry banner updated
 
 = 6.6.1 =
 -Tested with WordPress Version 6.7.1
