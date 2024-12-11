@@ -325,15 +325,12 @@ Yes, It is possible to edit writeable files in the wordpress directory using cod
 
 == Upgrade Notice ==
 
+== Changelog ==
+
 = 6.6.2 =
 
 = 6.6.1 =
 -Tested with WordPress Version 6.7.1
-
-= 6.6.0 =
-- No special requirements.
-
-== Changelog ==
 
 = 6.6.0 (27 Oct, 2024) =
 - Enhancement: The user permission grant UI has been updated, allowing users to search and grant permissions more efficiently. This resolves out-of-memory issues on the permission page.
