@@ -11,4 +11,133 @@
   padding: 8px 16px; /* Adjust padding as needed */
 }
 
+/*--bit-social-release-button--*/
+
+.bitSocialMenu .btn {
+  position: relative;
+
+  --active: 0.15;
+
+  box-shadow: 0 0 calc(var(--active) * 6em) calc(var(--active) * 3em) hsl(30deg 97% 61% / 75%),
+    0 0.05em 0 0 hsl(30deg calc(var(--active) * 97%) calc((var(--active) * 50%) + 30%)) inset,
+    0 -0.05em 0 0 hsl(30deg calc(var(--active) * 97%) calc(var(--active) * 60%)) inset !important;
+}
+
+.bitSocialMenu button {
+  color: black;
+  font-weight: bold;
+  animation: scaleUpDown 1s ease-in-out infinite;
+  cursor: pointer;
+  background-color: orange;
+  padding: 12px 10px;
+  border-radius: 10px;
+  border: none;
+}
+
+/* stylelint-disable-next-line keyframes-name-pattern */
+@keyframes scaleUpDown {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.star {
+  position: absolute;
+  background-color: white;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  animation: twinkle 2s infinite;
+}
+
+.star:nth-child(1) {
+  top: -5px;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  animation-delay: 0s;
+}
+
+.star:nth-child(2) {
+  bottom: -8px;
+  left: 12%;
+  width: 20px;
+  height: 20px;
+  animation-delay: 0.5s;
+}
+
+.star:nth-child(3) {
+  top: 60%;
+  left: 80%;
+  width: 16px;
+  height: 16px;
+  animation-delay: 1s;
+}
+
+.star:nth-child(4) {
+  top: -20%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  animation-delay: 1s;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(0.5) rotate(180deg);
+  }
+}
+
+.footerBtn {
+  background-color: #fcfbff;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  height: 60px;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.footerBtn a {
+  color: white;
+  font-weight: bold;
+  background-color: #5700fa;
+  padding: 12px 30px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.footerBtn a:hover {
+  background-color: #500cce;
+  color: white;
+}
+
+.footerBtn a:focus {
+  box-shadow: none;
+}
+
+/*--bit-social-release-button--*/
 

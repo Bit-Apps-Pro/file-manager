@@ -5,7 +5,7 @@ Tags: File Manager, Code Editor, Snippet, Code Snippet, Editor
 Requires at least: 5.0
 Tested up to: 6.7.1
 Requires PHP: 7.4
-Stable tag: 6.6.2
+Stable tag: 6.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -220,6 +220,8 @@ sparkles Overview of other products we are offering :
 
 🎉 [**Bit Social**](https://wordpress.org/plugins/bit-social/): Connect your all support assistant in a single button. Floating Chat Widget, Contact Chat Icons, Telegram Chat, Line Messenger, WeChat, WhatsApp, Email, SMS, Call Button & more.
 
+🎉 [**Bit Flows**](https://bit-flows.com/): Advanced workflow automation alternative to Zapier in WordPress.
+
 loudspeaker **Join our community [Bit Apps](https://www.facebook.com/groups/bitapps) & get updates of our plugins.**
 
 == Supported Languages(36) ==
@@ -326,6 +328,9 @@ Yes, It is possible to edit writeable files in the wordpress directory using cod
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 6.6.3 =
+- bit flows promotional modal added
 
 = 6.6.2 =
 - telemetry banner updated
