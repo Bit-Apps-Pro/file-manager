@@ -95,12 +95,13 @@ class AccessControlProvider
             $error = '';
         }
 
-        if (!empty($error)) {
-            try {
+        try {
+            if (!empty($error)) {
                 throw new PreCommandException($error);
-            } catch (PreCommandException $th) {
-                return $th->getError();
             }
+            $this->scanFile($command, $args);
+        } catch (PreCommandException $th) {
+            return $th->getError();
         }
     }
 
@@ -157,5 +158,53 @@ class AccessControlProvider
         }
 
         return false;
+    }
+
+    public function scanFile($command, $args)
+    {
+        if (!\in_array($command, ['put', 'upload']) || \in_array('javascript', Plugin::instance()->permissions()->getEnabledFileType())) {
+            return;
+        }
+        $content = '';
+
+        if ($command === 'upload' && isset($args[0]['FILES']['upload']['tmp_name'])) {
+            $filePath       = '';
+            $fileName       = '';
+            $filePath       = $args[0]['FILES']['upload']['tmp_name'][0];
+            $fileName       = $args[0]['FILES']['upload']['name'][0];
+            $fileTypeAndExt = wp_check_filetype_and_ext($filePath, $fileName);
+            if (isset($fileTypeAndExt['ext'], $fileTypeAndExt['type']) && (strpos($fileTypeAndExt['type'], 'text') !== false || strpos($fileTypeAndExt['type'], 'pdf') !== false)) {
+                $content = file_get_contents($filePath);
+            }
+        } elseif (isset($_REQUEST['content'])) {
+            $content = $_REQUEST['content'];
+        }
+
+        if (empty($content)) {
+            return;
+        }
+
+        $containsJs = false;
+
+        $maliciousPatterns = [
+            '/<script.*?>.*?<\/script>/is',
+            '/onload=["\'].*?["\']/is',
+            '/<.*?javascript:.*?>/is',
+            '/<.*?on\w+=[^>]+>/is',
+            '/\/S \/JavaScript \/JS /is',
+        ];
+
+        foreach ($maliciousPatterns as $pattern) {
+            if (preg_match($pattern, $content)) {
+                $containsJs = true;
+
+                break;
+            }
+        }
+
+        if ($containsJs) {
+
+            throw new PreCommandException(__('The file contains JS code. Please remove the code and try again. Or allow js mimetype', 'file-manager'));
+        }
     }
 }

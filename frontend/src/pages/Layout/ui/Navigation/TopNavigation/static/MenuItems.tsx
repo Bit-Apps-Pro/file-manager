@@ -44,10 +44,10 @@ export const items: Array<ProductDetail> = [
       'Customer Support Button with SMS Call Button, Click to Chat Messenger, Live Chat Support Chat Button'
   },
   {
-    key: 'bit-pi',
+    key: 'bit-flows',
     label: (
-      <a href="https://bitapps.pro" target="_blank" rel="noreferrer">
-        Bit Pi
+      <a href="https://bit-flows.com" target="_blank" rel="noreferrer">
+        Bit Flows
       </a>
     ),
     title: 'An advanced integration plugin for your WordPress website.'

@@ -45,7 +45,7 @@ final class FileManagerController
         );
 
         $finderOptions->setBind(
-            'get.pre file.pre archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre
+            'get.pre file.pre archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre
              extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre
              netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre
              rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre

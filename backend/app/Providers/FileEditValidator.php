@@ -13,6 +13,7 @@ class FileEditValidator
     {
         try {
             $this->checkPermission();
+            Plugin::instance()->accessControl()->scanFile($cmd, $args);
         } catch (PreCommandException $th) {
             return $th->getError();
         }
