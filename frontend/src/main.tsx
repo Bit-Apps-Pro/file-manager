@@ -28,7 +28,7 @@ if (elm) {
   root.render(
     <StrictMode>
       <QueryClientProvider client={queryClient}>
-        <HashRouter>
+        <HashRouter window={window}>
           <AppRoutes />
         </HashRouter>
         <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />

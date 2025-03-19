@@ -1,5 +1,7 @@
 import { type Edge, type Node, type SetViewport, type Viewport } from 'reactflow'
 
+import { type FinderInstance } from 'elfinder'
+
 interface AppStateType {
   flowState: {
     edges: Edge[]
@@ -12,6 +14,7 @@ interface AppStateType {
 declare global {
   interface Window {
     appState: AppStateType
+    elFinder: FinderInstance
   }
 }
 
