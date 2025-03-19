@@ -21,9 +21,9 @@ class Config
 
     const VAR_PREFIX = 'bit_fm_';
 
-    const VERSION = '6.6.3';
+    const VERSION = '6.7';
 
-    const VERSION_ID = 663;
+    const VERSION_ID = 670;
 
     const DB_VERSION = '1.0';
 
@@ -188,9 +188,9 @@ class Config
 
         $pluginToTry = [
             'bit-form/bitforms.php' => [
-                'title' => 'Try Bit Form: Super Fast, Advanced & Lightweight form builder for WordPress. Create Multi Step Form, Conversational Form, Quiz Form Completely Free.',
+                'title'    => 'Try Bit Form: Super Fast, Advanced & Lightweight form builder for WordPress. Create Multi Step Form, Conversational Form, Quiz Form Completely Free.',
                 'tutorial' => 'https://www.youtube.com/embed/BUX6-BIPfSA?rel=0&autoplay=1&mute=1&controls=0',
-                'slug'  => 'bit-form',
+                'slug'     => 'bit-form',
             ]
         ];
 

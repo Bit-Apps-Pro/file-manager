@@ -12,6 +12,13 @@ const supportInfo = {
   bitAppsLogo: 'https://bitapps.pro/wp-content/uploads/2023/03/bit-apps.svg',
   pluginsList: [
     {
+      name: 'Bit Flows',
+      icon: 'https://ps.w.org/bit-pi/assets/icon-256x256.png?rev=3228494',
+      description: 'Communicate with your customers using different messaging apps.',
+      doc: 'https://bit-flows.com/users-guide/',
+      url: 'https://wordpress.org/plugin/bit-pi'
+    },
+    {
       name: 'Bit Form',
       icon: 'https://ps.w.org/bit-form/assets/icon-128x128.gif?rev=2947008',
       description: 'A drag and drop form builder that allows you to create complex form in a minute.',
@@ -35,20 +42,12 @@ const supportInfo = {
     },
     {
       name: 'Bit Social',
-      icon: 'https://s.w.org/plugins/geopattern-icon/bit-social.svg',
+      icon: 'https://ps.w.org/bit-social/assets/icon-128x128.gif?rev=3176768',
       description:
         'The easiest WordPress plugin for automatic social media posting which allows you to automatically share your WordPress posts on social media platforms..',
       doc: 'https://bitapps.pro/docs/bit-social',
       url: 'https://wordpress.org/plugin/bit-social'
     }
-    /* ,
-    {
-      name: 'Bit Pi',
-      icon: '',
-      description: 'Communicate with your customers using different messaging apps.',
-      doc: 'https://bitapps.pro/docs/bit-pi',
-      url: 'https://wordpress.org/plugin/bit-pi'
-    } */
   ]
 }
 
