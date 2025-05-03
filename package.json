@@ -81,7 +81,6 @@
     "eslint-visitor-keys": "^3.4.3",
     "gettext-parser": "^8.0.0",
     "lodash": "^4.17.21",
-    "node-sass": "^7.0.3",
     "onchange": "^7.1.0",
     "postcss-csso": "^6.0.1",
     "prettier": "^3.3.3",
