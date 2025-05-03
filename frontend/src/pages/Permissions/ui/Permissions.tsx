@@ -99,13 +99,19 @@ function Permissions() {
               name="do_not_use_for_admin"
               label={__('Disable this permission inside WordPress dashboard')}
               tooltip={__(
-                'If disabled, the root folder for the file manager will be determined by this permission setting.'
+                'When this option is enabled, the File Manager within the WordPress dashboard will operate independently of the permission settings configured for users and user roles.'
               )}
             >
               <Switch />
             </Form.Item>
 
-            <Form.Item name="fileType" label="Allowed MIME types">
+            <Form.Item 
+            name="fileType" 
+            label="Allowed MIME types"
+            tooltip={__(
+              'Enable only the MIME types you need. Allowing unnecessary types may pose security risks.'
+            )}
+            >
               <Select mode="multiple">
                 {fileTypes?.map(fileType => (
                   <Select.Option key={fileType} value={fileType}>

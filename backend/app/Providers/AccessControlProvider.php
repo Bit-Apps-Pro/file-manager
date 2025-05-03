@@ -172,14 +172,20 @@ class AccessControlProvider
             $fileName       = '';
             $filePath       = $args[0]['FILES']['upload']['tmp_name'][0];
             $fileName       = $args[0]['FILES']['upload']['name'][0];
-            $fileTypeAndExt = wp_check_filetype_and_ext($filePath, $fileName);
-            if (isset($fileTypeAndExt['ext'], $fileTypeAndExt['type']) && (strpos($fileTypeAndExt['type'], 'text') !== false || strpos($fileTypeAndExt['type'], 'pdf') !== false)) {
+            $fileTypeAndExt = wp_check_filetype_and_ext($filePath, $fileName, $args[0]['FILES']['upload']['type'][0]);
+
+            if (
+                isset($fileTypeAndExt['ext'], $fileTypeAndExt['type']) 
+            && (strpos($fileTypeAndExt['type'], 'text') !== false || strpos($fileTypeAndExt['type'], 'pdf') !== false)
+            || current_user_can('administrator')
+            ) {
                 $content = file_get_contents($filePath);
+            } else {
+                throw new PreCommandException(__('Failed to process the file', 'file-manager'));
             }
         } elseif (isset($_REQUEST['content'])) {
             $content = $_REQUEST['content'];
         }
-
         if (empty($content)) {
             return;
         }
@@ -193,14 +199,16 @@ class AccessControlProvider
             '/<.*?on\w+=[^>]+>/is',
             '/\/S \/JavaScript \/JS /is',
         ];
-
+        
         foreach ($maliciousPatterns as $pattern) {
             if (preg_match($pattern, $content)) {
                 $containsJs = true;
-
+                
                 break;
             }
         }
+
+
 
         if ($containsJs) {
 
