@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { __ } from '@common/helpers/i18nwrap'
 import config from '@config/config'
 import LucideIcn from '@icons/LucideIcn'
 import { Avatar, Card, Col, Flex, Row, Skeleton, Space, Typography, theme } from 'antd'
@@ -65,8 +66,10 @@ export default function Support() {
           <div className="mb-5">
             <Title level={5}>Support</Title>
             <Paragraph style={{ color: token.colorTextSecondary }}>
-              In Bit Apps, we provide all kind product support for any types of customer, it dose not
-              matter FREE or PRO user. We actively provide support through Email and Live Chat.
+              {__(
+                'In Bit Apps, we provide all kind product support for any types of customer, it dose not matter FREE or PRO user.'
+              )}
+              {__('We actively provide support through Email and Live Chat.')}
             </Paragraph>
 
             <Space direction="vertical">
@@ -88,7 +91,7 @@ export default function Support() {
                 <Flex gap={10}>
                   <LucideIcn name="MessageCircle" size={18} />
                   <Link href={supportInfo.supportLink} strong>
-                    Chat here{' '}
+                    {__('Chat here')}
                     <LucideIcn name="MoveUpRight" size={12} style={{ transform: 'translateY(-4px)' }} />
                   </Link>
                 </Flex>

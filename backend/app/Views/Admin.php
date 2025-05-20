@@ -304,7 +304,7 @@ class Admin
             'Logs'           => [
                 'parent'     => Config::SLUG,
                 'type'       => 'submenu',
-                'name'       => 'Logs',
+                'name'       => __('Logs', 'file-manager'),
                 'title'      => __('Logs | Bit File Manager', 'file-manager'),
                 'capability' => Hooks::applyFilter('bitapps_fm_can_access_logs', 'install_plugins'),
                 'slug'       => Config::SLUG . '#/logs',
@@ -312,7 +312,7 @@ class Admin
             'Settings'           => [
                 'parent'     => Config::SLUG,
                 'type'       => 'submenu',
-                'name'       => 'Settings',
+                'name'       => __('Settings', 'file-manager'),
                 'title'      => __('Settings | Bit File Manager', 'file-manager'),
                 'capability' => Hooks::applyFilter('bitapps_fm_can_change_settings', 'install_plugins'),
                 'slug'       => Config::SLUG . '#/settings',
@@ -320,7 +320,7 @@ class Admin
             'Permissions'        => [
                 'parent'     => Config::SLUG,
                 'type'       => 'submenu',
-                'name'       => 'Permissions',
+                'name'       => __('Permissions', 'file-manager'),
                 'title'      => __(
                     'Permissions - Sets permission for specific user or by user role | Bit File Manager',
                     'file-manager'
@@ -331,7 +331,7 @@ class Admin
             'Support' => [
                 'parent'     => Config::SLUG,
                 'type'       => 'submenu',
-                'name'       => 'Support',
+                'name'       => __('Support', 'file-manager'),
                 'title'      => __(
                     'Support | Bit File Manager',
                     'file-manager'
@@ -342,7 +342,7 @@ class Admin
             'System Information' => [
                 'parent'     => Config::SLUG,
                 'type'       => 'submenu',
-                'name'       => 'System Information',
+                'name'       => __('System Information', 'file-manager'),
                 'title'      => __(
                     'System Information | Bit File Manager',
                     'file-manager'

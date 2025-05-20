@@ -99,7 +99,7 @@ export default function TopNavigation() {
           <LogoText h={35} dark={isDarkTheme} />
         </div>
         <Space style={{ paddingInline: '40px', fontSize: '12px' }}>
-          <Typography.Text>Share Your Product Experience!</Typography.Text>
+          <Typography.Text>{__('Share Your Product Experience')}!</Typography.Text>
           <Button
             style={{ fontSize: 14, borderRadius: 14 }}
             className={cls.reviewUs}
@@ -107,7 +107,7 @@ export default function TopNavigation() {
             href="https://wordpress.org/support/plugin/file-manager/reviews/#new-post"
             target="_blank"
           >
-            Review us
+            {__('Review us')}
             <AntIconWrapper>
               <span
                 className="dashicons dashicons-star-filled"
@@ -120,7 +120,7 @@ export default function TopNavigation() {
         <Space style={{ paddingInline: '10px', fontSize: '12px' }}>
           <div className={cls.bitSocialMenu}>
             <button type="button" onClick={() => showModal()} className={cls.btn}>
-              New Product Released
+              {__('New Product Released')}
               <span className={cls.star} />
               <span className={cls.star} />
               <span className={cls.star} />
@@ -137,10 +137,10 @@ export default function TopNavigation() {
           ))}
         </Space>
         <Space id="fm-theme-lang">
-          Theme:
+          {__('Theme')}:
           <Select
             defaultValue={config.THEME}
-            style={{ width: 'max-content' }}
+            style={{ maxWidth: '140px' }}
             variant="borderless"
             onChange={handleThemeChange}
           >
@@ -150,7 +150,7 @@ export default function TopNavigation() {
           </Select>
           <Select
             defaultValue={config.LANG}
-            style={{ width: 'max-content' }}
+            style={{ maxWidth: 'max-content', minWidth: '115px' }}
             variant="borderless"
             onChange={handleLanguageChange}
           >

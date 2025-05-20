@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import $finder, { $finderCurrentPath, $finderViewType } from '@common/globalStates/$finder'
 import { type BreadcrumbItemType } from '@common/globalStates/GlobalStates'
+import { __ } from '@common/helpers/i18nwrap'
 import request from '@common/helpers/request'
 import config from '@config/config'
 import LucideIcn from '@icons/LucideIcn'
@@ -125,7 +126,7 @@ export default function Root() {
                   elfinder?.exec('upload', [], { _userAction: true, _currentType: 'toolbar' })
                 }
               >
-                Upload
+                {__('Upload')}
               </Button>
               <Button
                 ghost
@@ -134,7 +135,7 @@ export default function Root() {
                   elfinder?.exec('mkdir', [], { _userAction: true, _currentType: 'toolbar' })
                 }
               >
-                Create Folder
+                {__('Create Folder')}
               </Button>
             </Flex>
             <Flex style={{ gap: 15 }}>

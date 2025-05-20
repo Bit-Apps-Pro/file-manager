@@ -75,7 +75,7 @@ function Permissions() {
 
   return (
     <>
-      <Card title="File Manager Shortcode" style={{ marginInline: '0.625rem' }}>
+      <Card title={__('File Manager Shortcode')} style={{ marginInline: '0.625rem' }}>
         <Typography.Text copyable={{ text: '[file-manager]' }}>[file-manager]</Typography.Text>
       </Card>
       <Form
@@ -90,7 +90,7 @@ function Permissions() {
           <Space style={{ display: 'flex', justifyContent: 'right', paddingBlock: '8px' }}>
             <Form.Item style={{ marginBottom: 0 }}>
               <Button type="primary" htmlType="submit" loading={isPermissionUpdating}>
-                Update
+                {__('Update')}
               </Button>
             </Form.Item>
           </Space>
@@ -105,12 +105,12 @@ function Permissions() {
               <Switch />
             </Form.Item>
 
-            <Form.Item 
-            name="fileType" 
-            label="Allowed MIME types"
-            tooltip={__(
-              'Enable only the MIME types you need. Allowing unnecessary types may pose security risks.'
-            )}
+            <Form.Item
+              name="fileType"
+              label={__('Allowed MIME types')}
+              tooltip={__(
+                'Enable only the MIME types you need. Allowing unnecessary types may pose security risks.'
+              )}
             >
               <Select mode="multiple">
                 {fileTypes?.map(fileType => (
@@ -122,23 +122,23 @@ function Permissions() {
             </Form.Item>
 
             <Form.Item name="file_size" label="Max upload Size">
-              <Input type="number" placeholder="Maximum File Size" addonAfter="MB" />
+              <Input type="number" placeholder={__('Maximum File Size')} addonAfter="MB" />
             </Form.Item>
           </Card>
 
           <Card title={__('Public folder options')}>
             <Form.Item name="root_folder">
-              <Input placeholder="Root Folder Path" />
+              <Input placeholder={__('Root Folder Path')} />
             </Form.Item>
 
             <Form.Item name="root_folder_url">
-              <Input placeholder="Root Folder URL" />
+              <Input placeholder={__('Root Folder URL')} />
             </Form.Item>
             <Form.Item name="folder_options" label={__('Folder Options')}>
               <Radio.Group size="large">
-                <Radio value="common">Enable a common folder for everyone</Radio>
-                <Radio value="user">Enable separate folders for each user</Radio>
-                <Radio value="role">Enable folders for each user role</Radio>
+                <Radio value="common">{__('Enable a common folder for everyone')}</Radio>
+                <Radio value="user">{__('Enable separate folders for each user')}</Radio>
+                <Radio value="role">{__('Enable folders for each user role')}</Radio>
               </Radio.Group>
             </Form.Item>
           </Card>
@@ -158,7 +158,7 @@ function Permissions() {
                       }
                     ]} */
                   >
-                    <Input placeholder="Root Folder Path" />
+                    <Input placeholder={__('Root Folder Path')} />
                   </Form.Item>
                   <Form.Item name={['by_role', role, 'commands']} label={__('Enabled Commands')}>
                     <Select mode="multiple">
@@ -214,6 +214,7 @@ function Permissions() {
                       <Button loading={isUserPermissionDeleting && delInProgressId === user.ID}>
                         <DeleteFilled />
                       </Button>
+                      placeholder=" placeholder=" placeholder=" placeholder=" placeholder=" placeholder="
                     </Popconfirm>
                   }
                 >
@@ -228,7 +229,7 @@ function Permissions() {
                       }
                     ]} */
                   >
-                    <Input placeholder="Root Folder Path" />
+                    <Input placeholder={__('Root Folder Path')} />
                   </Form.Item>
                   <Form.Item name={['by_user', user.ID, 'commands']} label={__('Enabled Commands')}>
                     <Select mode="multiple">
@@ -247,7 +248,11 @@ function Permissions() {
             <Form.Item
               name={['guest', 'path']}
               label={__('Path')}
-              /* rules={[
+              /* rules={[">">
+">
+">
+">
+">
                 {
                   // eslint-disable-next-line no-useless-escape
                   pattern: new RegExp(`^${wpRoot}?(?:\/[^\/]+)*\/?$`),
@@ -255,7 +260,7 @@ function Permissions() {
                 }
               ]} */
             >
-              <Input placeholder="Root Folder Path" />
+              <Input placeholder={__('Root Folder Path')} />
             </Form.Item>
             <Form.Item name={['guest', 'can_download']} label={__('can download?')}>
               <Switch />

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { __ } from '@common/helpers/i18nwrap'
 import useDeleteLog from '@pages/Logs/data/useDeleteLog'
 import {
   type LogQueryType,
@@ -13,16 +14,16 @@ import { Col, Row, Space, Table } from 'antd'
 type TableRowSelection<T extends object = object> = TableProps<T>['rowSelection']
 
 const columns: TableColumnsType<LogType> = [
-  { title: 'Id', dataIndex: 'id', key: 'id' },
+  { title: __('Id'), dataIndex: 'id', key: 'id' },
   {
-    title: 'User',
+    title: __('User'),
     dataIndex: 'user',
     key: 'user',
     render: user => user?.display_name ?? ''
   },
-  { title: 'Command', dataIndex: 'command', key: 'command' },
+  { title: __('Command'), dataIndex: 'command', key: 'command' },
   {
-    title: 'Details',
+    title: __('Details'),
     dataIndex: 'details',
     key: 'details',
     render: (details, _record, index) => (
@@ -48,7 +49,7 @@ const columns: TableColumnsType<LogType> = [
       </Space>
     )
   },
-  { title: 'Created', dataIndex: 'created_at', key: 'created_at' }
+  { title: __('Created'), dataIndex: 'created_at', key: 'created_at' }
 ]
 
 export default function Logs() {

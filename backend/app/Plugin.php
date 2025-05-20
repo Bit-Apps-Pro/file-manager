@@ -19,15 +19,15 @@ use BitApps\FM\Providers\MimeProvider;
 use BitApps\FM\Providers\PermissionsProvider;
 use BitApps\FM\Providers\PreferenceProvider;
 use BitApps\FM\Providers\VersionMigrationProvider;
-use BitApps\FM\Views\Admin;
-use BitApps\FM\Views\Shortcode;
 use BitApps\FM\Vendor\BitApps\WPKit\Hooks\Hooks;
 use BitApps\FM\Vendor\BitApps\WPKit\Http\RequestType;
-
 use BitApps\FM\Vendor\BitApps\WPKit\Migration\MigrationHelper;
 use BitApps\FM\Vendor\BitApps\WPTelemetry\Telemetry\Report\Report;
+
 use BitApps\FM\Vendor\BitApps\WPTelemetry\Telemetry\Telemetry;
 use BitApps\FM\Vendor\BitApps\WPTelemetry\Telemetry\TelemetryConfig;
+use BitApps\FM\Views\Admin;
+use BitApps\FM\Views\Shortcode;
 
 final class Plugin
 {
@@ -284,9 +284,25 @@ final class Plugin
                 'ajaxURL'      => admin_url('admin-ajax.php'),
                 'js_url'       => BFM_FINDER_URL . 'js/',
                 'elfinder'     => BFM_FINDER_URL,
-                'translations' => [],
+                'translations' => $this->loadTranslations(),
             ]
         );
+    }
+
+    /**
+     * Load translations for frontend.
+     *
+     * @return array
+     */
+    public function loadTranslations()
+    {
+        $translations = [];
+        if (get_locale() !== 'en_US' && file_exists(Config::get('BASEDIR') . '/languages/generatedString.php')) {
+            include_once Config::get('BASEDIR') . '/languages/generatedString.php';
+            $translations = $i18n_strings;
+        }
+
+        return $translations;
     }
 
     /**
@@ -377,17 +393,18 @@ final class Plugin
 
     /**
      * Telemetry Report Instance
-     * 
+     *
      * @return Report
      */
-    public function telemetryReport() {
+    public function telemetryReport()
+    {
         if (!isset($this->_container['telemetry_report'])) {
-            $telemetryReport = Telemetry::report();
+            $telemetryReport                      = Telemetry::report();
             $this->_container['telemetry_report'] = $telemetryReport;
             $telemetryReport->init();
         }
 
-        return  $this->_container['telemetry_report'];
+        return $this->_container['telemetry_report'];
     }
 
     /**
