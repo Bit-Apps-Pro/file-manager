@@ -187,7 +187,7 @@ class AccessControlProvider
             $filePath       = '';
             $fileName       = '';
             $uploadedFiles = $args[0]['FILES']['upload']['tmp_name'];
-            error_log(print_r($args[0]['FILES']['upload'], true));
+            
             foreach ($uploadedFiles as $index => $tmpName) {
                 $content = '';
                 $filePath       = $args[0]['FILES']['upload']['tmp_name'][$index];
@@ -196,7 +196,6 @@ class AccessControlProvider
                     continue;
                 }
                 $fileTypeAndExt = wp_check_filetype_and_ext($filePath, $fileName);
-    error_log(print_r($fileTypeAndExt, true));
                 if (!empty($fileTypeAndExt['type'])) {
                     if (stripos($fileTypeAndExt['type'], 'javascript') !== false) {
                         $this->scannedResult[] = sprintf(__('This file %s type is not allowed', 'file-manager'), $fileName);
