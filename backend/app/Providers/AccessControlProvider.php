@@ -13,6 +13,15 @@ class AccessControlProvider
 {
     public $settings;
 
+    private $maliciousPatterns = [
+            '/<script.*?>.*?<\/script>/is',
+            '/onload=["\'].*?["\']/is',
+            '/<.*?javascript:.*?>/is',
+            '/<.*?on\w+=[^>]+>/is',
+            '/\/S \/JavaScript \/JS /is',
+        ];
+    private $scannedResult = [];
+
     public function __construct()
     {
         $this->settings = Plugin::instance()->preferences();
@@ -165,42 +174,67 @@ class AccessControlProvider
         if (!\in_array($command, ['put', 'upload']) || \in_array('javascript', Plugin::instance()->permissions()->getEnabledFileType())) {
             return;
         }
-        $content = '';
 
-        if ($command === 'upload' && isset($args[0]['FILES']['upload']['tmp_name'])) {
-            $filePath       = '';
-            $fileName       = '';
-            $filePath       = $args[0]['FILES']['upload']['tmp_name'][0];
-            $fileName       = $args[0]['FILES']['upload']['name'][0];
-            $fileTypeAndExt = wp_check_filetype_and_ext($filePath, $fileName, $args[0]['FILES']['upload']['type'][0]);
-
-            if (
-                isset($fileTypeAndExt['ext'], $fileTypeAndExt['type']) 
-            && (strpos($fileTypeAndExt['type'], 'text') !== false || strpos($fileTypeAndExt['type'], 'pdf') !== false)
-            || current_user_can('administrator')
-            ) {
-                $content = file_get_contents($filePath);
-            } else {
-                throw new PreCommandException(__('Failed to process the file', 'file-manager'));
-            }
-        } elseif (isset($_REQUEST['content'])) {
-            $content = $_REQUEST['content'];
-        }
-        if (empty($content)) {
+        if (isset($args[0]['chunk']) && !empty($args[0]['chunk'])) {
             return;
         }
 
-        $containsJs = false;
+        if (
+            $command === 'upload' &&
+            !empty($args[0]['FILES']['upload']['tmp_name']) &&
+            is_array($args[0]['FILES']['upload']['tmp_name'])
+        ) {
+            $filePath       = '';
+            $fileName       = '';
+            $uploadedFiles = $args[0]['FILES']['upload']['tmp_name'];
+            error_log(print_r($args[0]['FILES']['upload'], true));
+            foreach ($uploadedFiles as $index => $tmpName) {
+                $content = '';
+                $filePath       = $args[0]['FILES']['upload']['tmp_name'][$index];
+                $fileName       = $args[0]['FILES']['upload']['name'][$index];
+                if (empty($filePath)) {
+                    continue;
+                }
+                $fileTypeAndExt = wp_check_filetype_and_ext($filePath, $fileName);
+    error_log(print_r($fileTypeAndExt, true));
+                if (!empty($fileTypeAndExt['type'])) {
+                    if (stripos($fileTypeAndExt['type'], 'javascript') !== false) {
+                        $this->scannedResult[] = sprintf(__('This file %s type is not allowed', 'file-manager'), $fileName);
+                    }
+                    if (
+                        stripos($fileTypeAndExt['type'], 'text') !== false ||
+                        stripos($fileTypeAndExt['type'], 'pdf') !== false
+                    ) {
+                        $content = file_get_contents($filePath);
+                    }
+                } else {
+                    try {
+                        $content = file_get_contents($filePath);
+                    } catch (\Exception $e) {
+                        $this->scannedResult[] = sprintf(__('Failed to process this file %s', 'file-manager'), $fileName);
+                    }
+                }
 
-        $maliciousPatterns = [
-            '/<script.*?>.*?<\/script>/is',
-            '/onload=["\'].*?["\']/is',
-            '/<.*?javascript:.*?>/is',
-            '/<.*?on\w+=[^>]+>/is',
-            '/\/S \/JavaScript \/JS /is',
-        ];
-        
-        foreach ($maliciousPatterns as $pattern) {
+                if (!empty($content)) {
+                    $this->scanForPattern($content, $fileName);
+                }
+            }
+        } elseif (isset($_REQUEST['content'])) {
+            $this->scanForPattern($_REQUEST['content'], '');
+        }
+
+        if (count($this->scannedResult) > 0) {
+            throw new PreCommandException(
+                implode('. >> ', $this->scannedResult)
+            );
+        }
+
+    }
+
+    private function scanForPattern($content, $fileName)
+    {
+        $containsJs = false;
+        foreach ($this->maliciousPatterns as $pattern) {
             if (preg_match($pattern, $content)) {
                 $containsJs = true;
                 
@@ -208,11 +242,10 @@ class AccessControlProvider
             }
         }
 
-
-
         if ($containsJs) {
-
-            throw new PreCommandException(__('The file contains JS code. Please remove the code and try again. Or allow js mimetype', 'file-manager'));
+            $this->scannedResult[] = sprintf(__('This file %s contains JS code. Please remove the code and try again. Or allow js mimetype', 'file-manager'), $fileName);
         }
     }
 }
+
+    

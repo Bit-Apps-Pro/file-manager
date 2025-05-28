@@ -606,7 +606,7 @@ class elFinder
         $this->version = (string)self::$ApiVersion;
 
         // set error handler of WARNING, NOTICE
-        $errLevel = E_WARNING | E_NOTICE | E_USER_WARNING | E_USER_NOTICE | E_STRICT | E_RECOVERABLE_ERROR;
+        $errLevel = E_WARNING | E_NOTICE | E_USER_WARNING | E_USER_NOTICE | E_RECOVERABLE_ERROR;
         if (defined('E_DEPRECATED')) {
             $errLevel |= E_DEPRECATED | E_USER_DEPRECATED;
         }
@@ -3528,7 +3528,7 @@ class elFinder
             }
             if (!$_target || ($file = $volume->upload($fp, $_target, $name, $tmpname, ($_target === $target) ? $hashes : array())) === false) {
                 $errors = array_merge($errors, $this->error(self::ERROR_UPLOAD_FILE, $name, $volume->error()));
-                fclose($fp);
+                is_resource($fp) && fclose($fp);
                 if (!is_uploaded_file($tmpname) && unlink($tmpname)) {
                     unset($GLOBALS['elFinderTempFiles'][$tmpname]);
                 }
@@ -4467,7 +4467,7 @@ var go = function() {
         foreach ($hashes as $hash) {
             $lock = elFinder::$commonTempPath . DIRECTORY_SEPARATOR . self::filenameDecontaminate($hash) . '.lock';
             if ($this->itemLocked($hash)) {
-                $cnt = file_get_contents($lock) + 1;
+                $cnt = (int) file_get_contents($lock) + 1;
             } else {
                 $cnt = 1;
             }
@@ -4492,7 +4492,7 @@ var go = function() {
             return true;
         }
         $lock = elFinder::$commonTempPath . DIRECTORY_SEPARATOR . $hash . '.lock';
-        $cnt = file_get_contents($lock);
+        $cnt = (int)file_get_contents($lock);
         if (--$cnt < 1) {
             unlink($lock);
             return true;

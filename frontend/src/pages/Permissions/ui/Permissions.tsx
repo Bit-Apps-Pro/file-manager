@@ -214,7 +214,6 @@ function Permissions() {
                       <Button loading={isUserPermissionDeleting && delInProgressId === user.ID}>
                         <DeleteFilled />
                       </Button>
-                      placeholder=" placeholder=" placeholder=" placeholder=" placeholder=" placeholder="
                     </Popconfirm>
                   }
                 >
@@ -248,16 +247,10 @@ function Permissions() {
             <Form.Item
               name={['guest', 'path']}
               label={__('Path')}
-              /* rules={[">">
-">
-">
-">
-">
-                {
+              /* rules={[
                   // eslint-disable-next-line no-useless-escape
                   pattern: new RegExp(`^${wpRoot}?(?:\/[^\/]+)*\/?$`),
                   message: __('Folder Path Must be within WordPress root directory')
-                }
               ]} */
             >
               <Input placeholder={__('Root Folder Path')} />

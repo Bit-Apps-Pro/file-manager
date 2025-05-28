@@ -75,6 +75,14 @@ export default function Root() {
         setIsOpening(false)
       })
 
+      finder.bind('uploadfail', () => {
+        finder.toast({
+          mode: 'error',
+          msg: __('Something went wrong while uploading files.'),
+          hideDuration: 5000
+        })
+      })
+
       finder.bind('viewchange', () => {
         changeViewState(finder)
       })

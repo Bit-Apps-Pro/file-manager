@@ -46,13 +46,21 @@ class Logger
          * update: put
          */
         $commandDetails = [];
-        if ($command === 'upload') {
-            $commandDetails = $this->processFileHashForUpload($target, $volume);
-        } else {
-            $commandDetails = $this->processFileHash($command, $target, $volume);
-        }
+        $commandDetails = $this->processFileHash($command, $target, $volume);
 
-        $this->_logger->save($command, $commandDetails);
+        if (isset($commandDetails['files'])) {
+            $this->_logger->save($command, $commandDetails);
+        }
+    }
+    
+    public function logUpload($command, $status, $target, $finder, $volume)
+    {
+        $commandDetails = [];
+            $commandDetails = $this->processFileHashForUpload($target, $volume);
+       
+        if (isset($commandDetails['files'])) {
+            $this->_logger->save($command, $commandDetails);
+        }
     }
 
     /**
@@ -85,15 +93,26 @@ class Logger
         return $details;
     }
 
+    /**
+     * Process targeted file hash to path for upload command
+     *
+     * @param array                                                $target
+     * @param elFinderVolumeDriver | elFinderVolumeLocalFileSystem $volume
+     *
+     * @return array
+     */
     private function processFileHashForUpload($target, $volume)
     {
-        $details = [];
+        if(!empty($target['chunk'])) {
+            return [];
+        }
+        $details['driver']  = \get_class($volume);
+        $details['folder']  = [
+            'path' => str_replace(ABSPATH, '', $volume->getPath($target['target'])),
+            'hash' => $target['target'],
+        ];
+
         if (!empty($target['upload_path'])) {
-            $details['driver']  = \get_class($volume);
-            $details['folder']  = [
-                'path' => str_replace(ABSPATH, '', $volume->getPath($target['target'])),
-                'hash' => $target['target'],
-            ];
             foreach ($target['upload_path'] as $index => $file) {
                 $details['files'][] = [
                     'path' => str_replace(ABSPATH, '', $volume->getPath($file)),
@@ -103,6 +122,19 @@ class Logger
                     break;
                 }
             }
+        } else if (isset($target["FILES"]["upload"]["full_path"])) {
+            $uploadBase = $details['folder']['path'];
+            $files = $target["FILES"]["upload"]["full_path"];
+            foreach ($files as $index => $file) {
+                if ($index > 300 || $file === 'blob') {
+                    break;
+                }
+                $details['files'][] = [
+                    'path' => $uploadBase . DIRECTORY_SEPARATOR . $file,
+                    'hash' => '',
+                ];
+            }
+            
         }
 
         return $details;
