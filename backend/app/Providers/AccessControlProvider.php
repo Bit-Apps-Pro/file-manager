@@ -14,12 +14,12 @@ class AccessControlProvider
     public $settings;
 
     private $maliciousPatterns = [
-            '/<script.*?>.*?<\/script>/is',
-            '/onload=["\'].*?["\']/is',
-            '/<.*?javascript:.*?>/is',
-            '/<.*?on\w+=[^>]+>/is',
-            '/\/S \/JavaScript \/JS /is',
-        ];
+        '/<script\b[^>]*>.*?<\/script>/is',
+        '/<[^>]+?\s(on\w+)\s*=\s*["\'].*?["\']/is',
+        '/<[^>]+?href\s*=\s*["\']\s*javascript:.*?["\']/is',
+        '/\/S\s*\/JavaScript\s*\/JS/is',
+    ];
+
     private $scannedResult = [];
 
     public function __construct()
