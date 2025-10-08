@@ -19,6 +19,7 @@ class SettingsUpdateRequest extends Request
         return [
             'show_url_path'               => ['sanitize:text', 'nullable','boolean'],
             'show_hidden_files'           => ['sanitize:text', 'nullable','boolean'],
+            'wp_media_sync'               => ['sanitize:text', 'nullable','boolean'],
             'create_trash_files_folders'  => ['sanitize:text', 'nullable','boolean'],
             'create_hidden_files_folders' => ['sanitize:text', 'nullable','boolean'],
             'remember_last_dir'           => ['sanitize:text', 'nullable','boolean'],

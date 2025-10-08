@@ -153,9 +153,9 @@ class PreferenceProvider
     {
         $this->preferences['theme'] = $theme;
     }
-
+ 
     /**
-     * Sets theme
+     * Sets Link Path Visibility
      *
      * @param string $view
      */
@@ -577,6 +577,17 @@ class PreferenceProvider
     {
         return \array_key_exists('create_hidden_files_folders', $this->preferences)
          && $this->preferences['create_hidden_files_folders'] ? true : false;
+    }
+
+    public function isWpMediaSyncEnabled()
+    {
+        return \array_key_exists('wp_media_sync', $this->preferences)
+         && $this->preferences['wp_media_sync'] ? true : false;
+    }
+
+    public function toggleWpMediaSync($sync)
+    {
+        $this->preferences['wp_media_sync'] = (bool)$sync;
     }
 
     public function setPermissionForTrashCreation($permission)

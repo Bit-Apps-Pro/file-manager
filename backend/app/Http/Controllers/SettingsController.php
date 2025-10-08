@@ -38,6 +38,7 @@ final class SettingsController
 
         $settingsService = Plugin::instance()->preferences();
 
+        $settingsService->toggleWpMediaSync($updatedSettings['wp_media_sync']);
         $settingsService->setLinkPathVisibility($updatedSettings['show_url_path']);
         $settingsService->setVisibilityOfHiddenFile($updatedSettings['show_hidden_files']);
         $settingsService->setPermissionForTrashCreation($updatedSettings['create_trash_files_folders']);

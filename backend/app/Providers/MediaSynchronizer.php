@@ -2,25 +2,26 @@
 
 namespace BitApps\FM\Providers;
 
+use BitApps\FM\Plugin;
+
 \defined('ABSPATH') or exit();
 class MediaSynchronizer
 {
-    public $wp_upload_directory;
+    public $wpUploadBaseDirectory;
 
     function __construct()
     {
         require_once ABSPATH . 'wp-admin/includes/image.php';
 
-        $this->wp_upload_directory = wp_upload_dir();
-        $this->wp_upload_directory = $this->wp_upload_directory['path'];
+        $this->wpUploadBaseDirectory = wp_upload_dir()['basedir'];
     }
 
     // Triggers when a file is uploaded and initiates the uploading process for single or batch files.
     public function onFileUpload($cmd, &$result, $args, $elfinder, $volume)
     {
         $targetPath = $volume->getPath($args['target']);
-
-        if (strpos($targetPath, $this->wp_upload_directory) !== false) {
+ 
+        if (strpos($targetPath, $this->wpUploadBaseDirectory) !== false && Plugin::instance()->preferences()->isWpMediaSyncEnabled()) {
             $images = [];
             for ($file = 0; $file < \count($args['FILES']['upload']['name']); $file++) {
                 $images[] = [
@@ -34,11 +35,11 @@ class MediaSynchronizer
                 ];
             }
 
-            $this->add_media($images);
+            $this->addMedia($images);
         }
     }
 
-    private function add_media($images)
+    private function addMedia($images)
     {
         foreach ($images as $image) {
             $attachment = [

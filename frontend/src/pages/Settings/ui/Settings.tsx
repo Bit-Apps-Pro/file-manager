@@ -159,6 +159,15 @@ export default function Settings() {
               <Input />
             </Form.Item>
           </Card>
+          <Form.Item
+            label={__('Sync with media library')}
+            name="wp_media_sync"
+            tooltip={__(
+              'If this is enabled and target upload path is within Wordpress upload directory then, files uploaded using file manager will be visible in WordPress media library'
+            )}
+          >
+            <Switch />
+          </Form.Item>
           <Form.Item label={__('Show Hidden Files')} name="show_hidden_files">
             <Switch />
           </Form.Item>

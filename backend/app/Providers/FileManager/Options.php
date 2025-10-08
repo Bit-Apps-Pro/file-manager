@@ -165,7 +165,7 @@ class Options
      */
     public function setBind($commandType, callable $callback)
     {
-        $this->_bind[$commandType] = $callback;
+        $this->_bind[$commandType][] = $callback;
 
         return $this;
     }
