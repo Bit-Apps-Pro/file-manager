@@ -289,7 +289,7 @@ class Admin
                 'capability' => Hooks::applyFilter('can_access_fm_home', 'manage_options'),// fm_capabilities
                 'slug'       => Config::SLUG,
                 'callback'   => [$this, 'dashboard'],
-                'icon'       => 'data:image/svg+xml;base64,' . base64_encode('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 30"> <g fill="#606060"> <path d="M32.82.76H18.64a1 1 0 0 0-.83.46l-1.6 2.5-2.32 3.9a1 1 0 0 1-.89.48H1.19a1 1 0 0 0-1 1v15c0 2.86 1.82 5.17 4 5.17h25.52c2.23 0 4-2.32 4-5.18l.06-22.32a1 1 0 0 0-.95-1.01Z"/> </g> </svg>'),
+                'icon'       => 'data:image/svg+xml;base64,' . base64_encode('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19"><path fill="currentColor" d="M5 8.13v-2.5q0-.82.88-.88H10q.3 0 .63.19l.18.31.31.38.26.3.12.13h5.38q.62.25.68.88v1.18l.19.07q.63.25.81.87v.5l-.12.5-.07.75-.12.63-.19 1.69-.25 2.18-.12.94-.13.63-.06.5q-.3.67-1.06.75H5.87l-.62-.2q-.31-.24-.44-.62v-.37l-.12-.82-.13-1-.43-3.43-.25-1.5v-.5l-.13-.31v-.13c0-.69.63-1.12 1.25-1.12m5.19-1.26-.13-.3v-.2L10 6.2l-.31-.25h-.31l-.44.12-1.44.32-.62.18-.38.07q-.25.13-.19.43v.25l.19.82h8.88l-.13-.44-.12-.57q0-.18-.2-.43l-.37-.07h-.19l-.24.07-.57.12-.75.19-.62.13-.06-.2q-.14-.3-.44-.3h-.31l-.44.12-.5.13Zm.94 2.94h-.26l-.56.13a3.3 3.3 0 0 0-.94 5.69q.75.62 1.7.62h.5a3.1 3.1 0 0 0 3-2.69v-.81a3.1 3.1 0 0 0-3-3h-.2Zm-.38 3.69.25-.31 1.31-1.25q0-.2.19-.19.25 0 .31.13.2.19.13.3l-.13.2-1.87 1.87-.25.13-.13-.07-.81-.81-.06-.12q-.12 0-.13-.2 0-.18.13-.24.06-.12.25-.13.18 0 .25.19Zm0 0"/></svg>'),
                 'position'   => '2',
             ],
             'Home'               => [
@@ -305,6 +305,7 @@ class Admin
                 'parent'     => Config::SLUG,
                 'type'       => 'submenu',
                 'name'       => __('Logs', 'file-manager'),
+
                 'title'      => __('Logs | Bit File Manager', 'file-manager'),
                 'capability' => Hooks::applyFilter('bitapps_fm_can_access_logs', 'install_plugins'),
                 'slug'       => Config::SLUG . '#/logs',

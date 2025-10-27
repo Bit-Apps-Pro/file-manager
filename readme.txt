@@ -1,7 +1,7 @@
-=== Bit File Manager – 100% Free & Open Source File Manager and Code Editor for WordPress ===
+=== File Manager ===
 
 Contributors: bitpressadmin, akaioum, aihimel
-Tags: File Manager, Code Editor, Snippet, Code Snippet, Editor
+Tags: file manager, wp file manager, wordpress file manager, files, ftp
 Requires at least: 5.0
 Tested up to: 6.8.3
 Requires PHP: 7.4
@@ -13,13 +13,13 @@ File manager simplifies file tasks: edit, create, upload, delete, copy, move, re
 
 == Description ==
 
-Best File manager and Code editor plugin for WordPress. You can edit, upload, delete, copy, move, rename, archive and extract files with the file manager plugin. You don’t need to worry about FTP anymore. It is really simple and easy to use.
+File manager and Code editor plugin for WordPress. You can edit, upload, delete, copy, move, rename, archive and extract files with the file manager plugin. You don’t need to worry about FTP anymore. It is really simple and easy to use.
 
 = Advance Plugin Of Your WordPress system =
 
 📢 **Join our new community [File Manager](https://www.facebook.com/groups/bitapps) & get updates of our new plugin.**
 
-📢 **We are open for freelance work/custom development for this plugin. [Connect](https://bitapps.pro/contact) with us for further information.**
+📢 **We are open for freelance work/custom development. [Connect](https://bitapps.pro/contact) with us for further information.**
 
 Just install the plugin by following the standard WordPress plugin install process. All the file management is in one place.
 
@@ -36,7 +36,7 @@ Just install the plugin by following the standard WordPress plugin install proce
 - **Operation Control:** Control 13+ operations for specific user and user roles.
 
 
-== Some Advantages Key of Bit File Manager ==
+== Some Key Advantages of Bit File Manager ==
 
 Shortcode Support : Shortcode support for Bit File Manager to post it anywhere on your website.
 

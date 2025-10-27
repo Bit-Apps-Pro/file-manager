@@ -8,7 +8,7 @@ const commonThemeToken: Partial<AliasToken> = {
   borderRadius: 10,
   borderRadiusSM: 8,
   borderRadiusXS: 4,
-  colorPrimary: '#2bbdff',
+  colorPrimary: '#006afe',
   colorSuccess: '#00ff7d',
   colorWarning: '#ffc041'
 }

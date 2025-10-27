@@ -22,15 +22,11 @@ class TelemetryPopupController
     {
         if ($request->isChecked == true) {
             Telemetry::report()->trackingOptIn();
-            update_option(Config::VAR_PREFIX . 'old_version', Config::VERSION);
-
-            return true;
+        } else {
+            Telemetry::report()->trackingOptOut();
         }
 
-        Telemetry::report()->trackingOptOut();
         update_option(Config::VAR_PREFIX . 'old_version', Config::VERSION);
-
-        return false;
     }
 
     public function isPopupDisabled()
@@ -40,11 +36,10 @@ class TelemetryPopupController
             return true;
         }
 
-        $popupSkipped             = get_option(Config::VAR_PREFIX . 'tracking_skipped');
-        $adminNoticeSkipped       = get_option(Config::VAR_PREFIX . 'tracking_notice_dismissed');
-        $getOldPluginVersion      = get_option(Config::VAR_PREFIX . 'old_version');
+        $popupSkipped             = Config::getOption('tracking_skipped');
+        $adminNoticeSkipped       = Config::getOption('tracking_notice_dismissed');
 
-        return (bool) (($popupSkipped == true || $adminNoticeSkipped == true) && $getOldPluginVersion === Config::VERSION);
+        return $popupSkipped || $adminNoticeSkipped;
     }
 
     public function tryPlugin(TryPluginRequest $request)

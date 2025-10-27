@@ -3,12 +3,11 @@
 /* eslint-disable no-nested-ternary */
 import type React from 'react'
 import { type ReactElement } from 'react'
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 
 import request from '@common/helpers/request'
-import config from '@config/config'
 import { type StepProps } from 'antd'
-import { Button, Flex, Modal, Steps, Typography } from 'antd'
+import { Button, Modal, Steps } from 'antd'
 
 import changeLogs from '../../../changeLog'
 import cls from './TelemetryPopup.module.css'
@@ -26,7 +25,6 @@ interface CustomStepProps extends StepProps {
 
 function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: TelemetryPopupProps) {
   const [current, setCurrent] = useState(0)
-  const { TELEMETRY } = config
   const [isDataNoticeShow, setIsDataNoticeShow] = useState(false)
 
   const handleTelemetryAccess = () => {
@@ -34,14 +32,14 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
     setIsTelemetryModalOpen(false)
   }
 
-  const handleTryPlugin = () => {
+  /* const handleTryPlugin = () => {
     setCurrent(previous => previous + 1)
     const defaultAccptedPlugin: Record<string, boolean> = {}
     Object.values<{ title: string; slug: string }>(TELEMETRY.tryPlugin).map(plugin => {
       defaultAccptedPlugin[plugin.slug] = true
     })
     request({ action: 'telemetry/tryplugin', data: { tryPlugin: defaultAccptedPlugin } })
-  }
+  } */
 
   const handleTelemetryModalSkip = () => {
     setIsTelemetryModalOpen(false)
@@ -101,14 +99,14 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
     }
   ]
 
-  if (TELEMETRY?.tryPlugin && Object.keys(TELEMETRY.tryPlugin).length) {
+  /* if (TELEMETRY?.tryPlugin && Object.keys(TELEMETRY.tryPlugin).length) {
     steps.splice(steps.length - 1, 0, {
       title: '',
       id: 'tryplugin',
       'data-modaltitle': 'Try Bit Apps Plugins',
       content: <TryPlugins />
     })
-  }
+  } */
 
   const next = () => {
     setCurrent(current + 1)
@@ -144,12 +142,12 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
             </Button>
           )}
 
-          {steps[current].id === 'tryplugin' && (
+          {/*           {steps[current].id === 'tryplugin' && (
             <Button type="primary" onClick={handleTryPlugin}>
               Install and Continue
             </Button>
           )}
-
+ */}
           {current === steps.length - 1 && (
             <Button className={cls.skipBtn} onClick={() => handleTelemetryModalSkip()}>
               Skip
@@ -168,7 +166,7 @@ function TelemetryPopup({ isTelemetryModalOpen, setIsTelemetryModalOpen }: Telem
 
 export default TelemetryPopup
 
-function TryPlugins() {
+/* function TryPlugins() {
   const { TELEMETRY } = config
   return (
     <Flex vertical>
@@ -188,4 +186,4 @@ function TryPlugins() {
       )}
     </Flex>
   )
-}
+} */
