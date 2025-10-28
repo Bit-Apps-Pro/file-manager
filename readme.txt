@@ -5,269 +5,242 @@ Tags: file manager, wp file manager, wordpress file manager, files, ftp
 Requires at least: 5.0
 Tested up to: 6.8.3
 Requires PHP: 7.4
-Stable tag: 6.8.4
+Stable tag: 6.8.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-File manager simplifies file tasks: edit, create, upload, delete, copy, move, rename, compress, extract. No more FTP worries; it's easy to use.
+**File Manager lets you manage your WordPress files easily right from your dashboard, no need for FTP or cPanel!**
 
 == Description ==
 
-File manager and Code editor plugin for WordPress. You can edit, upload, delete, copy, move, rename, archive and extract files with the file manager plugin. You don’t need to worry about FTP anymore. It is really simple and easy to use.
+**Bit File Manager is an advanced WordPress file management plugin with a built-in code editor. It allows you to edit, upload, delete, move, rename, archive, and extract files and folders right from your WordPress dashboard.
+A secure and easy solution for file management and code editing in WordPress without FTP access.**
 
-= Advance Plugin Of Your WordPress system =
+Every operation (copy, paste, rename, etc.) can be done with a few clicks or drag-and-drop, **making file management fast**. The intuitive and responsive interface ensure that even beginners can manage theme/plugin files, code snippets, and **media folders** without confusion.
 
-📢 **Join our new community [File Manager](https://www.facebook.com/groups/bitapps) & get updates of our new plugin.**
+**Manage your WordPress files securely. Compress, extract & organize files easily from the WordPress dashboard.**
 
-📢 **We are open for freelance work/custom development. [Connect](https://bitapps.pro/contact) with us for further information.**
+📢 join [our community](https://www.facebook.com/groups/bitapps) & get updates of our new plugin.
 
-Just install the plugin by following the standard WordPress plugin install process. All the file management is in one place.
+📢 We’re open for freelance work or custom development for this plugin. [Reach out](https://bitapps.pro/contact) to us for more details.
 
-- **Frontend:** Enable Bit File Manager plugin for frontend users.
-- **Shortcode Support:** Shortcode support for Bit File Manager to post it anywhere on your website.
-- **Personal User Folder:** Every user has a personal/private folder.
-- **Public User Folder:** All the users can share a common folder.
-- **User Role Folder:** Users with the same role can have a common shared folder.
-- **User Role Permission:** Set permission for user roles.
-- **User Permission:** Set permission for specific users.
-- **File Type:** Control what files can be uploaded and what files can be downloaded.
-- **File Size:** Control the maximum file size that can be uploaded.
-- **Maximum Operations:** Support 13+ types of file operation control.
-- **Operation Control:** Control 13+ operations for specific user and user roles.
+Bit File Manager also smoothly integrates with the WordPress **Media Library**. Uploaded images, PDFs, and zip files can be added to your media folders automatically. This way, managing media folders and other assets is as easy as working with local files, directly in your site’s dashboard.
+
+## 🔥Quick Highlights of File Manager Plugin
+
+- **Frontend Access:** Easily enable the file manager for frontend users.
+- **Shortcode Support:** Add Bit File Manager anywhere on your site using shortcodes.
+- **Personal User Folder:** Each user gets a unique private folder.
+- **Public User Folder:** All users can share a common folder.
+- **User Role Folder:** Shared folders based on user roles.
+- **User Role Permission:** Set permissions for each user role.
+- **User Permission:** Set permissions for individual users.
+- **File Type Control:** Choose what file types can be uploaded/downloaded.
+- **File Size Control:** Set the max file upload size.
+- **Operation Control:** Support and manage 13+ file operations for users and roles.
 
 
-== Some Key Advantages of Bit File Manager ==
+## Key Advantages of File Manager
 
-Shortcode Support : Shortcode support for Bit File Manager to post it anywhere on your website.
+- **Granular Shortcode Support:** Place the file manager plugin anywhere on your site.
+- **User Role Permission:** Admins can control who can read, write, edit, delete, upload, download, archive, extract, etc.
+- **Personal Folder Privacy:** Every user’s private folder is only accessible by them.
+- **Shared Public Folders:** Let all users access and share files in a common folder.
+- **Operation Control:** Fine-tune 13+ operations for users/roles to keep your WordPress files safe.
 
-User Role permission: Admin can set permission for user role. Which user can read, write, edit, delete, upload, download, archive, and extract, etc any kind of file and folder.
+## File Manager for WordPress Features Overview
 
-Personal User Folder: Every user has some personal/private folder. Only that user can access that folder. This folder is not shared with any other user and keep all the files private.
+- **Comprehensive Operations:** Edit, upload, download, delete, copy, move, create folders/files, rename, archive, and extract.
+- **Code Editor and Code Editor:** Edit PHP, JS, CSS, and any text-based files.
+- **Modern UI:** Sleek, light, and user-friendly client UI.
+- **Drag & Drop:** Easily upload files and folders by dragging from your device.
+- **Multiple Views:** Switch between list and icon views.
+- **FTP & cPanel Alternative:** Handle all file management tasks inside WordPress.
+- **Archive Support:** Work with zip, rar, 7z, tar, gzip, bzip2.
+- **Edit Images and Files:** Modify files, including images, without external tools.
+- **Quicklook & Preview:** Instantly preview file contents before downloading.
+- **Directory Size Calculation:** Check directory space usage.
+- **Media Preview:** Preview/play video and audio files.
+- **Search & Sort:** Instantly find and manage files and folders.
+- **Automatic Media Sync:** Media auto-sync to your WordPress Library.
+- **Trash Folder:** Restore deleted files at any time.
+- **High-performance Backend:** Fast and stable for better workflow.
+- **File Activity Log:** Monitor all edits, uploads, and deletions.
+- **Keyboard Shortcuts:** Manage files faster with keyboard shortcuts.
+- **Bulk Selections:** Select multiple files/folders for quick bulk operations.
+- **Move/Copy with Drag & Drop:** Rearrange or duplicate using drag & drop.
+- **Context Menu & Toolbar:** Access advanced features in just a click.
+- **Image Thumbnails:** See quick previews of images for easy management.
+- **Auto-resize on Upload:** Uploaded images are automatically resized.
+- **UTF-8 Naming Support:** Ensures compatible file names/paths.
+- **Sanitizer:** Cleans file/folder names automatically.
+- **Folder Upload:** Upload entire folders in one go.
+- **Chunked Upload:** Upload large files in parts for reliability.
+- **Direct Upload to Folder:** Send files right where you need them.
+- **Custom Archive Names:** Specify archive names during file creation.
+- **File Browsing History:** Track your navigation through folders.
+- **Fully Responsive:** Manage files on desktop, tablet, or phone.
 
-Public User Folder: All the users can share a common folder. All the users can access this folder. This folder is shared with all the users.
+## ⚡ Bit File Manager Features Deep Dive ⚡
 
-Operation Control: Admin can control 13+ operations for specific user and user roles. Admin can control what user can do with files and folders.
 
-= Key Features =
+### Operations (Edit, Upload, Download, Delete)
 
-⭐ Operations (Edit, Upload, Download and Delete)
-⭐ Code Editor to edit php, js, css and any type of text files
-⭐ File manager plugin comes with light and elegant client UI
-⭐ File manager support drag & drop file upload
-⭐ List and Icons view available in File Manager Plugin
-⭐ Alternative to FTP and cPanel
-⭐ Supported Archives (zip, rar, 7z, tar, gzip, bzip2)
-⭐ Image and File Edit Support
-⭐ Quicklook, preview for common file types
-⭐ Calculate directory sizes
-⭐ Video and audio preview/play
-⭐ File manager supports file search and sort
-⭐ Automatic media sync
-⭐ Trash folder
-⭐ High-performance server backend
-⭐ Uses a local file system therefore no need for a database.
-⭐ Keyboard shortcuts available
-⭐ Multiple file/folder selection
-⭐ Move/Copy files with Drag & Drop
-⭐ Rich context menu and toolbar
-⭐ Thumbnails for image files
-⭐ Auto resizes on file upload.
-⭐ UTF-8 Normalizer of file-name and file-path etc.
-⭐ Sanitizer of a file name and file path etc.
-⭐ Folder upload
-⭐ Chunked file upload
-⭐ Upload directly to the folder
-⭐ Create the archive by specifying the file name
-⭐ File browsing history
-⭐ Responsive(Works on tablet and phone)
+Perform all typical file and folder operations: copy, move, upload, create, rename, archive, extract, edit, download, cut, duplicate, paste, delete, and more.  
+Use-case: Admins can manage plugin files such as Contact Form, LMS, WooCommerce, and more with ease.
 
-Elaborate key features of Bit File Manager:
+### User-Friendly UI
 
-🚀 Operations (Edit, Upload, Download and Delete) ++
+The light, clean, and intuitive UI means easy file management for This plugin is simple and easy for everyone. You don’t need any complicated guides.
 
-Admin can do all kinds of operations with files and folders. like (copy, move, upload, create folder/file, rename, archive, extract, edit, etc.)
-Download, upload, cut, copy, duplicate, paste, delete, create a directory, create a file, edit file, rename, archive, extract.
-Use-cases: Admin can manage Contact Form, LMS, WooCommerce, and other plugin files easily.
+### Drag & Drop
 
-🚀 User-Friendly UI ++
-The File Manager plugin comes with a light and elegant client UI. It is very easy to use and understand. Admin can easily manage files and folders. Everything is in one place and even a beginner can use it without reading documentation.
+Upload files/folders by dragging from your computer to your site.  
+Use-case: Instantly edit any file or action hook (like Contact Form) with just a drag-and-drop upload.
 
-🚀 Drag & Drop ++
-File manager plugin supports drag & drop file upload. Admin can upload files and folders by dragging and dropping from the local computer to the remote server. It increases the user experience.
-Use-cases: Admin wants to pause Contact Form submit action hook, then admin can edit the file and comment out the hook.
+### List & Icon Views
 
-🚀 List and Icons view ++
-File manager plugin supports both list view and icons view to list files and folders, So the admin can choose the view type according to his/her preference.
+Switch between list and icon layouts to suit personal admin preferences.
 
-🚀 Alternative to FTP and cPanel ++
-File manager plugin is the best alternative to FTP and cPanel. Admin can edit, update, delete files and folders.
+### FTP & cPanel Alternative
 
-🚀 Supported Archives (zip, rar, 7z, tar, gzip, bzip2) ++
-File manager plugin supports all the popular archive formats. Admin can create, extract, archive files and folders.
-Use-case: Admin can create a zip file of any Contact Form plugin, then download it and send it to the developer for debugging.
+Manage your files and folders directly in WordPress without extra FTP or cPanel steps.
 
-🚀 Image and File Edit Support ++
-This Advance File Manager plugin supports image and file edit. Admin can edit images and files with the file manager plugin.
+### Supported Archives
 
-🚀 Quicklook, preview for common file types ++
-File manager plugin supports quick look and preview for common file types. Admin can preview files and folders before downloading.
-Use-case: After editing any WooCommerce, Contact Form , Tutor Lms file admin can see a quick look of the file.
+Work with all major archive formats: zip, rar, 7z, tar, gzip, bzip2.  
+Use-case: Easily package any plugin folder (like Contact Form) for debugging or transfer.
 
-🚀 Calculate directory sizes ++
-File manager plugin can calculate directory sizes. Admin can easily check the size of the directory.
-Use-case: Admin can calculate Contact form , Page Builder, WooCommerce, LMS plugin directory size.
+### Image & File Editing
 
-🚀 Video and audio preview/play ++
-File manager plugin supports video and audio preview/play. Admin can preview/play video and audio files before downloading.
+Open and edit files (including images) directly from the file manager.
 
-🚀 File manager supports file search and sort ++
-File manager plugin supports file search and sort. Admin can easily search and sort files and folders and take action.
-Use-case: Admin can search Contact Form, WooCommerce, LMS plugin files and folders.
+### Quicklook & Preview
 
-🚀 Automatic media sync ++
-File manager plugin supports automatic media sync. Admin can sync media files automatically.
+Preview common file types (before download) so you can check your work instantly.  
+Use-case: Quickly review WooCommerce, Contact Form, or Tutor LMS file changes.
 
-🚀 Trash folder ++
-File manager plugin supports trash folder. Admin can restore files and folders from the trash folder.
-Use-case: Admin can restore Contact Form, WooCommerce, LMS plugin files and folders from the trash folder.
+### Directory Size Calculation
 
-🚀 High-performance server backend ++
-File manager plugin has a high-performance server backend. Admin can manage files and folders.
+Monitor directory/builder/plugin sizes to manage your resources.  
+Use-case: Easily view Page Builder, WooCommerce, or LMS folder usage.
 
-🚀 Uses a local file system therefore no need for a database. ++
-File manager plugin uses a local file system therefore no need for a database. Admin can manage files and folders without any hassle.
+### Video & Audio Preview/Play
 
-🚀 Keyboard shortcuts available ++
-File manager plugin supports keyboard shortcuts. Admin can easily navigate files and folders.
+Preview and play video/audio files without leaving WordPress.
 
-🚀 Multiple file/folder selection ++
-File manager plugin supports multiple file/folder selections. Admin can manage multiple files and folders at a time.
-Use-case: Admin can select multiple Contact Form, WooCommerce, LMS plugin files and folders and take action.
+### File Search & Sort
 
-🚀 Move/Copy files with Drag & Drop ++
-File manager plugin supports move/copy files with drag & drop. Admin can move/copy files and folders with drag & drop.
-Use-case: Easily move/copy Contact Form, WooCommerce, LMS plugin files and folders with drag & drop.
+Efficiently search and sort to locate any file or folder.  
+Use-case: Search files/folders for plugins like Contact Form, WooCommerce, or LMS.
 
-🚀 Rich context menu and toolbar ++
-File manager plugin supports a rich context menu and toolbar. Admin can manage files and folders without any hassle.
+### Automatic Media Sync
 
-🚀 Thumbnails for image files ++
-File manager plugin supports thumbnails for image files. Admin can manage image files without any hassle.
+Keep media in sync automatically within WordPress.
 
-🚀 Auto resizes on file upload. ++
-File manager plugin supports auto resizes on file upload.
+### Trash Folder
 
-🚀 UTF-8 Normalizer of file-name and file-path etc. ++
-File manager plugin supports UTF-8 Normalizer of file-name and file-path etc. Admin can manage files and folders without any hassle.
+Easily restore deleted files or folders from trash as needed.  
+Use-case: Return WooCommerce, Contact Form, or LMS plugin files you may have deleted.
 
-🚀 Sanitizer of file name and file path etc. ++
-File manager plugin supports sanitizer of file-name and file-path etc. Admin can manage files and folders without any hassle.
+### High-Performance Backend
 
-🚀 Folder upload ++
-File manager plugin supports folder upload. Admin can upload folders.
-Use-case: Admin can upload Contact Form, WooCommerce, LMS plugin folders.
+Built for speed and stability when managing site files.
 
-🚀 Chunked file upload ++
-File manager plugin supports chunked file upload. Admin can upload files.
+### No Database Needed
 
-🚀 Upload directly to the folder ++
-File manager plugin supports uploading directly to the folder. Admin can upload files and folders.
+Using the local file system plugin is simple and easy for everyone. No database setup or storage bloat.
 
-🚀 Creating the archive by specifying the file name ++
-File manager plugin supports creating the archive by specifying the file name. Admin can create archives.
-Use-case: Admin can create archives of Contact Form, WooCommerce, LMS plugin files and folders.
+### Keyboard Shortcuts Available
 
-🚀 File browsing history ++
-File manager plugin supports file browsing history. Admin can manage files and folders.
-Use-case: Admin easily see which plugin files and folders he/she visited.
+Navigate and manage files even faster via keyboard shortcuts.
 
-🚀 Responsive(Works on tablet and phone) ++
-File manager plugin supports responsive design. Admin can manage files and folders from a Desktop, Tablet, and Phone or any other device.
+### Multiple File/Folder Selection
+
+Select and manage several files/folders simultaneously.  
+Use-case: Batch-select and bulk-edit plugin assets.
+
+### Move/Copy with Drag & Drop
+
+Easily move or copy files between folders using intuitive drag & drop.  
+Use-case: Organize plugin files quickly (Contact Form, WooCommerce, LMS).
+
+### Rich Context Menu & Toolbar
+
+Access smart, organized menus for all file management actions.
+
+### Thumbnails for Images
+
+Preview images with thumbnail views for quicker identification.
+
+### Auto-resize on Upload
+
+Images get automatically resized as you upload them.
+
+### UTF-8 Naming Support
+
+Ensures your file/folder names work everywhere.
+
+### Name/Path Sanitizer
+
+Automatic cleaning and correction of all file names and folder paths.
+
+### Folder Upload
+
+Upload one or more folders directly from your device.  
+Use-case: Upload a complete plugin folder in one step.
+
+### Chunked File Upload
+
+Upload large files more reliably by chunking them.
+
+### Direct Upload to Folder
+
+Send files/folders into the right folder in a single action.
+
+### Create Archive with Custom Name
+
+Choose a custom name when creating archives.  
+Use-case: Make archives for plugin files (Contact Form, WooCommerce, LMS) by setting your filename.
+
+### File Browsing History
+
+Track visited folders for convenient backtracking.  
+Use-case: Review which plugin folders you’ve worked in recently.
+
+### Responsive Design
+
+Manage your site’s files from desktop, tablet, or This plugin is simple and easy for everyone. wherever you are.
+
+## Compatibility
+
+If you notice any compatibility issues with a third-party plugin or theme, please let us know through our support forum or our website.
+
+Stay organized, empowered, and efficient with the Bit File Manager plugin. Simple and easy for everyone.
 
 **[Github](https://github.com/Bit-Apps-Pro/file-manager/)**
 
-== What our customer say about Bit File Manager : ==
+## Explore Our Other Products :
 
-`Great! Excellent work.`
-`Works very good! Handy tool`
-`This plugin is just fantastic.`
-`Great and efficient`
-`Worked like a charm!!!!`
-`Does a great job!`
-`What a great plugin!!!!`
-`AWESOME PLUGIN. I use it ALL the time.`
-`Saves using ftp most of the time – Great!`
-`Does what is says, thats good :)`
-`A life saver if ftp access is lost`
-`Reliable and easy to use`
-`I’m using this plugin for many websites and i loved it.`
-`The BEST if you haven´t got FTP access`
-`Great plugin – it just works perfectly`
+- [**Bit Form**](https://bit-form.com/): A powerful WordPress form builder that lets you create **multi-step and conversational forms** with a **smart drag-and-drop builder**. Connect your forms with 50+ apps through **built-in integrations** to automate workflows. Build, customize, and convert with the lightning-fast form solution!
 
-== Compatibility ==
+- [**Bit Integrations**](https://bit-integrations.com/): A no-code WordPress automation plugin that lets you connect **300+ apps and services** to automate your workflows in minutes. With its **3 easy automation methods**, you can automate tasks, sync data, and maximize productivity. It connects your forms, CRMs, LMS, and eCommerce tools all inside WordPress.
 
-We try to make our plugin compatible with as many plugin/theme as possible. If you find any compatibility issue with any 3rd party plugin/theme, kindly report it to us via our plugin support forum or on our website.
+- [**Bit Assist**](https://bitassist.co/): Connect all your customer support channels with a single button. Integrate Floating Chat Widget, WhatsApp, Email, SMS, Telegram, Messenger, and more with Bit Assist.
 
-sparkles Overview of other products we are offering :
+- [**Bit Social**](https://bit-social.com/): A social media automation tool that lets you **auto-post, schedule, and share instantly** across **12+ platforms** like Facebook, Instagram, LinkedIn, X, Pinterest, and more with a smart calendar view.
 
-🎉 [**Bit Form**](https://wordpress.org/plugins/bit-form/): Bit Form is an amazing drag & drop form builder that allows you to create custom forms to interact with your visitors. It gives you the freedom to create any form you want, no coding required.
+- [**Bit Flows**](https://bit-flows.com/): Bit Flows is a powerful automation tool with multi-step, unlimited workflows and advanced tools, including Router, Repeater, Iterator, and JSON Parser. With built-in AI integrations, it’s a more powerful and easier alternative to n8n.
 
-🎉 [**Bit Integrations**](https://wordpress.org/plugins/bit-integrations/): Automate 165+ platforms and Contact form 7, Elementor Form, WooCommerce, Google Sheet, WPForms, Forminator, BuddyBoss, LearnDash, Hubspot, Mail poet, MailChimp, Webhook, ACF, Zapier, Fluent, Forms, CRM, LMS, Membership & many more.
+- [**Bit SMTP**](https://wordpress.org/plugins/bit-smtp/): Bit SMTP makes sending emails from your WordPress site easy and secure, ensuring they reach the right inbox every time.
 
-🎉 [**Bit SMTP**](https://wordpress.org/plugins/bit-smtp/): The ultimate goal of Bit SMTP plugin to make your email deliverability more easy as well as secure.
+Join our **[Bit Apps Community](https://www.facebook.com/groups/bitapps)** for the latest plugin and exclusive features updates!
 
-🎉 [**Bit Assist**](https://wordpress.org/plugins/bit-assist/): Connect your all support assistant in a single button. Floating Chat Widget, Contact Chat Icons, Telegram Chat, Line Messenger, WeChat, WhatsApp, Email, SMS, Call Button & more.
-
-🎉 [**Bit Social**](https://wordpress.org/plugins/bit-social/): Connect your all support assistant in a single button. Floating Chat Widget, Contact Chat Icons, Telegram Chat, Line Messenger, WeChat, WhatsApp, Email, SMS, Call Button & more.
-
-🎉 [**Bit Flows**](https://bit-flows.com/): Advanced workflow automation alternative to Zapier in WordPress.
-
-loudspeaker **Join our community [Bit Apps](https://www.facebook.com/groups/bitapps) & get updates of our plugins.**
-
-== Supported Languages(36) ==
-
-- Arabic
-- Bulgarian
-- Catalan
-- Czech
-- Danish
-- German
-- Greek
-- English
-- Español
-- Persian/Farsi
-- Faroese
-- Française/French
-- Canadienne française/French Canadian
-- Hebrew/hébreu
-- Croatian
-- Hungarian
-- Indonesian
-- Italiano/Italian
-- Japanese
-- Korean
-- Dutch
-- Norwegian
-- Polskie/Polish
-- Português/Porguese
-- Română/Romanian/Moldavian/Moldovan
-- Russian
-- Sinhala
-- Slovak
-- Slovenian
-- Serbian
-- Swedish
-- Türkçe/Turkish
-- Uyghur
-- Ukrainian
-- Vietnamese
-- Chinese
 
 = Telemetry Data =
+Bit File Manager uses [wp-telemetry](https://packagist.org/packages/bitapps/wp-telemetry) to collect some telemetry data upon the user’s confirmation. This helps us to troubleshoot problems faster & make product improvements.
 
-Bit Social uses [wp-telemetry](https://packagist.org/packages/bitapps/wp-telemetry) to collect some telemetry data upon user’s confirmation. This helps us to troubleshoot problems faster & make product improvements.
-
-Wp-Telemetry **DOES NOT IMMEDIATELY** start gathering data, rather it will gather basic telemetry data when a user allows it. We collect the data to ensure great user experience for all our users.
+Wp-Telemetry DOES NOT IMMEDIATELY start gathering data; rather, it will gather basic telemetry data when a user allows it. We collect the data to ensure a great user experience for all our users.
 
 == Installation ==
 
@@ -328,6 +301,10 @@ Yes, It is possible to edit writeable files in the wordpress directory using cod
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 6.8.5 =
+- chore: revamped UI
+- chore: updated php packages
 
 = 6.8.4 =
 - Feat: Added option to sync with WordPress media library. If this is enabled and target upload path is within WordPress upload directory then, files uploaded using file manager will be visible in WordPress media library.

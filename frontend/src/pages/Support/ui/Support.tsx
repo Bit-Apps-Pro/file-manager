@@ -14,7 +14,7 @@ const supportInfo = {
   pluginsList: [
     {
       name: 'Bit Flows',
-      icon: 'https://ps.w.org/bit-pi/assets/icon-256x256.png?rev=3228494',
+      icon: 'https://ps.w.org/bit-pi/assets/icon-256x256.gif?rev=3325692',
       description: 'Communicate with your customers using different messaging apps.',
       doc: 'https://bit-flows.com/users-guide/',
       url: 'https://wordpress.org/plugin/bit-pi'
