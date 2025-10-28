@@ -9,12 +9,14 @@ Stable tag: 6.8.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-**File Manager lets you manage your WordPress files easily right from your dashboard, no need for FTP or cPanel!**
 
 == Description ==
 
-**Bit File Manager is an advanced WordPress file management plugin with a built-in code editor. It allows you to edit, upload, delete, move, rename, archive, and extract files and folders right from your WordPress dashboard.
-A secure and easy solution for file management and code editing in WordPress without FTP access.**
+**File Manager lets you manage your WordPress files easily right from your dashboard, no need for FTP or cPanel!**
+
+**Bit File Manager is an advanced WordPress file management plugin with a built-in code editor. It allows you to edit, upload, delete, move, rename, archive, and extract files and folders right from your WordPress dashboard.**
+
+## A secure and easy solution for file management and code editing in WordPress without FTP access.
 
 Every operation (copy, paste, rename, etc.) can be done with a few clicks or drag-and-drop, **making file management fast**. The intuitive and responsive interface ensure that even beginners can manage theme/plugin files, code snippets, and **media folders** without confusion.
 
