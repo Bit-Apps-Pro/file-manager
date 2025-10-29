@@ -5,7 +5,7 @@ Tags: file manager, wp file manager, wordpress file manager, files, ftp
 Requires at least: 5.0
 Tested up to: 6.8.3
 Requires PHP: 7.4
-Stable tag: 6.8.5
+Stable tag: 6.8.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -299,6 +299,8 @@ Yes, It is possible to edit writeable files in the wordpress directory using cod
 11. Server details
 12. Emailing File
 13. Changing file permission
+14. Shortcode and User/Role based folder permission settings
+15. File Manager activity logs
 
 == Upgrade Notice ==
 

@@ -1,0 +1,51 @@
+name: Run Lefthook on Push
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'feature/*'
+      - 'fix/*'
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: true
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            /tmp/composer-cache
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - uses: php-actions/composer@v6
+        with:
+          php_version: '8.4'
+          version: '2.2'
+          dev: no
+          args: --prefer-dist --no-dev --optimize-autoloader
+
+        # - name: Install php dependencies
+        # run: composer install --prefer-dist --no-progress
+
+      - name: Run Lefthook
+        run: pnpm lefthook run github-actions
