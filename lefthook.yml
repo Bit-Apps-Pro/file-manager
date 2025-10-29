@@ -1,0 +1,52 @@
+pre-push:
+  parallel: true
+  commands:
+    style-lint:
+      glob: '*.{css,scss}'
+      run: pnpm stylelint {staged_files} --aei --fix --quiet
+
+    php-lint:
+      glob: '*.php'
+      run: composer lint
+    php-test:
+      glob: '*php'
+      run: composer test {staged_files}
+    php-compatibility-check:
+      glob: 'backend/**/*.php'
+      run: composer compat {staged_files}
+
+    lint:
+      glob: '*.{js,ts,jsx,tsx}'
+      run: pnpm eslint frontend
+    pretty:
+      glob: '*.{js,ts,jsx,tsx}'
+      run: pnpm pretty:fix
+    ts-check:
+      glob: '*.{ts,tsx}'
+      run: pnpm ts-check
+
+commit-msg:
+  commands:
+    commit-lint:
+      run: pnpm commitlint --edit {1}
+
+github-actions:
+  parallel: true
+  commands:
+    lint:
+      run: pnpm eslint frontend
+    lint-css:
+      run: pnpm lint:css
+    lint-php:
+      run: composer lint
+    php-compatibility-check:
+      run: composer compat
+    prettier:
+      run: pnpm pretty:fix
+    test-js:
+      run: pnpm test
+    ts-check:
+      run: pnpm ts-check
+    # require db conn
+    # test-php:
+    #   run: composer test:unit
