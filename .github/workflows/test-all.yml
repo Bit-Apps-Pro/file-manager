@@ -44,10 +44,10 @@ jobs:
         id: composer-cache
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v4
-        name: Setup package cache
+      - uses: actions/cache/restore@v4
+        name: Restore package cache
+        id: restore-package-cache
         with:
-          save-always: true
           path: |
             ${{ steps.pnpm-cache.outputs.dir }}
             ${{ steps.composer-cache.outputs.dir }}
@@ -60,6 +60,14 @@ jobs:
         run: |
           composer install --prefer-dist --no-progress
           pnpm install
+      
+      - uses: actions/cache/save@v4
+        name: Save package cache
+        if: always() && steps.restore-package-cache.outputs.cache-hit != 'true'
+        with:
+          path: |
+            ${{ steps.pnpm-cache.outputs.dir }}
+            ${{ steps.composer-cache.outputs.dir }}
 
       - name: Run Lefthook
         run: pnpm lefthook run github-actions
