@@ -65,6 +65,7 @@ jobs:
         name: Save package cache
         if: always() && steps.restore-package-cache.outputs.cache-hit != 'true'
         with:
+          key: ${{ steps.restore-package-cache.outputs.cache-primary-key }}
           path: |
             ${{ steps.pnpm-cache.outputs.dir }}
             ${{ steps.composer-cache.outputs.dir }}
