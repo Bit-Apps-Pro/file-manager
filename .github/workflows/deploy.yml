@@ -45,8 +45,8 @@ jobs:
         name: Setup package cache
         with:
           path: |
-            '${{ steps.pnpm-cache.outputs.dir }}'
-            '${{ steps.composer-cache.outputs.dir }}'
+            ${{ steps.pnpm-cache.outputs.dir }}
+            ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-cached-package-${{ hashFiles('**/pnpm-lock.yaml', '**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-cached-package-

@@ -16,36 +16,49 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
+       
+      - name: Setup PHP
+        id: setup-php
+        uses: shivammathur/setup-php@v2
         with:
-          run_install: true
+          php-version: '8.x'
+          tools: composer:v2, wp-cli
 
-      - name: Install Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'pnpm'
+          node-version: 22
 
-      - name: Cache Composer dependencies
-        uses: actions/cache@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "dir=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v4
+        name: Setup package cache
         with:
           path: |
-            /tmp/composer-cache
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+            ${{ steps.pnpm-cache.outputs.dir }}
+            ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-cached-test-package-${{ hashFiles('**/pnpm-lock.yaml', '**/composer.lock') }}
           restore-keys: |
-            ${{ runner.os }}-composer-
+            ${{ runner.os }}-cached-test-package-
 
-      - uses: php-actions/composer@v6
-        with:
-          php_version: '8.4'
-          version: '2.2'
-          dev: no
-          args: --prefer-dist --no-dev --optimize-autoloader
 
-        # - name: Install php dependencies
-        # run: composer install --prefer-dist --no-progress
+      - name: Install dependencies
+        run: |
+          composer install --prefer-dist --no-progress
+          pnpm install
 
       - name: Run Lefthook
         run: pnpm lefthook run github-actions
