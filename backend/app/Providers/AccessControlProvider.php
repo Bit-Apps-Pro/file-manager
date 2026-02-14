@@ -6,6 +6,7 @@ use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
 
 use elFinder;
+use Exception;
 
 \defined('ABSPATH') || exit();
 
@@ -149,6 +150,64 @@ class AccessControlProvider
         return $isNotRequired;
     }
 
+    public function scanFile($command, $args)
+    {
+        if (!\in_array($command, ['put', 'upload']) || \in_array('javascript', Plugin::instance()->permissions()->getEnabledFileType())) {
+            return;
+        }
+
+        if (isset($args[0]['chunk']) && !empty($args[0]['chunk'])) {
+            return;
+        }
+
+        if (
+            $command === 'upload'
+            && !empty($args[0]['FILES']['upload']['tmp_name'])
+            && \is_array($args[0]['FILES']['upload']['tmp_name'])
+        ) {
+            $filePath       = '';
+            $fileName       = '';
+            $uploadedFiles  = $args[0]['FILES']['upload']['tmp_name'];
+
+            foreach ($uploadedFiles as $index => $tmpName) {
+                $content        = '';
+                $filePath       = $args[0]['FILES']['upload']['tmp_name'][$index];
+                $fileName       = $args[0]['FILES']['upload']['name'][$index];
+                if (empty($filePath)) {
+                    continue;
+                }
+                $fileTypeAndExt = wp_check_filetype_and_ext($filePath, $fileName);
+                if (!empty($fileTypeAndExt['type'])) {
+                    if (stripos($fileTypeAndExt['type'], 'javascript') !== false) {
+                        $this->scannedResult[] = \sprintf(__('This file %s type is not allowed', 'file-manager'), $fileName);
+                    }
+                    if (
+                        stripos($fileTypeAndExt['type'], 'text')   !== false
+                        || stripos($fileTypeAndExt['type'], 'pdf') !== false
+                    ) {
+                        $content = file_get_contents($filePath);
+                    }
+                } else {
+                    try {
+                        $content = file_get_contents($filePath);
+                    } catch (Exception $e) {
+                        $this->scannedResult[] = \sprintf(__('Failed to process this file %s', 'file-manager'), $fileName);
+                    }
+                }
+
+                if (!empty($content)) {
+                    $this->scanForPattern($content, $fileName);
+                }
+            }
+        } elseif (isset($_REQUEST['content'])) {
+            $this->scanForPattern($_REQUEST['content'], '');
+        }
+
+        if (\count($this->scannedResult) > 0) {
+            throw new PreCommandException(implode('. >> ', $this->scannedResult));
+        }
+    }
+
     private function isFileAllowedToOpen($args)
     {
         if (isset($args[1]) && $args[1] instanceof elFinder) {
@@ -169,82 +228,19 @@ class AccessControlProvider
         return false;
     }
 
-    public function scanFile($command, $args)
-    {
-        if (!\in_array($command, ['put', 'upload']) || \in_array('javascript', Plugin::instance()->permissions()->getEnabledFileType())) {
-            return;
-        }
-
-        if (isset($args[0]['chunk']) && !empty($args[0]['chunk'])) {
-            return;
-        }
-
-        if (
-            $command === 'upload' &&
-            !empty($args[0]['FILES']['upload']['tmp_name']) &&
-            is_array($args[0]['FILES']['upload']['tmp_name'])
-        ) {
-            $filePath       = '';
-            $fileName       = '';
-            $uploadedFiles = $args[0]['FILES']['upload']['tmp_name'];
-            
-            foreach ($uploadedFiles as $index => $tmpName) {
-                $content = '';
-                $filePath       = $args[0]['FILES']['upload']['tmp_name'][$index];
-                $fileName       = $args[0]['FILES']['upload']['name'][$index];
-                if (empty($filePath)) {
-                    continue;
-                }
-                $fileTypeAndExt = wp_check_filetype_and_ext($filePath, $fileName);
-                if (!empty($fileTypeAndExt['type'])) {
-                    if (stripos($fileTypeAndExt['type'], 'javascript') !== false) {
-                        $this->scannedResult[] = sprintf(__('This file %s type is not allowed', 'file-manager'), $fileName);
-                    }
-                    if (
-                        stripos($fileTypeAndExt['type'], 'text') !== false ||
-                        stripos($fileTypeAndExt['type'], 'pdf') !== false
-                    ) {
-                        $content = file_get_contents($filePath);
-                    }
-                } else {
-                    try {
-                        $content = file_get_contents($filePath);
-                    } catch (\Exception $e) {
-                        $this->scannedResult[] = sprintf(__('Failed to process this file %s', 'file-manager'), $fileName);
-                    }
-                }
-
-                if (!empty($content)) {
-                    $this->scanForPattern($content, $fileName);
-                }
-            }
-        } elseif (isset($_REQUEST['content'])) {
-            $this->scanForPattern($_REQUEST['content'], '');
-        }
-
-        if (count($this->scannedResult) > 0) {
-            throw new PreCommandException(
-                implode('. >> ', $this->scannedResult)
-            );
-        }
-
-    }
-
     private function scanForPattern($content, $fileName)
     {
         $containsJs = false;
         foreach ($this->maliciousPatterns as $pattern) {
             if (preg_match($pattern, $content)) {
                 $containsJs = true;
-                
+
                 break;
             }
         }
 
         if ($containsJs) {
-            $this->scannedResult[] = sprintf(__('This file %s contains JS code. Please remove the code and try again. Or allow js mimetype', 'file-manager'), $fileName);
+            $this->scannedResult[] = \sprintf(__('This file %s contains JS code. Please remove the code and try again. Or allow js mimetype', 'file-manager'), $fileName);
         }
     }
 }
-
-    

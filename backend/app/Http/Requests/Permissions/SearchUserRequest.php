@@ -14,7 +14,6 @@ class SearchUserRequest extends Request
     public function authorize()
     {
         return Capabilities::filter('bitapps_fm_can_search_user', 'list_users');
-
     }
 
     public function rules()

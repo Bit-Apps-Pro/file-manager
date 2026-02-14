@@ -2,7 +2,6 @@
 
 namespace BitApps\FM\Http\Controllers;
 
-use BitApps\FM\Vendor\BitApps\WPKit\Http\Response;
 use BitApps\FM\Http\Requests\Settings\LangUpdateRequest;
 use BitApps\FM\Http\Requests\Settings\SettingsRequest;
 use BitApps\FM\Http\Requests\Settings\SettingsUpdateRequest;
@@ -10,6 +9,7 @@ use BitApps\FM\Http\Requests\Settings\ThemeUpdateRequest;
 use BitApps\FM\Http\Requests\Settings\ToggleViewRequest;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\PreferenceProvider;
+use BitApps\FM\Vendor\BitApps\WPKit\Http\Response;
 
 final class SettingsController
 {

@@ -37,9 +37,9 @@ class FileEditValidator
         if (
             (!\function_exists('exec')  && Capabilities::check('install_plugins'))
             || (\defined('BFM_DISABLE_SYNTAX_CHECK') && BFM_DISABLE_SYNTAX_CHECK)
-            ) {
+        ) {
             return;
-        } else if (!\function_exists('exec')) {
+        } elseif (!\function_exists('exec')) {
             $error = __('exec() is required for php syntax check');
         } else {
             $fp           = tmpfile();
@@ -48,7 +48,7 @@ class FileEditValidator
             fwrite($fp, $content);
             exec('php -l ' . escapeshellarg($tempFilePath), $output, $return);
             fclose($fp);
-            
+
             $errorMessages = [];
 
             foreach ($output as $result) {

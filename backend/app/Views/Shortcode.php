@@ -5,12 +5,14 @@
 namespace BitApps\FM\Views;
 
 use BitApps\FM\Config;
-use BitApps\FM\Vendor\BitApps\WPKit\Hooks\Hooks;
-use BitApps\FM\Vendor\BitApps\WPKit\Shortcode\Shortcode as SWrapper;
 
 use function BitApps\FM\Functions\view;
 
 use BitApps\FM\Plugin;
+
+use BitApps\FM\Vendor\BitApps\WPKit\Hooks\Hooks;
+
+use BitApps\FM\Vendor\BitApps\WPKit\Shortcode\Shortcode as SWrapper;
 
 /**
  * The admin Layout and page handler class.
@@ -27,7 +29,7 @@ class Shortcode
     public function filterConfigVariable($config)
     {
         $options = Plugin::instance()->preferences()->finderOptions();
-        if (count($options['commands'])) {
+        if (\count($options['commands'])) {
             $options['commands'][] = 'sort';
             $options['commands'][] = 'fullscreen';
             $options['commands'][] = 'view';

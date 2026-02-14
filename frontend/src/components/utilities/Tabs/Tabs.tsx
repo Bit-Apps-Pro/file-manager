@@ -37,9 +37,12 @@ export default function Tabs({
   const [pref, setPref] = useState<HTMLDivElement | null>(null)
   const directionNum = prevTabIndex < tabIndex ? 1 : -1
 
-  const ActiveTabPanel = cloneElement(children?.find((c: ReactElement) => c.props.value === tabValue), {
-    panelRef: (r: HTMLDivElement | null) => setPref(r)
-  })
+  const ActiveTabPanel = cloneElement(
+    children?.find((c: ReactElement) => c.props.value === tabValue),
+    {
+      panelRef: (r: HTMLDivElement | null) => setPref(r)
+    }
+  )
 
   const segmentOnchange = (v: SegmentedValue) => {
     setPrevTabIndex(findIndexByValue(tabValue, options))

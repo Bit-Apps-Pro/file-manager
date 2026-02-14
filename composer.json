@@ -26,8 +26,8 @@
   },
   "require": {
     "bitapps/wp-validator": "^1.1.0",
-    "bitapps/wp-kit": "^1.7",
-    "bitapps/wp-database": "^1.6",
+    "bitapps/wp-kit": "^2.2",
+    "bitapps/wp-database": "^1.11",
     "bitapps/wp-telemetry": "^0.0.9",
     "typisttech/imposter-plugin": "^0.6.2"
   },

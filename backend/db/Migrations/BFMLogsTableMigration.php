@@ -2,9 +2,9 @@
 
 use BitApps\FM\Config;
 use BitApps\FM\Vendor\BitApps\WPDatabase\Blueprint;
+use BitApps\FM\Vendor\BitApps\WPDatabase\Connection;
 use BitApps\FM\Vendor\BitApps\WPDatabase\Schema;
 use BitApps\FM\Vendor\BitApps\WPKit\Migration\Migration;
-use BitApps\FM\Vendor\BitApps\WPDatabase\Connection;
 
 if (! \defined('ABSPATH')) {
     exit;

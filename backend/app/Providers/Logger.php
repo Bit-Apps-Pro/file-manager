@@ -52,12 +52,12 @@ class Logger
             $this->_logger->save($command, $commandDetails);
         }
     }
-    
+
     public function logUpload($command, $status, $target, $finder, $volume)
     {
         $commandDetails = [];
-            $commandDetails = $this->processFileHashForUpload($target, $volume);
-       
+        $commandDetails = $this->processFileHashForUpload($target, $volume);
+
         if (isset($commandDetails['files'])) {
             $this->_logger->save($command, $commandDetails);
         }
@@ -103,7 +103,7 @@ class Logger
      */
     private function processFileHashForUpload($target, $volume)
     {
-        if(!empty($target['chunk'])) {
+        if (!empty($target['chunk'])) {
             return [];
         }
         $details['driver']  = \get_class($volume);
@@ -122,9 +122,9 @@ class Logger
                     break;
                 }
             }
-        } else if (isset($target["FILES"]["upload"]["full_path"])) {
+        } elseif (isset($target['FILES']['upload']['full_path'])) {
             $uploadBase = $details['folder']['path'];
-            $files = $target["FILES"]["upload"]["full_path"];
+            $files      = $target['FILES']['upload']['full_path'];
             foreach ($files as $index => $file) {
                 if ($index > 300 || $file === 'blob') {
                     break;
@@ -134,7 +134,6 @@ class Logger
                     'hash' => '',
                 ];
             }
-            
         }
 
         return $details;

@@ -32,7 +32,9 @@ final class LogController
 
     public function delete(DeleteLogRequest $request)
     {
-        $validatedIds = array_map(function($id) { return intval($id);}, $request->ids);
+        $validatedIds = array_map(function ($id) {
+            return \intval($id);
+        }, $request->ids);
         $status = $this->logger->delete($validatedIds);
         if ($status) {
             return Response::success([])->message('log deleted successfully');

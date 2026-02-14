@@ -11,12 +11,14 @@ class FinderConnector extends elFinderConnector
     /**
      * Output json
      * This function is overridden. Some servers disable `fpassthru` function
-     *  which is used in this function 
+     *  which is used in this function
      *
      * @param  array  data to output
      *
-     * @return void
      * @throws elFinderAbortException
+     *
+     * @return void
+     *
      * @author Dmitry (dio) Levashov
      */
     protected function output(array $data)
@@ -40,28 +42,27 @@ class FinderConnector extends elFinderConnector
             }
 
             // clear output buffer
-            while (ob_get_level() && ob_end_clean()) {
-            }
+            while (ob_get_level() && ob_end_clean());
 
-            $toEnd = true;
-            $fp = $data['pointer'];
+            $toEnd    = true;
+            $fp       = $data['pointer'];
             $sendData = !($this->reqMethod === 'HEAD' || !empty($data['info']['xsendfile']));
-            $psize = null;
+            $psize    = null;
             if (($this->reqMethod === 'GET' || !$sendData)
                 && (elFinder::isSeekableStream($fp) || elFinder::isSeekableUrl($fp))
                 && (array_search('Accept-Ranges: none', headers_list()) === false)) {
                 header('Accept-Ranges: bytes');
                 if (!empty($_SERVER['HTTP_RANGE'])) {
                     $size = $data['info']['size'];
-                    $end = $size - 1;
+                    $end  = $size - 1;
                     if (preg_match('/bytes=(\d*)-(\d*)(,?)/i', $_SERVER['HTTP_RANGE'], $matches)) {
                         if (empty($matches[3])) {
                             if (empty($matches[1]) && $matches[1] !== '0') {
                                 $start = $size - $matches[2];
                             } else {
-                                $start = intval($matches[1]);
+                                $start = \intval($matches[1]);
                                 if (!empty($matches[2])) {
-                                    $end = intval($matches[2]);
+                                    $end = \intval($matches[2]);
                                     if ($end >= $size) {
                                         $end = $size - 1;
                                     }
@@ -76,7 +77,7 @@ class FinderConnector extends elFinderConnector
 
                             // Apache mod_xsendfile dose not support range request
                             if (isset($data['info']['xsendfile']) && strtolower($data['info']['xsendfile']) === 'x-sendfile') {
-                                if (function_exists('header_remove')) {
+                                if (\function_exists('header_remove')) {
                                     header_remove($data['info']['xsendfile']);
                                 } else {
                                     header($data['info']['xsendfile'] . ':');
@@ -91,13 +92,13 @@ class FinderConnector extends elFinderConnector
                         }
                     }
                 }
-                if ($sendData && is_null($psize)) {
+                if ($sendData && \is_null($psize)) {
                     elFinder::rewind($fp);
                 }
             } else {
                 header('Accept-Ranges: none');
                 if (isset($data['info']) && !$data['info']['size']) {
-                    if (function_exists('header_remove')) {
+                    if (\function_exists('header_remove')) {
                         header_remove('Content-Length');
                     } else {
                         header('Content-Length:');
@@ -106,7 +107,7 @@ class FinderConnector extends elFinderConnector
             }
 
             if ($sendData) {
-                if (function_exists('fpassthru') && ($toEnd || elFinder::isSeekableUrl($fp))) {
+                if (\function_exists('fpassthru') && ($toEnd || elFinder::isSeekableUrl($fp))) {
                     // PHP < 5.6 has a bug of fpassthru
                     // see https://bugs.php.net/bug.php?id=66736
                     if (version_compare(PHP_VERSION, '5.6', '<')) {
@@ -127,10 +128,8 @@ class FinderConnector extends elFinderConnector
                 fclose($fp);
             }
             exit();
-        } else {
-            self::outputJson($data);
-            exit(0);
         }
+        self::outputJson($data);
+        exit(0);
     }
-
 }
