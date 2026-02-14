@@ -3,10 +3,10 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
-use BitApps\FM\Vendor\BitApps\WPKit\Http\RequestType;
-use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\ClientOptions;
+use BitApps\FM\Vendor\BitApps\WPKit\Http\RequestType;
+use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
 
 \defined('ABSPATH') || exit();
 class PreferenceProvider
@@ -153,7 +153,7 @@ class PreferenceProvider
     {
         $this->preferences['theme'] = $theme;
     }
- 
+
     /**
      * Sets Link Path Visibility
      *
@@ -423,7 +423,7 @@ class PreferenceProvider
     {
         $selectedCode = $this->getDefaultLangCode();
         if (isset($this->preferences['language'])
-        && is_string($this->preferences['language'])
+        && \is_string($this->preferences['language'])
         && isset($this->availableLanguages()[$this->preferences['language']])
         ) {
             $selectedCode = esc_attr($this->preferences['language']);
@@ -587,7 +587,7 @@ class PreferenceProvider
 
     public function toggleWpMediaSync($sync)
     {
-        $this->preferences['wp_media_sync'] = (bool)$sync;
+        $this->preferences['wp_media_sync'] = (bool) $sync;
     }
 
     public function setPermissionForTrashCreation($permission)

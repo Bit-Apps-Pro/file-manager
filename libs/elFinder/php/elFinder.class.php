@@ -11,7 +11,6 @@
  **/
 class elFinder
 {
-
     /**
      * API version number
      *
@@ -32,7 +31,7 @@ class elFinder
      *
      * @var integer
      */
-    protected static $ApiRevision = 65;
+    protected static $ApiRevision = 66;
 
     /**
      * Storages (root dirs)
@@ -421,9 +420,9 @@ class elFinder
 
     /**
      * LAN class allowed when uploading via URL
-     * 
+     *
      * Array keys are 'local', 'private_a', 'private_b', 'private_c' and 'link'
-     * 
+     *
      * local:     127.0.0.0/8
      * private_a: 10.0.0.0/8
      * private_b: 172.16.0.0/12
@@ -480,72 +479,72 @@ class elFinder
     private static $seekableUrlFps = array();
 
     // Errors messages
-    const ERROR_ACCESS_DENIED = 'errAccess';
-    const ERROR_ARC_MAXSIZE = 'errArcMaxSize';
-    const ERROR_ARC_SYMLINKS = 'errArcSymlinks';
-    const ERROR_ARCHIVE = 'errArchive';
-    const ERROR_ARCHIVE_EXEC = 'errArchiveExec';
-    const ERROR_ARCHIVE_TYPE = 'errArcType';
-    const ERROR_CONF = 'errConf';
-    const ERROR_CONF_NO_JSON = 'errJSON';
-    const ERROR_CONF_NO_VOL = 'errNoVolumes';
-    const ERROR_CONV_UTF8 = 'errConvUTF8';
-    const ERROR_COPY = 'errCopy';
-    const ERROR_COPY_FROM = 'errCopyFrom';
-    const ERROR_COPY_ITSELF = 'errCopyInItself';
-    const ERROR_COPY_TO = 'errCopyTo';
-    const ERROR_CREATING_TEMP_DIR = 'errCreatingTempDir';
-    const ERROR_DIR_NOT_FOUND = 'errFolderNotFound';
-    const ERROR_EXISTS = 'errExists';        // 'File named "$1" already exists.'
-    const ERROR_EXTRACT = 'errExtract';
-    const ERROR_EXTRACT_EXEC = 'errExtractExec';
-    const ERROR_FILE_NOT_FOUND = 'errFileNotFound';     // 'File not found.'
-    const ERROR_FTP_DOWNLOAD_FILE = 'errFtpDownloadFile';
-    const ERROR_FTP_MKDIR = 'errFtpMkdir';
-    const ERROR_FTP_UPLOAD_FILE = 'errFtpUploadFile';
-    const ERROR_INV_PARAMS = 'errCmdParams';
-    const ERROR_INVALID_DIRNAME = 'errInvDirname';    // 'Invalid folder name.'
-    const ERROR_INVALID_NAME = 'errInvName';       // 'Invalid file name.'
-    const ERROR_LOCKED = 'errLocked';        // '"$1" is locked and can not be renamed, moved or removed.'
-    const ERROR_MAX_TARGTES = 'errMaxTargets'; // 'Max number of selectable items is $1.'
-    const ERROR_MKDIR = 'errMkdir';
-    const ERROR_MKFILE = 'errMkfile';
-    const ERROR_MKOUTLINK = 'errMkOutLink';        // 'Unable to create a link to outside the volume root.'
-    const ERROR_MOVE = 'errMove';
-    const ERROR_NETMOUNT = 'errNetMount';
-    const ERROR_NETMOUNT_FAILED = 'errNetMountFailed';
-    const ERROR_NETMOUNT_NO_DRIVER = 'errNetMountNoDriver';
-    const ERROR_NETUNMOUNT = 'errNetUnMount';
-    const ERROR_NOT_ARCHIVE = 'errNoArchive';
-    const ERROR_NOT_DIR = 'errNotFolder';
-    const ERROR_NOT_FILE = 'errNotFile';
-    const ERROR_NOT_REPLACE = 'errNotReplace';       // Object "$1" already exists at this location and can not be replaced with object of another type.
-    const ERROR_NOT_UTF8_CONTENT = 'errNotUTF8Content';
-    const ERROR_OPEN = 'errOpen';
-    const ERROR_PERM_DENIED = 'errPerm';
-    const ERROR_REAUTH_REQUIRE = 'errReauthRequire';  // 'Re-authorization is required.'
-    const ERROR_RENAME = 'errRename';
-    const ERROR_REPLACE = 'errReplace';          // 'Unable to replace "$1".'
-    const ERROR_RESIZE = 'errResize';
-    const ERROR_RESIZESIZE = 'errResizeSize';
-    const ERROR_RM = 'errRm';               // 'Unable to remove "$1".'
-    const ERROR_RM_SRC = 'errRmSrc';            // 'Unable remove source file(s)'
-    const ERROR_SAVE = 'errSave';
-    const ERROR_SEARCH_TIMEOUT = 'errSearchTimeout';    // 'Timed out while searching "$1". Search result is partial.'
-    const ERROR_SESSION_EXPIRES = 'errSessionExpires';
-    const ERROR_TRGDIR_NOT_FOUND = 'errTrgFolderNotFound'; // 'Target folder "$1" not found.'
-    const ERROR_UNKNOWN = 'errUnknown';
-    const ERROR_UNKNOWN_CMD = 'errUnknownCmd';
-    const ERROR_UNSUPPORT_TYPE = 'errUsupportType';
-    const ERROR_UPLOAD = 'errUpload';           // 'Upload error.'
-    const ERROR_UPLOAD_FILE = 'errUploadFile';       // 'Unable to upload "$1".'
-    const ERROR_UPLOAD_FILE_MIME = 'errUploadMime';       // 'File type not allowed.'
-    const ERROR_UPLOAD_FILE_SIZE = 'errUploadFileSize';   // 'File exceeds maximum allowed size.'
-    const ERROR_UPLOAD_NO_FILES = 'errUploadNoFiles';    // 'No files found for upload.'
-    const ERROR_UPLOAD_TEMP = 'errUploadTemp';       // 'Unable to make temporary file for upload.'
-    const ERROR_UPLOAD_TOTAL_SIZE = 'errUploadTotalSize';  // 'Data exceeds the maximum allowed size.'
-    const ERROR_UPLOAD_TRANSFER = 'errUploadTransfer';   // '"$1" transfer error.'
-    const ERROR_MAX_MKDIRS = 'errMaxMkdirs'; // 'You can create up to $1 folders at one time.'
+    public const ERROR_ACCESS_DENIED = 'errAccess';
+    public const ERROR_ARC_MAXSIZE = 'errArcMaxSize';
+    public const ERROR_ARC_SYMLINKS = 'errArcSymlinks';
+    public const ERROR_ARCHIVE = 'errArchive';
+    public const ERROR_ARCHIVE_EXEC = 'errArchiveExec';
+    public const ERROR_ARCHIVE_TYPE = 'errArcType';
+    public const ERROR_CONF = 'errConf';
+    public const ERROR_CONF_NO_JSON = 'errJSON';
+    public const ERROR_CONF_NO_VOL = 'errNoVolumes';
+    public const ERROR_CONV_UTF8 = 'errConvUTF8';
+    public const ERROR_COPY = 'errCopy';
+    public const ERROR_COPY_FROM = 'errCopyFrom';
+    public const ERROR_COPY_ITSELF = 'errCopyInItself';
+    public const ERROR_COPY_TO = 'errCopyTo';
+    public const ERROR_CREATING_TEMP_DIR = 'errCreatingTempDir';
+    public const ERROR_DIR_NOT_FOUND = 'errFolderNotFound';
+    public const ERROR_EXISTS = 'errExists';        // 'File named "$1" already exists.'
+    public const ERROR_EXTRACT = 'errExtract';
+    public const ERROR_EXTRACT_EXEC = 'errExtractExec';
+    public const ERROR_FILE_NOT_FOUND = 'errFileNotFound';     // 'File not found.'
+    public const ERROR_FTP_DOWNLOAD_FILE = 'errFtpDownloadFile';
+    public const ERROR_FTP_MKDIR = 'errFtpMkdir';
+    public const ERROR_FTP_UPLOAD_FILE = 'errFtpUploadFile';
+    public const ERROR_INV_PARAMS = 'errCmdParams';
+    public const ERROR_INVALID_DIRNAME = 'errInvDirname';    // 'Invalid folder name.'
+    public const ERROR_INVALID_NAME = 'errInvName';       // 'Invalid file name.'
+    public const ERROR_LOCKED = 'errLocked';        // '"$1" is locked and can not be renamed, moved or removed.'
+    public const ERROR_MAX_TARGTES = 'errMaxTargets'; // 'Max number of selectable items is $1.'
+    public const ERROR_MKDIR = 'errMkdir';
+    public const ERROR_MKFILE = 'errMkfile';
+    public const ERROR_MKOUTLINK = 'errMkOutLink';        // 'Unable to create a link to outside the volume root.'
+    public const ERROR_MOVE = 'errMove';
+    public const ERROR_NETMOUNT = 'errNetMount';
+    public const ERROR_NETMOUNT_FAILED = 'errNetMountFailed';
+    public const ERROR_NETMOUNT_NO_DRIVER = 'errNetMountNoDriver';
+    public const ERROR_NETUNMOUNT = 'errNetUnMount';
+    public const ERROR_NOT_ARCHIVE = 'errNoArchive';
+    public const ERROR_NOT_DIR = 'errNotFolder';
+    public const ERROR_NOT_FILE = 'errNotFile';
+    public const ERROR_NOT_REPLACE = 'errNotReplace';       // Object "$1" already exists at this location and can not be replaced with object of another type.
+    public const ERROR_NOT_UTF8_CONTENT = 'errNotUTF8Content';
+    public const ERROR_OPEN = 'errOpen';
+    public const ERROR_PERM_DENIED = 'errPerm';
+    public const ERROR_REAUTH_REQUIRE = 'errReauthRequire';  // 'Re-authorization is required.'
+    public const ERROR_RENAME = 'errRename';
+    public const ERROR_REPLACE = 'errReplace';          // 'Unable to replace "$1".'
+    public const ERROR_RESIZE = 'errResize';
+    public const ERROR_RESIZESIZE = 'errResizeSize';
+    public const ERROR_RM = 'errRm';               // 'Unable to remove "$1".'
+    public const ERROR_RM_SRC = 'errRmSrc';            // 'Unable remove source file(s)'
+    public const ERROR_SAVE = 'errSave';
+    public const ERROR_SEARCH_TIMEOUT = 'errSearchTimeout';    // 'Timed out while searching "$1". Search result is partial.'
+    public const ERROR_SESSION_EXPIRES = 'errSessionExpires';
+    public const ERROR_TRGDIR_NOT_FOUND = 'errTrgFolderNotFound'; // 'Target folder "$1" not found.'
+    public const ERROR_UNKNOWN = 'errUnknown';
+    public const ERROR_UNKNOWN_CMD = 'errUnknownCmd';
+    public const ERROR_UNSUPPORT_TYPE = 'errUsupportType';
+    public const ERROR_UPLOAD = 'errUpload';           // 'Upload error.'
+    public const ERROR_UPLOAD_FILE = 'errUploadFile';       // 'Unable to upload "$1".'
+    public const ERROR_UPLOAD_FILE_MIME = 'errUploadMime';       // 'File type not allowed.'
+    public const ERROR_UPLOAD_FILE_SIZE = 'errUploadFileSize';   // 'File exceeds maximum allowed size.'
+    public const ERROR_UPLOAD_NO_FILES = 'errUploadNoFiles';    // 'No files found for upload.'
+    public const ERROR_UPLOAD_TEMP = 'errUploadTemp';       // 'Unable to make temporary file for upload.'
+    public const ERROR_UPLOAD_TOTAL_SIZE = 'errUploadTotalSize';  // 'Data exceeds the maximum allowed size.'
+    public const ERROR_UPLOAD_TRANSFER = 'errUploadTransfer';   // '"$1" transfer error.'
+    public const ERROR_MAX_MKDIRS = 'errMaxMkdirs'; // 'You can create up to $1 folders at one time.'
 
     /**
      * Constructor
@@ -610,12 +609,18 @@ class elFinder
         if (defined('E_DEPRECATED')) {
             $errLevel |= E_DEPRECATED | E_USER_DEPRECATED;
         }
+        // E_STRICT is deprecated; see https://wiki.php.net/rfc/deprecations_php_8_4#remove_e_strict_error_level_and_deprecate_e_strict_constant
+        if (defined('E_STRICT')) {
+            $errLevel |= @E_STRICT;
+        }
         set_error_handler('elFinder::phpErrorHandler', $errLevel);
 
         // Associative array of file pointers to close at the end of script: ['temp file pointer' => true]
         $GLOBALS['elFinderTempFps'] = array();
         // Associative array of files to delete at the end of script: ['temp file path' => true]
         $GLOBALS['elFinderTempFiles'] = array();
+        // Associative array of abort files to delete at the end of script: ['temp file path' => true]
+        $GLOBALS['elFinderAbortFiles'] = array();
         // regist Shutdown function
         register_shutdown_function(array('elFinder', 'onShutdown'));
 
@@ -1019,7 +1024,7 @@ class elFinder
             foreach ($this->listeners[$cmd] as $handler) {
                 $_res = call_user_func_array($handler, $vars);
                 if ($_res && is_array($_res)) {
-                    $_err = !empty($_res['error'])? $_res['error'] : (!empty($_res['warning'])? $_res['warning'] : null);
+                    $_err = !empty($_res['error']) ? $_res['error'] : (!empty($_res['warning']) ? $_res['warning'] : null);
                     if ($_err) {
                         if (is_array($_err)) {
                             $errors = array_merge($errors, $_err);
@@ -1154,7 +1159,7 @@ class elFinder
         $dst = !empty($args['target']) ? $args['target'] : (!empty($args['dst']) ? $args['dst'] : '');
         if ($dst) {
             $dstVolume = $this->volume($dst);
-        } else if (isset($args['targets']) && is_array($args['targets']) && isset($args['targets'][0])) {
+        } elseif (isset($args['targets']) && is_array($args['targets']) && isset($args['targets'][0])) {
             $dst = $args['targets'][0];
             $dstVolume = $this->volume($dst);
             if ($dstVolume && ($_stat = $dstVolume->file($dst)) && !empty($_stat['phash'])) {
@@ -1162,7 +1167,7 @@ class elFinder
             } else {
                 $dst = '';
             }
-        } else if ($cmd === 'open') {
+        } elseif ($cmd === 'open') {
             // for initial open without args `target`
             $dstVolume = $this->default;
             $dst = $dstVolume->defaultPath();
@@ -1289,7 +1294,7 @@ class elFinder
         }
         // add toasts
         if ($this->toastMessages) {
-            $result['toasts'] = array_merge(((isset($result['toasts']) && is_array($result['toasts']))? $result['toasts'] : array()), $this->toastMessages);
+            $result['toasts'] = array_merge(((isset($result['toasts']) && is_array($result['toasts'])) ? $result['toasts'] : array()), $this->toastMessages);
         }
 
         if ($this->debug || !empty($args['debug'])) {
@@ -1878,7 +1883,7 @@ class elFinder
         $targets = $args['targets'];
         $download = !empty($args['download']);
         $h404 = 'HTTP/1.x 404 Not Found';
-        $CriOS = isset($_SERVER['HTTP_USER_AGENT'])? (strpos($_SERVER['HTTP_USER_AGENT'], 'CriOS') !== false) : false;
+        $CriOS = isset($_SERVER['HTTP_USER_AGENT']) ? (strpos($_SERVER['HTTP_USER_AGENT'], 'CriOS') !== false) : false;
 
         if (!$download) {
             //1st: Return array contains download archive file info
@@ -1897,7 +1902,7 @@ class elFinder
                     $this->session->set('zipdl' . $uniqid, basename($path));
                     $result = array(
                         'zipdl' => array(
-                            'file' => $CriOS? basename($path) : $uniqid,
+                            'file' => $CriOS ? basename($path) : $uniqid,
                             'name' => $name,
                             'mime' => $dlres['mime']
                         )
@@ -1914,13 +1919,13 @@ class elFinder
             // It has access twice on downloading
             $CriOSinit = false;
             if ($CriOS) {
-                $accept = isset($_SERVER['HTTP_ACCEPT'])? $_SERVER['HTTP_ACCEPT'] : '';
+                $accept = isset($_SERVER['HTTP_ACCEPT']) ? $_SERVER['HTTP_ACCEPT'] : '';
                 if ($accept && $accept !== '*' && $accept !== '*/*') {
                     $CriOSinit = true;
                 }
             }
             // data check
-            if (count($targets) !== 4 || ($volume = $this->volume($targets[0])) == false || !($file = $CriOS? $targets[1] : $this->session->get('zipdl' . $targets[1]))) {
+            if (count($targets) !== 4 || ($volume = $this->volume($targets[0])) == false || !($file = $CriOS ? $targets[1] : $this->session->get('zipdl' . $targets[1]))) {
                 return array('error' => 'File not found', 'header' => $h404, 'raw' => true);
             }
             $path = $volume->getTempPath() . DIRECTORY_SEPARATOR . basename($file);
@@ -1999,18 +2004,17 @@ class elFinder
         if ($onetime) {
             $volume = null;
             $tmpdir = elFinder::$commonTempPath;
-            if (!$tmpdir || !is_file($tmpf = $tmpdir . DIRECTORY_SEPARATOR . 'ELF' . $target)) {
+            if (!$tmpdir || !is_file($tmpf = $tmpdir . DIRECTORY_SEPARATOR . 'ELF' . basename($target))) {
                 return $a404;
             }
             $GLOBALS['elFinderTempFiles'][$tmpf] = true;
             if ($file = json_decode(file_get_contents($tmpf), true)) {
-                $src = base64_decode($file['file']);
+                $src = $tmpdir . DIRECTORY_SEPARATOR . basename(base64_decode($file['file']));
                 if (!is_file($src) || !($fp = fopen($src, 'rb'))) {
                     return $a404;
                 }
-                if (strpos($src, $tmpdir) === 0) {
-                    $GLOBALS['elFinderTempFiles'][$src] = true;
-                }
+                $GLOBALS['elFinderTempFiles'][$src] = true;
+
                 unset($file['file']);
                 $file['read'] = true;
                 $file['size'] = filesize($src);
@@ -2071,7 +2075,7 @@ class elFinder
         if (strpos($filenameEncoded, '%') === false) { // ASCII only
             $filename = 'filename="' . $file['name'] . '"';
         } else {
-            $ua = isset($_SERVER['HTTP_USER_AGENT'])? $_SERVER['HTTP_USER_AGENT'] : '';
+            $ua = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
             if (preg_match('/MSIE [4-8]/', $ua)) { // IE < 9 do not support RFC 6266 (RFC 2231/RFC 5987)
                 $filename = 'filename="' . $filenameEncoded . '"';
             } elseif (strpos($ua, 'Chrome') === false && strpos($ua, 'Safari') !== false && preg_match('#Version/[3-5]#', $ua)) { // Safari < 6
@@ -2178,7 +2182,7 @@ class elFinder
                     $dirs += $sizeInfo['dirCnt'];
                 }
                 $sizes[$target] = $sizeInfo;
-            } else if (is_numeric($volRes)) {
+            } elseif (is_numeric($volRes)) {
                 $size += $volRes;
                 $files = $dirs = 'unknown';
                 $itemCount = false;
@@ -2216,15 +2220,15 @@ class elFinder
             $reset = null;
             $mkdirs = array();
             foreach ($dirs as $dir) {
-                $tgt =& $mkdirs;
+                $tgt = & $mkdirs;
                 $_names = explode('/', trim($dir, '/'));
                 foreach ($_names as $_key => $_name) {
                     if (!isset($tgt[$_name])) {
                         $tgt[$_name] = array();
                     }
-                    $tgt =& $tgt[$_name];
+                    $tgt = & $tgt[$_name];
                 }
-                $tgt =& $reset;
+                $tgt = & $reset;
             }
             $res = $this->ensureDirsRecursively($volume, $target, $mkdirs);
             $ret = array(
@@ -2279,7 +2283,7 @@ class elFinder
         $target = $args['target'];
         $name = $args['name'];
         $query = (!empty($args['q']) && strpos($args['q'], '*') !== false) ? $args['q'] : '';
-        $targets = !empty($args['targets'])? $args['targets'] : false;
+        $targets = !empty($args['targets']) ? $args['targets'] : false;
         $rms = array();
         $notfounds = array();
         $locked = array();
@@ -2332,11 +2336,11 @@ class elFinder
                 if ($splits[1] && $splits[0] === '*') {
                     $type = 'extention';
                     $name = $splits[1];
-                } else if (strlen($splits[0]) > 1) {
+                } elseif (strlen($splits[0]) > 1) {
                     if (substr($splits[0], -1) === '*') {
                         $type = 'prefix';
                         $name = substr($splits[0], 0, strlen($splits[0]) - 1);
-                    } else if (substr($splits[0], 0, 1) === '*') {
+                    } elseif (substr($splits[0], 0, 1) === '*') {
                         $type = 'suffix';
                         $name = substr($splits[0], 1);
                     }
@@ -2362,9 +2366,9 @@ class elFinder
                     if ($type === 'extention') {
                         $splits = elFinder::splitFileExtention($rm['name']);
                         $rname = $splits[0] . '.' . $name;
-                    } else if ($type === 'prefix') {
+                    } elseif ($type === 'prefix') {
                         $rname = $name . $rm['name'];
-                    } else if ($type === 'suffix') {
+                    } elseif ($type === 'suffix') {
                         $splits = elFinder::splitFileExtention($rm['name']);
                         $rname = $splits[0] . $name . ($splits[1] ? ('.' . $splits[1]) : '');
                     }
@@ -2564,7 +2568,7 @@ class elFinder
         if (!empty($args['makeFile'])) {
             self::$abortCheckFile = sprintf($flagFile, self::filenameDecontaminate($args['makeFile']));
             touch(self::$abortCheckFile);
-            $GLOBALS['elFinderTempFiles'][self::$abortCheckFile] = true;
+            $GLOBALS['elFinderAbortFiles'][self::$abortCheckFile] = true;
             return;
         }
 
@@ -2666,7 +2670,7 @@ class elFinder
                 return false;
             }
             // dose not support 'user' and 'pass' for security reasons
-            $url = $info['scheme'].'://'.$info['host'].(!empty($info['port'])? (':'.$info['port']) : '').$info['path'].(!empty($info['query'])? ('?'.$info['query']) : '').(!empty($info['fragment'])? ('#'.$info['fragment']) : '');
+            $url = $info['scheme'].'://'.$info['host'].(!empty($info['port']) ? (':'.$info['port']) : '').$info['path'].(!empty($info['query']) ? ('?'.$info['query']) : '').(!empty($info['fragment']) ? ('#'.$info['fragment']) : '');
             // check by URL upload filter
             if ($this->urlUploadFilter && is_callable($this->urlUploadFilter)) {
                 if (!call_user_func_array($this->urlUploadFilter, array($url, $this))) {
@@ -2770,8 +2774,12 @@ class elFinder
         $query .= "Host: " . $arr['host'] . "\r\n";
         $query .= "Accept: */*\r\n";
         $query .= "Connection: close\r\n";
-        if (!empty($ua)) $query .= "User-Agent: " . $ua . "\r\n";
-        if (!is_null($getSize)) $query .= 'Range: bytes=0-' . ($getSize - 1) . "\r\n";
+        if (!empty($ua)) {
+            $query .= "User-Agent: " . $ua . "\r\n";
+        }
+        if (!is_null($getSize)) {
+            $query .= 'Range: bytes=0-' . ($getSize - 1) . "\r\n";
+        }
 
         $query .= $headers;
 
@@ -2785,8 +2793,13 @@ class elFinder
             $fp = fsockopen(
                 $ssl . $arr['host'],
                 $arr['port'],
-                $errno, $errstr, $connect_timeout);
-            if ($fp) break;
+                $errno,
+                $errstr,
+                $connect_timeout
+            );
+            if ($fp) {
+                break;
+            }
             $connect_try_count++;
             if (connection_aborted()) {
                 throw new elFinderAbortException();
@@ -2905,7 +2918,7 @@ class elFinder
                 $mime = $meta['mediatype'];
             }
             fclose($fp);
-        } else if (preg_match('~^data:(.+?/.+?)?(?:;charset=.+?)?;base64,~', substr($str, 0, 128), $m)) {
+        } elseif (preg_match('~^data:(.+?/.+?)?(?:;charset=.+?)?;base64,~', substr($str, 0, 128), $m)) {
             $data = base64_decode(substr($str, strlen($m[0])));
             if ($m[1]) {
                 $mime = $m[1];
@@ -3030,7 +3043,9 @@ class elFinder
         }
         $tempDir = '';
         foreach ($testDirs as $testDir) {
-            if (!$testDir || !is_dir($testDir)) continue;
+            if (!$testDir || !is_dir($testDir)) {
+                continue;
+            }
             if (is_writable($testDir)) {
                 $tempDir = $testDir;
                 $gc = time() - 3600;
@@ -3333,7 +3348,7 @@ class elFinder
                             // to check connection is aborted
                             try {
                                 elFinder::checkAborted();
-                            } catch(elFinderAbortException $e) {
+                            } catch (elFinderAbortException $e) {
                                 fclose($fp);
                                 throw $e;
                             }
@@ -3352,7 +3367,7 @@ class elFinder
                                     if ($m[1] && strtoupper($m[1]) !== 'UTF-8' && function_exists('mb_convert_encoding')) {
                                         $_name = mb_convert_encoding($_name, 'UTF-8', $m[1]);
                                     }
-                                } else if (preg_match('/filename="?([ a-z0-9_.~%-]+)"?/i', $headers['Content-Disposition'], $m)) {
+                                } elseif (preg_match('/filename="?([ a-z0-9_.~%-]+)"?/i', $headers['Content-Disposition'], $m)) {
                                     $_name = rawurldecode($m[1]);
                                 }
                             }
@@ -3427,7 +3442,7 @@ class elFinder
                                 $result['error'] = $this->error(self::ERROR_UPLOAD_FILE, $m[1], $tmpname);
                                 $result['_chunkfailure'] = true;
                                 $this->uploadDebug = 'Upload error: ' . $tmpname;
-                            } else if ($name) {
+                            } elseif ($name) {
                                 $result['_chunkmerged'] = basename($tmpname);
                                 $result['_name'] = $name;
                                 $result['_mtime'] = $mtime;
@@ -3473,10 +3488,12 @@ class elFinder
 
             $fp = null;
             if (!is_file($tmpname) || ($fp = fopen($tmpname, 'rb')) === false) {
-                $errors = array_merge($errors, array(self::ERROR_UPLOAD_FILE, $name, ($fp === false? self::ERROR_UPLOAD_TEMP : self::ERROR_UPLOAD_TRANSFER)));
+                $errors = array_merge($errors, array(self::ERROR_UPLOAD_FILE, $name, ($fp === false ? self::ERROR_UPLOAD_TEMP : self::ERROR_UPLOAD_TRANSFER)));
                 $this->uploadDebug = 'Upload error: unable open tmp file';
                 if (!is_uploaded_file($tmpname)) {
-                    if (unlink($tmpname) && $tmpfname) unset($GLOBALS['elFinderTempFiles'][$tmpfname]);
+                    if (unlink($tmpname) && $tmpfname) {
+                        unset($GLOBALS['elFinderTempFiles'][$tmpfname]);
+                    }
                     continue;
                 }
                 break;
@@ -3528,7 +3545,7 @@ class elFinder
             }
             if (!$_target || ($file = $volume->upload($fp, $_target, $name, $tmpname, ($_target === $target) ? $hashes : array())) === false) {
                 $errors = array_merge($errors, $this->error(self::ERROR_UPLOAD_FILE, $name, $volume->error()));
-                is_resource($fp) && fclose($fp);
+                fclose($fp);
                 if (!is_uploaded_file($tmpname) && unlink($tmpname)) {
                     unset($GLOBALS['elFinderTempFiles'][$tmpname]);
                 }
@@ -3708,7 +3725,7 @@ class elFinder
                         } else {
                             $enc = 'unknown';
                         }
-                    } else if (!preg_match('//u', $content)) {
+                    } elseif (!preg_match('//u', $content)) {
                         $enc = 'unknown';
                     }
                     if ($enc === 'unknown') {
@@ -3749,7 +3766,7 @@ class elFinder
                             if ($enc === 'unknown') {
                                 $content = false;
                             }
-                        } else if ($enc === 'unknown') {
+                        } elseif ($enc === 'unknown') {
                             return array('doconv' => $enc);
                         }
                     }
@@ -3846,7 +3863,7 @@ class elFinder
             }
             $encoding = '';
             $args['content'] = "\0" . $args['content'];
-        } else if ($encoding === 'hash') {
+        } elseif ($encoding === 'hash') {
             $_hash = $args['content'];
             if ($_src = $this->getVolume($_hash)) {
                 if ($_file = $_src->file($_hash)) {
@@ -4156,7 +4173,7 @@ class elFinder
                 } else {
                     $trigger = $triggerdone = $triggerfail = '';
                 }
-                $origin = isset($_SERVER['HTTP_ORIGIN'])? str_replace('\'', '\\\'', $_SERVER['HTTP_ORIGIN']) : '*';
+                $origin = isset($_SERVER['HTTP_ORIGIN']) ? str_replace('\'', '\\\'', $_SERVER['HTTP_ORIGIN']) : '*';
                 $script .= '
 var go = function() {
     var w = window.opener || window.parent || window,
@@ -4183,7 +4200,7 @@ var go = function() {
         }
     } catch(e) {
         // for CORS
-        w.postMessage && w.postMessage(JSON.stringify({bind:\'' . $bind . '\',data:' . $json . '}), \'' . $origin . '\');
+        w.postMessage && w.postMessage(JSON.stringify({type:\'io.studio-42.github\',bind:\'' . $bind . '\',data:' . $json . '}), \'' . $origin . '\');
     }
     close();
     setTimeout(function() {
@@ -4268,7 +4285,7 @@ var go = function() {
         // Do not report real path
         if (strpos($errfile, $base) === 0) {
             $errfile = str_replace($base, '', $errfile);
-        } else if ($pos = strrpos($errfile, '/vendor/')) {
+        } elseif ($pos = strrpos($errfile, '/vendor/')) {
             $errfile = substr($errfile, $pos + 1);
         } else {
             $errfile = basename($errfile);
@@ -4287,15 +4304,16 @@ var go = function() {
                 $proc = true;
                 break;
 
-            case E_STRICT:
-                elFinder::$phpErrors[] = "STRICT: $errstr in $errfile line $errline.";
-                $proc = true;
-                break;
-
             case E_RECOVERABLE_ERROR:
                 elFinder::$phpErrors[] = "RECOVERABLE_ERROR: $errstr in $errfile line $errline.";
                 $proc = true;
                 break;
+        }
+
+        // E_STRICT is deprecated; see https://wiki.php.net/rfc/deprecations_php_8_4#remove_e_strict_error_level_and_deprecate_e_strict_constant
+        if (defined('E_STRICT') && $errno === @E_STRICT) {
+            elFinder::$phpErrors[] = "STRICT: $errstr in $errfile line $errline.";
+            $proc = true;
         }
 
         if (defined('E_DEPRECATED')) {
@@ -4388,7 +4406,7 @@ var go = function() {
     protected function utime()
     {
         $time = explode(" ", microtime());
-        return (double)$time[1] + (double)$time[0];
+        return (float)$time[1] + (float)$time[0];
     }
 
     /**
@@ -4467,7 +4485,7 @@ var go = function() {
         foreach ($hashes as $hash) {
             $lock = elFinder::$commonTempPath . DIRECTORY_SEPARATOR . self::filenameDecontaminate($hash) . '.lock';
             if ($this->itemLocked($hash)) {
-                $cnt = (int) file_get_contents($lock) + 1;
+                $cnt = file_get_contents($lock) + 1;
             } else {
                 $cnt = 1;
             }
@@ -4492,7 +4510,7 @@ var go = function() {
             return true;
         }
         $lock = elFinder::$commonTempPath . DIRECTORY_SEPARATOR . $hash . '.lock';
-        $cnt = (int)file_get_contents($lock);
+        $cnt = file_get_contents($lock);
         if (--$cnt < 1) {
             unlink($lock);
             return true;
@@ -4892,18 +4910,25 @@ var go = function() {
         switch ($last) {
             case 'y':
                 $val = elFinder::xKilobyte($val);
+                // no break
             case 'z':
                 $val = elFinder::xKilobyte($val);
+                // no break
             case 'e':
                 $val = elFinder::xKilobyte($val);
+                // no break
             case 'p':
                 $val = elFinder::xKilobyte($val);
+                // no break
             case 't':
                 $val = elFinder::xKilobyte($val);
+                // no break
             case 'g':
                 $val = elFinder::xKilobyte($val);
+                // no break
             case 'm':
                 $val = elFinder::xKilobyte($val);
+                // no break
             case 'k':
                 $val = elFinder::xKilobyte($val);
         }
@@ -5225,7 +5250,7 @@ var go = function() {
             $name = str_replace('\\', '/', $name);
         }
         $parts = explode('/', trim($name, '/'));
-        $name = array_pop($parts); 
+        $name = array_pop($parts);
         return $name;
     }
 
@@ -5291,14 +5316,14 @@ var go = function() {
                 if ($ret === false) {
                     // error
                     break;
-                } else if ($ret === 0) {
+                } elseif ($ret === 0) {
                     // timeout
                     continue;
                 } else {
                     foreach ($read as $sock) {
                         if ($sock === $pipes[1]) {
                             $tmpout .= fread($sock, 4096);
-                        } else if ($sock === $pipes[2]) {
+                        } elseif ($sock === $pipes[2]) {
                             $tmperr .= fread($sock, 4096);
                         }
                     }
@@ -5372,11 +5397,26 @@ var go = function() {
                 is_resource($fp) && fclose($fp);
             }
         }
+        //Delete temp file paths
         if (!empty($GLOBALS['elFinderTempFiles'])) {
             foreach (array_keys($GLOBALS['elFinderTempFiles']) as $f) {
-                is_file($f) && is_writable($f) && unlink($f);
+                //Make sure paths are safe before deleting them
+                $tf = elFinder::$commonTempPath . DIRECTORY_SEPARATOR . basename($f);
+                is_file($tf) && is_writable($tf) && unlink($tf);
             }
+            unset($f);
         }
+
+        //Delete abort file paths
+        if (!empty($GLOBALS['elFinderAbortFiles'])) {
+            foreach (array_keys($GLOBALS['elFinderAbortFiles']) as $f) {
+                //Make sure paths are safe before deleting them
+                $tf = elFinder::$connectionFlagsPath . DIRECTORY_SEPARATOR . basename($f);
+                is_file($tf) && is_writable($tf) && unlink($tf);
+            }
+            unset($f);
+        }
+
     }
 
     /**

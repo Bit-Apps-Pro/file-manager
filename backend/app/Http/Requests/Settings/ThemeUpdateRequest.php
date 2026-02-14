@@ -2,9 +2,9 @@
 
 namespace BitApps\FM\Http\Requests\Settings;
 
+use BitApps\FM\Http\Rules\ValidateThemeRule;
 use BitApps\FM\Vendor\BitApps\WPKit\Http\Request\Request;
 use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
-use BitApps\FM\Http\Rules\ValidateThemeRule;
 
 class ThemeUpdateRequest extends Request
 {

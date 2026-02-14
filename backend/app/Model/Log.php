@@ -17,9 +17,9 @@ class Log extends Model
 {
     public $timestamps = false;
 
-    protected $prefix = Config::VAR_PREFIX;
-
     public $casts = ['details' => 'object'];
+
+    protected $prefix = Config::VAR_PREFIX;
 
     protected $fillable = [
         'user_id',
@@ -28,7 +28,8 @@ class Log extends Model
         'created_at',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->hasOne(User::class, 'ID', 'user_id');
     }
 }

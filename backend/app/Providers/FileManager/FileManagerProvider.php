@@ -6,7 +6,6 @@ namespace BitApps\FM\Providers\FileManager;
 
 use BitApps\FM\Providers\FileManager\Options as FinderOptions;
 use elFinder;
-use elFinderConnector;
 
 class FileManagerProvider
 {

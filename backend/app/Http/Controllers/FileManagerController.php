@@ -9,7 +9,6 @@ use BitApps\FM\Providers\FileManager\FileManagerProvider;
 use BitApps\FM\Providers\FileManager\FileRoot;
 use BitApps\FM\Providers\FileManager\Options;
 use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
-use Error;
 use Exception;
 
 final class FileManagerController
@@ -68,7 +67,7 @@ final class FileManagerController
             'zipdl.pre file.pre rename.pre put.pre rm.pre chmod.pre mkdir.pre mkfile.pre extract.pre',
             [Plugin::instance()->logger(), 'log']
         );
-        
+
         $finderOptions->setBind(
             'upload',
             [Plugin::instance()->logger(), 'logUpload']

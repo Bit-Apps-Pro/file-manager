@@ -2,8 +2,8 @@
 
 namespace BitApps\FM\Http\Rules;
 
-use BitApps\FM\Vendor\BitApps\WPValidator\Rule;
 use BitApps\FM\Plugin;
+use BitApps\FM\Vendor\BitApps\WPValidator\Rule;
 
 class ValidateUsersRule extends Rule
 {

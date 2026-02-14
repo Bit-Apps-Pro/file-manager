@@ -2,7 +2,6 @@
 
 namespace BitApps\FM\Model;
 
-use BitApps\FM\Config;
 use BitApps\FM\Vendor\BitApps\WPDatabase\Model;
 
 /**
@@ -20,4 +19,9 @@ class User extends Model
     protected $prefix = '';
 
     protected $fillable = [];
+
+    public function log()
+    {
+        return $this->hasMany(Log::class, 'user_id', 'ID');
+    }
 }

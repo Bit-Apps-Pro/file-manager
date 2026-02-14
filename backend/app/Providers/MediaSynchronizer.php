@@ -20,7 +20,7 @@ class MediaSynchronizer
     public function onFileUpload($cmd, &$result, $args, $elfinder, $volume)
     {
         $targetPath = $volume->getPath($args['target']);
- 
+
         if (strpos($targetPath, $this->wpUploadBaseDirectory) !== false && Plugin::instance()->preferences()->isWpMediaSyncEnabled()) {
             $images = [];
             for ($file = 0; $file < \count($args['FILES']['upload']['name']); $file++) {
