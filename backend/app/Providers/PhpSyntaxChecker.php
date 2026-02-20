@@ -30,7 +30,7 @@ class PhpSyntaxChecker
             return new WP_Error('file_not_writable');
         }
 
-        //phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fopen, WordPress.WP.AlternativeFunctions.file_system_operations_fwrite, WordPress.WP.AlternativeFunctions.file_system_operations_fclose
+        // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fopen, WordPress.WP.AlternativeFunctions.file_system_operations_fwrite, WordPress.WP.AlternativeFunctions.file_system_operations_fclose
         $f = fopen($realFile, 'w+');
 
         if (false === $f) {
@@ -61,7 +61,6 @@ class PhpSyntaxChecker
 
             return new WP_Error('php_error', $message, $data);
         }
-
     }
 
     /**
