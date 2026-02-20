@@ -18,16 +18,14 @@ final class NonceCheckerMiddleware
             )
         ) {
             $response = \in_array($request->getRoute()->getPath(), ['connector', 'connector_front'])
-            ? wp_json_encode(['error' => __('Token expired. please reload the page', 'file-manager')])
-            : wp_json_encode(
-                [
+            ? ['error' => __('Token expired. please reload the page', 'file-manager')]
+                : [
                     'message' => __('Token expired. please reload the page', 'file-manager'),
                     'code'    => 'INVALID_NONCE',
                     'status'  => 'error',
-                ]
-            );
+                ];
 
-            echo $response;
+            echo wp_json_encode($response);
             wp_die();
         }
 

@@ -4,9 +4,13 @@ namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
 use BitApps\FM\Exception\PreCommandException;
+
+use function BitApps\FM\Functions\fileSystemAdapter;
+
 use BitApps\FM\Plugin;
 use BitApps\FM\Vendor\BitApps\WPKit\Helpers\Arr;
 use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
+
 use WP_User;
 
 \defined('ABSPATH') || exit();
@@ -196,11 +200,15 @@ class PermissionsProvider
     {
         $defaultPath = $this->getPublicRootPath();
         $rootPath    = wp_unslash($defaultPath) . DIRECTORY_SEPARATOR . "{$type}_{$criteria}";
-        if (!file_exists($rootPath) && is_dir($defaultPath) && is_writable($defaultPath)) {
+        if (
+            !fileSystemAdapter()->exists($rootPath)
+            && fileSystemAdapter()->is_dir($defaultPath)
+            && fileSystemAdapter()->is_writable($defaultPath)
+        ) {
             wp_mkdir_p($rootPath);
         }
 
-        if (!file_exists($rootPath) || !is_dir($rootPath) || !is_readable($rootPath)) {
+        if (!fileSystemAdapter()->exists($rootPath) || !fileSystemAdapter()->is_dir($rootPath) || !fileSystemAdapter()->is_readable($rootPath)) {
             $rootPath = '';
         }
 

@@ -11,6 +11,8 @@ use BitApps\FM\Providers\FileManager\Options;
 use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
 use Exception;
 
+use function BitApps\FM\Functions\fileSystemAdapter;
+
 final class FileManagerController
 {
     /**
@@ -176,7 +178,7 @@ final class FileManagerController
             $this->setAllowedFileType($baseRoot);
         }
 
-        if (is_writable(stripslashes($preferences->getRootPath()) . DIRECTORY_SEPARATOR . '.tmbPath')) {
+        if (fileSystemAdapter()->is_writable(stripslashes($preferences->getRootPath()) . DIRECTORY_SEPARATOR . '.tmbPath')) {
             $baseRoot->setOption('tmbPath', '.tmb');
         }
 

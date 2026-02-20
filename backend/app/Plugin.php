@@ -2,6 +2,7 @@
 
 namespace BitApps\FM;
 
+use function BitApps\FM\Functions\fileSystemAdapter;
 use function BitApps\FM\Functions\view;
 
 use BitApps\FM\Http\Middleware\CapCheckerMiddleware;
@@ -424,7 +425,7 @@ final class Plugin
     private function uploadFolder()
     {
         if (!is_dir(FM_UPLOAD_BASE_DIR)) {
-            mkdir(FM_UPLOAD_BASE_DIR, 0755);
+            fileSystemAdapter()->mkdir(FM_UPLOAD_BASE_DIR, 0755);
         }
     }
 }

@@ -8,6 +8,8 @@ use BitApps\FM\Vendor\BitApps\WPDatabase\Schema;
 use BitApps\FM\Vendor\BitApps\WPKit\Migration\MigrationHelper;
 use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
 
+use function BitApps\FM\Functions\fileSystemAdapter;
+
 \defined('ABSPATH') || exit();
 
 class VersionMigrationProvider
@@ -96,7 +98,7 @@ class VersionMigrationProvider
     {
         $logFile = FM_UPLOAD_BASE_DIR . DIRECTORY_SEPARATOR . 'log.txt';
         if (file_exists($logFile)) {
-            unlink($logFile);
+            fileSystemAdapter()->delete($logFile);
         }
     }
 }

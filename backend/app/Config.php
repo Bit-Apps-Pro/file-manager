@@ -63,7 +63,7 @@ class Config
                 return plugin_dir_path(self::get('MAIN_FILE')) . 'backend';
 
             case 'SITE_URL':
-                $parsedUrl = parse_url(get_admin_url());
+                $parsedUrl = wp_parse_url(get_admin_url());
                 $siteUrl   = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
                 $siteUrl .= empty($parsedUrl['port']) ? null : ':' . $parsedUrl['port'];
 
@@ -81,7 +81,7 @@ class Config
                 ];
 
             case 'ROOT_URI':
-                return set_url_scheme(plugins_url('', self::get('MAIN_FILE')), parse_url(home_url())['scheme']);
+                return set_url_scheme(plugins_url('', self::get('MAIN_FILE')), wp_parse_url(home_url())['scheme']);
 
             case 'ASSET_URI':
                 return self::get('ROOT_URI') . '/assets';

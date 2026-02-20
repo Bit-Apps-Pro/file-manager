@@ -179,7 +179,14 @@ class AccessControlProvider
                 $fileTypeAndExt = wp_check_filetype_and_ext($filePath, $fileName);
                 if (!empty($fileTypeAndExt['type'])) {
                     if (stripos($fileTypeAndExt['type'], 'javascript') !== false) {
-                        $this->scannedResult[] = \sprintf(__('This file %s type is not allowed', 'file-manager'), $fileName);
+                        $this->scannedResult[] = wp_sprintf(
+                            __(
+                                // translators: 1: file name
+                                'This file %s type is not allowed',
+                                'file-manager'
+                            ),
+                            $fileName
+                        );
                     }
                     if (
                         stripos($fileTypeAndExt['type'], 'text')   !== false
@@ -191,7 +198,14 @@ class AccessControlProvider
                     try {
                         $content = file_get_contents($filePath);
                     } catch (Exception $e) {
-                        $this->scannedResult[] = \sprintf(__('Failed to process this file %s', 'file-manager'), $fileName);
+                        $this->scannedResult[] = wp_sprintf(
+                            // translators: 1: file name
+                            __(
+                                'Failed to process this file %s',
+                                'file-manager'
+                            ),
+                            $fileName
+                        );
                     }
                 }
 
@@ -240,7 +254,14 @@ class AccessControlProvider
         }
 
         if ($containsJs) {
-            $this->scannedResult[] = \sprintf(__('This file %s contains JS code. Please remove the code and try again. Or allow js mimetype', 'file-manager'), $fileName);
+            $this->scannedResult[] = wp_sprintf(
+                // translators: 1: file name
+                __(
+                    'This file %s contains JS code. Please remove the code and try again. Or allow js mimetype',
+                    'file-manager'
+                ),
+                $fileName
+            );
         }
     }
 }

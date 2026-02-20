@@ -118,6 +118,7 @@ class FinderConnector extends elFinderConnector
                 } else {
                     $out = fopen('php://output', 'wb');
                     stream_copy_to_stream($fp, $out, $psize);
+                    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
                     fclose($out);
                 }
             }
@@ -125,6 +126,7 @@ class FinderConnector extends elFinderConnector
             if (!empty($data['volume'])) {
                 $data['volume']->close($fp, $data['info']['hash']);
             } else {
+                // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
                 fclose($fp);
             }
             exit();
