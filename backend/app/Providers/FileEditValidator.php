@@ -45,7 +45,12 @@ class FileEditValidator
         try {
             token_get_all($content);
         } catch (ParseError $e) {
-            $error = 'Syntax error in file: ' . $fileName . '. Error: ' . $e->getMessage();
+            $error = sprintf(
+                /* translators: 1: file name, 2: PHP parse error message */
+                __('Syntax error in file: %1$s. Error: %2$s', 'file-manager'),
+                $fileName,
+                $e->getMessage()
+            );
         }
 
         if (!empty($error)) {
