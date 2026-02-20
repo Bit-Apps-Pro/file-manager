@@ -1,0 +1,89 @@
+name: WordPress Plugin Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  PLUGIN_SLUG: file-manager
+
+jobs:
+  plugin-check:
+    name: Plugin Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: none
+          tools: composer:v2, wp-cli
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "dir=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Setup package cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ steps.pnpm-cache.outputs.dir }}
+            ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-plugin-check-${{ hashFiles('**/pnpm-lock.yaml', '**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-plugin-check-
+
+      - name: Build plugin
+        run: |
+          pnpm production
+          pnpm build:copy
+
+      - name: WordPress Plugin Check
+        uses: wordpress/plugin-check-action@v1
+        with:
+          build-dir: './build/${{ env.PLUGIN_SLUG }}'
+          exclude-directories: |
+            vendor
+            node_modules
+          categories: |
+            general
+            security
+            performance
+            accessibility
+            plugin_repo
+          checks: |
+            i18n_usage
+            late_escaping
+            plugin_readme
+            file_type
+            performant_wp_query_params
+            plugin_updater
+            enqueued_scripts_size
+            plugin_review_phpcs
+            trademarks

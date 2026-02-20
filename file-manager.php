@@ -1,5 +1,5 @@
 <?php
-
+if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Plugin Name: Bit File Manager
  * Plugin URI: https://bitapps.pro/bit-file-manager
