@@ -4,14 +4,16 @@ namespace BitApps\FM\Http\Controllers;
 
 use BitApps\FM\Config;
 use BitApps\FM\Exception\PreCommandException;
+
+use function BitApps\FM\Functions\fileSystemAdapter;
+
 use BitApps\FM\Plugin;
 use BitApps\FM\Providers\FileManager\FileManagerProvider;
 use BitApps\FM\Providers\FileManager\FileRoot;
 use BitApps\FM\Providers\FileManager\Options;
 use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
-use Exception;
 
-use function BitApps\FM\Functions\fileSystemAdapter;
+use Exception;
 
 final class FileManagerController
 {

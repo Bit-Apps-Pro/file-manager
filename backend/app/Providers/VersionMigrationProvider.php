@@ -3,12 +3,14 @@
 namespace BitApps\FM\Providers;
 
 use BitApps\FM\Config;
+
+use function BitApps\FM\Functions\fileSystemAdapter;
+
 use BitApps\FM\Vendor\BitApps\WPDatabase\Connection;
 use BitApps\FM\Vendor\BitApps\WPDatabase\Schema;
 use BitApps\FM\Vendor\BitApps\WPKit\Migration\MigrationHelper;
-use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
 
-use function BitApps\FM\Functions\fileSystemAdapter;
+use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
 
 \defined('ABSPATH') || exit();
 
