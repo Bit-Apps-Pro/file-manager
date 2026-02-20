@@ -17,7 +17,10 @@ class PhpSyntaxChecker
      * Write content to the real file, perform a loopback request to detect
      * fatal errors, then roll back the file if a problem is found.
      *
-     * @return WP_Error|null  null on success, WP_Error on failure
+     * @param mixed $content
+     * @param mixed $realFile
+     *
+     * @return WP_Error|null null on success, WP_Error on failure
      */
     public function check($content, $realFile)
     {
@@ -58,13 +61,12 @@ class PhpSyntaxChecker
             return new WP_Error('php_error', $message, $data);
         }
 
-        return null;
     }
 
     /**
      * Perform loopback requests with a scrape key to detect fatal PHP errors.
      *
-     * @return true|array  true on success, or an array with 'code'/'message' on failure
+     * @return true|array true on success, or an array with 'code'/'message' on failure
      */
     private function loopbackRequest()
     {
