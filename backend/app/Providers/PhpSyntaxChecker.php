@@ -26,11 +26,11 @@ class PhpSyntaxChecker
     {
         $previousContent = file_get_contents($realFile);
 
+        // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fopen, WordPress.WP.AlternativeFunctions.file_system_operations_fwrite, WordPress.WP.AlternativeFunctions.file_system_operations_fclose
         if (!is_writable($realFile)) {
             return new WP_Error('file_not_writable');
         }
 
-        // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fopen, WordPress.WP.AlternativeFunctions.file_system_operations_fwrite, WordPress.WP.AlternativeFunctions.file_system_operations_fclose
         $f = fopen($realFile, 'w+');
 
         if (false === $f) {
