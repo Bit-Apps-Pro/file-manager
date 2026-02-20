@@ -2,6 +2,10 @@
 
 namespace BitApps\FM\Functions;
 
+if (! \defined('ABSPATH')) {
+    exit;
+}
+
 use BitApps\FM\Plugin;
 
 function view($path)

@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 use BitApps\FM\Config;
 
@@ -6,7 +7,6 @@ use function BitApps\FM\Functions\view;
 
 use BitApps\FM\Providers\InstallerProvider;
 
-\defined('ABSPATH') || exit();
 
 function bfmActivate()
 {

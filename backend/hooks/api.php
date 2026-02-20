@@ -1,14 +1,14 @@
 <?php
 
+if (!\defined('ABSPATH')) {
+    exit;
+}
+
 use BitApps\FM\Http\Controllers\LogController;
 use BitApps\FM\Http\Controllers\PermissionsController;
 use BitApps\FM\Http\Controllers\SettingsController;
 use BitApps\FM\Http\Controllers\TelemetryPopupController;
 use BitApps\FM\Vendor\BitApps\WPKit\Http\Router\Route;
-
-if (!\defined('ABSPATH')) {
-    exit;
-}
 
 Route::group(
     function () {

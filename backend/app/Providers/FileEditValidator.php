@@ -5,6 +5,7 @@ namespace BitApps\FM\Providers;
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
 use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
+use ParseError;
 
 \defined('ABSPATH') or exit();
 class FileEditValidator
@@ -39,40 +40,12 @@ class FileEditValidator
             || (\defined('BFM_DISABLE_SYNTAX_CHECK') && BFM_DISABLE_SYNTAX_CHECK)
         ) {
             return;
-        } elseif (!\function_exists('exec')) {
-            $error = __('exec() is required for php syntax check');
-        } else {
-            $fp           = tmpfile();
-            $metaData     = stream_get_meta_data($fp);
-            $tempFilePath = $metaData['uri'];
-            fwrite($fp, $content);
-            exec('php -l ' . escapeshellarg($tempFilePath), $output, $return);
-            fclose($fp);
+        }
 
-            $errorMessages = [];
-
-            foreach ($output as $result) {
-                if (
-                    strpos($result, 'No syntax errors detected') !== false
-                || $result == ''
-                ) {
-                    continue;
-                }
-
-                if (strpos($result, 'Errors parsing') !== false) {
-                    $error = wp_sprintf(
-                        // translators: 1: Temporary file path
-                        __('Errors parsing the file [ %s ] as php script', 'file-manager'),
-                        $fileName
-                    );
-                } else {
-                    $errorMessages[] = $result;
-                }
-            }
-
-            if ($return !== 0 && !empty($errorMessages)) {
-                $error = !\is_string($errorMessages[0]) ? json_encode($errorMessages[0]) : $errorMessages[0];
-            }
+        try {
+            token_get_all($content);
+        } catch (ParseError $e) {
+            $error = 'Syntax error in file: ' . $fileName . '. Error: ' . $e->getMessage();
         }
 
         if (!empty($error)) {
