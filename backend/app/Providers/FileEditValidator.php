@@ -4,7 +4,6 @@ namespace BitApps\FM\Providers;
 
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
-use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
 use WP_Error;
 
 \defined('ABSPATH') or exit();

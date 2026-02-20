@@ -7,8 +7,6 @@
  * @since v5.2.0
  * */
 
-use function BitApps\FM\Functions\fileSystemAdapter;
-
 // Directory Separator
 if (!\defined('DS')) {
     \define('DS', DIRECTORY_SEPARATOR);
