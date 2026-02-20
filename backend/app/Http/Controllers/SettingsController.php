@@ -83,10 +83,10 @@ final class SettingsController
         $prefs   = Plugin::instance()->preferences();
         $prefs->setTheme($reqData['theme']);
         if ($prefs->saveOptions()) {
-            return Response::success([])->message(__('Theme updated successfully', 'file-manger'));
+            return Response::success([])->message(__('Theme updated successfully', 'file-manager'));
         }
 
-        return Response::error([])->message(__('Failed to update theme', 'file-manger'));
+        return Response::error([])->message(__('Failed to update theme', 'file-manager'));
     }
 
     public function getLanguages()
@@ -100,9 +100,9 @@ final class SettingsController
         $prefs   = Plugin::instance()->preferences();
         $prefs->setLang($reqData['lang']);
         if ($prefs->saveOptions()) {
-            return Response::success([])->message(__('Language updated successfully', 'file-manger'));
+            return Response::success([])->message(__('Language updated successfully', 'file-manager'));
         }
 
-        return Response::error([])->message(__('Failed to update language', 'file-manger'));
+        return Response::error([])->message(__('Failed to update language', 'file-manager'));
     }
 }

@@ -6,6 +6,8 @@
  * @since v5.2.0
  * */
 
+use function BitApps\FM\Functions\fileSystemAdapter;
+
 // Directory Separator
 if (!\defined('DS')) {
     \define('DS', DIRECTORY_SEPARATOR);
@@ -64,7 +66,7 @@ if (!\defined('FM_TRASH_DIR_PATH')) {
      */
     $fmTrashDir = FM_WP_UPLOAD_DIR['basedir'] . '/file-manager/trash/';
     \define('FM_TRASH_DIR_PATH', $fmTrashDir);
-    if (!file_exists($fmTrashDir) && is_writable(FM_WP_UPLOAD_DIR['basedir'])) {
+    if (!fileSystemAdapter()->exists($fmTrashDir) && fileSystemAdapter()->is_writable(FM_WP_UPLOAD_DIR['basedir'])) {
         mkdir($fmTrashDir, 0777, true);
         // Protect files from public access.
         touch(FM_TRASH_DIR_PATH . '.htaccess');
@@ -72,7 +74,7 @@ if (!\defined('FM_TRASH_DIR_PATH')) {
         $fp      = fopen(FM_TRASH_DIR_PATH . '.htaccess', 'wb');
         fwrite($fp, $content);
         fclose($fp);
-    } elseif (!file_exists($fmTrashDir) && !is_writable($fmTrashDir) && !is_writable(FM_WP_UPLOAD_DIR['basedir'])) {
+    } elseif (!fileSystemAdapter()->exists($fmTrashDir) && !fileSystemAdapter()->is_writable($fmTrashDir) && !fileSystemAdapter()->is_writable(FM_WP_UPLOAD_DIR['basedir'])) {
         add_action(
             'admin_notices',
             function () {

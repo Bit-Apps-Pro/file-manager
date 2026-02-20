@@ -36,7 +36,7 @@ class FileEditValidator
         $error = '';
 
         if (
-            (!\function_exists('exec')  && Capabilities::check('install_plugins'))
+            (Capabilities::check('install_plugins'))
             || (\defined('BFM_DISABLE_SYNTAX_CHECK') && BFM_DISABLE_SYNTAX_CHECK)
         ) {
             return;
@@ -45,7 +45,7 @@ class FileEditValidator
         try {
             token_get_all($content);
         } catch (ParseError $e) {
-            $error = sprintf(
+            $error = wp_sprintf(
                 /* translators: 1: file name, 2: PHP parse error message */
                 __('Syntax error in file: %1$s. Error: %2$s', 'file-manager'),
                 $fileName,

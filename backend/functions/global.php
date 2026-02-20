@@ -1,4 +1,5 @@
 <?php
+//phpcs:disable WordPress.WP.AlternativeFunctions
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 use BitApps\FM\Config;

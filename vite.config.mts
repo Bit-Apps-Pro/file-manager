@@ -164,6 +164,11 @@ function setDevServerConfig(): Plugin {
             server.restart()
           }
         })
+
+        server.httpServer.close(() => {
+          server.watcher.close()
+          removeStoredPort()
+        })
       }
     }
   }
