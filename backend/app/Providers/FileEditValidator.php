@@ -39,7 +39,9 @@ class FileEditValidator
         $wpError = (new PhpSyntaxChecker())->check($content, $realFile);
 
         if ($wpError instanceof WP_Error) {
-            throw new PreCommandException($wpError->get_error_message());
+            $message = $wpError->get_error_message();
+
+            throw new PreCommandException(wp_strip_all_tags($message));
         }
     }
 
