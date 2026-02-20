@@ -30,6 +30,7 @@ class PhpSyntaxChecker
             return new WP_Error('file_not_writable');
         }
 
+        //phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fopen, WordPress.WP.AlternativeFunctions.file_system_operations_fwrite, WordPress.WP.AlternativeFunctions.file_system_operations_fclose
         $f = fopen($realFile, 'w+');
 
         if (false === $f) {
@@ -40,7 +41,7 @@ class PhpSyntaxChecker
         fclose($f);
 
         if (false === $written) {
-            return new WP_Error('unable_to_write', __('Unable to write to file.'));
+            return new WP_Error('unable_to_write', __('Unable to write to file.', 'file-manager'));
         }
 
         wp_opcache_invalidate($realFile, true);
@@ -53,7 +54,7 @@ class PhpSyntaxChecker
 
             $message = isset($result['message'])
                 ? $result['message']
-                : __('An error occurred. Please try again later.');
+                : __('An error occurred. Please try again later.', 'file-manager');
 
             $data = $result;
             unset($data['message']);
@@ -70,9 +71,9 @@ class PhpSyntaxChecker
      */
     private function loopbackRequest()
     {
-        $scrapeKey   = md5(mt_rand());
+        $scrapeKey   = md5(wp_rand());
         $transient   = 'scrape_key_' . $scrapeKey;
-        $scrapeNonce = (string) mt_rand();
+        $scrapeNonce = (string) wp_rand();
         // Transient expires after 60 seconds — enough for both loopback requests.
         set_transient($transient, $scrapeNonce, 60);
 
@@ -111,7 +112,7 @@ class PhpSyntaxChecker
 
         $loopbackFailure = [
             'code'    => 'loopback_request_failed',
-            'message' => __('Unable to communicate back with site to check for fatal errors, so the PHP change was reverted. You will need to upload your PHP file change by some other means, such as by using SFTP.'),
+            'message' => __('Unable to communicate back with site to check for fatal errors, so the PHP change was reverted. You will need to upload your PHP file change by some other means, such as by using SFTP.', 'file-manager'),
         ];
         $jsonParseFailure = [
             'code' => 'json_parse_error',

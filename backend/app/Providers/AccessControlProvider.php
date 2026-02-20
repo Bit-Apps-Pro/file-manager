@@ -180,8 +180,8 @@ class AccessControlProvider
                 if (!empty($fileTypeAndExt['type'])) {
                     if (stripos($fileTypeAndExt['type'], 'javascript') !== false) {
                         $this->scannedResult[] = wp_sprintf(
+                            // translators: 1: file name
                             __(
-                                // translators: 1: file name
                                 'This file %s type is not allowed',
                                 'file-manager'
                             ),
