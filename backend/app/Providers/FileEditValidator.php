@@ -46,7 +46,7 @@ class FileEditValidator
             token_get_all($content);
         } catch (ParseError $e) {
             $error = wp_sprintf(
-                /* translators: 1: file name, 2: PHP parse error message */
+                // translators: 1: file name, 2: PHP parse error message
                 __('Syntax error in file: %1$s. Error: %2$s', 'file-manager'),
                 $fileName,
                 $e->getMessage()

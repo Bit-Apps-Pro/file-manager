@@ -1,13 +1,15 @@
 <?php
-//phpcs:disable WordPress.WP.AlternativeFunctions
-if ( ! defined( 'ABSPATH' ) ) exit;
+
+// phpcs:disable WordPress.WP.AlternativeFunctions
+if (! \defined('ABSPATH')) {
+    exit;
+}
 
 use BitApps\FM\Config;
 
 use function BitApps\FM\Functions\view;
 
 use BitApps\FM\Providers\InstallerProvider;
-
 
 function bfmActivate()
 {

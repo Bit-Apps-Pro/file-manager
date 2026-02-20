@@ -19,7 +19,7 @@ class MimeProvider
     public function getTypes()
     {
         $mimeList = [];
-        //phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
         $fp       = fopen($this->_mimePath, 'r');
         if ($fp) {
             while (($line = fgets($fp)) !== false) {
