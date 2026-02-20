@@ -5,7 +5,7 @@ namespace BitApps\FM\Providers;
 use BitApps\FM\Exception\PreCommandException;
 use BitApps\FM\Plugin;
 use BitApps\FM\Vendor\BitApps\WPKit\Utils\Capabilities;
-use ParseError;
+use WP_Error;
 
 \defined('ABSPATH') or exit();
 class FileEditValidator
@@ -24,37 +24,23 @@ class FileEditValidator
         // Checking syntax for PHP file.
         if (strpos($args['content'], '<?php') !== false) {
             try {
-                $this->checkSyntax($args['content'], wp_basename($volume->getPath($args['target'])));
+                $this->checkSyntax($args['content'], $volume->getPath($args['target']));
             } catch (PreCommandException $th) {
                 return $th->getError();
             }
         }
     }
 
-    public function checkSyntax($content, $fileName)
+    public function checkSyntax($content, $realFile)
     {
-        $error = '';
-
-        if (
-            (Capabilities::check('install_plugins'))
-            || (\defined('BFM_DISABLE_SYNTAX_CHECK') && BFM_DISABLE_SYNTAX_CHECK)
-        ) {
+        if (\defined('BFM_DISABLE_SYNTAX_CHECK') && BFM_DISABLE_SYNTAX_CHECK) {
             return;
         }
 
-        try {
-            token_get_all($content);
-        } catch (ParseError $e) {
-            $error = wp_sprintf(
-                // translators: 1: file name, 2: PHP parse error message
-                __('Syntax error in file: %1$s. Error: %2$s', 'file-manager'),
-                $fileName,
-                $e->getMessage()
-            );
-        }
+        $wpError = (new PhpSyntaxChecker())->check($content, $realFile);
 
-        if (!empty($error)) {
-            throw new PreCommandException(esc_html($error));
+        if ($wpError instanceof WP_Error) {
+            throw new PreCommandException($wpError->get_error_message());
         }
     }
 
